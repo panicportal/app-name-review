@@ -1549,6 +1549,152 @@ function suggestionScoreMarkup(scores = {}) {
     </div>`;
 }
 
+function manualSurnameScores(first, surname, firstPart, secondPart, usageCount = 0) {
+  const fullName = `${first} ${surname}`.trim();
+  const boundaryRepeat = Boolean(
+    firstPart &&
+    secondPart &&
+    firstPart.slice(-1).toLowerCase() === secondPart.slice(0, 1).toLowerCase()
+  );
+  const hardCluster = /[^aeiouy\s'-]{4,}/i.test(surname);
+  let readability = 9.7;
+  readability -= Math.max(0, surname.length - 13) * 0.22;
+  readability -= Math.max(0, fullName.length - 27) * 0.12;
+  if (boundaryRepeat) readability -= 0.6;
+  if (hardCluster) readability -= 0.7;
+  if (surname.length <= 11) readability += 0.2;
+
+  let collectability = 8.2;
+  if (surname.length >= 7 && surname.length <= 13) collectability += 0.5;
+  if (firstPart && secondPart) collectability += 0.35;
+  collectability -= Math.min(1.5, usageCount * 0.03);
+  if (boundaryRepeat || hardCluster) collectability -= 0.35;
+  const compact = surname.length <= 12 && fullName.length <= 27;
+  const clamp = value => Math.max(5, Math.min(10, Math.round(value * 10) / 10));
+  return {
+    readability: clamp(readability),
+    collectability: clamp(collectability),
+    readability_note: compact
+      ? "Compact length with a clear speaking rhythm"
+      : "Scored from full-name length, rhythm, and compound boundary",
+    collectability_note: usageCount
+      ? `Manual trait fit and compactness, with ${usageCount} other fragment use${usageCount === 1 ? "" : "s"}`
+      : "Manual trait fit, compactness, and no other proposed fragment uses"
+  };
+}
+
+function normalizeManualSurnamePart(value) {
+  const trimmed = String(value || "").trim();
+  if (!/^[A-Za-z]{2,20}$/.test(trimmed)) return null;
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+}
+
+function manualSurnameUsage(value) {
+  if (!value || !state.data) return 0;
+  const target = value.toLowerCase();
+  return state.data.characters.reduce((count, character) => {
+    return count + ["surname_part_1", "surname_part_2"]
+      .filter(key =>
+        !(character.id === state.selected?.id && key === state.suggestionPart) &&
+        partDefinitions(character).some(part => part.key === key && part.available) &&
+        effectivePartValue(character, key).toLowerCase() === target
+      ).length;
+  }, 0);
+}
+
+function manualSurnamePreview(value) {
+  const normalized = normalizeManualSurnamePart(value);
+  if (!normalized || !state.selected || !state.suggestionPart?.startsWith("surname_")) {
+    return null;
+  }
+  const part1 = state.suggestionPart === "surname_part_1"
+    ? normalized
+    : effectivePartValue(state.selected, "surname_part_1");
+  const part2 = state.suggestionPart === "surname_part_2"
+    ? normalized
+    : effectivePartValue(state.selected, "surname_part_2");
+  const surname = composeSurname(state.selected, part1, part2);
+  const first = effectivePartValue(state.selected, "first");
+  const usageCount = manualSurnameUsage(normalized);
+  return {
+    value: normalized,
+    surname,
+    fullName: `${first} ${surname}`.trim(),
+    usageCount,
+    scores: manualSurnameScores(first, surname, part1, part2, usageCount)
+  };
+}
+
+function updateManualSurnamePreview() {
+  const raw = els.manualSurnameInput.value;
+  const preview = manualSurnamePreview(raw);
+  const started = Boolean(raw.trim());
+  els.manualSurnameInput.classList.toggle("invalid", started && !preview);
+  els.manualSurnameSave.disabled = !preview;
+  if (!preview) {
+    els.manualSurnameFullName.textContent = started
+      ? "Use 2–20 English letters"
+      : "Start typing to preview";
+    els.manualSurnameMeta.textContent =
+      "No spaces, symbols, numbers, or Japanese-bank additions";
+    els.manualSurnameScores.innerHTML = "";
+    return;
+  }
+  els.manualSurnameFullName.textContent = preview.fullName;
+  els.manualSurnameMeta.textContent =
+    `${preview.value} · ${preview.usageCount} other current/proposed use${preview.usageCount === 1 ? "" : "s"}`;
+  els.manualSurnameScores.innerHTML = suggestionScoreMarkup(preview.scores);
+}
+
+function renderManualSurnameEditor() {
+  const show =
+    state.suggestionPart?.startsWith("surname_") &&
+    state.suggestionLanguage === "western";
+  els.manualSurnameEditor.hidden = !show;
+  if (!show) {
+    els.manualSurnameEditor.open = false;
+    els.manualSurnameInput.value = "";
+    return;
+  }
+  const review = partReview(state.selected.id, state.suggestionPart);
+  els.manualSurnameInput.value =
+    review.replacement_source === "Manual team edit"
+      ? review.replacement_value || ""
+      : "";
+  els.manualSurnameHelp.textContent =
+    `Saves only for Surv!vor #${state.selected.id}. Trait source remains ` +
+    `${state.suggestionSource || effectivePartSource(state.selected, state.suggestionPart)} for auditing.`;
+  updateManualSurnamePreview();
+}
+
+function saveManualSurnamePart() {
+  const preview = manualSurnamePreview(els.manualSurnameInput.value);
+  if (!preview || state.suggestionLanguage !== "western") return;
+  const definition = partDefinitions(state.selected)
+    .find(part => part.key === state.suggestionPart);
+  const traitSource =
+    state.suggestionSource ||
+    state.suggestionPayload?.trait_source ||
+    definition?.source ||
+    "";
+  updatePartReview(state.suggestionPart, {
+    decision: "replace",
+    scope: "this_character",
+    replacement_value: preview.value,
+    replacement_source: "Manual team edit",
+    replacement_trait_source: traitSource,
+    replacement_rationale:
+      `Manually curated by the team for ${traitSource || "this character's trait"}. ` +
+      `Replaced “${definition?.value || ""}” with “${preview.value}” for Surv!vor #${state.selected.id} only. ` +
+      `Saved full-name preview: ${preview.fullName}. ` +
+      `Readability ${preview.scores.readability.toFixed(1)}/10; ` +
+      `collectability ${preview.scores.collectability.toFixed(1)}/10.`,
+    replacement_scores: preview.scores
+  });
+  els.suggestionDialog.close();
+  showToast(`Saved manual surname ${preview.fullName}.`, "success");
+}
+
 function renderSuggestionCurrentPreview() {
   const preview = state.suggestionPayload?.current_preview;
   if (!preview) return;
@@ -1712,6 +1858,7 @@ async function openSuggestions(part, language = null, source = null) {
   els.suggestionFullPreview.hidden = true;
   els.suggestionTraitSourceWrap.hidden = !part.startsWith("surname_");
   els.suggestionTraitSource.disabled = true;
+  renderManualSurnameEditor();
   if (!els.suggestionDialog.open) els.suggestionDialog.showModal();
   try {
     const params = new URLSearchParams({
@@ -1730,6 +1877,7 @@ async function openSuggestions(part, language = null, source = null) {
     state.suggestionSource = payload.trait_source;
     renderSuggestionTraitSources();
     renderSuggestionCurrentPreview();
+    renderManualSurnameEditor();
     renderSuggestionOptions();
   } catch (error) {
     els.suggestionList.innerHTML = `<div class="suggestion-empty">${escapeHtml(error.message)}</div>`;
@@ -1929,6 +2077,8 @@ function bindEvents() {
     toggleSurnameOrder({ rerender: true, announce: false });
     openSuggestions(state.suggestionPart, state.suggestionLanguage, state.suggestionSource);
   });
+  els.manualSurnameInput.addEventListener("input", updateManualSurnamePreview);
+  els.manualSurnameSave.addEventListener("click", saveManualSurnamePart);
   els.mobilePrevious.addEventListener("click", () => moveSelection(-1));
   els.mobileApprove.addEventListener("click", approveRemaining);
   els.mobileNext.addEventListener("click", () => moveSelection(1));

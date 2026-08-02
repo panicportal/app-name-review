@@ -362,6 +362,28 @@
         <div class="preview-score-pair" id="suggestionCurrentScores"></div>
         <button id="suggestionFlipCurrent" hidden>⇄ Flip current surname</button>
       </section>
+      <details class="manual-surname-editor" id="manualSurnameEditor">
+        <summary>Write your own surname part</summary>
+        <div class="manual-surname-body">
+          <label for="manualSurnameInput">
+            <span>Custom surname fragment</span>
+            <input id="manualSurnameInput" maxlength="20" autocomplete="off"
+              inputmode="text" placeholder="Example: Skater">
+          </label>
+          <div class="manual-surname-preview">
+            <span>Full-name preview</span>
+            <strong id="manualSurnameFullName">Start typing to preview</strong>
+            <small id="manualSurnameMeta">English letters only · 2–20 characters</small>
+          </div>
+          <div class="preview-score-pair" id="manualSurnameScores"></div>
+          <button class="manual-surname-save" id="manualSurnameSave" disabled>
+            Save manual surname part
+          </button>
+        </div>
+        <p id="manualSurnameHelp">
+          Saves only for this character and keeps the selected trait source in the audit trail.
+        </p>
+      </details>
       <div class="suggestion-toolbar" id="suggestionToolbar">
         <span>Rank options by</span>
         <div role="group" aria-label="Suggestion ranking">

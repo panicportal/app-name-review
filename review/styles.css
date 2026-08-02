@@ -1295,6 +1295,100 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   font: 800 8px/1.2 var(--utility);
   text-transform: uppercase;
 }
+.manual-surname-editor {
+  margin-top: 12px;
+  border: 1px solid #8fa49e;
+  border-left: 6px solid var(--blue);
+  background: #eef5f2;
+}
+.manual-surname-editor summary {
+  padding: 13px 14px;
+  color: #294b54;
+  cursor: pointer;
+  font: 900 9px/1 var(--utility);
+  text-transform: uppercase;
+}
+.manual-surname-editor[open] summary {
+  border-bottom: 1px solid #b8c9c4;
+}
+.manual-surname-body {
+  display: grid;
+  grid-template-columns: minmax(180px, .8fr) minmax(230px, 1.2fr) minmax(154px, auto);
+  grid-template-areas:
+    "input preview scores"
+    "input preview save";
+  gap: 10px;
+  align-items: start;
+  padding: 13px 14px 8px;
+}
+.manual-surname-body label { grid-area: input; }
+.manual-surname-body label > span,
+.manual-surname-preview > span {
+  display: block;
+  margin-bottom: 6px;
+  color: #647772;
+  font: 800 8px/1 var(--utility);
+  text-transform: uppercase;
+}
+.manual-surname-body input {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 11px;
+  border: 1px solid #7f9891;
+  border-radius: 0;
+  background: white;
+  color: var(--ink);
+  font-size: 16px;
+}
+.manual-surname-body input.invalid {
+  border-color: #c94d56;
+  background: #fff3f2;
+}
+.manual-surname-preview {
+  grid-area: preview;
+  min-width: 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--amber);
+  background: white;
+}
+.manual-surname-preview strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font: 900 18px/1.1 var(--display);
+}
+.manual-surname-preview small {
+  display: block;
+  margin-top: 6px;
+  color: #667873;
+  font: 8px/1.35 var(--utility);
+}
+.manual-surname-body > .preview-score-pair { grid-area: scores; }
+.manual-surname-save {
+  grid-area: save;
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: #08212b;
+  font: 900 8px/1.2 var(--utility);
+  text-transform: uppercase;
+}
+.manual-surname-save:disabled {
+  border-color: #b9c5c1;
+  background: #dce4e1;
+  color: #788783;
+  cursor: not-allowed;
+}
+.manual-surname-editor > p {
+  margin: 0;
+  padding: 0 14px 13px;
+  color: #667873;
+  font: 8px/1.4 var(--utility);
+}
+.manual-surname-editor .preview-score {
+  border-color: #adc0ba;
+  background: #0e252e;
+}
 .preview-score-pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(72px, 1fr));
@@ -1637,6 +1731,17 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   .suggestion-trait-source { grid-template-columns: 1fr; }
   .suggestion-trait-source small { grid-column: 1; }
   .suggestion-trait-source select { width: 100%; font-size: 16px; }
+  .manual-surname-body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "input"
+      "preview"
+      "scores"
+      "save";
+    align-items: stretch;
+  }
+  .manual-surname-body .preview-score-pair { grid-template-columns: repeat(2, 1fr); }
+  .manual-surname-save { width: 100%; }
   .surname-title-line { align-items: flex-start; flex-direction: column; }
   .flip-surname-button { min-height: 42px; }
   .dialog-shell { padding: 18px; }
