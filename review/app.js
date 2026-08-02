@@ -50,7 +50,7 @@ const state = {
   suggestionSource: null,
   suggestionSort: "balanced",
   suggestionPayload: null,
-  suggestionOrderOverrides: {},
+  suggestionPreviewOrder: "12",
   focusSwipeStart: null
 };
 
@@ -495,18 +495,39 @@ function surnameComponentUsage(part) {
       .filter(candidate =>
         candidate.available &&
         candidate.key.startsWith("surname_") &&
-        candidate.value.toLowerCase() === target
+        effectivePartValue(character, candidate.key).toLowerCase() === target
       )
       .forEach(candidate => {
         total++;
         const review = partReview(character.id, candidate.key);
-        if (review.decision === "replace") {
+        if (review.decision === "replace" && !review.replacement_value) {
           rejected++;
           if (review.scope === "all_exact_matches") global++;
         }
       });
   });
   return { total, rejected, global };
+}
+
+function firstNameUsage(value) {
+  const target = String(value || "").trim().toLowerCase();
+  if (!target || !state.data) return { total: 0, characterIds: [] };
+  const characterIds = state.data.characters
+    .filter(character =>
+      effectivePartValue(character, "first").toLowerCase() === target
+    )
+    .map(character => character.id);
+  return { total: characterIds.length, characterIds };
+}
+
+function firstNameUsageText(value) {
+  const usage = firstNameUsage(value);
+  if (!usage.total) return "Not currently used elsewhere";
+  if (usage.total === 1) return "Used 1× collection-wide · unique first name";
+  return `Duplicate alert · used ${usage.total.toLocaleString()}× on survivors ${usage.characterIds
+    .slice(0, 6)
+    .map(id => `#${id}`)
+    .join(", ")}${usage.characterIds.length > 6 ? "…" : ""}`;
 }
 
 function usageText(part) {
@@ -751,16 +772,21 @@ function renderReplacementBriefs(character) {
   els.replacementBriefs.hidden = rejected.length === 0;
   els.replacementBriefList.innerHTML = rejected.map(part => {
     const review = partReview(character.id, part.key);
-    const liveUsage = surnameComponentUsage(part);
+    const liveUsage = part.key === "first"
+      ? firstNameUsage(part.value)
+      : surnameComponentUsage(part);
     const usage = liveUsage.total > 1
       ? ` (${liveUsage.total.toLocaleString()} current uses)`
       : "";
+    const usageCopy = part.key === "first"
+      ? firstNameUsageText(part.value)
+      : usageText(part);
     return `<article class="replacement-brief" data-replacement-part="${part.key}">
       <div class="replacement-value">
         <span>${review.replacement_value ? "Original " : ""}${escapeHtml(part.label)}</span>
         <strong>${escapeHtml(part.value || "—")}</strong>
         <small>${escapeHtml(part.source || "No source")}</small>
-        ${part.key.startsWith("surname_") ? `<em class="replacement-usage">${escapeHtml(usageText(part))}</em>` : ""}
+        <em class="replacement-usage">${escapeHtml(usageCopy)}</em>
         <div class="replacement-tools">
           <button class="find-replacement-button" data-find-replacement="${part.key}">
             ${review.replacement_value ? "Change selected option" : "Find fitting options"}
@@ -859,8 +885,16 @@ function renderFocusDeck(character) {
     `${character.first_name_language} first · ${character.surname_language} surname · ${status.decided}/${status.total} parts decided`;
   els.focusFlipButton.hidden = !canFlipSurname(character);
   if (canFlipSurname(character)) {
+    const nextFirst = effectivePartValue(
+      character,
+      surnameOrder(character) === "12" ? "surname_part_2" : "surname_part_1"
+    );
     els.focusFlipButton.textContent =
-      surnameOrder(character) === "12" ? "⇄ Try reversed surname" : "⇄ Restore original order";
+      `⇄ Put ${nextFirst || "other trait"} first`;
+    els.focusFlipButton.setAttribute(
+      "aria-label",
+      `Save surname order with ${nextFirst || "the other trait"} first`
+    );
   }
 
   els.focusParts.innerHTML = partDefinitions(character)
@@ -871,11 +905,17 @@ function renderFocusDeck(character) {
       const proposed = review.replacement_value
         ? `<small>Selected replacement · ${escapeHtml(review.replacement_source || "curated bank")}</small>`
         : `<small>${escapeHtml(part.source || "No source")}</small>`;
+      const liveUsage = part.key === "first"
+        ? firstNameUsageText(effective)
+        : usageText({ ...part, value: effective });
       return `<article class="focus-part" data-state="${review.decision || "unreviewed"}">
         <div>
           <span class="focus-part-label"><i></i>${escapeHtml(part.label)}</span>
           <strong>${escapeHtml(effective || "—")}</strong>
           ${proposed}
+          <small class="${part.key === "first" && firstNameUsage(effective).total > 1 ? "duplicate-usage" : ""}">
+            ${escapeHtml(liveUsage)}
+          </small>
         </div>
         <div class="focus-part-actions">
           <button class="approve ${review.decision === "approve" ? "active" : ""}"
@@ -929,8 +969,16 @@ function renderCharacter() {
   els.surname.textContent = effectiveSurname(c) || "—";
   els.surnameFlipButton.hidden = !canFlipSurname(c);
   if (canFlipSurname(c)) {
+    const nextFirst = effectivePartValue(
+      c,
+      surnameOrder(c) === "12" ? "surname_part_2" : "surname_part_1"
+    );
     els.surnameFlipButton.textContent =
-      surnameOrder(c) === "12" ? "⇄ Try reversed order" : "⇄ Restore original order";
+      `⇄ Put ${nextFirst || "other trait"} first`;
+    els.surnameFlipButton.setAttribute(
+      "aria-label",
+      `Save surname order with ${nextFirst || "the other trait"} first`
+    );
   }
   els.firstLanguage.textContent =
     c.first_name_provenance === "sensitivity_review_replacement" ? "Sensitivity-reviewed theme" :
@@ -964,6 +1012,10 @@ function renderCharacter() {
     "Awaiting hand-authored name";
   els.firstSource.textContent = [c.first_name_source, c.first_name_source_detail]
     .filter(Boolean).join(" · ");
+  const liveFirst = effectivePartValue(c, "first");
+  const liveFirstUsage = firstNameUsage(liveFirst);
+  els.firstNameUsage.textContent = firstNameUsageText(liveFirst);
+  els.firstNameUsage.classList.toggle("duplicate", liveFirstUsage.total > 1);
 
   const detail = c.surname_detail || {};
   const source1 = effectivePartSource(c, "surname_part_1");
@@ -1613,7 +1665,10 @@ function manualSurnamePreview(value) {
   const part2 = state.suggestionPart === "surname_part_2"
     ? normalized
     : effectivePartValue(state.selected, "surname_part_2");
-  const surname = composeSurname(state.selected, part1, part2);
+  const previewOrder = canFlipSurname(state.selected)
+    ? state.suggestionPreviewOrder
+    : surnameOrder(state.selected);
+  const surname = composeSurname(state.selected, part1, part2, previewOrder);
   const first = effectivePartValue(state.selected, "first");
   const usageCount = manualSurnameUsage(normalized);
   return {
@@ -1621,7 +1676,13 @@ function manualSurnamePreview(value) {
     surname,
     fullName: `${first} ${surname}`.trim(),
     usageCount,
-    scores: manualSurnameScores(first, surname, part1, part2, usageCount)
+    scores: manualSurnameScores(
+      first,
+      surname,
+      previewOrder === "21" ? part2 : part1,
+      previewOrder === "21" ? part1 : part2,
+      usageCount
+    )
   };
 }
 
@@ -1673,6 +1734,12 @@ function renderManualSurnameEditor() {
 function saveManualSurnamePart() {
   const preview = manualSurnamePreview(els.manualSurnameInput.value);
   if (!preview || state.suggestionLanguage !== "western") return;
+  if (canFlipSurname(state.selected)) {
+    setSurnameOrder(state.suggestionPreviewOrder, {
+      rerender: false,
+      announce: false
+    });
+  }
   const definition = partDefinitions(state.selected)
     .find(part => part.key === state.suggestionPart);
   const traitSource =
@@ -1699,18 +1766,32 @@ function saveManualSurnamePart() {
 }
 
 function renderSuggestionCurrentPreview() {
-  const preview = state.suggestionPayload?.current_preview;
-  if (!preview) return;
+  const current = state.suggestionPayload?.current_preview;
+  if (!current) return;
+  const preview =
+    current.order_previews?.[state.suggestionPreviewOrder] ||
+    current;
   els.suggestionFullPreview.hidden = false;
   els.suggestionCurrentFullName.textContent = preview.full_name;
-  els.suggestionCurrentOrder.textContent = preview.can_flip
-    ? `${preview.surname} · ${preview.order === "21" ? "trait 2 → trait 1" : "trait 1 → trait 2"}`
+  els.suggestionCurrentOrder.textContent = current.can_flip
+    ? `${preview.surname} · preview only · ${
+        preview.order === "21" ? "trait 2 → trait 1" : "trait 1 → trait 2"
+      } · saved only when you choose an option`
     : `${preview.surname} · fixed order`;
   els.suggestionCurrentScores.innerHTML = suggestionScoreMarkup(preview.scores);
-  els.suggestionFlipCurrent.hidden = !preview.can_flip;
-  if (preview.can_flip) {
+  els.suggestionFlipCurrent.hidden = !current.can_flip;
+  if (current.can_flip) {
+    const nextOrder = preview.order === "12" ? "21" : "12";
+    const nextPart = effectivePartValue(
+      state.selected,
+      nextOrder === "21" ? "surname_part_2" : "surname_part_1"
+    );
     els.suggestionFlipCurrent.textContent =
-      preview.order === "12" ? "⇄ Preview trait 2 first" : "⇄ Restore trait 1 first";
+      `⇄ Preview ${nextPart || (nextOrder === "21" ? "trait 2" : "trait 1")} first`;
+    els.suggestionFlipCurrent.setAttribute(
+      "aria-label",
+      `Preview all surname options with ${nextPart || (nextOrder === "21" ? "trait 2" : "trait 1")} first. This does not save until an option is chosen.`
+    );
   }
 }
 
@@ -1742,12 +1823,12 @@ function renderSuggestionTraitSources() {
     : `Showing reviewed fragments for ${payload.trait_source}, ranked for readability, collectability, and low repetition.`;
 }
 
-function candidateOrder(candidate, index) {
+function candidateOrder(candidate) {
   const available = candidate.order_previews || {};
   const preferred =
-    state.suggestionOrderOverrides[index] ||
-    candidate.recommended_order ||
+    state.suggestionPreviewOrder ||
     state.suggestionPayload?.current_preview?.order ||
+    candidate.recommended_order ||
     "12";
   return available[preferred] ? preferred : Object.keys(available)[0] || "12";
 }
@@ -1755,7 +1836,7 @@ function candidateOrder(candidate, index) {
 function sortedSuggestionEntries() {
   const suggestions = state.suggestionPayload?.suggestions || [];
   const entries = suggestions.map((candidate, index) => {
-    const order = candidateOrder(candidate, index);
+    const order = candidateOrder(candidate);
     const preview = candidate.order_previews?.[order] || {
       full_name: candidate.preview_full_name || candidate.value,
       surname: candidate.preview_surname || candidate.value,
@@ -1766,24 +1847,28 @@ function sortedSuggestionEntries() {
   });
   if (state.suggestionSort === "shortest") {
     return entries.sort((left, right) =>
-      left.preview.surname.length - right.preview.surname.length ||
-      left.preview.full_name.length - right.preview.full_name.length ||
-      Number(right.preview.scores?.readability || 0) - Number(left.preview.scores?.readability || 0)
+      String(left.candidate.preview_surname || "").length -
+        String(right.candidate.preview_surname || "").length ||
+      String(left.candidate.preview_full_name || "").length -
+        String(right.candidate.preview_full_name || "").length ||
+      Number(right.candidate.scores?.readability || 0) -
+        Number(left.candidate.scores?.readability || 0)
     );
   }
   if (state.suggestionSort === "least-used") {
     return entries.sort((left, right) =>
       Number(left.candidate.usage_count || 0) - Number(right.candidate.usage_count || 0) ||
-      Number(right.preview.scores?.collectability || 0) - Number(left.preview.scores?.collectability || 0)
+      Number(right.candidate.scores?.collectability || 0) -
+        Number(left.candidate.scores?.collectability || 0)
     );
   }
   return entries.sort((left, right) =>
     (
-      Number(right.preview.scores?.readability || 0) +
-      Number(right.preview.scores?.collectability || 0)
+      Number(right.candidate.scores?.readability || 0) +
+      Number(right.candidate.scores?.collectability || 0)
     ) - (
-      Number(left.preview.scores?.readability || 0) +
-      Number(left.preview.scores?.collectability || 0)
+      Number(left.candidate.scores?.readability || 0) +
+      Number(left.candidate.scores?.collectability || 0)
     ) ||
     Number(left.candidate.usage_count || 0) - Number(right.candidate.usage_count || 0)
   );
@@ -1792,13 +1877,18 @@ function sortedSuggestionEntries() {
 function renderSuggestionOptions() {
   const entries = sortedSuggestionEntries();
   if (!entries.length) {
+    const message =
+      state.suggestionPart === "first" && state.suggestionLanguage === "japanese"
+        ? "No unused exact name remains in this artist Clothing + Body-gender bank. Japanese names will not be invented or taken from the internet."
+        : state.suggestionPart === "first"
+          ? "No unused name remains in this clothing bank. Keep the red X and add a note so the reserve bank can be curated further."
+          : "No safe unused options remain in this exact bank. Keep the red X and add a note; the app will not invent a weak substitute.";
     els.suggestionList.innerHTML = `<div class="suggestion-empty">
-      No safe unused options remain in this exact bank. Keep the red X and add a note; the app will not invent a weak substitute.
+      ${escapeHtml(message)}
     </div>`;
     return;
   }
   els.suggestionList.innerHTML = entries.map(({ candidate, index, order, preview }) => {
-    const canFlip = Boolean(candidate.order_previews?.["12"] && candidate.order_previews?.["21"]);
     const changeLabel = state.suggestionPart === "first"
       ? `First-name option · ${candidate.value}`
       : `${state.suggestionPart === "surname_part_1" ? "Trait 1 fragment" : "Trait 2 fragment"} · ${candidate.value}`;
@@ -1815,19 +1905,11 @@ function renderSuggestionOptions() {
       <small>${escapeHtml(candidate.source)} · ${escapeHtml(candidate.uniqueness)}</small>
       <small>${escapeHtml(preview.scores?.readability_note || "")} · ${escapeHtml(preview.scores?.collectability_note || "")}</small>
       <div class="suggestion-option-actions">
-        ${canFlip ? `<button data-flip-suggestion="${index}">⇄ Flip preview</button>` : ""}
-        <button class="use-suggestion" data-use-suggestion="${index}" data-use-order="${order}">Use this full name</button>
+        <span>${candidate.order_previews?.["21"] ? `Preview order: ${order === "21" ? "trait 2 first" : "trait 1 first"}` : ""}</span>
+        <button class="use-suggestion" data-use-suggestion="${index}" data-use-order="${order}">Use this exact preview</button>
       </div>
     </article>`;
   }).join("");
-  els.suggestionList.querySelectorAll("[data-flip-suggestion]").forEach(button => {
-    button.addEventListener("click", () => {
-      const index = Number(button.dataset.flipSuggestion);
-      const current = candidateOrder(state.suggestionPayload.suggestions[index], index);
-      state.suggestionOrderOverrides[index] = current === "12" ? "21" : "12";
-      renderSuggestionOptions();
-    });
-  });
   els.suggestionList.querySelectorAll("[data-use-suggestion]").forEach(button => {
     button.addEventListener("click", () => {
       const candidate = state.suggestionPayload.suggestions[Number(button.dataset.useSuggestion)];
@@ -1844,7 +1926,7 @@ async function openSuggestions(part, language = null, source = null) {
     ? (source || partReview(state.selected.id, part).replacement_trait_source || definition?.source || "")
     : null;
   state.suggestionPayload = null;
-  state.suggestionOrderOverrides = {};
+  state.suggestionPreviewOrder = surnameOrder(state.selected);
   els.suggestionTitle.textContent = `Replace ${definition?.label || "name part"}`;
   els.suggestionContext.textContent =
     `Surv!vor #${state.selected.id} · ${definition?.source || state.selected.clothing}`;
@@ -2077,8 +2159,10 @@ function bindEvents() {
     });
   });
   els.suggestionFlipCurrent.addEventListener("click", () => {
-    toggleSurnameOrder({ rerender: true, announce: false });
-    openSuggestions(state.suggestionPart, state.suggestionLanguage, state.suggestionSource);
+    state.suggestionPreviewOrder =
+      state.suggestionPreviewOrder === "12" ? "21" : "12";
+    renderSuggestionCurrentPreview();
+    renderSuggestionOptions();
   });
   els.manualSurnameInput.addEventListener("input", updateManualSurnamePreview);
   els.manualSurnameSave.addEventListener("click", saveManualSurnamePart);

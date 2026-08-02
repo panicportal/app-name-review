@@ -32,15 +32,23 @@ function stableScore(id, value) {
 }
 
 function usedFirstNames(state, exceptId) {
+  // Keep original assignments reserved as well as live replacements. This
+  // prevents an undo on one character from creating a duplicate elsewhere.
   const used = new Set(
     review.characters
       .filter((character) => String(character.id) !== exceptId)
       .map((character) => String(character.first || "").toLowerCase())
+      .filter(Boolean)
   );
-  for (const [id, record] of Object.entries(state.curation?.records || {})) {
-    if (id === exceptId || record.deleted_at) continue;
-    const proposed = record.parts?.first?.replacement_value;
-    if (proposed) used.add(String(proposed).toLowerCase());
+  for (const character of review.characters) {
+    const id = String(character.id);
+    if (id === exceptId) continue;
+    const rawRecord = state.curation?.records?.[id];
+    const record = rawRecord?.deleted_at ? null : rawRecord;
+    const firstPart = record?.parts?.first;
+    const replacement =
+      !firstPart?.deleted_at && firstPart?.replacement_value;
+    if (replacement) used.add(String(replacement).toLowerCase());
   }
   return used;
 }
@@ -52,14 +60,20 @@ function componentUsage(state, exceptId) {
     if (key) counts.set(key, (counts.get(key) || 0) + 1);
   };
   for (const character of review.characters) {
-    if (String(character.id) === exceptId) continue;
-    add(character.surname_component_1);
-    add(character.surname_component_2);
-  }
-  for (const [id, record] of Object.entries(state.curation?.records || {})) {
-    if (id === exceptId || record.deleted_at) continue;
-    add(record.parts?.surname_part_1?.replacement_value);
-    add(record.parts?.surname_part_2?.replacement_value);
+    const id = String(character.id);
+    if (id === exceptId) continue;
+    const rawRecord = state.curation?.records?.[id];
+    const record = rawRecord?.deleted_at ? null : rawRecord;
+    const part1 = record?.parts?.surname_part_1;
+    const part2 = record?.parts?.surname_part_2;
+    add(
+      (!part1?.deleted_at && part1?.replacement_value) ||
+      character.surname_component_1
+    );
+    add(
+      (!part2?.deleted_at && part2?.replacement_value) ||
+      character.surname_component_2
+    );
   }
   return counts;
 }
@@ -67,10 +81,14 @@ function componentUsage(state, exceptId) {
 function candidatesFor(character, part, language, sourceOverride = "") {
   if (part === "first") {
     const bank = catalog.first[character.clothing] || {};
+    const matchesBodyGender = (candidate) =>
+      !candidate.gender_route ||
+      candidate.gender_route === character.gender_from_body;
     if (language === "any") {
-      return [...(bank.western || []), ...(bank.japanese || [])];
+      return [...(bank.western || []), ...(bank.japanese || [])]
+        .filter(matchesBodyGender);
     }
-    return bank[language] || [];
+    return (bank[language] || []).filter(matchesBodyGender);
   }
   const source = sourceOverride || (
     part === "surname_part_1"
@@ -257,16 +275,28 @@ module.exports = async function handler(req, res) {
     const currentUsage =
       (allUsage.get(String(currentPart1).toLowerCase()) || 0) +
       (allUsage.get(String(currentPart2).toLowerCase()) || 0);
-    const currentPreview = previewFor(
-      character,
-      currentFirst,
-      currentPart1,
-      currentPart2,
-      currentOrder,
-      { rank: 0, fit_type: "current" },
-      currentUsage
+    const canPreviewFlip =
+      part !== "first" && canFlip(character, currentPart2);
+    const currentOrders = canPreviewFlip ? ["12", "21"] : [currentOrder];
+    const currentOrderPreviews = Object.fromEntries(
+      currentOrders.map((order) => [
+        order,
+        previewFor(
+          character,
+          currentFirst,
+          currentPart1,
+          currentPart2,
+          order,
+          { rank: 0, fit_type: "current" },
+          currentUsage
+        ),
+      ])
     );
-    currentPreview.can_flip = canFlip(character, currentPart2);
+    const currentPreview = {
+      ...currentOrderPreviews[currentOrder],
+      can_flip: canPreviewFlip,
+      order_previews: currentOrderPreviews,
+    };
 
     const evaluated = candidatesFor(character, part, language, traitSource)
       .filter((candidate) => safe(candidate.value))
@@ -287,7 +317,10 @@ module.exports = async function handler(req, res) {
                 ? allUsage.get(String(currentPart2).toLowerCase()) || 0
                 : allUsage.get(String(currentPart1).toLowerCase()) || 0
             );
-        const orders = canFlip(character, candidatePart2) ? ["12", "21"] : ["12"];
+        const orders =
+          part !== "first" && canFlip(character, candidatePart2)
+            ? ["12", "21"]
+            : [currentOrder];
         const orderPreviews = Object.fromEntries(
           orders.map((order) => [
             order,
