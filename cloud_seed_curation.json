@@ -1,0 +1,6223 @@
+{
+  "schema_version": "panic-name-curation/v2",
+  "exported_at": "2026-08-02T10:49:12.543Z",
+  "reviewer": "",
+  "source_names_file": "names_v11_curated_preview.csv",
+  "collection_rows": 3333,
+  "policy": {
+    "unexported_characters": "leave_unchanged",
+    "unmarked_parts": "leave_unchanged",
+    "approved_parts": "lock_exact_current_value",
+    "replace_this_character": "change_only_the_listed_character",
+    "replace_all_exact_matches": "retire_the_exact_listed_value_everywhere"
+  },
+  "summary": {
+    "touched_characters": 124,
+    "untouched_characters": 3209,
+    "approved_parts": 181,
+    "replacement_requests": 27,
+    "unmarked_parts_inside_touched_characters": 130
+  },
+  "records": [
+    {
+      "id": "4",
+      "current_full_name": "Marcellus Maki",
+      "clothing": "Polished suit",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Marcellus",
+          "source": "Clothing:Polished suit + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Maki",
+          "source": "Hair:Turmeric fluffy",
+          "usage_count": 7,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:04:53.788Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "6",
+      "current_full_name": "Pieter Yuugure",
+      "clothing": "Dark swim trunks",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Pieter",
+          "source": "Clothing:Dark swim trunks + Body:Male (v8.2 swimmer/aquatic bank)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Yuugure",
+          "source": "Back:You & me sunset",
+          "usage_count": 2,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:05:00.339Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "17",
+      "current_full_name": "Juliette Yoshida",
+      "clothing": "Sharp suit",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Juliette",
+          "source": "Clothing:Sharp suit + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Yoshida",
+          "source": "Front:Baseball",
+          "usage_count": 2,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:05:06.734Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "32",
+      "current_full_name": "Marauder Takara",
+      "clothing": "Rogue pirate captain",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Marauder",
+          "source": "Clothing:Rogue pirate captain + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Takara",
+          "source": "Back:Treasures",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:05:21.857Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "34",
+      "current_full_name": "Taizo Whitefluff",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Taizo",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:57:21.722Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "White",
+          "source": "Back:White cloud",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Fluff",
+          "source": "Hair:Turmeric fluffy",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "35",
+      "current_full_name": "Boots Beertear",
+      "clothing": "Watchful cat",
+      "character_note": "replace prise with beer | Surname part 1: Prise → Beer (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 2,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Boots",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Beer",
+          "source": "Front:Glass of beer",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Tear",
+          "source": "Eyes:Tearful",
+          "usage_count": 8,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "41",
+      "current_full_name": "Zia Kozato",
+      "clothing": "Vintage sweatshirt",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Zia",
+          "source": "Clothing:Vintage sweatshirt + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kozato",
+          "source": "Clothing:Vintage sweatshirt",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:05:30.349Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "42",
+      "current_full_name": "Bodie Tago",
+      "clothing": "Dark swim trunks",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Bodie",
+          "source": "Clothing:Dark swim trunks + Body:Male (v8.2 swimmer/aquatic bank)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Tago",
+          "source": "Hair:Octopus hot frizz",
+          "usage_count": 1,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:05:58.602Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "44",
+      "current_full_name": "Finn Kogure",
+      "clothing": "Common villager",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Finn",
+          "source": "Clothing:Common villager + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kogure",
+          "source": "Back:Overgrown wasteland",
+          "usage_count": 2,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:05:55.231Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "51",
+      "current_full_name": "Softstep Whitegrim",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Softstep",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "White",
+          "source": "Back:White cloud",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Grim",
+          "source": "Mouth:Grimace",
+          "usage_count": 12,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "52",
+      "current_full_name": "Mashira Browntrove",
+      "clothing": "Restless ape",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Mashira",
+          "source": "Clothing:Restless ape + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:57:58.026Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Brown",
+          "source": "Eyes:Brown tilt",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Trove",
+          "source": "Back:Treasures",
+          "usage_count": 3,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "54",
+      "current_full_name": "Iori Roughbeard",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Iori",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:04.518Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Rough",
+          "source": "Hair:Biscotti rough",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Beard",
+          "source": "Mouth:Long beard surprise",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "60",
+      "current_full_name": "Rosamund Komori",
+      "clothing": "Star queen",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Rosamund",
+          "source": "Clothing:Star queen + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Komori",
+          "source": "Hair:Emerald innocent braids",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:04.561Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "63",
+      "current_full_name": "Tigress Greentwitch",
+      "clothing": "Watchful cat",
+      "character_note": "First name: Dinah → Tigress (replacement applied; review the new value) | Surname part 2: Grim → Twitch (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tigress",
+          "source": "Clothing:Watchful cat + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Green",
+          "source": "Eyes:Green stretched",
+          "usage_count": 20,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Twitch",
+          "source": "Mouth:Grimace",
+          "usage_count": 7,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "67",
+      "current_full_name": "Gregory Ichijo",
+      "clothing": "Polished suit",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Gregory",
+          "source": "Clothing:Polished suit + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Ichijo",
+          "source": "Clothing:Polished suit",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:10.846Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "68",
+      "current_full_name": "Gertrude Shirakaba",
+      "clothing": "Simple swimsuit",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Gertrude",
+          "source": "Clothing:Simple swimsuit + Body:Female (v8.2 swimmer/aquatic bank)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Shirakaba",
+          "source": "Clothing:Simple swimsuit",
+          "usage_count": 1,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:18.945Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "75",
+      "current_full_name": "Bailey Kubo",
+      "clothing": "Vintage sweatshirt",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Bailey",
+          "source": "Clothing:Vintage sweatshirt + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kubo",
+          "source": "Front:Soccer ball",
+          "usage_count": 2,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:23.879Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "76",
+      "current_full_name": "Waldo Kirisaki",
+      "clothing": "Starry night clown",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Waldo",
+          "source": "Clothing:Starry night clown + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kirisaki",
+          "source": "Hair:Soot sleek curl",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:31.035Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "80",
+      "current_full_name": "Felix Harekawa",
+      "clothing": "Common villager",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Felix",
+          "source": "Clothing:Common villager + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Harekawa",
+          "source": "Back:Sun",
+          "usage_count": 2,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:36.227Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "84",
+      "current_full_name": "Sarabi Greyeyeberry",
+      "clothing": "Watchful cat",
+      "character_note": "Surname part 1: Grey → Greyeye (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 2,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Sarabi",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Greyeye",
+          "source": "Eyes:Grey stare",
+          "usage_count": 9,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Berry",
+          "source": "Front:Berry cake",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "85",
+      "current_full_name": "Mack Kuroshio",
+      "clothing": "Dark swim trunks",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Mack",
+          "source": "Clothing:Dark swim trunks + Body:Male (v8.2 swimmer/aquatic bank)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kuroshio",
+          "source": "Clothing:Dark swim trunks",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:06:41.063Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "89",
+      "current_full_name": "Jesse Shinonome",
+      "clothing": "Brownie cowboy",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Jesse",
+          "source": "Clothing:Brownie cowboy + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Shinonome",
+          "source": "Back:Melt into heart sunrise",
+          "usage_count": 2,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:07:14.783Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "100",
+      "current_full_name": "Sphinx Kuroboshi",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Sphinx",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kuroboshi",
+          "source": "Clothing:Watchful cat",
+          "usage_count": 1,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "110",
+      "current_full_name": "Harutsugu Undermoon",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Harutsugu",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:14.189Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Under",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Moon",
+          "source": "Back:Waning crescent moon",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "113",
+      "current_full_name": "Shadowpaw Goalcloud",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Shadowpaw",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Goal",
+          "source": "Front:Soccer ball",
+          "usage_count": 18,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Cloud",
+          "source": "Back:White cloud",
+          "usage_count": 21,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "133",
+      "current_full_name": "Akiko Jetburger",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Akiko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:18.823Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Jet",
+          "source": "Hair:Jet loose",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Burger",
+          "source": "Front:Hamburger",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "139",
+      "current_full_name": "Gen Soccerbun",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Gen",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:25.849Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Soccer",
+          "source": "Front:Soccer ball",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Bun",
+          "source": "Hair:Ginger dreads bun",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "148",
+      "current_full_name": "Blessed Suzaku",
+      "clothing": "Blood crowned saint",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Blessed",
+          "source": "Clothing:Blood crowned saint + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Suzaku",
+          "source": "Back:You & me sunset",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "152",
+      "current_full_name": "Tatsumi Curlunder",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tatsumi",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:31.782Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Curl",
+          "source": "Hair:Soot sleek curl",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Under",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "160",
+      "current_full_name": "Momoko Chayamoto",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Momoko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:45.197Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Chayamoto",
+          "source": "Clothing:Kawaii kimono",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:44.088Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "180",
+      "current_full_name": "Tundra Bristlewhim",
+      "clothing": "King penguin",
+      "character_note": "Surname part 1: Pale → Bristle (replacement applied; review the new value) | Surname part 2: Googly → Whim (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tundra",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Bristle",
+          "source": "Front:White flat brush",
+          "usage_count": 9,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:49:44.275Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Whim",
+          "source": "Eyes:Googly",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:49:52.094Z"
+        }
+      }
+    },
+    {
+      "id": "191",
+      "current_full_name": "Ichiro Blisslunar",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Ichiro",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:37.948Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Bliss",
+          "source": "Eyes:Happy",
+          "usage_count": 11,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Lunar",
+          "source": "Back:Waning crescent moon",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "193",
+      "current_full_name": "Mumble Rosewideeye",
+      "clothing": "King penguin",
+      "character_note": "First name: Crown → Mumble (replacement applied; review the new value) | Surname part 2: Googly → Wideeye (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Mumble",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "replace mumble with Gloria",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:51:46.971Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Rose",
+          "source": "Front:Red rose",
+          "usage_count": 8,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Wideeye",
+          "source": "Eyes:Googly",
+          "usage_count": 4,
+          "decision": "replace",
+          "requested_action": "replace_all_exact_matches",
+          "scope": "all_exact_matches",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:51:55.233Z"
+        }
+      }
+    },
+    {
+      "id": "199",
+      "current_full_name": "Suzu Pattyscrub",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Suzu",
+          "source": "Clothing:Watchful cat + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:46.953Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Patty",
+          "source": "Front:Hamburger",
+          "usage_count": 16,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Scrub",
+          "source": "Back:Overgrown wasteland",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "232",
+      "current_full_name": "Yamato Goldendoll",
+      "clothing": "Shiba dog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Yamato",
+          "source": "Clothing:Shiba dog + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:58:54.604Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Golden",
+          "source": "Front:Golden smiley poop",
+          "usage_count": 3,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Doll",
+          "source": "Eyes:Blue doll",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "243",
+      "current_full_name": "Tsumugu Bananasun",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tsumugu",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:00.790Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Banana",
+          "source": "Hair:Banana flattop",
+          "usage_count": 16,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Sun",
+          "source": "Back:Sun",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "251",
+      "current_full_name": "Whiskers Minamoto",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Whiskers",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Minamoto",
+          "source": "Background:Uncontrollable Ocean Blue",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "257",
+      "current_full_name": "Tomoko Tanmoonset",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tomoko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:10.476Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Tan",
+          "source": "Hair:Tan loose wave",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Moonset",
+          "source": "Back:Waning crescent moon",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "266",
+      "current_full_name": "Komachi Bathanging",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Komachi",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:17.609Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Bat",
+          "source": "Front:Baseball",
+          "usage_count": 20,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Hanging",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "273",
+      "current_full_name": "Zenkichi Shiba",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Zenkichi",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:38.859Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Shiba",
+          "source": "Clothing:Wabi sabi kimono",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:35.115Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "276",
+      "current_full_name": "Cherry Braidstangle",
+      "clothing": "Spicy devil",
+      "character_note": "Surname part 2: Room → Tangle (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 2,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Cherry",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Braids",
+          "source": "Hair:Emerald innocent braids",
+          "usage_count": 15,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Tangle",
+          "source": "Back:Messy room",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "281",
+      "current_full_name": "Vixen Azuremire",
+      "clothing": "Spicy devil",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Vixen",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Azure",
+          "source": "Eyes:Blue doll",
+          "usage_count": 23,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Mire",
+          "source": "Back:Swamp swirl",
+          "usage_count": 12,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "296",
+      "current_full_name": "Sakura Sushitear",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Sakura",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:23.762Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Sushi",
+          "source": "Front:Tuna sushi",
+          "usage_count": 10,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Tear",
+          "source": "Eyes:Tearful",
+          "usage_count": 8,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "304",
+      "current_full_name": "Jinx Pizzatreat",
+      "clothing": "Spicy devil",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Jinx",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Pizza",
+          "source": "Front:Salami pizza",
+          "usage_count": 6,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Treat",
+          "source": "Hair:Moon candy",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "363",
+      "current_full_name": "Musashi Yellowbig",
+      "clothing": "Shiba dog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Musashi",
+          "source": "Clothing:Shiba dog + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:30.826Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Yellow",
+          "source": "Front:Yellow brush",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Big",
+          "source": "Mouth:Big smile",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "372",
+      "current_full_name": "Rockhopper Frostingdawn",
+      "clothing": "King penguin",
+      "character_note": "First name: Permafrost → Rockhopper (replacement applied; review the new value) | Surname part 1: Frost → Frosting (replacement applied; review the new value) | Surname part 2: Helio → Dawn (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Rockhopper",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:47:32.080Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Frosting",
+          "source": "Front:Berry cake",
+          "usage_count": 3,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:47:34.268Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Dawn",
+          "source": "Back:Sun",
+          "usage_count": 18,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:47:41.742Z"
+        }
+      }
+    },
+    {
+      "id": "382",
+      "current_full_name": "Nekoto Batonudge",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Nekoto",
+          "source": "Clothing:Watchful cat + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Baton",
+          "source": "Front:Baguette",
+          "usage_count": 16,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Nudge",
+          "source": "Eyes:Winking",
+          "usage_count": 6,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "409",
+      "current_full_name": "Saruta Greenball",
+      "clothing": "Restless ape",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Saruta",
+          "source": "Clothing:Restless ape + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:41.001Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Green",
+          "source": "Eyes:Green stretched",
+          "usage_count": 20,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Ball",
+          "source": "Front:Soccer ball",
+          "usage_count": 20,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "413",
+      "current_full_name": "Masahito Alesanpaku",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Masahito",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:46.958Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Ale",
+          "source": "Front:Glass of beer",
+          "usage_count": 21,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Sanpaku",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 16,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "416",
+      "current_full_name": "Tama Grinmellow",
+      "clothing": "Watchful cat",
+      "character_note": "First name: Yuki → Tama (replacement applied; review the new value) | Surname part 2: Relax → Mellow (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 2,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tama",
+          "source": "Clothing:Watchful cat + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:50.953Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Grin",
+          "source": "Mouth:Smile",
+          "usage_count": 18,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Mellow",
+          "source": "Eyebrows:Relax",
+          "usage_count": 1,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "422",
+      "current_full_name": "Noriko Icelowgaze",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Noriko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:59:58.071Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Ice",
+          "source": "Hair:Snow natural",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Lowgaze",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "429",
+      "current_full_name": "Gamae Upcastmelt",
+      "clothing": "Aware frog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Gamae",
+          "source": "Clothing:Aware frog + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:03.667Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Upcast",
+          "source": "Eyes:Up",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Melt",
+          "source": "Back:Melt into heart sunrise",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "465",
+      "current_full_name": "Soichiro Cheesewhim",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Soichiro",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:10.207Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Cheese",
+          "source": "Front:Hamburger",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Whim",
+          "source": "Eyes:Googly",
+          "usage_count": 10,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "505",
+      "current_full_name": "Empress Pintwonder",
+      "clothing": "King penguin",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Empress",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Pint",
+          "source": "Front:Glass of beer",
+          "usage_count": 15,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Wonder",
+          "source": "Mouth:Surprise",
+          "usage_count": 13,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "521",
+      "current_full_name": "Keiko Sakuragi",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "complete-rejected",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Keiko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:30.486Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Sakuragi",
+          "source": "Clothing:Kawaii kimono",
+          "usage_count": 1,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:29.497Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "527",
+      "current_full_name": "Delilah Menya",
+      "clothing": "Spicy devil",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Delilah",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Menya",
+          "source": "Front:Ramen",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "570",
+      "current_full_name": "Kowalski Surpriselens",
+      "clothing": "King penguin",
+      "character_note": "First name: Chill → Kowalski (replacement applied; review the new value) | Surname part 1: Amaze → Surprise (replacement applied; review the new value) | Surname part 2: Specs → Lens (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kowalski",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "replace to Kowalska",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:46:44.291Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Surprise",
+          "source": "Mouth:Surprise",
+          "usage_count": 5,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:39:23.400Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Lens",
+          "source": "Eyes:3D glasses",
+          "usage_count": 5,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:39:23.400Z"
+        }
+      }
+    },
+    {
+      "id": "593",
+      "current_full_name": "Slink Akamatsu",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Slink",
+          "source": "Clothing:Watchful cat + Body:Female (v8.5 animal-theme 65% balance)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:32:59.965Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Akamatsu",
+          "source": "Background:Passion Scarlet",
+          "usage_count": 1,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "605",
+      "current_full_name": "Keromi Hamabsent",
+      "clothing": "Aware frog",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Keromi",
+          "source": "Clothing:Aware frog + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:57.757Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Ham",
+          "source": "Front:Hamburger",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Absent",
+          "source": "Eyebrows:Absentminded",
+          "usage_count": 7,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "609",
+      "current_full_name": "Ennosuke Salamidusk",
+      "clothing": "Restless ape",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Ennosuke",
+          "source": "Clothing:Restless ape + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:20.989Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Salami",
+          "source": "Front:Salami pizza",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Dusk",
+          "source": "Back:You & me sunset",
+          "usage_count": 10,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "615",
+      "current_full_name": "Saruo Berrytear",
+      "clothing": "Restless ape",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Saruo",
+          "source": "Clothing:Restless ape + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:26.523Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Berry",
+          "source": "Front:Berry cake",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Tear",
+          "source": "Eyes:Tearful",
+          "usage_count": 8,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "626",
+      "current_full_name": "Toshinobu Sleekscrub",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Toshinobu",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:32.790Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Sleek",
+          "source": "Hair:Soot sleek curl",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Scrub",
+          "source": "Back:Overgrown wasteland",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "659",
+      "current_full_name": "Fukusuke Loafhungry",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Fukusuke",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:41.404Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Loaf",
+          "source": "Front:Baguette",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Hungry",
+          "source": "Background:Hungry Red",
+          "usage_count": 2,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "710",
+      "current_full_name": "Frost Shockrummage",
+      "clothing": "King penguin",
+      "character_note": "Surname part 1: Gasp → Shock (replacement applied; review the new value) | Surname part 2: Untidy → Rummage (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Frost",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Shock",
+          "source": "Mouth:Surprise",
+          "usage_count": 14,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:47:55.464Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Rummage",
+          "source": "Back:Messy room",
+          "usage_count": 10,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:47:53.336Z"
+        }
+      }
+    },
+    {
+      "id": "724",
+      "current_full_name": "Rico Shadesrewild",
+      "clothing": "King penguin",
+      "character_note": "First name: Iceberg → Rico (replacement applied; review the new value) | Surname part 2: Ruin → Rewild (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Rico",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "replace rico to Rica ",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:47:10.371Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Shades",
+          "source": "Eyes:Dark shades",
+          "usage_count": 6,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Rewild",
+          "source": "Back:Overgrown wasteland",
+          "usage_count": 17,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "rewild to wild",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:44:47.379Z"
+        }
+      }
+    },
+    {
+      "id": "804",
+      "current_full_name": "Shino Flatupwave",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Shino",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:44.791Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Flatup",
+          "source": "Eyes:Flat up",
+          "usage_count": 9,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Wave",
+          "source": "Hair:Tan loose wave",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "821",
+      "current_full_name": "Itsuki Whiskerlid",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Itsuki",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:00:48.063Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Whisker",
+          "source": "Mouth:Mustache happy",
+          "usage_count": 11,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Lid",
+          "source": "Eyes:Closed",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "988",
+      "current_full_name": "Kuromi Basenarrow",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kuromi",
+          "source": "Clothing:Watchful cat + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:01:23.450Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Base",
+          "source": "Front:Baseball",
+          "usage_count": 19,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Narrow",
+          "source": "Eyes:Tight",
+          "usage_count": 4,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1042",
+      "current_full_name": "Chiyoko Tacthicket",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Chiyoko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:01:20.255Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Tac",
+          "source": "Front:Taco",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Thicket",
+          "source": "Back:Overgrown wasteland",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1045",
+      "current_full_name": "Tokinari Cottongaze",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tokinari",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:01:28.852Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Cotton",
+          "source": "Hair:Cotton airy",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Gaze",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1119",
+      "current_full_name": "Aurora Zenithdusk",
+      "clothing": "King penguin",
+      "character_note": "Surname part 1: Skyward → Zenith (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Aurora",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Zenith",
+          "source": "Eyes:Up",
+          "usage_count": 3,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:45:00.406Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Dusk",
+          "source": "Back:You & me sunset",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "1147",
+      "current_full_name": "Amane Shortcakup",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Amane",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:01:32.522Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Shortcake",
+          "source": "Front:Berry cake",
+          "usage_count": 1,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Up",
+          "source": "Eyes:Up",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1156",
+      "current_full_name": "Majesty Piercesoul",
+      "clothing": "King penguin",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Majesty",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Pierce",
+          "source": "Eyes:Glare",
+          "usage_count": 5,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Soul",
+          "source": "Body:Female spirit",
+          "usage_count": 4,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "1171",
+      "current_full_name": "Keroko Pinchjewel",
+      "clothing": "Aware frog",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Keroko",
+          "source": "Clothing:Aware frog + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:11.706Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Pinch",
+          "source": "Eyes:Tight",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Jewel",
+          "source": "Back:Treasures",
+          "usage_count": 1,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1173",
+      "current_full_name": "Kagetora Tanikawa",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "complete-rejected",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kagetora",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:07.271Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Tanikawa",
+          "source": "Front:Soccer ball",
+          "usage_count": 2,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:56:17.392Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1216",
+      "current_full_name": "Botan Upsoftcurl",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Botan",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:02.956Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Up",
+          "source": "Eyes:Up",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Softcurl",
+          "source": "Back:Fuzzy swirl",
+          "usage_count": 2,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1244",
+      "current_full_name": "Private Ashwinking",
+      "clothing": "King penguin",
+      "character_note": "First name: Duchess → Private (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Private",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:44:06.670Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Ash",
+          "source": "Front:Cigarette",
+          "usage_count": 17,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Winking",
+          "source": "Eyes:Winking",
+          "usage_count": 5,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "1261",
+      "current_full_name": "Cinder Berryspirit",
+      "clothing": "Spicy devil",
+      "character_note": "Surname part 2: Taut → Spirit (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 2,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Cinder",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Berry",
+          "source": "Front:Berry cake",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Spirit",
+          "source": "Body:Female spirit",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1417",
+      "current_full_name": "Snowdrop Sushilowgaze",
+      "clothing": "King penguin",
+      "character_note": "Surname part 2: Gaze → Lowgaze (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Snowdrop",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Sushi",
+          "source": "Front:Tuna sushi",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Lowgaze",
+          "source": "Eyes:Hanging sanpaku",
+          "usage_count": 14,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "no doublewords for one part of the surname",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:49:36.083Z"
+        }
+      }
+    },
+    {
+      "id": "1486",
+      "current_full_name": "Kuro Hanagasaki",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-rejected",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kuro",
+          "source": "Clothing:Watchful cat + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:46.963Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Hanagasaki",
+          "source": "Background:Lovely Pink",
+          "usage_count": 1,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:51.641Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1505",
+      "current_full_name": "Gentoo Tankardusk",
+      "clothing": "King penguin",
+      "character_note": "First name: Scepter → Gentoo (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Gentoo",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:40:01.752Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Tankard",
+          "source": "Front:Glass of beer",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Dusk",
+          "source": "Back:You & me sunset",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "1612",
+      "current_full_name": "Momoka Stackdandy",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Momoka",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:07.694Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Stack",
+          "source": "Front:Hamburger",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Dandy",
+          "source": "Hair:Dandelion rough buns",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1616",
+      "current_full_name": "Fumie Cakedreads",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Fumie",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:14.192Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Cake",
+          "source": "Front:Berry cake",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Dreads",
+          "source": "Hair:Ginger dreads bun",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1620",
+      "current_full_name": "Maru Slatetwirl",
+      "clothing": "Shiba dog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Maru",
+          "source": "Clothing:Shiba dog + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:18.747Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Slate",
+          "source": "Eyes:Grey stare",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Twirl",
+          "source": "Back:Fuzzy swirl",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1633",
+      "current_full_name": "Noble Amezaiku",
+      "clothing": "King penguin",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Noble",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Amezaiku",
+          "source": "Front:Lollipop",
+          "usage_count": 2,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1650",
+      "current_full_name": "Lilith Yellowcurl",
+      "clothing": "Spicy devil",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Lilith",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Yellow",
+          "source": "Front:Yellow brush",
+          "usage_count": 15,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Curl",
+          "source": "Back:Fuzzy swirl",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "1952",
+      "current_full_name": "Hanako Emeraldpop",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Hanako",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:22.344Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Emerald",
+          "source": "Hair:Emerald innocent braids",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Pop",
+          "source": "Front:Lollipop",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "1969",
+      "current_full_name": "Nekomi Kumokiri",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Nekomi",
+          "source": "Clothing:Watchful cat + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:41.223Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kumokiri",
+          "source": "Back:White cloud",
+          "usage_count": 2,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:37.842Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2014",
+      "current_full_name": "Mora Awayuki",
+      "clothing": "Spicy devil",
+      "character_note": "Surname: Reizei → Awayuki (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Mora",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Awayuki",
+          "source": "Hair:Snow natural",
+          "usage_count": 2,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2054",
+      "current_full_name": "Emperor Hamclutter",
+      "clothing": "King penguin",
+      "character_note": "more penguins names instead for all the red marked first names | First name: Crystal → Emperor (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Emperor",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:43:47.867Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Ham",
+          "source": "Front:Hamburger",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Clutter",
+          "source": "Back:Messy room",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "2077",
+      "current_full_name": "Ember Dreadbunmelt",
+      "clothing": "Spicy devil",
+      "character_note": "Surname part 1: Copper → Dreadbun (replacement applied; review the new value) | Surname part 2: Glow → Melt (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Ember",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Dreadbun",
+          "source": "Hair:Ginger dreads bun",
+          "usage_count": 6,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Melt",
+          "source": "Back:Melt into heart sunrise",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2101",
+      "current_full_name": "Royale Deweyegilt",
+      "clothing": "King penguin",
+      "character_note": "Surname part 1: Cryeye → Deweye (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Royale",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Deweye",
+          "source": "Eyes:Tearful",
+          "usage_count": 3,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:49:04.811Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Gilt",
+          "source": "Body:Female golden",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "2117",
+      "current_full_name": "Adelie Staresolar",
+      "clothing": "King penguin",
+      "character_note": "replace for a more penguin name | First name: Pearl → Adelie (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Adelie",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:40:16.451Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Stare",
+          "source": "Eyes:Grey stare",
+          "usage_count": 16,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Solar",
+          "source": "Back:Sun",
+          "usage_count": 15,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "2138",
+      "current_full_name": "Chinstrap Courtstartle",
+      "clothing": "King penguin",
+      "character_note": "replace for a more penguin name | First name: Regal → Chinstrap (replacement applied; review the new value) | Surname part 2: Shock → Startle (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Chinstrap",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:40:32.651Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Court",
+          "source": "Front:Basketball",
+          "usage_count": 12,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Startle",
+          "source": "Mouth:Surprise",
+          "usage_count": 10,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:40:32.651Z"
+        }
+      }
+    },
+    {
+      "id": "2192",
+      "current_full_name": "Icicle Bluefrosty",
+      "clothing": "King penguin",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Icicle",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Blue",
+          "source": "Eyes:Blue doll",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Frosty",
+          "source": "Front:Soft serve ice cream",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "2203",
+      "current_full_name": "Zen Malthicket",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Zen",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:28.466Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Malt",
+          "source": "Front:Glass of beer",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Thicket",
+          "source": "Back:Overgrown wasteland",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2231",
+      "current_full_name": "Chitose Tanrummage",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Chitose",
+          "source": "Clothing:Kawaii kimono + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:02:33.468Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Tan",
+          "source": "Hair:Tan loose wave",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Rummage",
+          "source": "Back:Messy room",
+          "usage_count": 10,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2266",
+      "current_full_name": "Hachi Pattylemon",
+      "clothing": "Shiba dog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Hachi",
+          "source": "Clothing:Shiba dog + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:24.499Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Patty",
+          "source": "Front:Hamburger",
+          "usage_count": 16,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Lemon",
+          "source": "Eyes:Sour",
+          "usage_count": 8,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2319",
+      "current_full_name": "Ravyn Kanzaki",
+      "clothing": "Spicy devil",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Ravyn",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kanzaki",
+          "source": "Front:Red wine",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2338",
+      "current_full_name": "Saya Blackamaze",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Saya",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:29.908Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Black",
+          "source": "Hair:Jet loose",
+          "usage_count": 21,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Amaze",
+          "source": "Mouth:Surprise",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2472",
+      "current_full_name": "Roxie Hourai",
+      "clothing": "Spicy devil",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Roxie",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Hourai",
+          "source": "Front:?an!c coin",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2555",
+      "current_full_name": "Tamae Kickballup",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tamae",
+          "source": "Clothing:Watchful cat + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:37.496Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Kickball",
+          "source": "Front:Soccer ball",
+          "usage_count": 3,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Up",
+          "source": "Eyes:Up",
+          "usage_count": 15,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2640",
+      "current_full_name": "Throne Claretcircle",
+      "clothing": "King penguin",
+      "character_note": "Surname part 2: Ring → Circle (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Throne",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Claret",
+          "source": "Front:Red wine",
+          "usage_count": 7,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Circle",
+          "source": "Eyes:Round",
+          "usage_count": 6,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:48:06.492Z"
+        }
+      }
+    },
+    {
+      "id": "2668",
+      "current_full_name": "Macaroni Glarewetland",
+      "clothing": "King penguin",
+      "character_note": "First name: Diadem → Macaroni (replacement applied; review the new value) | Surname part 2: Marsh → Wetland (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Macaroni",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:40:53.055Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Glare",
+          "source": "Eyes:Glare",
+          "usage_count": 12,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Wetland",
+          "source": "Back:Swamp swirl",
+          "usage_count": 11,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:41:22.594Z"
+        }
+      }
+    },
+    {
+      "id": "2683",
+      "current_full_name": "Scarlet Smokesmooth",
+      "clothing": "Spicy devil",
+      "character_note": "Surname part 2: Slick → Smooth (replacement applied; review the new value)",
+      "curation_status": "partial",
+      "decided_parts": 2,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Scarlet",
+          "source": "Clothing:Spicy devil + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Smoke",
+          "source": "Front:Cigarette",
+          "usage_count": 7,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Smooth",
+          "source": "Eyebrows:Cool",
+          "usage_count": 1,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2730",
+      "current_full_name": "Arctica Goalieslant",
+      "clothing": "King penguin",
+      "character_note": "Surname part 2: Tilt → Slant (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Arctica",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Goalie",
+          "source": "Front:Soccer ball",
+          "usage_count": 16,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Slant",
+          "source": "Eyes:Brown tilt",
+          "usage_count": 8,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:48:51.677Z"
+        }
+      }
+    },
+    {
+      "id": "2780",
+      "current_full_name": "Blizzard Brewsmileeye",
+      "clothing": "King penguin",
+      "character_note": "Surname part 2: Warmeye → Smileeye (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Blizzard",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Brew",
+          "source": "Front:Glass of beer",
+          "usage_count": 15,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Smileeye",
+          "source": "Eyebrows:Smize",
+          "usage_count": 1,
+          "decision": "replace",
+          "requested_action": "replace_all_exact_matches",
+          "scope": "all_exact_matches",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:48:40.833Z"
+        }
+      }
+    },
+    {
+      "id": "2812",
+      "current_full_name": "Kotaro Gelatoweep",
+      "clothing": "Shiba dog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kotaro",
+          "source": "Clothing:Shiba dog + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:44.827Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Gelato",
+          "source": "Front:Soft serve ice cream",
+          "usage_count": 22,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Weep",
+          "source": "Eyes:Tearful",
+          "usage_count": 5,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2824",
+      "current_full_name": "Pyonko Diamondaze",
+      "clothing": "Aware frog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Pyonko",
+          "source": "Clothing:Aware frog + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:50.261Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Diamond",
+          "source": "Front:Baseball",
+          "usage_count": 10,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Daze",
+          "source": "Eyebrows:Absentminded",
+          "usage_count": 6,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2850",
+      "current_full_name": "Tiara Smirkslumber",
+      "clothing": "King penguin",
+      "character_note": "Surname part 1: Sunny → Smirk (replacement applied; review the new value) | Surname part 2: Sleep → Slumber (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tiara",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Smirk",
+          "source": "Mouth:Smile",
+          "usage_count": 15,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:48:28.627Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Slumber",
+          "source": "Eyes:Closed",
+          "usage_count": 5,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:48:32.573Z"
+        }
+      }
+    },
+    {
+      "id": "2866",
+      "current_full_name": "Waka Dunkspiral",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial-rejected",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Waka",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:03:55.943Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Dunk",
+          "source": "Front:Basketball",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Spiral",
+          "source": "Back:Fuzzy swirl",
+          "usage_count": 17,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "2870",
+      "current_full_name": "Waddles Lollipoptear",
+      "clothing": "King penguin",
+      "character_note": "First name: Ivory → Waddles (replacement applied; review the new value) | Surname part 1: Sucker → Lollipop (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Waddles",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:43:34.436Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Lollipop",
+          "source": "Front:Lollipop",
+          "usage_count": 5,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:43:34.436Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Tear",
+          "source": "Eyes:Tearful",
+          "usage_count": 8,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "2887",
+      "current_full_name": "Tux Goldnimbus",
+      "clothing": "King penguin",
+      "character_note": "First name: Diamond → Tux (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tux",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:42:55.924Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Gold",
+          "source": "Front:Yellow brush",
+          "usage_count": 14,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Nimbus",
+          "source": "Back:White cloud",
+          "usage_count": 16,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    },
+    {
+      "id": "2930",
+      "current_full_name": "Glacier Flatdaybreak",
+      "clothing": "King penguin",
+      "character_note": "Surname part 1: Plane → Flat (replacement applied; review the new value) | Surname part 2: Glow → Daybreak (replacement applied; review the new value)",
+      "curation_status": "complete-rejected",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Glacier",
+          "source": "Clothing:King penguin + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Flat",
+          "source": "Eyes:Flat up",
+          "usage_count": 17,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:42:08.804Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Daybreak",
+          "source": "Back:Melt into heart sunrise",
+          "usage_count": 3,
+          "decision": "replace",
+          "requested_action": "replace_all_exact_matches",
+          "scope": "all_exact_matches",
+          "note": "daybreak is 2 words only make 1 word options per surname part",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:42:04.210Z"
+        }
+      }
+    },
+    {
+      "id": "2961",
+      "current_full_name": "Saruhiko Greenshell",
+      "clothing": "Restless ape",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Saruhiko",
+          "source": "Clothing:Restless ape + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:04:02.295Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Green",
+          "source": "Eyes:Green stretched",
+          "usage_count": 20,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Shell",
+          "source": "Front:Taco",
+          "usage_count": 12,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3052",
+      "current_full_name": "Kaeruko Shigeta",
+      "clothing": "Aware frog",
+      "character_note": "",
+      "curation_status": "complete-rejected",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kaeruko",
+          "source": "Clothing:Aware frog + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:22.175Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Shigeta",
+          "source": "Front:Hamburger",
+          "usage_count": 2,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:32.461Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3064",
+      "current_full_name": "Elvira Kuroiwa",
+      "clothing": "Spicy devil",
+      "character_note": "First name: Jenifer → Elvira (replacement applied; review the new value) | Surname: Kuromi → Kuroiwa (replacement applied; review the new value)",
+      "curation_status": "untouched",
+      "decided_parts": 0,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Elvira",
+          "source": "Clothing:Spicy devil + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kuroiwa",
+          "source": "Hair:Tar shower",
+          "usage_count": 2,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3077",
+      "current_full_name": "Tokuko Griddlelow",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Tokuko",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:04:11.188Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Griddle",
+          "source": "Front:Hamburger",
+          "usage_count": 14,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Low",
+          "source": "Eyes:Droopy",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3089",
+      "current_full_name": "Takeshi Grinwaning",
+      "clothing": "Wabi sabi kimono",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Takeshi",
+          "source": "Clothing:Wabi sabi kimono + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:04:16.572Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Grin",
+          "source": "Mouth:Mustache happy",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Waning",
+          "source": "Back:Waning crescent moon",
+          "usage_count": 20,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3118",
+      "current_full_name": "Fuku Kickminded",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Fuku",
+          "source": "Clothing:Watchful cat + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:04:22.448Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Kick",
+          "source": "Front:Soccer ball",
+          "usage_count": 18,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Minded",
+          "source": "Eyebrows:Absentminded",
+          "usage_count": 6,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3131",
+      "current_full_name": "Kotetsu Toychaos",
+      "clothing": "Shiba dog",
+      "character_note": "",
+      "curation_status": "partial",
+      "decided_parts": 1,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Kotetsu",
+          "source": "Clothing:Shiba dog + Body:Male (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T22:04:28.218Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Toy",
+          "source": "Eyes:Blue doll",
+          "usage_count": 8,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Chaos",
+          "source": "Back:Messy room",
+          "usage_count": 13,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3151",
+      "current_full_name": "Sachi Hyuga",
+      "clothing": "Watchful cat",
+      "character_note": "",
+      "curation_status": "complete-rejected",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Sachi",
+          "source": "Clothing:Watchful cat + Body:Female (v8 globally unique)",
+          "usage_count": null,
+          "decision": "replace",
+          "requested_action": "replace_for_this_character_only",
+          "scope": "this_character",
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:57:08.489Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Hyuga",
+          "source": "Back:Sun",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:57:07.574Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3209",
+      "current_full_name": "Hana Kannagi",
+      "clothing": "Kawaii kimono",
+      "character_note": "",
+      "curation_status": "complete-approved",
+      "decided_parts": 2,
+      "available_parts": 2,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Hana",
+          "source": "Clothing:Kawaii kimono + Body:Female (v11 exact artist CSV repair)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:54:57.905Z"
+        },
+        "surname_part_1": {
+          "label": "Surname",
+          "available": true,
+          "current_value": "Kannagi",
+          "source": "Background:Lovely Pink",
+          "usage_count": 1,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:55:00.950Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": false,
+          "current_value": "",
+          "source": "",
+          "usage_count": null,
+          "decision": null,
+          "requested_action": "leave_unchanged",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": null
+        }
+      }
+    },
+    {
+      "id": "3261",
+      "current_full_name": "Pebble Salamidoll",
+      "clothing": "King penguin",
+      "character_note": "First name: Coronet → Pebble (replacement applied; review the new value)",
+      "curation_status": "complete-approved",
+      "decided_parts": 3,
+      "available_parts": 3,
+      "parts": {
+        "first": {
+          "label": "First name",
+          "available": true,
+          "current_value": "Pebble",
+          "source": "Clothing:King penguin + Body:Female (v11 team curation)",
+          "usage_count": null,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:42:36.506Z"
+        },
+        "surname_part_1": {
+          "label": "Surname part 1",
+          "available": true,
+          "current_value": "Salami",
+          "source": "Front:Salami pizza",
+          "usage_count": 5,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        },
+        "surname_part_2": {
+          "label": "Surname part 2",
+          "available": true,
+          "current_value": "Doll",
+          "source": "Eyes:Blue doll",
+          "usage_count": 22,
+          "decision": "approve",
+          "requested_action": "lock_exact_current_value",
+          "scope": null,
+          "note": "",
+          "reviewer": "",
+          "updated_at": "2026-07-28T21:04:40.148Z"
+        }
+      }
+    }
+  ]
+}

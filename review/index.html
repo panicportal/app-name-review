@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>?an!c Name Studio</title>
+  <link rel="stylesheet" href="/review/styles.css">
+</head>
+<body>
+  <div class="boot" id="boot">Loading 3,333 survivors…</div>
+  <div class="app" id="app" hidden>
+    <header class="topbar">
+      <a class="brand" href="#1" aria-label="Name review home">
+        <span class="brand-mark">?</span>
+        <span><strong>NAME STUDIO</strong><small>v12 shared curation / closed Japanese bank</small></span>
+      </a>
+      <div class="collection-stats" id="collectionStats"></div>
+      <div class="top-actions">
+        <div class="view-mode-switch" id="viewModeSwitch" aria-label="Review layout">
+          <button data-view-mode="browse" class="active">Browse</button>
+          <button data-view-mode="focus">Focus</button>
+        </div>
+        <button class="mobile-filter-button" id="mobileFiltersButton">Filters</button>
+        <span class="cloud-chip connecting" id="cloudChip"><i></i><b>Connecting</b></span>
+        <button class="quiet-button" id="nextUndecidedButton">Next undecided</button>
+        <button class="quiet-button" id="activityButton">Activity</button>
+        <button class="quiet-button" id="importButton">Import</button>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <button class="export-button" id="exportButton">Export decisions</button>
+      </div>
+    </header>
+
+    <aside class="roster-panel">
+      <div class="search-wrap">
+        <div class="mobile-roster-heading">
+          <b>Browse & filter</b>
+          <button id="closeMobileRoster" aria-label="Close filters">×</button>
+        </div>
+        <label for="search">Find a survivor</label>
+        <input id="search" type="search" placeholder="Name, ID, trait…" autocomplete="off">
+        <kbd>/</kbd>
+      </div>
+      <section class="curation-summary" aria-label="Curation progress">
+        <div class="curation-summary-line">
+          <span>Team progress</span>
+          <b id="curationPercent">0%</b>
+        </div>
+        <div class="curation-meter" aria-hidden="true"><i id="curationBar"></i></div>
+        <div class="curation-counts" id="curationCounts"></div>
+        <label class="reviewer-field" for="reviewerName">
+          <span>Reviewer / team</span>
+          <input id="reviewerName" autocomplete="name" placeholder="Add your name">
+        </label>
+        <div class="save-state"><i></i><span id="saveState">Preparing cloud sync…</span></div>
+      </section>
+      <div class="filters">
+        <div class="filter-tabs" role="tablist" aria-label="Trait filter mode">
+          <button id="clothingTab" class="active" role="tab" aria-selected="true">Clothing</button>
+          <button id="anyTraitTab" role="tab" aria-selected="false">Any trait</button>
+        </div>
+        <div id="clothingFilterPanel">
+          <select id="clothingFilter" aria-label="Clothing trait">
+            <option value="">Every clothing trait</option>
+          </select>
+        </div>
+        <div class="trait-filter-pair" id="anyTraitFilterPanel" hidden>
+          <select id="traitTypeFilter" aria-label="Trait category">
+            <option value="">Choose trait category</option>
+          </select>
+          <select id="traitValueFilter" aria-label="Trait value" disabled>
+            <option value="">Choose trait value</option>
+          </select>
+        </div>
+        <select id="mixFilter" aria-label="Language mix">
+          <option value="">Every language mix</option>
+          <option value="japanese+japanese">Japanese + Japanese</option>
+          <option value="japanese+western">Japanese + Western</option>
+          <option value="western+japanese">Western + Japanese</option>
+          <option value="western+western">Western + Western</option>
+          <option value="special+special">Hand-authored required</option>
+        </select>
+        <div class="language-filter-pair">
+          <select id="firstLanguageFilter" aria-label="First-name language">
+            <option value="">Any first-name language</option>
+            <option value="japanese">Japanese first names</option>
+            <option value="western">Western first names</option>
+            <option value="special">Special / unnamed firsts</option>
+          </select>
+          <select id="surnameLanguageFilter" aria-label="Surname language">
+            <option value="">Any surname language</option>
+            <option value="japanese">Japanese surnames</option>
+            <option value="western">Western surnames</option>
+            <option value="special">Special / unnamed surnames</option>
+          </select>
+        </div>
+        <select id="statusFilter" aria-label="Review status">
+          <option value="">Every curation status</option>
+          <option value="untouched">Untouched</option>
+          <option value="partial">Partially reviewed</option>
+          <option value="complete-approved">Fully locked</option>
+          <option value="has-rejection">Has red X</option>
+          <option value="replacement-picked">Replacement selected</option>
+          <option value="needs-suggestion">Red X needs a replacement</option>
+          <option value="complete-rejected">Complete with replacement request</option>
+          <option value="first-online">Online first-name replacements</option>
+          <option value="first-theme">Japanese theme-routed names</option>
+          <option value="proposal">Current surname changes</option>
+          <option value="flagged">Editorial flags</option>
+          <option value="required">System flagged</option>
+        </select>
+      </div>
+      <div class="result-line">
+        <span id="resultCount"></span>
+        <span id="pageCount"></span>
+      </div>
+      <nav class="roster" id="roster" aria-label="Survivor roster"></nav>
+      <div class="pager">
+        <button id="pagePrev" aria-label="Previous roster page">←</button>
+        <button id="pageNext" aria-label="Next roster page">→</button>
+      </div>
+    </aside>
+    <button class="mobile-roster-scrim" id="mobileRosterScrim" aria-label="Close filters"></button>
+
+    <main class="workspace">
+      <section class="portrait-stage">
+        <div class="portrait-meta">
+          <span id="tokenId"></span>
+          <span id="languageMix"></span>
+        </div>
+        <div class="portrait-frame">
+          <img id="portrait" alt="">
+          <div class="portrait-error" id="portraitError" hidden>Portrait could not be loaded.</div>
+        </div>
+        <div class="character-title">
+          <p id="clothingEyebrow"></p>
+          <h1 id="characterName"></h1>
+        </div>
+        <div class="character-curation-status">
+          <div>
+            <span id="characterDecisionSummary">0 of 3 parts decided</span>
+            <div class="mini-decision-rail" id="characterDecisionRail"></div>
+          </div>
+          <b id="characterCurationState">Untouched</b>
+        </div>
+        <div class="quick-controls" role="group" aria-label="Character curation shortcuts">
+          <button class="approve-all-button" id="approveRemainingButton">✓ Lock remaining parts</button>
+          <button class="replace-all-button" id="replaceWholeButton">× Replace whole name</button>
+          <button id="clearCharacterButton">Clear this character</button>
+        </div>
+        <label class="character-note-label" for="reviewNote">Character-level note</label>
+        <textarea id="reviewNote" rows="2" placeholder="Optional context about the full name or portrait…"></textarea>
+        <p class="autosave-copy">Every choice saves locally first, then syncs to the shared team workspace.</p>
+      </section>
+
+      <section class="evidence-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="kicker">Naming evidence</p>
+            <h2>Why this name</h2>
+          </div>
+          <div class="stepper">
+            <button id="previousButton" aria-label="Previous survivor">←</button>
+            <button id="nextButton" aria-label="Next survivor">→</button>
+          </div>
+        </div>
+
+        <div class="name-evidence">
+          <article class="evidence-card first-card">
+            <div class="evidence-label"><span>First</span><b id="firstLanguage"></b></div>
+            <h3 id="firstName"></h3>
+            <div class="part-decision" data-part-control="first">
+              <span>First name decision</span>
+              <div>
+                <button class="decision-yes" data-part="first" data-decision="approve" aria-label="Lock this first name">✓ <b>Lock</b></button>
+                <button class="decision-no" data-part="first" data-decision="replace" aria-label="Replace this first name">× <b>Replace</b></button>
+                <button class="decision-clear" data-part="first" data-decision="clear" aria-label="Clear first name decision">Clear</button>
+              </div>
+            </div>
+            <p id="firstRationale"></p>
+            <div class="first-proof">
+              <div><span>Clothing theme</span><b id="firstTheme"></b></div>
+              <div><span>Gender route</span><b id="firstGenderRoute"></b></div>
+              <div><span>Bank evidence</span><b id="firstEvidence"></b></div>
+            </div>
+            <div class="source-path" id="firstSource"></div>
+          </article>
+          <div class="name-join">+</div>
+          <article class="evidence-card surname-card">
+            <div class="evidence-label"><span>Surname</span><b id="surnameLanguage"></b></div>
+            <h3 id="surname"></h3>
+            <p id="surnameRationale"></p>
+            <div class="fusion-recipe" id="surnameRecipe">
+              <div class="fusion-part fusion-a">
+                <span id="surnameType1"></span>
+                <b id="surnameTrait1"></b>
+                <em id="surnameComponent1"></em>
+                <div class="part-decision compact" data-part-control="surname_part_1">
+                  <span>Surname part 1</span>
+                  <div>
+                    <button class="decision-yes" data-part="surname_part_1" data-decision="approve" aria-label="Lock surname part 1">✓</button>
+                    <button class="decision-no" data-part="surname_part_1" data-decision="replace" aria-label="Replace surname part 1">×</button>
+                    <button class="decision-clear" data-part="surname_part_1" data-decision="clear" aria-label="Clear surname part 1 decision">Clear</button>
+                  </div>
+                </div>
+                <small class="part-note" id="surnameComponentNote1"></small>
+                <small class="part-usage" id="surnameComponentCount1"></small>
+              </div>
+              <div class="fusion-operator" id="surnameFusionOperator">+</div>
+              <div class="fusion-part fusion-b" id="surnameFusionPart2">
+                <span id="surnameType2"></span>
+                <b id="surnameTrait2"></b>
+                <em id="surnameComponent2"></em>
+                <div class="part-decision compact" data-part-control="surname_part_2">
+                  <span>Surname part 2</span>
+                  <div>
+                    <button class="decision-yes" data-part="surname_part_2" data-decision="approve" aria-label="Lock surname part 2">✓</button>
+                    <button class="decision-no" data-part="surname_part_2" data-decision="replace" aria-label="Replace surname part 2">×</button>
+                    <button class="decision-clear" data-part="surname_part_2" data-decision="clear" aria-label="Clear surname part 2 decision">Clear</button>
+                  </div>
+                </div>
+                <small class="part-note" id="surnameComponentNote2"></small>
+                <small class="part-usage" id="surnameComponentCount2"></small>
+              </div>
+            </div>
+            <div id="surnameScoring">
+              <div class="score-row">
+                <span>Internal surname score</span>
+                <b id="surnameScore"></b>
+              </div>
+              <div class="score-meter" aria-hidden="true"><i id="surnameScoreBar"></i></div>
+            </div>
+            <div class="source-path" id="surnameSource"></div>
+          </article>
+        </div>
+
+        <section class="replacement-briefs" id="replacementBriefs" hidden>
+          <div class="replacement-heading">
+            <div>
+              <p class="kicker">Red X instructions</p>
+              <h2>What should be replaced?</h2>
+            </div>
+            <span>Scope is required; notes are optional.</span>
+          </div>
+          <div id="replacementBriefList"></div>
+        </section>
+
+        <div class="flags" id="flags"></div>
+
+        <article class="proposal first-proposal" id="firstProposal" hidden>
+          <div>
+            <p class="kicker">Current curated first name</p>
+            <h2><s id="firstProposalOld"></s> <span>→</span> <b id="firstProposalNew"></b></h2>
+          </div>
+          <p id="firstProposalReason"></p>
+        </article>
+
+        <article class="proposal" id="proposal" hidden>
+          <div>
+            <p class="kicker">Current curated surname</p>
+            <h2><s id="proposalOld"></s> <span>→</span> <b id="proposalNew"></b></h2>
+          </div>
+          <p id="proposalReason"></p>
+        </article>
+
+        <div class="traits-heading">
+          <div>
+            <p class="kicker">Visual inventory</p>
+            <h2>Character traits</h2>
+          </div>
+          <span>from source JSON</span>
+        </div>
+        <div class="traits" id="traits"></div>
+      </section>
+    </main>
+  </div>
+  <div class="login-gate" id="loginGate" hidden>
+    <form class="login-card" id="loginForm">
+      <span class="login-mark">?</span>
+      <p class="kicker">Private team workspace</p>
+      <h1>Name Studio</h1>
+      <p>Continue the same 3,333-name curation from desktop, Mac, iPhone, or Android.</p>
+      <label>
+        <span>Your reviewer name</span>
+        <input id="loginReviewer" autocomplete="name" maxlength="80" required placeholder="e.g. Maya">
+      </label>
+      <label>
+        <span>Team passcode</span>
+        <input id="loginPasscode" type="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">Enter shared studio</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+  <dialog class="suggestion-dialog" id="suggestionDialog">
+    <div class="dialog-shell">
+      <header>
+        <div>
+          <p class="kicker">Auditable replacement bank</p>
+          <h2 id="suggestionTitle">Choose a better option</h2>
+          <p id="suggestionContext"></p>
+        </div>
+        <button class="dialog-close" id="suggestionClose" aria-label="Close">×</button>
+      </header>
+      <div class="language-switch" id="suggestionLanguage">
+        <button data-language="western">Western</button>
+        <button data-language="japanese">Japanese</button>
+      </div>
+      <div class="suggestion-policy" id="suggestionPolicy"></div>
+      <div class="suggestion-list" id="suggestionList"></div>
+    </div>
+  </dialog>
+  <dialog class="activity-dialog" id="activityDialog">
+    <div class="dialog-shell">
+      <header>
+        <div>
+          <p class="kicker">Shared team trail</p>
+          <h2>Recent activity</h2>
+          <p>Who changed which part, and when.</p>
+        </div>
+        <button class="dialog-close" id="activityClose" aria-label="Close">×</button>
+      </header>
+      <div class="activity-list" id="activityList"></div>
+    </div>
+  </dialog>
+  <nav class="mobile-review-nav" aria-label="Mobile review controls">
+    <button id="mobilePrevious">←<span>Previous</span></button>
+    <button id="mobileApprove">✓<span>Lock rest</span></button>
+    <button id="mobileNext">→<span>Next</span></button>
+  </nav>
+  <script src="/review/app.js"></script>
+</body>
+</html>
