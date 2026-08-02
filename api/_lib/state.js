@@ -25,6 +25,8 @@ function seedCuration() {
     records[String(item.id)] = {
       note: item.character_note || "",
       note_updated_at: item.updated_at || seed.exported_at || null,
+      surname_order: item.surname_order === "21" ? "21" : "12",
+      surname_order_updated_at: item.surname_order_updated_at || null,
       updated_at: item.updated_at || seed.exported_at || null,
       parts,
     };
@@ -84,6 +86,16 @@ function mergeRecord(stored = {}, incoming = {}) {
       timestamp(incoming.note_updated_at) >= timestamp(stored.note_updated_at)
         ? incoming.note_updated_at || incoming.updated_at || null
         : stored.note_updated_at || stored.updated_at || null,
+    surname_order:
+      timestamp(incoming.surname_order_updated_at) >=
+      timestamp(stored.surname_order_updated_at)
+        ? incoming.surname_order === "21" ? "21" : "12"
+        : stored.surname_order === "21" ? "21" : "12",
+    surname_order_updated_at:
+      timestamp(incoming.surname_order_updated_at) >=
+      timestamp(stored.surname_order_updated_at)
+        ? incoming.surname_order_updated_at || null
+        : stored.surname_order_updated_at || null,
     parts: { ...(stored.parts || {}) },
   };
   for (const [key, part] of Object.entries(incoming.parts || {})) {
@@ -93,6 +105,7 @@ function mergeRecord(stored = {}, incoming = {}) {
     stored.updated_at,
     incoming.updated_at,
     merged.note_updated_at,
+    merged.surname_order_updated_at,
     ...Object.values(merged.parts).map((part) => part.updated_at || part.deleted_at),
   ]
     .filter(Boolean)
@@ -110,6 +123,20 @@ function summarizeChanges(before, after, actor) {
   for (const id of ids) {
     const oldRecord = before?.records?.[id] || {};
     const newRecord = after?.records?.[id] || {};
+    if (
+      oldRecord.surname_order !== newRecord.surname_order &&
+      newRecord.surname_order_updated_at
+    ) {
+      events.push({
+        at: newRecord.surname_order_updated_at,
+        by: actor,
+        character_id: id,
+        part: "surname_order",
+        action: newRecord.surname_order === "21"
+          ? "Flipped surname to trait 2 → trait 1"
+          : "Restored surname to trait 1 → trait 2",
+      });
+    }
     for (const key of ["first", "surname_part_1", "surname_part_2"]) {
       const oldPart = oldRecord.parts?.[key] || {};
       const newPart = newRecord.parts?.[key] || {};

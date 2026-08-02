@@ -83,17 +83,89 @@ function candidatesFor(character, part, language) {
   return bank[language] || [];
 }
 
-function previewSurname(character, part, value) {
-  const original =
-    part === "surname_part_1"
-      ? character.surname_component_1 || character.surname
-      : character.surname_component_2;
-  if (!original) return value;
-  const escaped = String(original).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const pattern = new RegExp(escaped, "i");
-  return pattern.test(character.surname)
-    ? character.surname.replace(pattern, value)
-    : value;
+function roundScore(value) {
+  return Math.round(Math.max(1, Math.min(10, value)) * 10) / 10;
+}
+
+function capitalize(value) {
+  const text = String(value || "").trim();
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function canFlip(character, secondPart) {
+  return Boolean(character.surname_language === "western" && secondPart);
+}
+
+function joinSurname(character, firstPart, secondPart, order = "12") {
+  if (!canFlip(character, secondPart)) return firstPart || character.surname || "";
+  return order === "21"
+    ? `${capitalize(secondPart)}${capitalize(firstPart)}`
+    : `${capitalize(firstPart)}${capitalize(secondPart)}`;
+}
+
+function scorePreview({ first, surname, firstPart, secondPart, usageCount = 0, rank = 0, fitType = "" }) {
+  const fullName = `${first} ${surname}`.trim();
+  const surnameLength = surname.length;
+  const fullLength = fullName.length;
+  const boundaryRepeat = Boolean(
+    firstPart &&
+    secondPart &&
+    firstPart.slice(-1).toLowerCase() === secondPart.slice(0, 1).toLowerCase()
+  );
+  const hardCluster = /[^aeiouy\s'-]{4,}/i.test(surname);
+  let readability = 9.7;
+  readability -= Math.max(0, surnameLength - 13) * 0.22;
+  readability -= Math.max(0, fullLength - 27) * 0.12;
+  if (boundaryRepeat) readability -= 0.6;
+  if (hardCluster) readability -= 0.7;
+  if (surnameLength <= 11) readability += 0.2;
+
+  let collectability = 8.2;
+  if (/literal|exact|direct/i.test(fitType)) collectability += 0.6;
+  if (surnameLength >= 7 && surnameLength <= 13) collectability += 0.5;
+  if (firstPart && secondPart) collectability += 0.35;
+  collectability -= Math.min(1.5, usageCount * 0.03);
+  collectability -= Math.min(0.8, Number(rank || 0) * 0.025);
+  if (boundaryRepeat || hardCluster) collectability -= 0.35;
+
+  const compact = surnameLength <= 12 && fullLength <= 27;
+  return {
+    readability: roundScore(readability),
+    collectability: roundScore(collectability),
+    readability_note: compact
+      ? "Compact length with a clear speaking rhythm"
+      : "Scored from full-name length, rhythm, and compound boundary",
+    collectability_note: usageCount
+      ? `Trait fit and compactness, with ${usageCount} other fragment use${usageCount === 1 ? "" : "s"}`
+      : "Trait fit, compactness, and no other proposed fragment uses",
+    compact,
+    surname_length: surnameLength,
+    full_name_length: fullLength,
+  };
+}
+
+function previewFor(character, first, firstPart, secondPart, order, candidate, usageCount) {
+  const surname = joinSurname(character, firstPart, secondPart, order);
+  const scores = scorePreview({
+    first,
+    surname,
+    firstPart: order === "21" ? secondPart : firstPart,
+    secondPart: order === "21" ? firstPart : secondPart,
+    usageCount,
+    rank: candidate?.rank,
+    fitType: candidate?.fit_type,
+  });
+  return {
+    order,
+    surname,
+    full_name: `${first} ${surname}`.trim(),
+    compact: scores.compact,
+    scores,
+  };
+}
+
+function proposedValue(state, id, part, fallback) {
+  return state.curation?.records?.[id]?.parts?.[part]?.replacement_value || fallback || "";
 }
 
 module.exports = async function handler(req, res) {
@@ -119,51 +191,143 @@ module.exports = async function handler(req, res) {
           ? character.first_name_language
           : character.surname_language;
     const state = await getOrCreateState();
+    const record = state.curation?.records?.[id] || {};
     const firstUsed = part === "first" ? usedFirstNames(state, id) : null;
     const usage = part === "first" ? null : componentUsage(state, id);
+    const allUsage = componentUsage(state, id);
     const current =
       part === "first"
         ? character.first
         : part === "surname_part_1"
           ? character.surname_component_1
           : character.surname_component_2;
-    const suggestions = candidatesFor(character, part, language)
+    const currentFirst = proposedValue(state, id, "first", character.first);
+    const currentPart1 = proposedValue(
+      state,
+      id,
+      "surname_part_1",
+      character.surname_component_1 || character.surname
+    );
+    const currentPart2 = proposedValue(
+      state,
+      id,
+      "surname_part_2",
+      character.surname_component_2
+    );
+    const currentOrder = canFlip(character, currentPart2) && record.surname_order === "21"
+      ? "21"
+      : "12";
+    const currentUsage =
+      (allUsage.get(String(currentPart1).toLowerCase()) || 0) +
+      (allUsage.get(String(currentPart2).toLowerCase()) || 0);
+    const currentPreview = previewFor(
+      character,
+      currentFirst,
+      currentPart1,
+      currentPart2,
+      currentOrder,
+      { rank: 0, fit_type: "current" },
+      currentUsage
+    );
+    currentPreview.can_flip = canFlip(character, currentPart2);
+
+    const evaluated = candidatesFor(character, part, language)
       .filter((candidate) => safe(candidate.value))
       .filter((candidate) => candidate.value.toLowerCase() !== String(current).toLowerCase())
       .filter((candidate) => !firstUsed || !firstUsed.has(candidate.value.toLowerCase()))
-      .map((candidate) => ({
-        ...candidate,
-        usage_count: usage?.get(candidate.value.toLowerCase()) || 0,
-        preview_surname:
-          part === "first" ? character.surname : previewSurname(character, part, candidate.value),
-        uniqueness:
+      .map((candidate) => {
+        const candidateFirst = part === "first" ? candidate.value : currentFirst;
+        const candidatePart1 = part === "surname_part_1" ? candidate.value : currentPart1;
+        const candidatePart2 = part === "surname_part_2" ? candidate.value : currentPart2;
+        const usageCount = part === "first"
+          ? 0
+          : usage?.get(candidate.value.toLowerCase()) || 0;
+        const scoreUsageCount =
           part === "first"
-            ? "Unused across all 3,333 current and proposed first names"
-            : `${usage?.get(candidate.value.toLowerCase()) || 0} other current/proposed uses`,
-      }))
-      .map((candidate) => ({
-        ...candidate,
-        preview_full_name:
+            ? currentUsage
+            : usageCount + (
+              part === "surname_part_1"
+                ? allUsage.get(String(currentPart2).toLowerCase()) || 0
+                : allUsage.get(String(currentPart1).toLowerCase()) || 0
+            );
+        const orders = canFlip(character, candidatePart2) ? ["12", "21"] : ["12"];
+        const orderPreviews = Object.fromEntries(
+          orders.map((order) => [
+            order,
+            previewFor(
+              character,
+              candidateFirst,
+              candidatePart1,
+              candidatePart2,
+              order,
+              candidate,
+              scoreUsageCount
+            ),
+          ])
+        );
+        const recommendedOrder = orders.sort((left, right) => {
+          const leftScores = orderPreviews[left].scores;
+          const rightScores = orderPreviews[right].scores;
+          return (
+            rightScores.readability + rightScores.collectability -
+            leftScores.readability - leftScores.collectability
+          );
+        })[0];
+        const recommended = orderPreviews[recommendedOrder];
+        return {
+          ...candidate,
+          usage_count: usageCount,
+          score_usage_count: scoreUsageCount,
+          uniqueness:
+            part === "first"
+              ? "Unused across all 3,333 current and proposed first names"
+              : `${usageCount} other current/proposed uses`,
+          recommended_order: recommendedOrder,
+          order_previews: orderPreviews,
+          preview_surname: recommended.surname,
+          preview_full_name: recommended.full_name,
+          scores: recommended.scores,
+          length_check: recommended.compact ? "Compact length" : "Longer form",
+        };
+      })
+      .filter((candidate) => {
+        const previews = Object.values(candidate.order_previews);
+        return previews.some((preview) =>
           part === "first"
-            ? `${candidate.value} ${character.surname}`
-            : `${character.first} ${candidate.preview_surname}`,
-        length_check:
-          (part === "first" ? candidate.value.length : candidate.preview_surname.length) <= 20
-            ? "Compact length"
-            : "Long form",
-      }))
-      .filter((candidate) =>
-        part === "first"
-          ? candidate.value.length <= 20
-          : candidate.preview_surname.length <= 20 && candidate.preview_full_name.length <= 34
-      )
-      .sort(
-        (left, right) =>
-          left.usage_count - right.usage_count ||
-          Number(left.rank || 0) - Number(right.rank || 0) ||
-          stableScore(id, left.value) - stableScore(id, right.value)
-      )
-      .slice(0, 18);
+            ? candidate.value.length <= 20 && preview.full_name.length <= 34
+            : preview.surname.length <= 22 && preview.full_name.length <= 36
+        );
+      });
+    const balanced = [...evaluated].sort((left, right) =>
+      (
+        right.scores.readability + right.scores.collectability
+      ) - (
+        left.scores.readability + left.scores.collectability
+      ) ||
+      left.usage_count - right.usage_count ||
+      Number(left.rank || 0) - Number(right.rank || 0)
+    );
+    const shortest = [...evaluated].sort((left, right) =>
+      left.preview_surname.length - right.preview_surname.length ||
+      left.preview_full_name.length - right.preview_full_name.length
+    );
+    const leastUsed = [...evaluated].sort((left, right) =>
+      left.usage_count - right.usage_count ||
+      stableScore(id, left.value) - stableScore(id, right.value)
+    );
+    const suggestions = [];
+    const seen = new Set();
+    for (const candidate of [
+      ...balanced.slice(0, 18),
+      ...shortest.slice(0, 14),
+      ...leastUsed.slice(0, 10),
+    ]) {
+      const key = candidate.value.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      suggestions.push(candidate);
+      if (suggestions.length >= 36) break;
+    }
     return res.status(200).json({
       character_id: id,
       part,
@@ -177,6 +341,7 @@ module.exports = async function handler(req, res) {
             ? character.surname_source_2
             : `Clothing:${character.clothing}`,
       policy: catalog.policy,
+      current_preview: currentPreview,
       suggestions,
     });
   } catch (error) {

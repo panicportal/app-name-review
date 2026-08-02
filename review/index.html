@@ -192,7 +192,10 @@
           <div class="name-join">+</div>
           <article class="evidence-card surname-card">
             <div class="evidence-label"><span>Surname</span><b id="surnameLanguage"></b></div>
-            <h3 id="surname"></h3>
+            <div class="surname-title-line">
+              <h3 id="surname"></h3>
+              <button class="flip-surname-button" id="surnameFlipButton" hidden>⇄ Flip order</button>
+            </div>
             <p id="surnameRationale"></p>
             <div class="fusion-recipe" id="surnameRecipe">
               <div class="fusion-part fusion-a">
@@ -294,6 +297,7 @@
           <p id="focusClothing"></p>
           <h1 id="focusName"></h1>
           <small id="focusMix"></small>
+          <button class="focus-flip-button" id="focusFlipButton" hidden>⇄ Flip surname order</button>
         </div>
         <div class="focus-parts" id="focusParts"></div>
         <div class="focus-primary-actions">
@@ -342,6 +346,23 @@
         <button data-language="japanese">Japanese</button>
       </div>
       <div class="suggestion-policy" id="suggestionPolicy"></div>
+      <section class="suggestion-full-preview" id="suggestionFullPreview">
+        <div>
+          <span>Current full-name preview</span>
+          <strong id="suggestionCurrentFullName"></strong>
+          <small id="suggestionCurrentOrder"></small>
+        </div>
+        <div class="preview-score-pair" id="suggestionCurrentScores"></div>
+        <button id="suggestionFlipCurrent" hidden>⇄ Flip current surname</button>
+      </section>
+      <div class="suggestion-toolbar" id="suggestionToolbar">
+        <span>Rank options by</span>
+        <div role="group" aria-label="Suggestion ranking">
+          <button class="active" data-suggestion-sort="balanced">Best balance</button>
+          <button data-suggestion-sort="shortest">Shortest</button>
+          <button data-suggestion-sort="least-used">Least used</button>
+        </div>
+      </div>
       <div class="suggestion-list" id="suggestionList"></div>
     </div>
   </dialog>

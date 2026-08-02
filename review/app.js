@@ -47,6 +47,9 @@ const state = {
   cloudHistory: [],
   suggestionPart: null,
   suggestionLanguage: null,
+  suggestionSort: "balanced",
+  suggestionPayload: null,
+  suggestionOrderOverrides: {},
   focusSwipeStart: null
 };
 
@@ -90,6 +93,8 @@ function recordFor(id) {
   return state.curation.records[String(id)] || {
     note: "",
     updated_at: null,
+    surname_order: "12",
+    surname_order_updated_at: null,
     parts: {}
   };
 }
@@ -108,6 +113,8 @@ function ensureRecord(id) {
       note: "",
       note_updated_at: null,
       updated_at: null,
+      surname_order: "12",
+      surname_order_updated_at: null,
       parts: {}
     };
   }
@@ -124,6 +131,7 @@ function isPartTouched(part) {
 function isRecordTouched(record) {
   return Boolean(
     record?.note?.trim() ||
+    record?.surname_order_updated_at ||
     Object.values(record?.parts || {}).some(isPartTouched)
   );
 }
@@ -212,6 +220,14 @@ function mergeCurationStates(local, remote) {
       note_updated_at: timestamp(incoming.note_updated_at) >= timestamp(current.note_updated_at)
         ? (incoming.note_updated_at || incoming.updated_at || null)
         : (current.note_updated_at || current.updated_at || null),
+      surname_order:
+        timestamp(incoming.surname_order_updated_at) >= timestamp(current.surname_order_updated_at)
+          ? (incoming.surname_order || "12")
+          : (current.surname_order || "12"),
+      surname_order_updated_at:
+        timestamp(incoming.surname_order_updated_at) >= timestamp(current.surname_order_updated_at)
+          ? (incoming.surname_order_updated_at || null)
+          : (current.surname_order_updated_at || null),
       parts: { ...(current.parts || {}) }
     };
     Object.entries(incoming.parts || {}).forEach(([key, part]) => {
@@ -221,6 +237,7 @@ function mergeCurationStates(local, remote) {
       current.updated_at,
       incoming.updated_at,
       result.note_updated_at,
+      result.surname_order_updated_at,
       ...Object.values(result.parts).map(part => part.updated_at || part.deleted_at)
     ]);
     merged.records[id] = result;
@@ -385,6 +402,33 @@ function replaceFirstExact(text, search, replacement) {
   return pattern.test(text) ? text.replace(pattern, replacement) : text;
 }
 
+function canFlipSurname(character) {
+  const detail = character.surname_detail || {};
+  return Boolean(
+    character.surname_language === "western" &&
+    (detail.source_2 || character.surname_source_2) &&
+    (detail.component_2 || character.surname_component_2)
+  );
+}
+
+function surnameOrder(character) {
+  return canFlipSurname(character) && recordFor(character.id).surname_order === "21"
+    ? "21"
+    : "12";
+}
+
+function compoundComponent(value) {
+  const text = String(value || "").trim();
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function composeSurname(character, firstPart, secondPart, order = surnameOrder(character)) {
+  if (!canFlipSurname(character) || !secondPart) return firstPart || character.surname || "";
+  const left = order === "21" ? secondPart : firstPart;
+  const right = order === "21" ? firstPart : secondPart;
+  return `${compoundComponent(left)}${compoundComponent(right)}`;
+}
+
 function effectiveSurname(character) {
   let surname = character.surname || "";
   const detail = character.surname_detail || {};
@@ -392,6 +436,9 @@ function effectiveSurname(character) {
   const original2 = detail.component_2 || character.surname_component_2 || "";
   const next1 = effectivePartValue(character, "surname_part_1");
   const next2 = effectivePartValue(character, "surname_part_2");
+  if (canFlipSurname(character)) {
+    return composeSurname(character, next1 || original1, next2 || original2);
+  }
   surname = replaceFirstExact(surname, original1, next1);
   surname = replaceFirstExact(surname, original2, next2);
   if (!original2 && next1 && surname === character.surname) return next1;
@@ -599,7 +646,7 @@ function renderRoster() {
     return `<button class="roster-item status-${status.key}${active}" data-id="${character.id}">
       <img class="roster-thumb" src="/pfps_webp/${character.id}.webp" alt="" loading="lazy">
       <span class="roster-copy">
-        <strong>${escapeHtml(character.display_name)}</strong>
+        <strong>${escapeHtml(effectiveDisplayName(character))}</strong>
         <small>#${character.id} · ${escapeHtml(character.clothing || "Special")}</small>
       </span>
       <span class="roster-decisions" aria-label="${escapeHtml(status.label)}">${badges}</span>
@@ -779,6 +826,11 @@ function renderFocusDeck(character) {
   els.focusName.textContent = effectiveDisplayName(character);
   els.focusMix.textContent =
     `${character.first_name_language} first · ${character.surname_language} surname · ${status.decided}/${status.total} parts decided`;
+  els.focusFlipButton.hidden = !canFlipSurname(character);
+  if (canFlipSurname(character)) {
+    els.focusFlipButton.textContent =
+      surnameOrder(character) === "12" ? "⇄ Try reversed surname" : "⇄ Restore original order";
+  }
 
   els.focusParts.innerHTML = partDefinitions(character)
     .filter(part => part.available)
@@ -844,6 +896,11 @@ function renderCharacter() {
     ? `Original: ${c.display_name}` : "";
   els.firstName.textContent = effectivePartValue(c, "first") || "—";
   els.surname.textContent = effectiveSurname(c) || "—";
+  els.surnameFlipButton.hidden = !canFlipSurname(c);
+  if (canFlipSurname(c)) {
+    els.surnameFlipButton.textContent =
+      surnameOrder(c) === "12" ? "⇄ Try reversed order" : "⇄ Restore original order";
+  }
   els.firstLanguage.textContent =
     c.first_name_provenance === "sensitivity_review_replacement" ? "Sensitivity-reviewed theme" :
     c.first_name_provenance === "iconic_animal_reference" ? "Animal character reference" :
@@ -990,6 +1047,29 @@ function updatePartReview(key, patch, rerender = true) {
   renderRoster();
 }
 
+function setSurnameOrder(order, { rerender = true, announce = true } = {}) {
+  if (!canFlipSurname(state.selected)) return;
+  const record = ensureRecord(state.selected.id);
+  const timestamp = nowIso();
+  record.surname_order = order === "21" ? "21" : "12";
+  record.surname_order_updated_at = timestamp;
+  record.updated_at = timestamp;
+  saveCuration();
+  if (rerender) renderCharacter();
+  updateProgress();
+  renderRoster();
+  if (announce) {
+    showToast(
+      `Surname order changed to ${effectiveSurname(state.selected)}. The two trait sources remain unchanged.`,
+      "success"
+    );
+  }
+}
+
+function toggleSurnameOrder(options) {
+  setSurnameOrder(surnameOrder(state.selected) === "12" ? "21" : "12", options);
+}
+
 function setPartDecision(key, decision) {
   if (decision === "clear") {
     const record = ensureRecord(state.selected.id);
@@ -1113,8 +1193,11 @@ function exportRecord(character) {
   return {
     id: character.id,
     current_full_name: character.name,
+    preview_full_name: effectiveDisplayName(character),
     clothing: character.clothing,
     character_note: record.note || "",
+    surname_order: record.surname_order || "12",
+    surname_order_updated_at: record.surname_order_updated_at || null,
     curation_status: status.key,
     decided_parts: status.decided,
     available_parts: status.total,
@@ -1232,6 +1315,14 @@ function mergeImportedPayload(payload) {
       local.note = importedRecord.character_note;
       imported++;
     }
+    if (
+      importedRecord.surname_order_updated_at &&
+      timestamp(importedRecord.surname_order_updated_at) >= timestamp(local.surname_order_updated_at)
+    ) {
+      local.surname_order = importedRecord.surname_order === "21" ? "21" : "12";
+      local.surname_order_updated_at = importedRecord.surname_order_updated_at;
+      imported++;
+    }
     PART_KEYS.forEach(key => {
       const incoming = importedRecord.parts?.[key];
       if (!incoming?.decision) return;
@@ -1303,6 +1394,10 @@ async function loadPackagedProgress() {
       );
       const record = ensureRecord(character.id);
       record.note = importedRecord.character_note || "";
+      if (importedRecord.surname_order_updated_at) {
+        record.surname_order = importedRecord.surname_order === "21" ? "21" : "12";
+        record.surname_order_updated_at = importedRecord.surname_order_updated_at;
+      }
       PART_KEYS.forEach(key => {
         const incoming = importedRecord.parts?.[key];
         if (
@@ -1391,9 +1486,131 @@ function suggestionLanguageFor(character, part) {
     : (character.surname_language || "western");
 }
 
+function suggestionScoreMarkup(scores = {}) {
+  return `
+    <div class="preview-score" title="${escapeHtml(scores.readability_note || "Length, rhythm, and word-boundary clarity")}">
+      <span>Readability</span><b>${Number(scores.readability || 0).toFixed(1)}</b>
+    </div>
+    <div class="preview-score" title="${escapeHtml(scores.collectability_note || "Trait fit, rarity, and compactness")}">
+      <span>Collectability</span><b>${Number(scores.collectability || 0).toFixed(1)}</b>
+    </div>`;
+}
+
+function renderSuggestionCurrentPreview() {
+  const preview = state.suggestionPayload?.current_preview;
+  if (!preview) return;
+  els.suggestionFullPreview.hidden = false;
+  els.suggestionCurrentFullName.textContent = preview.full_name;
+  els.suggestionCurrentOrder.textContent = preview.can_flip
+    ? `${preview.surname} · ${preview.order === "21" ? "trait 2 → trait 1" : "trait 1 → trait 2"}`
+    : `${preview.surname} · fixed order`;
+  els.suggestionCurrentScores.innerHTML = suggestionScoreMarkup(preview.scores);
+  els.suggestionFlipCurrent.hidden = !preview.can_flip;
+  if (preview.can_flip) {
+    els.suggestionFlipCurrent.textContent =
+      preview.order === "12" ? "⇄ Preview trait 2 first" : "⇄ Restore trait 1 first";
+  }
+}
+
+function candidateOrder(candidate, index) {
+  const available = candidate.order_previews || {};
+  const preferred =
+    state.suggestionOrderOverrides[index] ||
+    candidate.recommended_order ||
+    state.suggestionPayload?.current_preview?.order ||
+    "12";
+  return available[preferred] ? preferred : Object.keys(available)[0] || "12";
+}
+
+function sortedSuggestionEntries() {
+  const suggestions = state.suggestionPayload?.suggestions || [];
+  const entries = suggestions.map((candidate, index) => {
+    const order = candidateOrder(candidate, index);
+    const preview = candidate.order_previews?.[order] || {
+      full_name: candidate.preview_full_name || candidate.value,
+      surname: candidate.preview_surname || candidate.value,
+      scores: candidate.scores || {},
+      compact: candidate.length_check === "Compact length"
+    };
+    return { candidate, index, order, preview };
+  });
+  if (state.suggestionSort === "shortest") {
+    return entries.sort((left, right) =>
+      left.preview.surname.length - right.preview.surname.length ||
+      left.preview.full_name.length - right.preview.full_name.length ||
+      Number(right.preview.scores?.readability || 0) - Number(left.preview.scores?.readability || 0)
+    );
+  }
+  if (state.suggestionSort === "least-used") {
+    return entries.sort((left, right) =>
+      Number(left.candidate.usage_count || 0) - Number(right.candidate.usage_count || 0) ||
+      Number(right.preview.scores?.collectability || 0) - Number(left.preview.scores?.collectability || 0)
+    );
+  }
+  return entries.sort((left, right) =>
+    (
+      Number(right.preview.scores?.readability || 0) +
+      Number(right.preview.scores?.collectability || 0)
+    ) - (
+      Number(left.preview.scores?.readability || 0) +
+      Number(left.preview.scores?.collectability || 0)
+    ) ||
+    Number(left.candidate.usage_count || 0) - Number(right.candidate.usage_count || 0)
+  );
+}
+
+function renderSuggestionOptions() {
+  const entries = sortedSuggestionEntries();
+  if (!entries.length) {
+    els.suggestionList.innerHTML = `<div class="suggestion-empty">
+      No safe unused options remain in this exact bank. Keep the red X and add a note; the app will not invent a weak substitute.
+    </div>`;
+    return;
+  }
+  els.suggestionList.innerHTML = entries.map(({ candidate, index, order, preview }) => {
+    const canFlip = Boolean(candidate.order_previews?.["12"] && candidate.order_previews?.["21"]);
+    const changeLabel = state.suggestionPart === "first"
+      ? `First-name option · ${candidate.value}`
+      : `${state.suggestionPart === "surname_part_1" ? "Trait 1 fragment" : "Trait 2 fragment"} · ${candidate.value}`;
+    return `<article class="suggestion-option ${preview.compact ? "compact-option" : ""}">
+      <div class="suggestion-option-preview">
+        <div>
+          <span>Full-name preview${preview.compact ? " · compact" : ""}</span>
+          <h3>${escapeHtml(preview.full_name)}</h3>
+        </div>
+        <div class="preview-score-pair">${suggestionScoreMarkup(preview.scores)}</div>
+      </div>
+      <div class="suggestion-component-change">${escapeHtml(changeLabel)}</div>
+      <p>${escapeHtml(candidate.fit)}</p>
+      <small>${escapeHtml(candidate.source)} · ${escapeHtml(candidate.uniqueness)}</small>
+      <small>${escapeHtml(preview.scores?.readability_note || "")} · ${escapeHtml(preview.scores?.collectability_note || "")}</small>
+      <div class="suggestion-option-actions">
+        ${canFlip ? `<button data-flip-suggestion="${index}">⇄ Flip preview</button>` : ""}
+        <button class="use-suggestion" data-use-suggestion="${index}" data-use-order="${order}">Use this full name</button>
+      </div>
+    </article>`;
+  }).join("");
+  els.suggestionList.querySelectorAll("[data-flip-suggestion]").forEach(button => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.flipSuggestion);
+      const current = candidateOrder(state.suggestionPayload.suggestions[index], index);
+      state.suggestionOrderOverrides[index] = current === "12" ? "21" : "12";
+      renderSuggestionOptions();
+    });
+  });
+  els.suggestionList.querySelectorAll("[data-use-suggestion]").forEach(button => {
+    button.addEventListener("click", () => {
+      const candidate = state.suggestionPayload.suggestions[Number(button.dataset.useSuggestion)];
+      chooseSuggestion(candidate, button.dataset.useOrder);
+    });
+  });
+}
+
 async function openSuggestions(part, language = null) {
   state.suggestionPart = part;
   state.suggestionLanguage = language || suggestionLanguageFor(state.selected, part);
+  state.suggestionPayload = null;
+  state.suggestionOrderOverrides = {};
   const definition = partDefinitions(state.selected).find(item => item.key === part);
   els.suggestionTitle.textContent = `Replace ${definition?.label || "name part"}`;
   els.suggestionContext.textContent =
@@ -1408,6 +1625,7 @@ async function openSuggestions(part, language = null) {
         ? "Western first names come only from the curated clothing-theme bank and must be unused across the full collection."
         : "Surname options come from the exact source trait’s reviewed fragment bank, ranked for low repetition.";
   els.suggestionList.innerHTML = `<div class="suggestion-loading">Checking fit, uniqueness, and current team proposals…</div>`;
+  els.suggestionFullPreview.hidden = true;
   if (!els.suggestionDialog.open) els.suggestionDialog.showModal();
   try {
     const params = new URLSearchParams({
@@ -1421,45 +1639,33 @@ async function openSuggestions(part, language = null) {
       throw new Error(payload.error || `HTTP ${response.status}`);
     }
     const payload = await response.json();
-    if (!payload.suggestions.length) {
-      els.suggestionList.innerHTML = `<div class="suggestion-empty">
-        No safe unused options remain in this exact bank. Keep the red X and add a note; the app will not invent a weak substitute.
-      </div>`;
-      return;
-    }
-    els.suggestionList.innerHTML = payload.suggestions.map((candidate, index) => `
-      <article class="suggestion-option">
-        <div>
-          <h3>${escapeHtml(candidate.value)}</h3>
-          <p>${escapeHtml(candidate.fit)}</p>
-          <small>${escapeHtml(candidate.source)} · ${escapeHtml(candidate.uniqueness)} · ${escapeHtml(candidate.length_check || "")}</small>
-          <small>Full-name preview: ${escapeHtml(candidate.preview_full_name || candidate.value)}</small>
-        </div>
-        <button data-use-suggestion="${index}">Use</button>
-      </article>
-    `).join("");
-    els.suggestionList.querySelectorAll("[data-use-suggestion]").forEach(button => {
-      button.addEventListener("click", () => {
-        const candidate = payload.suggestions[Number(button.dataset.useSuggestion)];
-        chooseSuggestion(candidate);
-      });
-    });
+    state.suggestionPayload = payload;
+    renderSuggestionCurrentPreview();
+    renderSuggestionOptions();
   } catch (error) {
     els.suggestionList.innerHTML = `<div class="suggestion-empty">${escapeHtml(error.message)}</div>`;
   }
 }
 
-function chooseSuggestion(candidate) {
+function chooseSuggestion(candidate, order = "12") {
+  if (state.suggestionPart.startsWith("surname_") && canFlipSurname(state.selected)) {
+    setSurnameOrder(order, { rerender: false, announce: false });
+  }
+  const preview = candidate.order_previews?.[order];
   updatePartReview(state.suggestionPart, {
     decision: "replace",
     scope: partReview(state.selected.id, state.suggestionPart).scope || "this_character",
     replacement_value: candidate.value,
     replacement_source: candidate.source,
-    replacement_rationale: `${candidate.fit} ${candidate.uniqueness}.`
+    replacement_rationale:
+      `${candidate.fit} ${candidate.uniqueness}. ` +
+      `Chosen full-name preview: ${preview?.full_name || candidate.preview_full_name || candidate.value}. ` +
+      `Readability ${Number(preview?.scores?.readability || candidate.scores?.readability || 0).toFixed(1)}/10; ` +
+      `collectability ${Number(preview?.scores?.collectability || candidate.scores?.collectability || 0).toFixed(1)}/10.`
   });
   els.suggestionDialog.close();
   showToast(
-    `Previewing ${candidate.value}. It is saved as the requested replacement and remains auditable in your export.`,
+    `Saved ${preview?.full_name || effectiveDisplayName(state.selected)} as the requested full-name preview.`,
     "success"
   );
 }
@@ -1612,6 +1818,19 @@ function bindEvents() {
       openSuggestions(state.suggestionPart, button.dataset.language);
     });
   });
+  els.suggestionToolbar.querySelectorAll("[data-suggestion-sort]").forEach(button => {
+    button.addEventListener("click", () => {
+      state.suggestionSort = button.dataset.suggestionSort;
+      els.suggestionToolbar.querySelectorAll("[data-suggestion-sort]").forEach(option => {
+        option.classList.toggle("active", option === button);
+      });
+      renderSuggestionOptions();
+    });
+  });
+  els.suggestionFlipCurrent.addEventListener("click", () => {
+    toggleSurnameOrder({ rerender: true, announce: false });
+    openSuggestions(state.suggestionPart, state.suggestionLanguage);
+  });
   els.mobilePrevious.addEventListener("click", () => moveSelection(-1));
   els.mobileApprove.addEventListener("click", approveRemaining);
   els.mobileNext.addEventListener("click", () => moveSelection(1));
@@ -1619,6 +1838,8 @@ function bindEvents() {
   els.focusNextButton.addEventListener("click", () => moveSelection(1));
   els.focusApproveNextButton.addEventListener("click", approveRemainingAndNext);
   els.focusNextUndecidedButton.addEventListener("click", nextUndecided);
+  els.surnameFlipButton.addEventListener("click", () => toggleSurnameOrder());
+  els.focusFlipButton.addEventListener("click", () => toggleSurnameOrder());
   els.focusExportButton.addEventListener("click", exportReviews);
   els.focusImportButton.addEventListener("click", () => els.importFile.click());
   els.mobileExportButton.addEventListener("click", exportReviews);
