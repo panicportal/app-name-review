@@ -7,6 +7,7 @@ const SCHEMA_VERSION = "panic-name-curation/v2";
 const PACKAGED_PROGRESS_URL = "/cloud_seed_curation.json";
 const PART_KEYS = ["first", "surname_part_1", "surname_part_2"];
 const CLOUD_POLL_MS = 12000;
+const SURNAME_FORMAT_VERSION = 2;
 
 function emptyCuration() {
   return {
@@ -51,7 +52,7 @@ const state = {
   suggestionSort: "balanced",
   suggestionPayload: null,
   suggestionPreviewOrder: "12",
-  suggestionJoinStyle: "camel",
+  suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
   focusSwipeStart: null
 };
@@ -101,7 +102,8 @@ function recordFor(id) {
     updated_at: null,
     surname_order: "12",
     surname_order_updated_at: null,
-    surname_join_style: "camel",
+    surname_join_style: "lower_second",
+    surname_format_version: SURNAME_FORMAT_VERSION,
     surname_join_style_updated_at: null,
     parts: {}
   };
@@ -123,7 +125,8 @@ function ensureRecord(id) {
       updated_at: null,
       surname_order: "12",
       surname_order_updated_at: null,
-      surname_join_style: "camel",
+      surname_join_style: "lower_second",
+      surname_format_version: SURNAME_FORMAT_VERSION,
       surname_join_style_updated_at: null,
       parts: {}
     };
@@ -250,6 +253,10 @@ function mergeCurationStates(local, remote) {
         timestamp(incoming.surname_join_style_updated_at) >= timestamp(current.surname_join_style_updated_at)
           ? (incoming.surname_join_style_updated_at || null)
           : (current.surname_join_style_updated_at || null),
+      surname_format_version:
+        timestamp(incoming.surname_join_style_updated_at) >= timestamp(current.surname_join_style_updated_at)
+          ? Number(incoming.surname_format_version || 0)
+          : Number(current.surname_format_version || 0),
       parts: { ...(current.parts || {}) }
     };
     Object.entries(incoming.parts || {}).forEach(([key, part]) => {
@@ -454,9 +461,17 @@ function compoundComponent(value) {
 }
 
 function surnameJoinStyle(character) {
-  return recordFor(character.id).surname_join_style === "lower_second"
-    ? "lower_second"
-    : "camel";
+  const record = recordFor(character.id);
+  // v1 stored "camel" as an automatic default, not an editorial decision.
+  // Treat all legacy records as the new metadata-clean style. A capitalized
+  // second fragment remains available only when explicitly selected in v2.
+  if (
+    Number(record.surname_format_version || 0) >= SURNAME_FORMAT_VERSION &&
+    record.surname_join_style === "camel"
+  ) {
+    return "camel";
+  }
+  return "lower_second";
 }
 
 function composeSurname(
@@ -1217,6 +1232,7 @@ function setSurnameJoinStyle(style, { rerender = true, announce = true } = {}) {
   const record = ensureRecord(state.selected.id);
   const timestamp = nowIso();
   record.surname_join_style = style === "lower_second" ? "lower_second" : "camel";
+  record.surname_format_version = SURNAME_FORMAT_VERSION;
   record.surname_join_style_updated_at = timestamp;
   record.updated_at = timestamp;
   saveCuration();
@@ -1412,7 +1428,8 @@ function exportRecord(character) {
     character_note: record.note || "",
     surname_order: record.surname_order || "12",
     surname_order_updated_at: record.surname_order_updated_at || null,
-    surname_join_style: record.surname_join_style === "lower_second" ? "lower_second" : "camel",
+    surname_join_style: surnameJoinStyle(character),
+    surname_format_version: SURNAME_FORMAT_VERSION,
     surname_join_style_updated_at: record.surname_join_style_updated_at || null,
     curation_status: status.key,
     decided_parts: status.decided,
@@ -1546,6 +1563,9 @@ function mergeImportedPayload(payload) {
     ) {
       local.surname_join_style =
         importedRecord.surname_join_style === "lower_second" ? "lower_second" : "camel";
+      local.surname_format_version = Number(
+        importedRecord.surname_format_version || SURNAME_FORMAT_VERSION
+      );
       local.surname_join_style_updated_at = importedRecord.surname_join_style_updated_at;
       imported++;
     }

@@ -29,6 +29,7 @@ function seedCuration() {
       surname_order_updated_at: item.surname_order_updated_at || null,
       surname_join_style:
         item.surname_join_style === "lower_second" ? "lower_second" : "camel",
+      surname_format_version: Number(item.surname_format_version || 0),
       surname_join_style_updated_at: item.surname_join_style_updated_at || null,
       updated_at: item.updated_at || seed.exported_at || null,
       parts,
@@ -109,6 +110,11 @@ function mergeRecord(stored = {}, incoming = {}) {
       timestamp(stored.surname_join_style_updated_at)
         ? incoming.surname_join_style_updated_at || null
         : stored.surname_join_style_updated_at || null,
+    surname_format_version:
+      timestamp(incoming.surname_join_style_updated_at) >=
+      timestamp(stored.surname_join_style_updated_at)
+        ? Number(incoming.surname_format_version || 0)
+        : Number(stored.surname_format_version || 0),
     parts: { ...(stored.parts || {}) },
   };
   for (const [key, part] of Object.entries(incoming.parts || {})) {

@@ -177,7 +177,7 @@ function canFlip(firstPart, secondPart) {
   return Boolean(firstPart && secondPart);
 }
 
-function joinSurname(character, firstPart, secondPart, order = "12", joinStyle = "camel") {
+function joinSurname(character, firstPart, secondPart, order = "12", joinStyle = "lower_second") {
   if (!firstPart) return capitalize(secondPart) || character.surname || "";
   if (!secondPart) return capitalize(firstPart) || character.surname || "";
   const left = order === "21" ? secondPart : firstPart;
@@ -237,7 +237,7 @@ function previewFor(
   order,
   candidate,
   usageCount,
-  joinStyle = "camel"
+  joinStyle = "lower_second"
 ) {
   const surname = joinSurname(character, firstPart, secondPart, order, joinStyle);
   const scores = scorePreview({
@@ -338,7 +338,10 @@ module.exports = async function handler(req, res) {
       ? "21"
       : "12";
     const currentJoinStyle =
-      record.surname_join_style === "lower_second" ? "lower_second" : "camel";
+      Number(record.surname_format_version || 0) >= 2 &&
+      record.surname_join_style === "camel"
+        ? "camel"
+        : "lower_second";
     const currentUsage =
       (allUsage.get(String(currentPart1).toLowerCase()) || 0) +
       (allUsage.get(String(currentPart2).toLowerCase()) || 0);
