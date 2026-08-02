@@ -42,9 +42,12 @@ const state = {
   cloudAuthenticated: false,
   cloudMode: "connecting",
   cloudRevision: 0,
+  cloudDirty: false,
+  cloudSaveVersion: 0,
   cloudHistory: [],
   suggestionPart: null,
-  suggestionLanguage: null
+  suggestionLanguage: null,
+  focusSwipeStart: null
 };
 
 const $ = id => document.getElementById(id);
@@ -62,6 +65,11 @@ function escapeHtml(value = "") {
 
 function nowIso() {
   return new Date().toISOString();
+}
+
+function latestValue(values) {
+  const sorted = values.filter(Boolean).sort();
+  return sorted.length ? sorted[sorted.length - 1] : null;
 }
 
 function blankPart() {
@@ -135,6 +143,8 @@ function pruneRecord(id) {
 function saveCuration() {
   state.curation.updated_at = nowIso();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.curation));
+  state.cloudDirty = true;
+  state.cloudSaveVersion += 1;
   if (els.saveState) {
     els.saveState.textContent = state.cloudAuthenticated ? "Saving to cloud…" : "Saved on this device";
     clearTimeout(state.saveTimer);
@@ -163,6 +173,7 @@ function setViewMode(mode) {
     button.setAttribute("aria-pressed", String(active));
   });
   if (state.viewMode === "focus") els.app.classList.remove("mobile-roster-open");
+  if (state.viewMode === "focus" && state.selected) renderFocusDeck(state.selected);
 }
 
 function setMobileRoster(open) {
@@ -186,7 +197,7 @@ function mergeCurationStates(local, remote) {
     ...local,
     reviewer: local.reviewer || remote.reviewer || "",
     records: { ...(local.records || {}) },
-    updated_at: [local.updated_at, remote.updated_at].filter(Boolean).sort().at(-1) || null
+    updated_at: latestValue([local.updated_at, remote.updated_at])
   };
   Object.entries(remote.records || {}).forEach(([id, incoming]) => {
     const current = merged.records[id] || {};
@@ -206,12 +217,12 @@ function mergeCurationStates(local, remote) {
     Object.entries(incoming.parts || {}).forEach(([key, part]) => {
       result.parts[key] = newerPart(part, result.parts[key]);
     });
-    result.updated_at = [
+    result.updated_at = latestValue([
       current.updated_at,
       incoming.updated_at,
       result.note_updated_at,
       ...Object.values(result.parts).map(part => part.updated_at || part.deleted_at)
-    ].filter(Boolean).sort().at(-1) || null;
+    ]);
     merged.records[id] = result;
   });
   return merged;
@@ -260,7 +271,8 @@ async function pullCloudState({ quiet = false } = {}) {
 }
 
 async function pushCloudState() {
-  if (!state.cloudAuthenticated) return;
+  if (!state.cloudAuthenticated || !state.cloudDirty) return;
+  const saveVersion = state.cloudSaveVersion;
   setCloudStatus("saving", "Saving");
   try {
     const response = await fetch("/api/state", {
@@ -276,6 +288,7 @@ async function pushCloudState() {
     state.cloudRevision = Number(payload.revision || 0);
     state.cloudHistory = payload.history || [];
     state.curation = mergeCurationStates(state.curation, payload.curation);
+    if (state.cloudSaveVersion === saveVersion) state.cloudDirty = false;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.curation));
     localStorage.setItem(
       CLOUD_SYNC_MARKER_KEY,
@@ -289,10 +302,31 @@ async function pushCloudState() {
   }
 }
 
+function flushCloudState() {
+  if (!state.cloudAuthenticated || !state.cloudDirty) return;
+  clearTimeout(state.cloudTimer);
+  fetch("/api/state", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      revision: state.cloudRevision,
+      curation: state.curation
+    }),
+    keepalive: true
+  }).catch(() => {
+    // The local draft remains authoritative on this device and retries next visit.
+  });
+}
+
 function scheduleCloudSave() {
   if (!state.cloudAuthenticated) return;
   clearTimeout(state.cloudTimer);
   state.cloudTimer = setTimeout(pushCloudState, 650);
+}
+
+function syncCloudTick() {
+  if (state.cloudDirty) pushCloudState();
+  else pullCloudState({ quiet: true });
 }
 
 function languageLabel(value) {
@@ -563,7 +597,7 @@ function renderRoster() {
       .map(part => partBadge(part, partReview(character.id, part.key).decision))
       .join("");
     return `<button class="roster-item status-${status.key}${active}" data-id="${character.id}">
-      <img class="roster-thumb" src="../${character.portrait}" alt="" loading="lazy">
+      <img class="roster-thumb" src="/pfps_webp/${character.id}.webp" alt="" loading="lazy">
       <span class="roster-copy">
         <strong>${escapeHtml(character.display_name)}</strong>
         <small>#${character.id} · ${escapeHtml(character.clothing || "Special")}</small>
@@ -730,6 +764,72 @@ function renderCharacterCuration(character) {
   renderReplacementBriefs(character);
 }
 
+function renderFocusDeck(character) {
+  if (!character || !els.focusDeck) return;
+  const list = state.filtered.length ? state.filtered : state.data.characters;
+  const index = Math.max(0, list.findIndex(item => item.id === character.id));
+  const status = curationStatus(character);
+  els.focusPosition.textContent =
+    `${(index + 1).toLocaleString()} / ${list.length.toLocaleString()}`;
+  els.focusStatus.textContent = status.label;
+  els.focusStatus.className = status.key;
+  els.focusPortrait.src = `/pfps_webp/${character.id}.webp`;
+  els.focusPortrait.alt = `Pixel portrait of ${effectiveDisplayName(character)}, survivor ${character.id}`;
+  els.focusClothing.textContent = `${character.clothing || "Special"} · Surv!vor #${character.id}`;
+  els.focusName.textContent = effectiveDisplayName(character);
+  els.focusMix.textContent =
+    `${character.first_name_language} first · ${character.surname_language} surname · ${status.decided}/${status.total} parts decided`;
+
+  els.focusParts.innerHTML = partDefinitions(character)
+    .filter(part => part.available)
+    .map(part => {
+      const review = partReview(character.id, part.key);
+      const effective = effectivePartValue(character, part.key);
+      const proposed = review.replacement_value
+        ? `<small>Selected replacement · ${escapeHtml(review.replacement_source || "curated bank")}</small>`
+        : `<small>${escapeHtml(part.source || "No source")}</small>`;
+      return `<article class="focus-part" data-state="${review.decision || "unreviewed"}">
+        <div>
+          <span class="focus-part-label"><i></i>${escapeHtml(part.label)}</span>
+          <strong>${escapeHtml(effective || "—")}</strong>
+          ${proposed}
+        </div>
+        <div class="focus-part-actions">
+          <button class="approve ${review.decision === "approve" ? "active" : ""}"
+            data-focus-part="${part.key}" data-focus-decision="approve"
+            aria-label="Lock ${escapeHtml(part.label)}">✓ Lock</button>
+          <button class="replace ${review.decision === "replace" ? "active" : ""}"
+            data-focus-part="${part.key}" data-focus-decision="replace"
+            aria-label="Replace ${escapeHtml(part.label)}">× Replace</button>
+          <button class="suggest" data-focus-suggest="${part.key}"
+            aria-label="Find fitting options for ${escapeHtml(part.label)}">Ideas</button>
+        </div>
+      </article>`;
+    })
+    .join("");
+
+  els.focusParts.querySelectorAll("[data-focus-decision]").forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.focusPart;
+      const decision = button.dataset.focusDecision;
+      const current = partReview(state.selected.id, key).decision;
+      setPartDecision(key, current === decision ? "clear" : decision);
+    });
+  });
+  els.focusParts.querySelectorAll("[data-focus-suggest]").forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.focusSuggest;
+      if (partReview(state.selected.id, key).decision !== "replace") {
+        updatePartReview(key, {
+          decision: "replace",
+          scope: "this_character"
+        });
+      }
+      openSuggestions(key);
+    });
+  });
+}
+
 function renderCharacter() {
   const c = state.selected;
   els.tokenId.textContent = `Surv!vor #${c.id}`;
@@ -839,6 +939,7 @@ function renderCharacter() {
   }
 
   renderCharacterCuration(c);
+  renderFocusDeck(c);
 }
 
 function moveSelection(direction) {
@@ -931,6 +1032,11 @@ function approveRemaining() {
   renderCharacter();
   updateProgress();
   renderRoster();
+}
+
+function approveRemainingAndNext() {
+  approveRemaining();
+  moveSelection(1);
 }
 
 function replaceWholeName() {
@@ -1055,17 +1161,50 @@ function buildExportPayload() {
   };
 }
 
-function exportReviews() {
+function downloadExportFile(file, filename) {
+  const link = document.createElement("a");
+  const objectUrl = URL.createObjectURL(file);
+  link.href = objectUrl;
+  link.download = filename;
+  link.hidden = true;
+  document.body.appendChild(link);
+  link.click();
+  window.setTimeout(() => {
+    link.remove();
+    URL.revokeObjectURL(objectUrl);
+  }, 1500);
+}
+
+async function exportReviews() {
   const payload = buildExportPayload();
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+  const contents = JSON.stringify(payload, null, 2);
+  const stamp = new Date().toISOString().slice(0, 10);
+  const filename = `name_curation_${stamp}.json`;
+  const file = new File([contents], filename, {
     type: "application/json"
   });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  const stamp = new Date().toISOString().slice(0, 10);
-  link.download = `name_curation_${stamp}.json`;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  const isTouchDevice = window.matchMedia?.("(pointer: coarse)")?.matches;
+  if (isTouchDevice && navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({
+        files: [file],
+        title: "Panic Name Studio backup",
+        text: `${payload.summary.touched_characters} curated characters`
+      });
+      showToast(
+        `Shared ${payload.summary.touched_characters.toLocaleString()} touched characters. Unmarked parts remain unchanged.`,
+        "success"
+      );
+      return;
+    } catch (error) {
+      if (error?.name === "AbortError") {
+        showToast("Export cancelled. No decisions were changed.", "warning");
+        return;
+      }
+      // Fall through to a normal download if native sharing is unavailable.
+    }
+  }
+  downloadExportFile(file, filename);
   showToast(
     `Exported ${payload.summary.touched_characters.toLocaleString()} touched characters. Unmarked parts remain unchanged.`,
     "success"
@@ -1354,7 +1493,7 @@ async function checkCloudSession() {
     els.loginGate.hidden = true;
     await pullCloudState();
     clearInterval(state.cloudPollTimer);
-    state.cloudPollTimer = setInterval(() => pullCloudState({ quiet: true }), CLOUD_POLL_MS);
+    state.cloudPollTimer = setInterval(syncCloudTick, CLOUD_POLL_MS);
     return true;
   } catch (_) {
     state.cloudMode = "local";
@@ -1389,7 +1528,7 @@ async function loginToCloud(event) {
     await pullCloudState();
     scheduleCloudSave();
     clearInterval(state.cloudPollTimer);
-    state.cloudPollTimer = setInterval(() => pullCloudState({ quiet: true }), CLOUD_POLL_MS);
+    state.cloudPollTimer = setInterval(syncCloudTick, CLOUD_POLL_MS);
   } catch (error) {
     els.loginError.textContent = error.message;
   }
@@ -1476,6 +1615,28 @@ function bindEvents() {
   els.mobilePrevious.addEventListener("click", () => moveSelection(-1));
   els.mobileApprove.addEventListener("click", approveRemaining);
   els.mobileNext.addEventListener("click", () => moveSelection(1));
+  els.focusPreviousButton.addEventListener("click", () => moveSelection(-1));
+  els.focusNextButton.addEventListener("click", () => moveSelection(1));
+  els.focusApproveNextButton.addEventListener("click", approveRemainingAndNext);
+  els.focusNextUndecidedButton.addEventListener("click", nextUndecided);
+  els.focusExportButton.addEventListener("click", exportReviews);
+  els.focusImportButton.addEventListener("click", () => els.importFile.click());
+  els.mobileExportButton.addEventListener("click", exportReviews);
+  els.mobileImportButton.addEventListener("click", () => els.importFile.click());
+  els.focusPortrait.addEventListener("pointerdown", event => {
+    state.focusSwipeStart = event.clientX;
+  });
+  els.focusPortrait.addEventListener("pointerup", event => {
+    if (state.focusSwipeStart === null) return;
+    const delta = event.clientX - state.focusSwipeStart;
+    state.focusSwipeStart = null;
+    if (Math.abs(delta) < 55) return;
+    moveSelection(delta < 0 ? 1 : -1);
+  });
+  els.focusPortrait.addEventListener("pointercancel", () => {
+    state.focusSwipeStart = null;
+  });
+  els.focusPortrait.addEventListener("dragstart", event => event.preventDefault());
   els.loginForm.addEventListener("submit", loginToCloud);
   els.importButton.addEventListener("click", () => els.importFile.click());
   els.importFile.addEventListener("change", async () => {
@@ -1526,6 +1687,16 @@ function bindEvents() {
   window.addEventListener("hashchange", () => {
     const requestedId = location.hash.slice(1);
     if (requestedId && requestedId !== state.selected?.id) selectById(requestedId);
+  });
+  window.addEventListener("online", () => {
+    if (state.cloudAuthenticated) {
+      pushCloudState();
+      pullCloudState({ quiet: true });
+    }
+  });
+  window.addEventListener("pagehide", flushCloudState);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushCloudState();
   });
 }
 

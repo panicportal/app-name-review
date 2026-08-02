@@ -53,6 +53,10 @@
           <input id="reviewerName" autocomplete="name" placeholder="Add your name">
         </label>
         <div class="save-state"><i></i><span id="saveState">Preparing cloud sync…</span></div>
+        <div class="mobile-data-actions">
+          <button id="mobileImportButton">Import decisions</button>
+          <button id="mobileExportButton">Export backup</button>
+        </div>
       </section>
       <div class="filters">
         <div class="filter-tabs" role="tablist" aria-label="Trait filter mode">
@@ -271,6 +275,37 @@
           <span>from source JSON</span>
         </div>
         <div class="traits" id="traits"></div>
+      </section>
+    </main>
+    <main class="focus-deck" id="focusDeck" aria-label="Focus review mode">
+      <section class="focus-card" id="focusCard">
+        <header class="focus-card-header">
+          <div>
+            <p class="kicker">Focus review</p>
+            <b id="focusPosition">1 / 3,333</b>
+          </div>
+          <span id="focusStatus">Untouched</span>
+        </header>
+        <div class="focus-portrait-wrap">
+          <img id="focusPortrait" alt="">
+          <div class="focus-swipe-hint">Swipe or use arrows</div>
+        </div>
+        <div class="focus-identity">
+          <p id="focusClothing"></p>
+          <h1 id="focusName"></h1>
+          <small id="focusMix"></small>
+        </div>
+        <div class="focus-parts" id="focusParts"></div>
+        <div class="focus-primary-actions">
+          <button id="focusPreviousButton">← Previous</button>
+          <button class="focus-lock-next" id="focusApproveNextButton">✓ Lock remaining & next</button>
+          <button id="focusNextButton">Next →</button>
+        </div>
+        <div class="focus-secondary-actions">
+          <button id="focusNextUndecidedButton">Skip to next undecided</button>
+          <button id="focusImportButton">Import decisions</button>
+          <button id="focusExportButton">Export backup</button>
+        </div>
       </section>
     </main>
   </div>
