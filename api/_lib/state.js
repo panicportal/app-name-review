@@ -27,6 +27,9 @@ function seedCuration() {
       note_updated_at: item.updated_at || seed.exported_at || null,
       surname_order: item.surname_order === "21" ? "21" : "12",
       surname_order_updated_at: item.surname_order_updated_at || null,
+      surname_join_style:
+        item.surname_join_style === "lower_second" ? "lower_second" : "camel",
+      surname_join_style_updated_at: item.surname_join_style_updated_at || null,
       updated_at: item.updated_at || seed.exported_at || null,
       parts,
     };
@@ -96,6 +99,16 @@ function mergeRecord(stored = {}, incoming = {}) {
       timestamp(stored.surname_order_updated_at)
         ? incoming.surname_order_updated_at || null
         : stored.surname_order_updated_at || null,
+    surname_join_style:
+      timestamp(incoming.surname_join_style_updated_at) >=
+      timestamp(stored.surname_join_style_updated_at)
+        ? incoming.surname_join_style === "lower_second" ? "lower_second" : "camel"
+        : stored.surname_join_style === "lower_second" ? "lower_second" : "camel",
+    surname_join_style_updated_at:
+      timestamp(incoming.surname_join_style_updated_at) >=
+      timestamp(stored.surname_join_style_updated_at)
+        ? incoming.surname_join_style_updated_at || null
+        : stored.surname_join_style_updated_at || null,
     parts: { ...(stored.parts || {}) },
   };
   for (const [key, part] of Object.entries(incoming.parts || {})) {
@@ -106,6 +119,7 @@ function mergeRecord(stored = {}, incoming = {}) {
     incoming.updated_at,
     merged.note_updated_at,
     merged.surname_order_updated_at,
+    merged.surname_join_style_updated_at,
     ...Object.values(merged.parts).map((part) => part.updated_at || part.deleted_at),
   ]
     .filter(Boolean)

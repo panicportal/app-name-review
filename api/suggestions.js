@@ -66,14 +66,18 @@ function componentUsage(state, exceptId) {
     const record = rawRecord?.deleted_at ? null : rawRecord;
     const part1 = record?.parts?.surname_part_1;
     const part2 = record?.parts?.surname_part_2;
-    add(
-      (!part1?.deleted_at && part1?.replacement_value) ||
-      character.surname_component_1
-    );
-    add(
-      (!part2?.deleted_at && part2?.replacement_value) ||
-      character.surname_component_2
-    );
+    if (!part1?.disabled) {
+      add(
+        (!part1?.deleted_at && part1?.replacement_value) ||
+        character.surname_component_1
+      );
+    }
+    if (!part2?.disabled) {
+      add(
+        (!part2?.deleted_at && part2?.replacement_value) ||
+        character.surname_component_2
+      );
+    }
   }
   return counts;
 }
@@ -84,10 +88,28 @@ function candidatesFor(character, part, language, sourceOverride = "") {
     const matchesBodyGender = (candidate) =>
       !candidate.gender_route ||
       candidate.gender_route === character.gender_from_body;
+    const unique = (values) => {
+      const seen = new Set();
+      return values.filter((candidate) => {
+        const key = String(candidate.value || "").toLowerCase();
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    };
+    const originalSource = `Clothing:${character.clothing}`;
+    const selectedSource = sourceOverride || originalSource;
+    const routed = catalog.first_by_trait?.[selectedSource] || {};
+    const japanese = selectedSource === originalSource
+      ? unique(bank.japanese || []).filter(matchesBodyGender)
+      : unique([
+          ...(routed[character.gender_from_body] || []),
+          ...(routed.Any || []),
+        ]).filter(matchesBodyGender);
     if (language === "any") {
-      return [...(bank.western || []), ...(bank.japanese || [])]
-        .filter(matchesBodyGender);
+      return unique([...(bank.western || []), ...japanese]).filter(matchesBodyGender);
     }
+    if (language === "japanese") return japanese;
     return (bank[language] || []).filter(matchesBodyGender);
   }
   const source = sourceOverride || (
@@ -100,6 +122,31 @@ function candidatesFor(character, part, language, sourceOverride = "") {
     return [...(bank.western || []), ...(bank.japanese || [])];
   }
   return bank[language] || [];
+}
+
+function availableFirstTraitSources(character) {
+  const originalSource = `Clothing:${character.clothing}`;
+  return (character.traits || [])
+    .map((trait) => {
+      const source = `${trait.type}:${trait.value}`;
+      const routed = catalog.first_by_trait?.[source] || {};
+      const count = source === originalSource
+        ? (catalog.first?.[character.clothing]?.japanese || []).filter(
+            (candidate) => safe(candidate.value)
+          ).length
+        : [
+            ...(routed[character.gender_from_body] || []),
+            ...(routed.Any || []),
+          ].filter((candidate) => safe(candidate.value)).length;
+      return {
+        source,
+        label: `${trait.type} · ${trait.value}`,
+        western_count: 0,
+        japanese_count: count,
+        primary: source === originalSource,
+      };
+    })
+    .filter((item) => item.japanese_count);
 }
 
 function availableTraitSources(character) {
@@ -126,15 +173,19 @@ function capitalize(value) {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 }
 
-function canFlip(character, secondPart) {
-  return Boolean(character.surname_language === "western" && secondPart);
+function canFlip(firstPart, secondPart) {
+  return Boolean(firstPart && secondPart);
 }
 
-function joinSurname(character, firstPart, secondPart, order = "12") {
-  if (!canFlip(character, secondPart)) return firstPart || character.surname || "";
-  return order === "21"
-    ? `${capitalize(secondPart)}${capitalize(firstPart)}`
-    : `${capitalize(firstPart)}${capitalize(secondPart)}`;
+function joinSurname(character, firstPart, secondPart, order = "12", joinStyle = "camel") {
+  if (!firstPart) return capitalize(secondPart) || character.surname || "";
+  if (!secondPart) return capitalize(firstPart) || character.surname || "";
+  const left = order === "21" ? secondPart : firstPart;
+  const right = order === "21" ? firstPart : secondPart;
+  const rightText = joinStyle === "lower_second"
+    ? String(right || "").trim().toLowerCase()
+    : capitalize(right);
+  return `${capitalize(left)}${rightText}`;
 }
 
 function scorePreview({ first, surname, firstPart, secondPart, usageCount = 0, rank = 0, fitType = "" }) {
@@ -178,8 +229,17 @@ function scorePreview({ first, surname, firstPart, secondPart, usageCount = 0, r
   };
 }
 
-function previewFor(character, first, firstPart, secondPart, order, candidate, usageCount) {
-  const surname = joinSurname(character, firstPart, secondPart, order);
+function previewFor(
+  character,
+  first,
+  firstPart,
+  secondPart,
+  order,
+  candidate,
+  usageCount,
+  joinStyle = "camel"
+) {
+  const surname = joinSurname(character, firstPart, secondPart, order, joinStyle);
   const scores = scorePreview({
     first,
     surname,
@@ -191,6 +251,7 @@ function previewFor(character, first, firstPart, secondPart, order, candidate, u
   });
   return {
     order,
+    join_style: joinStyle,
     surname,
     full_name: `${first} ${surname}`.trim(),
     compact: scores.compact,
@@ -199,7 +260,9 @@ function previewFor(character, first, firstPart, secondPart, order, candidate, u
 }
 
 function proposedValue(state, id, part, fallback) {
-  return state.curation?.records?.[id]?.parts?.[part]?.replacement_value || fallback || "";
+  const saved = state.curation?.records?.[id]?.parts?.[part];
+  if (saved?.disabled) return "";
+  return saved?.replacement_value || fallback || "";
 }
 
 module.exports = async function handler(req, res) {
@@ -241,8 +304,12 @@ module.exports = async function handler(req, res) {
         : part === "surname_part_2"
           ? character.surname_source_2
           : `Clothing:${character.clothing}`;
-    const traitSources = part === "first" ? [] : availableTraitSources(character);
-    const requestedSource = String(req.query.source || "");
+    const traitSources = part === "first"
+      ? language === "japanese" ? availableFirstTraitSources(character) : []
+      : availableTraitSources(character);
+    // Some serverless/dev query parsers preserve URLSearchParams' "+" for
+    // spaces. Normalize it so exact trait keys such as "Lovely Pink" survive.
+    const requestedSource = String(req.query.source || "").replace(/\+/g, " ");
     const eligibleTraitSources = traitSources.filter((item) =>
       language === "japanese" ? item.japanese_count > 0 : item.western_count > 0
     );
@@ -251,9 +318,7 @@ module.exports = async function handler(req, res) {
     )
       ? originalTraitSource
       : eligibleTraitSources[0]?.source || originalTraitSource;
-    const traitSource = part === "first"
-      ? originalTraitSource
-      : eligibleTraitSources.some((item) => item.source === requestedSource)
+    const traitSource = eligibleTraitSources.some((item) => item.source === requestedSource)
         ? requestedSource
         : defaultTraitSource;
     const currentFirst = proposedValue(state, id, "first", character.first);
@@ -269,33 +334,46 @@ module.exports = async function handler(req, res) {
       "surname_part_2",
       character.surname_component_2
     );
-    const currentOrder = canFlip(character, currentPart2) && record.surname_order === "21"
+    const currentOrder = canFlip(currentPart1, currentPart2) && record.surname_order === "21"
       ? "21"
       : "12";
+    const currentJoinStyle =
+      record.surname_join_style === "lower_second" ? "lower_second" : "camel";
     const currentUsage =
       (allUsage.get(String(currentPart1).toLowerCase()) || 0) +
       (allUsage.get(String(currentPart2).toLowerCase()) || 0);
     const canPreviewFlip =
-      part !== "first" && canFlip(character, currentPart2);
+      part !== "first" && canFlip(currentPart1, currentPart2);
     const currentOrders = canPreviewFlip ? ["12", "21"] : [currentOrder];
-    const currentOrderPreviews = Object.fromEntries(
-      currentOrders.map((order) => [
-        order,
-        previewFor(
-          character,
-          currentFirst,
-          currentPart1,
-          currentPart2,
-          order,
-          { rank: 0, fit_type: "current" },
-          currentUsage
+    const currentFormatPreviews = Object.fromEntries(
+      ["camel", "lower_second"].map((joinStyle) => [
+        joinStyle,
+        Object.fromEntries(
+          currentOrders.map((order) => [
+            order,
+            previewFor(
+              character,
+              currentFirst,
+              currentPart1,
+              currentPart2,
+              order,
+              { rank: 0, fit_type: "current" },
+              currentUsage,
+              joinStyle
+            ),
+          ])
         ),
       ])
     );
+    const currentOrderPreviews = currentFormatPreviews[currentJoinStyle];
     const currentPreview = {
       ...currentOrderPreviews[currentOrder],
       can_flip: canPreviewFlip,
       order_previews: currentOrderPreviews,
+      format_previews: currentFormatPreviews,
+      can_use_single: part !== "first" && Boolean(
+        part === "surname_part_1" ? currentPart1 : currentPart2
+      ),
     };
 
     const evaluated = candidatesFor(character, part, language, traitSource)
@@ -318,23 +396,44 @@ module.exports = async function handler(req, res) {
                 : allUsage.get(String(currentPart1).toLowerCase()) || 0
             );
         const orders =
-          part !== "first" && canFlip(character, candidatePart2)
+          part !== "first" && canFlip(candidatePart1, candidatePart2)
             ? ["12", "21"]
             : [currentOrder];
-        const orderPreviews = Object.fromEntries(
-          orders.map((order) => [
-            order,
-            previewFor(
-              character,
-              candidateFirst,
-              candidatePart1,
-              candidatePart2,
-              order,
-              candidate,
-              scoreUsageCount
+        const formatPreviews = Object.fromEntries(
+          ["camel", "lower_second"].map((joinStyle) => [
+            joinStyle,
+            Object.fromEntries(
+              orders.map((order) => [
+                order,
+                previewFor(
+                  character,
+                  candidateFirst,
+                  candidatePart1,
+                  candidatePart2,
+                  order,
+                  candidate,
+                  scoreUsageCount,
+                  joinStyle
+                ),
+              ])
             ),
           ])
         );
+        const orderPreviews = formatPreviews[currentJoinStyle];
+        const singleFirstPart = part === "surname_part_1" ? candidate.value : currentPart1;
+        const singleSecondPart = part === "surname_part_2" ? candidate.value : currentPart2;
+        const singlePreview = part === "first"
+          ? null
+          : previewFor(
+              character,
+              candidateFirst,
+              part === "surname_part_1" ? singleFirstPart : "",
+              part === "surname_part_2" ? singleSecondPart : "",
+              "12",
+              candidate,
+              usageCount,
+              "camel"
+            );
         const recommendedOrder = orders.sort((left, right) => {
           const leftScores = orderPreviews[left].scores;
           const rightScores = orderPreviews[right].scores;
@@ -354,6 +453,8 @@ module.exports = async function handler(req, res) {
               : `${usageCount} other current/proposed uses`,
           recommended_order: recommendedOrder,
           order_previews: orderPreviews,
+          format_previews: formatPreviews,
+          single_preview: singlePreview,
           preview_surname: recommended.surname,
           preview_full_name: recommended.full_name,
           scores: recommended.scores,
@@ -409,6 +510,18 @@ module.exports = async function handler(req, res) {
       original_trait_source: originalTraitSource,
       available_trait_sources: traitSources,
       policy: catalog.policy,
+      japanese_coverage: part === "first" && language === "japanese"
+        ? {
+            exact_artist_bank_options_before_uniqueness: candidatesFor(
+              character,
+              part,
+              language,
+              traitSource
+            ).filter((candidate) => safe(candidate.value)).length,
+            unused_exact_options: evaluated.length,
+            route: "Selected visible trait bank, Body-gender only",
+          }
+        : null,
       current_preview: currentPreview,
       suggestions,
     });

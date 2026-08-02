@@ -1241,7 +1241,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .language-switch button.active { border-color: var(--ink); background: var(--ink); color: white; }
 .suggestion-trait-source {
   display: grid;
-  grid-template-columns: auto minmax(220px, 1fr);
+  grid-template-columns: auto minmax(220px, 1fr) auto;
   gap: 7px 12px;
   align-items: center;
   margin-top: 12px;
@@ -1263,8 +1263,22 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   color: var(--ink);
   font-size: 12px;
 }
+.suggestion-trait-source button {
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: white;
+  font: 900 8px/1.2 var(--utility);
+  text-transform: uppercase;
+}
+.suggestion-trait-source button:disabled {
+  border-color: #aebdb8;
+  background: #d5dfdc;
+  color: #74837f;
+}
 .suggestion-trait-source small {
-  grid-column: 2;
+  grid-column: 2 / -1;
   color: #6b7b77;
   font: 8px/1.35 var(--utility);
 }
@@ -1276,6 +1290,46 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   color: #3f5751;
   font-size: 10px;
   line-height: 1.45;
+}
+.surname-format-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #9eb2ac;
+  background: #f5f8f3;
+}
+.surname-format-controls span,
+.surname-format-controls small {
+  display: block;
+  color: #526763;
+  font: 800 8px/1.35 var(--utility);
+  text-transform: uppercase;
+}
+.surname-format-controls small {
+  margin-top: 5px;
+  color: #72817d;
+  text-transform: none;
+}
+.surname-format-controls > div:last-child {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(104px, 1fr));
+  gap: 5px;
+}
+.surname-format-controls button {
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid #8ea49e;
+  background: white;
+  color: #29453f;
+  font: 900 11px/1 var(--utility);
+}
+.surname-format-controls button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: white;
 }
 .suggestion-dialog { width: min(940px, calc(100% - 28px)); }
 .suggestion-full-preview {
@@ -1315,6 +1369,15 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .suggestion-full-preview button:focus-visible {
   outline: 3px solid white;
   outline-offset: 3px;
+}
+.suggestion-preview-actions {
+  display: grid;
+  gap: 6px;
+}
+.suggestion-preview-actions #suggestionUseSingleCurrent {
+  border-color: #91aaa3;
+  background: transparent;
+  color: white;
 }
 .manual-surname-editor {
   margin-top: 12px;
@@ -1497,6 +1560,12 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   align-items: center;
   gap: 6px;
   margin-top: 12px;
+}
+.suggestion-option-actions .use-suggestion-single {
+  grid-column: 2;
+  border-color: var(--blue);
+  background: #d8edf3;
+  color: #163c48;
 }
 .suggestion-option-actions > span {
   color: #657772;
@@ -1752,12 +1821,15 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   .suggestion-list { grid-template-columns: 1fr; }
   .suggestion-full-preview { grid-template-columns: 1fr; gap: 10px; }
   .suggestion-full-preview button { width: 100%; }
+  .surname-format-controls { align-items: stretch; flex-direction: column; }
+  .surname-format-controls > div:last-child { width: 100%; }
   .suggestion-toolbar { align-items: stretch; flex-direction: column; }
   .suggestion-toolbar > div { display: grid; grid-template-columns: repeat(3, 1fr); }
   .suggestion-toolbar button { min-height: 42px; padding: 7px 5px; }
   .suggestion-trait-source { grid-template-columns: 1fr; }
   .suggestion-trait-source small { grid-column: 1; }
   .suggestion-trait-source select { width: 100%; font-size: 16px; }
+  .suggestion-trait-source button { min-height: 44px; }
   .manual-surname-body {
     grid-template-columns: 1fr;
     grid-template-areas:
