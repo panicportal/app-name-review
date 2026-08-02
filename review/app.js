@@ -47,6 +47,7 @@ const state = {
   cloudHistory: [],
   suggestionPart: null,
   suggestionLanguage: null,
+  suggestionSource: null,
   suggestionSort: "balanced",
   suggestionPayload: null,
   suggestionOrderOverrides: {},
@@ -84,7 +85,9 @@ function blankPart() {
     reviewer: "",
     replacement_value: null,
     replacement_source: "",
+    replacement_trait_source: "",
     replacement_rationale: "",
+    replacement_scores: null,
     deleted_at: null
   };
 }
@@ -396,6 +399,14 @@ function effectivePartValue(character, key) {
   return partReview(character.id, key).replacement_value || part?.value || "";
 }
 
+function effectivePartSource(character, key) {
+  const definition = partDefinitions(character).find(item => item.key === key);
+  return partReview(character.id, key).replacement_trait_source ||
+    partReview(character.id, key).replacement_source ||
+    definition?.source ||
+    "";
+}
+
 function replaceFirstExact(text, search, replacement) {
   if (!search || !replacement) return text;
   const pattern = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
@@ -450,6 +461,22 @@ function effectiveDisplayName(character) {
     effectivePartValue(character, "first"),
     effectiveSurname(character)
   ].filter(Boolean).join(" ");
+}
+
+function liveSurnameRationale(character) {
+  const part1 = effectivePartValue(character, "surname_part_1");
+  const part2 = effectivePartValue(character, "surname_part_2");
+  const source1 = effectivePartSource(character, "surname_part_1");
+  const source2 = effectivePartSource(character, "surname_part_2");
+  const surname = effectiveSurname(character);
+  if (!part2) {
+    return `“${part1 || surname}” is the currently selected surname from ${source1 || "the reviewed surname bank"}.`;
+  }
+  const ordered = surnameOrder(character) === "21"
+    ? `“${part2}” first, then “${part1}”`
+    : `“${part1}” first, then “${part2}”`;
+  return `“${part1}” represents ${source1}; “${part2}” represents ${source2}. ` +
+    `The live surname is “${surname}”, ordered ${ordered}.`;
 }
 
 function surnameComponentUsage(part) {
@@ -727,7 +754,7 @@ function renderReplacementBriefs(character) {
       : "";
     return `<article class="replacement-brief" data-replacement-part="${part.key}">
       <div class="replacement-value">
-        <span>${escapeHtml(part.label)}</span>
+        <span>${review.replacement_value ? "Original " : ""}${escapeHtml(part.label)}</span>
         <strong>${escapeHtml(part.value || "—")}</strong>
         <small>${escapeHtml(part.source || "No source")}</small>
         ${part.key.startsWith("surname_") ? `<em class="replacement-usage">${escapeHtml(usageText(part))}</em>` : ""}
@@ -736,8 +763,9 @@ function renderReplacementBriefs(character) {
             ${review.replacement_value ? "Change selected option" : "Find fitting options"}
           </button>
           ${review.replacement_value ? `<div class="chosen-replacement">
-            Selected preview: <b>${escapeHtml(review.replacement_value)}</b><br>
-            ${escapeHtml(review.replacement_source || "Curated bank")}
+            Selected now: <b>${escapeHtml(review.replacement_value)}</b><br>
+            ${escapeHtml(review.replacement_trait_source || review.replacement_source || "Curated bank")}<br>
+            Full name: <b>${escapeHtml(effectiveDisplayName(character))}</b>
           </div>` : ""}
         </div>
       </div>
@@ -915,7 +943,7 @@ function renderCharacter() {
     languageLabel(c.first_name_language);
   els.surnameLanguage.textContent = languageLabel(c.surname_language);
   els.firstRationale.textContent = c.first_rationale;
-  els.surnameRationale.textContent = c.surname_rationale;
+  els.surnameRationale.textContent = liveSurnameRationale(c);
   els.firstTheme.textContent = c.clothing || "Hand-authored special";
   els.firstGenderRoute.textContent = c.gender_from_body || "Special";
   els.firstEvidence.textContent =
@@ -935,41 +963,60 @@ function renderCharacter() {
     .filter(Boolean).join(" · ");
 
   const detail = c.surname_detail || {};
-  const [type1, trait1] = splitSource(detail.source_1 || c.surname_source_1);
-  const [type2, trait2] = splitSource(detail.source_2 || c.surname_source_2);
+  const source1 = effectivePartSource(c, "surname_part_1");
+  const source2 = effectivePartSource(c, "surname_part_2");
+  const livePart1 = effectivePartValue(c, "surname_part_1");
+  const livePart2 = effectivePartValue(c, "surname_part_2");
+  const review1 = partReview(c.id, "surname_part_1");
+  const review2 = partReview(c.id, "surname_part_2");
+  const [type1, trait1] = splitSource(source1);
+  const [type2, trait2] = splitSource(source2);
   els.surnameType1.textContent = type1;
   els.surnameTrait1.textContent = trait1 || "—";
-  els.surnameComponent1.textContent = detail.component_1 || "—";
-  els.surnameComponentNote1.textContent = detail.component_1_note || "";
+  els.surnameComponent1.textContent = livePart1 || "—";
+  els.surnameComponentNote1.textContent = review1.replacement_value
+    ? `Selected replacement${review1.replacement_trait_source && review1.replacement_trait_source !== (detail.source_1 || c.surname_source_1) ? " from another character trait" : ""}`
+    : detail.component_1_note || "";
   const surnameParts = Object.fromEntries(
     partDefinitions(c).map(part => [part.key, part])
   );
-  const usage1 = surnameComponentUsage(surnameParts.surname_part_1);
-  els.surnameComponentCount1.textContent = usageText(surnameParts.surname_part_1);
+  const liveUsagePart1 = { ...surnameParts.surname_part_1, value: livePart1 };
+  const usage1 = surnameComponentUsage(liveUsagePart1);
+  els.surnameComponentCount1.textContent = usageText(liveUsagePart1);
   els.surnameComponentCount1.classList.toggle("has-rejections", usage1.rejected > 0);
   els.surnameType2.textContent = type2;
   els.surnameTrait2.textContent = trait2 || "—";
-  els.surnameComponent2.textContent = detail.component_2 || "—";
-  els.surnameComponentNote2.textContent = detail.component_2_note || "";
-  const usage2 = surnameComponentUsage(surnameParts.surname_part_2);
-  els.surnameComponentCount2.textContent = usageText(surnameParts.surname_part_2);
+  els.surnameComponent2.textContent = livePart2 || "—";
+  els.surnameComponentNote2.textContent = review2.replacement_value
+    ? `Selected replacement${review2.replacement_trait_source && review2.replacement_trait_source !== (detail.source_2 || c.surname_source_2) ? " from another character trait" : ""}`
+    : detail.component_2_note || "";
+  const liveUsagePart2 = { ...surnameParts.surname_part_2, value: livePart2 };
+  const usage2 = surnameComponentUsage(liveUsagePart2);
+  els.surnameComponentCount2.textContent = usageText(liveUsagePart2);
   els.surnameComponentCount2.classList.toggle("has-rejections", usage2.rejected > 0);
   const hasSecondSurnamePart = Boolean(detail.source_2);
   els.surnameFusionOperator.hidden = !hasSecondSurnamePart;
   els.surnameFusionPart2.hidden = !hasSecondSurnamePart;
   els.surnameRecipe.classList.toggle("single-surname", !hasSecondSurnamePart);
-  const score = Number(detail.score || 0);
+  const scoredReviews = [review1, review2]
+    .filter(review => review.replacement_scores)
+    .sort((left, right) => timestamp(right.updated_at) - timestamp(left.updated_at));
+  const selectedScores = scoredReviews[0]?.replacement_scores;
+  const score = selectedScores
+    ? (Number(selectedScores.readability || 0) + Number(selectedScores.collectability || 0)) / 2
+    : Number(detail.score || 0);
   els.surnameRecipe.hidden = !detail.source_1;
   els.surnameScoring.hidden = !score;
-  els.surnameScore.textContent = score ? `${score.toFixed(2)} / 10` : "—";
+  els.surnameScoreLabel.textContent = selectedScores
+    ? "Selected preview · readability / collectability"
+    : "Original internal surname score";
+  els.surnameScore.textContent = selectedScores
+    ? `${Number(selectedScores.readability).toFixed(1)} / ${Number(selectedScores.collectability).toFixed(1)}`
+    : score ? `${score.toFixed(2)} / 10` : "—";
   els.surnameScoreBar.style.width = `${Math.max(0, Math.min(100, score * 10))}%`;
-  els.surnameSource.textContent = detail.join_note
-    ? `${detail.order_note || "neutral compound order"} · ${detail.join_note} · ${
-        detail.source_2
-          ? "both source traits verified against the character metadata"
-          : "source trait verified against the character metadata"
-      }`
-    : c.surname_source || "Hand-authored special";
+  els.surnameSource.textContent = source2
+    ? `${surnameOrder(c) === "21" ? "trait 2 placed first" : "trait 1 placed first"} · live sources: ${source1} + ${source2}`
+    : `live source: ${source1 || c.surname_source || "Hand-authored special"}`;
 
   els.traits.innerHTML = c.traits.map(trait =>
     `<div class="trait"><span>${escapeHtml(trait.type)}</span><strong>${escapeHtml(trait.value)}</strong></div>`
@@ -988,11 +1035,8 @@ function renderCharacter() {
   els.proposal.hidden = !c.surname_changed_from_v8;
   if (c.surname_changed_from_v8) {
     els.proposalOld.textContent = c.v8_surname;
-    els.proposalNew.textContent = c.surname;
-    els.proposalReason.textContent = detail.source_2
-      ? `${detail.component_1 || "First component"} makes ${detail.source_1 || c.surname_source_1} visible; ` +
-        `${detail.component_2 || "the second component"} makes ${detail.source_2 || c.surname_source_2} visible.`
-      : `${detail.component_1 || c.surname} is one exact artist-bank surname selected from ${detail.source_1 || c.surname_source_1}.`;
+    els.proposalNew.textContent = effectiveSurname(c);
+    els.proposalReason.textContent = liveSurnameRationale(c);
   }
 
   renderCharacterCuration(c);
@@ -1184,7 +1228,9 @@ function exportRecord(character) {
       note: review.note || "",
       selected_replacement: review.replacement_value || null,
       replacement_source: review.replacement_source || "",
+      replacement_trait_source: review.replacement_trait_source || "",
       replacement_rationale: review.replacement_rationale || "",
+      replacement_scores: review.replacement_scores || null,
       reviewer: review.reviewer || "",
       updated_at: review.updated_at
     };
@@ -1347,7 +1393,9 @@ function mergeImportedPayload(payload) {
         note: incoming.note || "",
         replacement_value: incoming.selected_replacement || incoming.replacement_value || null,
         replacement_source: incoming.replacement_source || "",
+        replacement_trait_source: incoming.replacement_trait_source || incoming.replacement_source || "",
         replacement_rationale: incoming.replacement_rationale || "",
+        replacement_scores: incoming.replacement_scores || null,
         reviewer: incoming.reviewer || payload.reviewer || "",
         updated_at: incoming.updated_at || payload.exported_at || nowIso()
       };
@@ -1412,7 +1460,9 @@ async function loadPackagedProgress() {
           note: incoming.note || "",
           replacement_value: incoming.selected_replacement || null,
           replacement_source: incoming.replacement_source || "",
+          replacement_trait_source: incoming.replacement_trait_source || incoming.replacement_source || "",
           replacement_rationale: incoming.replacement_rationale || "",
+          replacement_scores: incoming.replacement_scores || null,
           reviewer: incoming.reviewer || payload.reviewer || "",
           updated_at: incoming.updated_at || payload.exported_at || nowIso()
         };
@@ -1512,6 +1562,34 @@ function renderSuggestionCurrentPreview() {
   }
 }
 
+function renderSuggestionTraitSources() {
+  const payload = state.suggestionPayload;
+  const isSurname = state.suggestionPart?.startsWith("surname_");
+  els.suggestionTraitSourceWrap.hidden = !isSurname;
+  if (!isSurname || !payload) return;
+  els.suggestionTraitSource.innerHTML = (payload.available_trait_sources || [])
+    .filter(item => state.suggestionLanguage === "japanese"
+      ? item.japanese_count > 0
+      : item.western_count > 0)
+    .map(item => {
+      const count = state.suggestionLanguage === "japanese"
+        ? item.japanese_count
+        : item.western_count;
+      return `<option value="${escapeHtml(item.source)}" ${item.source === payload.trait_source ? "selected" : ""}>
+        ${escapeHtml(item.label)} · ${Number(count || 0)} options
+      </option>`;
+    })
+    .join("");
+  els.suggestionTraitSource.disabled = false;
+  els.suggestionTraitSourceHelp.textContent =
+    payload.trait_source === payload.original_trait_source
+      ? "Using this surname part’s original trait. Choose any other visible character trait to switch banks."
+      : `Alternate trait selected. This part will be auditable as ${payload.trait_source}, not ${payload.original_trait_source}.`;
+  els.suggestionPolicy.textContent = state.suggestionLanguage === "japanese"
+    ? `Closed artist bank only. Showing exact Japanese surnames indexed for ${payload.trait_source}.`
+    : `Showing reviewed fragments for ${payload.trait_source}, ranked for readability, collectability, and low repetition.`;
+}
+
 function candidateOrder(candidate, index) {
   const available = candidate.order_previews || {};
   const preferred =
@@ -1606,12 +1684,15 @@ function renderSuggestionOptions() {
   });
 }
 
-async function openSuggestions(part, language = null) {
+async function openSuggestions(part, language = null, source = null) {
   state.suggestionPart = part;
   state.suggestionLanguage = language || suggestionLanguageFor(state.selected, part);
+  const definition = partDefinitions(state.selected).find(item => item.key === part);
+  state.suggestionSource = part.startsWith("surname_")
+    ? (source || partReview(state.selected.id, part).replacement_trait_source || definition?.source || "")
+    : null;
   state.suggestionPayload = null;
   state.suggestionOrderOverrides = {};
-  const definition = partDefinitions(state.selected).find(item => item.key === part);
   els.suggestionTitle.textContent = `Replace ${definition?.label || "name part"}`;
   els.suggestionContext.textContent =
     `Surv!vor #${state.selected.id} · ${definition?.source || state.selected.clothing}`;
@@ -1626,6 +1707,8 @@ async function openSuggestions(part, language = null) {
         : "Surname options come from the exact source trait’s reviewed fragment bank, ranked for low repetition.";
   els.suggestionList.innerHTML = `<div class="suggestion-loading">Checking fit, uniqueness, and current team proposals…</div>`;
   els.suggestionFullPreview.hidden = true;
+  els.suggestionTraitSourceWrap.hidden = !part.startsWith("surname_");
+  els.suggestionTraitSource.disabled = true;
   if (!els.suggestionDialog.open) els.suggestionDialog.showModal();
   try {
     const params = new URLSearchParams({
@@ -1633,6 +1716,7 @@ async function openSuggestions(part, language = null) {
       part,
       language: state.suggestionLanguage
     });
+    if (state.suggestionSource) params.set("source", state.suggestionSource);
     const response = await fetch(`/api/suggestions?${params}`, { cache: "no-store" });
     if (!response.ok) {
       const payload = await response.json().catch(() => ({}));
@@ -1640,6 +1724,8 @@ async function openSuggestions(part, language = null) {
     }
     const payload = await response.json();
     state.suggestionPayload = payload;
+    state.suggestionSource = payload.trait_source;
+    renderSuggestionTraitSources();
     renderSuggestionCurrentPreview();
     renderSuggestionOptions();
   } catch (error) {
@@ -1657,11 +1743,13 @@ function chooseSuggestion(candidate, order = "12") {
     scope: partReview(state.selected.id, state.suggestionPart).scope || "this_character",
     replacement_value: candidate.value,
     replacement_source: candidate.source,
+    replacement_trait_source: state.suggestionPayload?.trait_source || candidate.source,
     replacement_rationale:
       `${candidate.fit} ${candidate.uniqueness}. ` +
       `Chosen full-name preview: ${preview?.full_name || candidate.preview_full_name || candidate.value}. ` +
       `Readability ${Number(preview?.scores?.readability || candidate.scores?.readability || 0).toFixed(1)}/10; ` +
-      `collectability ${Number(preview?.scores?.collectability || candidate.scores?.collectability || 0).toFixed(1)}/10.`
+      `collectability ${Number(preview?.scores?.collectability || candidate.scores?.collectability || 0).toFixed(1)}/10.`,
+    replacement_scores: preview?.scores || candidate.scores || null
   });
   els.suggestionDialog.close();
   showToast(
@@ -1815,8 +1903,15 @@ function bindEvents() {
   els.suggestionClose.addEventListener("click", () => els.suggestionDialog.close());
   els.suggestionLanguage.querySelectorAll("[data-language]").forEach(button => {
     button.addEventListener("click", () => {
-      openSuggestions(state.suggestionPart, button.dataset.language);
+      openSuggestions(state.suggestionPart, button.dataset.language, state.suggestionSource);
     });
+  });
+  els.suggestionTraitSource.addEventListener("change", () => {
+    openSuggestions(
+      state.suggestionPart,
+      state.suggestionLanguage,
+      els.suggestionTraitSource.value
+    );
   });
   els.suggestionToolbar.querySelectorAll("[data-suggestion-sort]").forEach(button => {
     button.addEventListener("click", () => {
@@ -1829,7 +1924,7 @@ function bindEvents() {
   });
   els.suggestionFlipCurrent.addEventListener("click", () => {
     toggleSurnameOrder({ rerender: true, announce: false });
-    openSuggestions(state.suggestionPart, state.suggestionLanguage);
+    openSuggestions(state.suggestionPart, state.suggestionLanguage, state.suggestionSource);
   });
   els.mobilePrevious.addEventListener("click", () => moveSelection(-1));
   els.mobileApprove.addEventListener("click", approveRemaining);
@@ -1840,6 +1935,8 @@ function bindEvents() {
   els.focusNextUndecidedButton.addEventListener("click", nextUndecided);
   els.surnameFlipButton.addEventListener("click", () => toggleSurnameOrder());
   els.focusFlipButton.addEventListener("click", () => toggleSurnameOrder());
+  els.surnameOptions1.addEventListener("click", () => openSuggestions("surname_part_1"));
+  els.surnameOptions2.addEventListener("click", () => openSuggestions("surname_part_2"));
   els.focusExportButton.addEventListener("click", exportReviews);
   els.focusImportButton.addEventListener("click", () => els.importFile.click());
   els.mobileExportButton.addEventListener("click", exportReviews);

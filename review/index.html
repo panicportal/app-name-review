@@ -212,6 +212,7 @@
                 </div>
                 <small class="part-note" id="surnameComponentNote1"></small>
                 <small class="part-usage" id="surnameComponentCount1"></small>
+                <button class="trait-bank-button" id="surnameOptions1">Browse character trait banks</button>
               </div>
               <div class="fusion-operator" id="surnameFusionOperator">+</div>
               <div class="fusion-part fusion-b" id="surnameFusionPart2">
@@ -228,11 +229,12 @@
                 </div>
                 <small class="part-note" id="surnameComponentNote2"></small>
                 <small class="part-usage" id="surnameComponentCount2"></small>
+                <button class="trait-bank-button" id="surnameOptions2">Browse character trait banks</button>
               </div>
             </div>
             <div id="surnameScoring">
               <div class="score-row">
-                <span>Internal surname score</span>
+                <span id="surnameScoreLabel">Internal surname score</span>
                 <b id="surnameScore"></b>
               </div>
               <div class="score-meter" aria-hidden="true"><i id="surnameScoreBar"></i></div>
@@ -345,6 +347,11 @@
         <button data-language="western">Western</button>
         <button data-language="japanese">Japanese</button>
       </div>
+      <label class="suggestion-trait-source" id="suggestionTraitSourceWrap">
+        <span>Name this surname part from</span>
+        <select id="suggestionTraitSource" aria-label="Trait source for surname options"></select>
+        <small id="suggestionTraitSourceHelp"></small>
+      </label>
       <div class="suggestion-policy" id="suggestionPolicy"></div>
       <section class="suggestion-full-preview" id="suggestionFullPreview">
         <div>

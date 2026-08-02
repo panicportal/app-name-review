@@ -64,7 +64,7 @@ function componentUsage(state, exceptId) {
   return counts;
 }
 
-function candidatesFor(character, part, language) {
+function candidatesFor(character, part, language, sourceOverride = "") {
   if (part === "first") {
     const bank = catalog.first[character.clothing] || {};
     if (language === "any") {
@@ -72,15 +72,31 @@ function candidatesFor(character, part, language) {
     }
     return bank[language] || [];
   }
-  const source =
+  const source = sourceOverride || (
     part === "surname_part_1"
       ? character.surname_source_1
-      : character.surname_source_2;
+      : character.surname_source_2
+  );
   const bank = catalog.surname[source] || {};
   if (language === "any") {
     return [...(bank.western || []), ...(bank.japanese || [])];
   }
   return bank[language] || [];
+}
+
+function availableTraitSources(character) {
+  return (character.traits || [])
+    .map((trait) => {
+      const source = `${trait.type}:${trait.value}`;
+      const bank = catalog.surname[source] || {};
+      return {
+        source,
+        label: `${trait.type} · ${trait.value}`,
+        western_count: (bank.western || []).filter((candidate) => safe(candidate.value)).length,
+        japanese_count: (bank.japanese || []).filter((candidate) => safe(candidate.value)).length,
+      };
+    })
+    .filter((item) => item.western_count || item.japanese_count);
 }
 
 function roundScore(value) {
@@ -201,6 +217,27 @@ module.exports = async function handler(req, res) {
         : part === "surname_part_1"
           ? character.surname_component_1
           : character.surname_component_2;
+    const originalTraitSource =
+      part === "surname_part_1"
+        ? character.surname_source_1
+        : part === "surname_part_2"
+          ? character.surname_source_2
+          : `Clothing:${character.clothing}`;
+    const traitSources = part === "first" ? [] : availableTraitSources(character);
+    const requestedSource = String(req.query.source || "");
+    const eligibleTraitSources = traitSources.filter((item) =>
+      language === "japanese" ? item.japanese_count > 0 : item.western_count > 0
+    );
+    const defaultTraitSource = eligibleTraitSources.some(
+      (item) => item.source === originalTraitSource
+    )
+      ? originalTraitSource
+      : eligibleTraitSources[0]?.source || originalTraitSource;
+    const traitSource = part === "first"
+      ? originalTraitSource
+      : eligibleTraitSources.some((item) => item.source === requestedSource)
+        ? requestedSource
+        : defaultTraitSource;
     const currentFirst = proposedValue(state, id, "first", character.first);
     const currentPart1 = proposedValue(
       state,
@@ -231,7 +268,7 @@ module.exports = async function handler(req, res) {
     );
     currentPreview.can_flip = canFlip(character, currentPart2);
 
-    const evaluated = candidatesFor(character, part, language)
+    const evaluated = candidatesFor(character, part, language, traitSource)
       .filter((candidate) => safe(candidate.value))
       .filter((candidate) => candidate.value.toLowerCase() !== String(current).toLowerCase())
       .filter((candidate) => !firstUsed || !firstUsed.has(candidate.value.toLowerCase()))
@@ -335,11 +372,9 @@ module.exports = async function handler(req, res) {
       gender_route: character.gender_from_body,
       clothing: character.clothing,
       trait_source:
-        part === "surname_part_1"
-          ? character.surname_source_1
-          : part === "surname_part_2"
-            ? character.surname_source_2
-            : `Clothing:${character.clothing}`,
+        traitSource,
+      original_trait_source: originalTraitSource,
+      available_trait_sources: traitSources,
       policy: catalog.policy,
       current_preview: currentPreview,
       suggestions,
