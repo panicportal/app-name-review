@@ -742,6 +742,12 @@ function updateProgress() {
 function selectById(id) {
   const character = state.data.characters.find(item => item.id === String(id));
   if (!character) return;
+  if (state.selected?.id !== character.id && els.suggestionDialog?.open) {
+    els.suggestionDialog.close();
+    state.suggestionPart = null;
+    state.suggestionSource = null;
+    state.suggestionPayload = null;
+  }
   state.selected = character;
   if (location.hash !== `#${id}`) history.replaceState(null, "", `#${id}`);
   setMobileRoster(false);
