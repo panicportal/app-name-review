@@ -183,12 +183,15 @@ function setViewMode(mode) {
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", String(active));
   });
-  if (state.viewMode === "focus") els.app.classList.remove("mobile-roster-open");
+  if (state.viewMode === "focus") setMobileRoster(false);
   if (state.viewMode === "focus" && state.selected) renderFocusDeck(state.selected);
 }
 
 function setMobileRoster(open) {
-  els.app.classList.toggle("mobile-roster-open", Boolean(open));
+  const expanded = Boolean(open);
+  els.app.classList.toggle("mobile-roster-open", expanded);
+  document.body.classList.toggle("mobile-roster-open", expanded);
+  els.mobileFiltersButton?.setAttribute("aria-expanded", String(expanded));
 }
 
 function timestamp(value) {
@@ -1992,6 +1995,11 @@ function bindEvents() {
   });
 
   document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && els.app.classList.contains("mobile-roster-open")) {
+      setMobileRoster(false);
+      els.mobileFiltersButton.focus();
+      return;
+    }
     if (event.target.matches("input, textarea, select")) return;
     if (event.key === "/") {
       event.preventDefault();

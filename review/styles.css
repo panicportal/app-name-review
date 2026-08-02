@@ -51,6 +51,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .topbar {
   grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
   display: grid;
   grid-template-columns: 310px 1fr auto;
   align-items: center;
@@ -1461,6 +1463,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 
 @media (max-width: 760px) {
   body { overflow: auto; }
+  body.mobile-roster-open { overflow: hidden; }
   .app { min-height: 100%; height: auto; grid-template: 70px auto / 1fr; }
   .topbar { grid-template-columns: 1fr auto; position: sticky; top: 0; z-index: 5; }
   .collection-stats { display: none; }
@@ -1469,8 +1472,14 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
     position: fixed;
     inset: 70px auto 0 0;
     z-index: 44;
-    display: grid;
+    display: block;
     width: min(380px, calc(100vw - 28px));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
     transform: translateX(-105%);
     transition: transform .2s ease;
     box-shadow: 20px 0 45px rgba(0,0,0,.42);
@@ -1479,10 +1488,16 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   .app.focus-mode .roster-panel { display: none; }
   .app.focus-mode .mobile-filter-button { display: none !important; }
   .mobile-roster-heading {
+    position: sticky;
+    top: 0;
+    z-index: 4;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 13px;
+    min-height: 54px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #0a1922;
     color: var(--paper);
     font: 800 11px/1 var(--utility);
     text-transform: uppercase;
@@ -1503,6 +1518,25 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
     background: rgba(2, 9, 12, .65);
   }
   .app.mobile-roster-open .mobile-roster-scrim { display: block; }
+  .roster-panel .search-wrap { padding-top: 14px; }
+  .roster-panel .result-line {
+    position: sticky;
+    top: 54px;
+    z-index: 3;
+    background: #0a1922;
+  }
+  .roster-panel .roster {
+    min-height: 180px;
+    overflow: visible;
+  }
+  .roster-panel .pager {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    min-height: 48px;
+    background: #0a1922;
+  }
+  .roster-panel .pager button { min-height: 48px; }
   .top-actions .mobile-filter-button {
     display: inline-block;
     padding: 9px 10px;
@@ -1569,7 +1603,13 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 @media (max-width: 620px) {
   body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
   .topbar { height: 62px; padding: 0 10px; }
+  .roster-panel { inset: 62px auto 0 0; }
+  .mobile-roster-scrim { inset: 62px 0 0; }
+  .brand { min-width: 0; padding: 0 8px; }
   .brand small { display: none; }
+  .brand strong { font-size: 14px; }
+  .brand-mark { flex: 0 0 34px; width: 34px; height: 34px; font-size: 22px; }
+  .top-actions { min-width: 0; padding-right: 0; }
   .top-actions .quiet-button,
   .top-actions .export-button { display: none; }
   .top-actions .view-mode-switch button { width: auto; padding: 9px 7px; font-size: 8px; }
