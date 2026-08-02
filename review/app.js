@@ -1654,6 +1654,9 @@ function renderManualSurnameEditor() {
   if (!show) {
     els.manualSurnameEditor.open = false;
     els.manualSurnameInput.value = "";
+    els.manualSurnameInput.classList.remove("invalid");
+    els.manualSurnameSave.disabled = true;
+    els.manualSurnameScores.innerHTML = "";
     return;
   }
   const review = partReview(state.selected.id, state.suggestionPart);
