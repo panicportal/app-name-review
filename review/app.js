@@ -89,6 +89,7 @@ function blankPart() {
     replacement_value: null,
     replacement_source: "",
     replacement_trait_source: "",
+    replacement_language: "",
     replacement_rationale: "",
     replacement_scores: null,
     disabled: false,
@@ -436,6 +437,39 @@ function effectivePartSource(character, key) {
     "";
 }
 
+function replacementLanguage(review, fallback = "western") {
+  if (!review?.replacement_value) return fallback;
+  if (review.replacement_language) return review.replacement_language;
+  const auditText = [
+    review.replacement_source,
+    review.replacement_trait_source,
+    review.replacement_rationale
+  ].filter(Boolean).join(" ");
+  if (/Japanese names surnames\.csv|artist Japanese CSV|closed artist/i.test(auditText)) {
+    return "japanese";
+  }
+  if (/Manual team edit|Western|SSA|behindthename|museum|swimmer/i.test(auditText)) {
+    return "western";
+  }
+  return fallback;
+}
+
+function effectiveFirstLanguage(character) {
+  return replacementLanguage(
+    partReview(character.id, "first"),
+    character.first_name_language || "western"
+  );
+}
+
+function effectiveSurnameLanguage(character) {
+  const languages = ["surname_part_1", "surname_part_2"]
+    .map(key => partReview(character.id, key))
+    .filter(review => !review.disabled && review.replacement_value)
+    .map(review => replacementLanguage(review, character.surname_language || "western"))
+    .filter(Boolean);
+  return languages[0] || character.surname_language || "western";
+}
+
 function replaceFirstExact(text, search, replacement) {
   if (!search || !replacement) return text;
   const pattern = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
@@ -706,7 +740,9 @@ function applyFilters() {
   const surnameLanguage = els.surnameLanguageFilter.value;
   const status = els.statusFilter.value;
   state.filtered = state.data.characters.filter(character => {
-    const characterMix = `${character.first_name_language}+${character.surname_language}`;
+    const effectiveFirst = effectiveFirstLanguage(character);
+    const effectiveSurname = effectiveSurnameLanguage(character);
+    const characterMix = `${effectiveFirst}+${effectiveSurname}`;
     return (
       (!query || searchable(character).includes(query)) &&
       (
@@ -717,8 +753,8 @@ function applyFilters() {
             ))
       ) &&
       (!mix || characterMix === mix) &&
-      (!firstLanguage || character.first_name_language === firstLanguage) &&
-      (!surnameLanguage || character.surname_language === surnameLanguage) &&
+      (!firstLanguage || effectiveFirst === firstLanguage) &&
+      (!surnameLanguage || effectiveSurname === surnameLanguage) &&
       matchesStatus(character, status)
     );
   });
@@ -939,7 +975,7 @@ function renderFocusDeck(character) {
   els.focusClothing.textContent = `${character.clothing || "Special"} · Surv!vor #${character.id}`;
   els.focusName.textContent = effectiveDisplayName(character);
   els.focusMix.textContent =
-    `${character.first_name_language} first · ${character.surname_language} surname · ${status.decided}/${status.total} parts decided`;
+    `${effectiveFirstLanguage(character)} first · ${effectiveSurnameLanguage(character)} surname · ${status.decided}/${status.total} parts decided`;
   els.focusFlipButton.hidden = !canFlipSurname(character);
   if (canFlipSurname(character)) {
     const nextFirst = effectivePartValue(
@@ -1014,8 +1050,10 @@ function renderFocusDeck(character) {
 
 function renderCharacter() {
   const c = state.selected;
+  const liveFirstReview = partReview(c.id, "first");
   els.tokenId.textContent = `Surv!vor #${c.id}`;
-  els.languageMix.textContent = `${c.first_name_language} first / ${c.surname_language} surname`;
+  els.languageMix.textContent =
+    `${effectiveFirstLanguage(c)} first / ${effectiveSurnameLanguage(c)} surname`;
   els.portrait.src = `/pfps_webp/${c.id}.webp`;
   els.portrait.alt = `Pixel portrait of ${c.display_name}, survivor ${c.id}`;
   els.portraitError.hidden = true;
@@ -1040,37 +1078,47 @@ function renderCharacter() {
     );
   }
   els.firstLanguage.textContent =
-    c.first_name_provenance === "sensitivity_review_replacement" ? "Sensitivity-reviewed theme" :
-    c.first_name_provenance === "iconic_animal_reference" ? "Animal character reference" :
-    c.first_name_provenance === "curated_animal_theme" ? "Western animal theme" :
-    c.first_name_provenance === "museum_artist_reference" ? "Museum artist reference" :
-    c.first_name_provenance === "swimmer_champion_reference" ? "Champion swimmer reference" :
-    c.first_name_provenance === "curated_aquatic_theme" ? "Aquatic clothing theme" :
-    c.first_name_provenance === "ssa_curated_western_theme_mix" ? "Western theme + SSA" :
-    c.first_name_provenance === "online_theme_replacement" ? "Online theme + SSA" :
-    c.first_name_provenance?.startsWith("ssa_online") ? "SSA verified" :
-    c.first_name_language === "japanese" ? "Artist Japanese CSV" :
-    languageLabel(c.first_name_language);
-  els.surnameLanguage.textContent = languageLabel(c.surname_language);
-  els.firstRationale.textContent = c.first_rationale;
+    liveFirstReview.replacement_value
+      ? languageLabel(effectiveFirstLanguage(c))
+      : c.first_name_provenance === "sensitivity_review_replacement" ? "Sensitivity-reviewed theme" :
+        c.first_name_provenance === "iconic_animal_reference" ? "Animal character reference" :
+        c.first_name_provenance === "curated_animal_theme" ? "Western animal theme" :
+        c.first_name_provenance === "museum_artist_reference" ? "Museum artist reference" :
+        c.first_name_provenance === "swimmer_champion_reference" ? "Champion swimmer reference" :
+        c.first_name_provenance === "curated_aquatic_theme" ? "Aquatic clothing theme" :
+        c.first_name_provenance === "ssa_curated_western_theme_mix" ? "Western theme + SSA" :
+        c.first_name_provenance === "online_theme_replacement" ? "Online theme + SSA" :
+        c.first_name_provenance?.startsWith("ssa_online") ? "SSA verified" :
+        c.first_name_language === "japanese" ? "Artist Japanese CSV" :
+        languageLabel(c.first_name_language);
+  els.surnameLanguage.textContent = languageLabel(effectiveSurnameLanguage(c));
+  els.firstRationale.textContent =
+    liveFirstReview.replacement_rationale || c.first_rationale;
   els.surnameRationale.textContent = liveSurnameRationale(c);
   els.firstTheme.textContent = c.clothing || "Hand-authored special";
   els.firstGenderRoute.textContent = c.gender_from_body || "Special";
   els.firstEvidence.textContent =
-    c.first_name_provenance === "sensitivity_review_replacement" ? "Collection-wide language and context safety review" :
-    c.first_name_provenance === "iconic_animal_reference" ? "Official character reference layer" :
-    c.first_name_provenance === "curated_animal_theme" ? "Direct animal, habitat, or behavior imagery" :
-    c.first_name_provenance === "museum_artist_reference" ? "Official museum artist index" :
-    c.first_name_provenance === "swimmer_champion_reference" ? "Swimming Hall of Fame reference layer" :
-    c.first_name_provenance === "curated_aquatic_theme" ? "Direct swimming, water, coast, or pool imagery" :
-    c.first_name_provenance === "ssa_curated_western_theme_mix" ? "Curated Western theme + SSA record" :
-    c.first_name_provenance === "online_theme_replacement" ? "Curated online theme source" :
-    c.first_name_provenance?.startsWith("ssa_online") ? "SSA-recorded name" :
-    c.first_name_language === "japanese" ? "Exact artist CSV entry" :
-    c.first_name_language === "western" ? "Curated clothing bank entry" :
-    "Awaiting hand-authored name";
-  els.firstSource.textContent = [c.first_name_source, c.first_name_source_detail]
-    .filter(Boolean).join(" · ");
+    liveFirstReview.replacement_value
+      ? `Live replacement · ${liveFirstReview.replacement_trait_source || `Clothing:${c.clothing}`}`
+      : c.first_name_provenance === "sensitivity_review_replacement" ? "Collection-wide language and context safety review" :
+        c.first_name_provenance === "iconic_animal_reference" ? "Official character reference layer" :
+        c.first_name_provenance === "curated_animal_theme" ? "Direct animal, habitat, or behavior imagery" :
+        c.first_name_provenance === "museum_artist_reference" ? "Official museum artist index" :
+        c.first_name_provenance === "swimmer_champion_reference" ? "Swimming Hall of Fame reference layer" :
+        c.first_name_provenance === "curated_aquatic_theme" ? "Direct swimming, water, coast, or pool imagery" :
+        c.first_name_provenance === "ssa_curated_western_theme_mix" ? "Curated Western theme + SSA record" :
+        c.first_name_provenance === "online_theme_replacement" ? "Curated online theme source" :
+        c.first_name_provenance?.startsWith("ssa_online") ? "SSA-recorded name" :
+        c.first_name_language === "japanese" ? "Exact artist CSV entry" :
+        c.first_name_language === "western" ? "Curated clothing bank entry" :
+        "Awaiting hand-authored name";
+  els.firstSource.textContent = liveFirstReview.replacement_value
+    ? [
+        liveFirstReview.replacement_source,
+        liveFirstReview.replacement_trait_source
+      ].filter(Boolean).join(" · ")
+    : [c.first_name_source, c.first_name_source_detail]
+        .filter(Boolean).join(" · ");
   const liveFirst = effectivePartValue(c, "first");
   const liveFirstUsage = firstNameUsage(liveFirst);
   els.firstNameUsage.textContent = firstNameUsageText(liveFirst);
@@ -1412,6 +1460,7 @@ function exportRecord(character) {
       selected_replacement: review.replacement_value || null,
       replacement_source: review.replacement_source || "",
       replacement_trait_source: review.replacement_trait_source || "",
+      replacement_language: review.replacement_language || "",
       replacement_rationale: review.replacement_rationale || "",
       replacement_scores: review.replacement_scores || null,
       disabled: Boolean(review.disabled),
@@ -1594,6 +1643,7 @@ function mergeImportedPayload(payload) {
         replacement_value: incoming.selected_replacement || incoming.replacement_value || null,
         replacement_source: incoming.replacement_source || "",
         replacement_trait_source: incoming.replacement_trait_source || incoming.replacement_source || "",
+        replacement_language: incoming.replacement_language || "",
         replacement_rationale: incoming.replacement_rationale || "",
         replacement_scores: incoming.replacement_scores || null,
         disabled: Boolean(incoming.disabled),
@@ -1662,6 +1712,7 @@ async function loadPackagedProgress() {
           replacement_value: incoming.selected_replacement || null,
           replacement_source: incoming.replacement_source || "",
           replacement_trait_source: incoming.replacement_trait_source || incoming.replacement_source || "",
+          replacement_language: incoming.replacement_language || "",
           replacement_rationale: incoming.replacement_rationale || "",
           replacement_scores: incoming.replacement_scores || null,
           reviewer: incoming.reviewer || payload.reviewer || "",
@@ -1732,9 +1783,9 @@ function showToast(message, tone = "") {
 }
 
 function suggestionLanguageFor(character, part) {
-  return part === "first"
-    ? (character.first_name_language || "western")
-    : (character.surname_language || "western");
+  if (part === "first") return effectiveFirstLanguage(character);
+  const live = partReview(character.id, part).replacement_language;
+  return live || effectiveSurnameLanguage(character);
 }
 
 function suggestionScoreMarkup(scores = {}) {
@@ -1785,6 +1836,104 @@ function normalizeManualSurnamePart(value) {
   const trimmed = String(value || "").trim();
   if (!/^[A-Za-z]{2,20}$/.test(trimmed)) return null;
   return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+}
+
+function normalizeManualFirstName(value) {
+  const trimmed = String(value || "").trim();
+  if (!/^[A-Za-z][A-Za-z'-]{1,19}$/.test(trimmed)) return null;
+  if (/(pounder|diddy|cig|slur)/i.test(trimmed) || /^isis$/i.test(trimmed)) return null;
+  return trimmed
+    .toLowerCase()
+    .replace(/(^|[-'])\p{L}/gu, match => match.toUpperCase());
+}
+
+function manualFirstNameUsage(value) {
+  if (!value || !state.data) return 0;
+  const target = value.toLowerCase();
+  return state.data.characters.reduce((count, character) => {
+    if (character.id === state.selected?.id) return count;
+    return count + (
+      effectivePartValue(character, "first").toLowerCase() === target ? 1 : 0
+    );
+  }, 0);
+}
+
+function manualFirstPreview(value) {
+  const normalized = normalizeManualFirstName(value);
+  if (!normalized || !state.selected || state.suggestionPart !== "first") return null;
+  const usageCount = manualFirstNameUsage(normalized);
+  return {
+    value: normalized,
+    usageCount,
+    fullName: `${normalized} ${effectiveSurname(state.selected)}`.trim()
+  };
+}
+
+function updateManualFirstPreview() {
+  const raw = els.manualFirstInput.value;
+  const preview = manualFirstPreview(raw);
+  const started = Boolean(raw.trim());
+  const duplicate = Boolean(preview?.usageCount);
+  els.manualFirstInput.classList.toggle("invalid", started && (!preview || duplicate));
+  els.manualFirstSave.disabled = !preview || duplicate;
+  if (!preview) {
+    els.manualFirstFullName.textContent = started
+      ? "Use 2–20 English letters"
+      : "Start typing to preview";
+    els.manualFirstMeta.textContent =
+      "Letters, apostrophe, or hyphen only · sensitive terms are blocked";
+    return;
+  }
+  els.manualFirstFullName.textContent = preview.fullName;
+  els.manualFirstMeta.textContent = duplicate
+    ? `Already used ${preview.usageCount}× elsewhere · choose a unique first name`
+    : `Unused collection-wide · Western custom for ${state.selected.clothing || "this character"}`;
+}
+
+function renderManualFirstEditor() {
+  const show =
+    state.suggestionPart === "first" &&
+    state.suggestionLanguage === "western";
+  els.manualFirstEditor.hidden = !show;
+  if (!show) {
+    els.manualFirstEditor.open = false;
+    els.manualFirstInput.value = "";
+    els.manualFirstInput.classList.remove("invalid");
+    els.manualFirstSave.disabled = true;
+    return;
+  }
+  const review = partReview(state.selected.id, "first");
+  els.manualFirstInput.value =
+    review.replacement_source === "Manual team edit · Western clothing theme"
+      ? review.replacement_value || ""
+      : "";
+  els.manualFirstHelp.textContent =
+    `Saves only for Surv!vor #${state.selected.id}. It is recorded as a Western custom ` +
+    `for Clothing:${state.selected.clothing || "No clothing trait"} and checked against all 3,333 live first names.`;
+  updateManualFirstPreview();
+}
+
+function saveManualFirstName() {
+  const preview = manualFirstPreview(els.manualFirstInput.value);
+  if (!preview || preview.usageCount || state.suggestionLanguage !== "western") return;
+  const definition = partDefinitions(state.selected).find(part => part.key === "first");
+  const traitSource = `Clothing:${state.selected.clothing || "No clothing trait"}`;
+  updatePartReview("first", {
+    decision: "replace",
+    scope: "this_character",
+    disabled: false,
+    replacement_value: preview.value,
+    replacement_source: "Manual team edit · Western clothing theme",
+    replacement_trait_source: traitSource,
+    replacement_language: "western",
+    replacement_rationale:
+      `Manually curated by the team as a Western first name for ${traitSource}. ` +
+      `Replaced “${definition?.value || ""}” with the collection-unique “${preview.value}” ` +
+      `for Surv!vor #${state.selected.id} only. Saved full-name preview: ${preview.fullName}.`,
+    replacement_scores: null
+  });
+  els.suggestionDialog.close();
+  showToast(`Saved unique custom first name ${preview.fullName}.`, "success");
 }
 
 function manualSurnameUsage(value) {
@@ -1909,6 +2058,7 @@ function saveManualSurnamePart() {
     replacement_value: preview.value,
     replacement_source: "Manual team edit",
     replacement_trait_source: traitSource,
+    replacement_language: "western",
     replacement_rationale:
       `Manually curated by the team for ${traitSource || "this character's trait"}. ` +
       `Replaced “${definition?.value || ""}” with “${preview.value}” for Surv!vor #${state.selected.id} only. ` +
@@ -2159,6 +2309,7 @@ async function openSuggestions(part, language = null, source = null) {
   );
   els.suggestionTraitSource.disabled = true;
   els.suggestionTraitSourceApply.disabled = true;
+  renderManualFirstEditor();
   renderManualSurnameEditor();
   if (!els.suggestionDialog.open) els.suggestionDialog.showModal();
   try {
@@ -2181,6 +2332,7 @@ async function openSuggestions(part, language = null, source = null) {
     state.suggestionSource = payload.trait_source;
     renderSuggestionTraitSources();
     renderSuggestionCurrentPreview();
+    renderManualFirstEditor();
     renderManualSurnameEditor();
     renderSuggestionOptions();
   } catch (error) {
@@ -2199,6 +2351,7 @@ function chooseSuggestion(candidate, order = "12", single = false) {
     replacement_value: candidate.value,
     replacement_source: candidate.source,
     replacement_trait_source: state.suggestionPayload?.trait_source || candidate.source,
+    replacement_language: candidate.language || state.suggestionLanguage,
     replacement_rationale:
       `${candidate.fit} ${candidate.uniqueness}. ` +
       `Chosen full-name preview: ${
@@ -2435,6 +2588,8 @@ function bindEvents() {
   });
   els.manualSurnameInput.addEventListener("input", updateManualSurnamePreview);
   els.manualSurnameSave.addEventListener("click", saveManualSurnamePart);
+  els.manualFirstInput.addEventListener("input", updateManualFirstPreview);
+  els.manualFirstSave.addEventListener("click", saveManualFirstName);
   els.mobilePrevious.addEventListener("click", () => moveSelection(-1));
   els.mobileApprove.addEventListener("click", approveRemaining);
   els.mobileNext.addEventListener("click", () => moveSelection(1));

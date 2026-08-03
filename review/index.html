@@ -377,21 +377,42 @@
           <button id="suggestionUseSingleCurrent" hidden>Use only this surname part</button>
         </div>
       </section>
-      <details class="manual-surname-editor" id="manualSurnameEditor">
+      <details class="manual-name-editor manual-first-editor" id="manualFirstEditor" hidden>
+        <summary>Write your own Western first name</summary>
+        <div class="manual-name-body">
+          <label for="manualFirstInput">
+            <span>Custom first name</span>
+            <input id="manualFirstInput" maxlength="20" autocomplete="off"
+              inputmode="text" placeholder="Example: Skipper">
+          </label>
+          <div class="manual-name-preview">
+            <span>Full-name preview</span>
+            <strong id="manualFirstFullName">Start typing to preview</strong>
+            <small id="manualFirstMeta">English letters, apostrophe, or hyphen · must be unique</small>
+          </div>
+          <button class="manual-name-save" id="manualFirstSave" disabled>
+            Save custom first name
+          </button>
+        </div>
+        <p id="manualFirstHelp">
+          Saves as a Western clothing-theme choice for this character and remains visible in the audit trail.
+        </p>
+      </details>
+      <details class="manual-name-editor manual-surname-editor" id="manualSurnameEditor">
         <summary>Write your own surname part</summary>
-        <div class="manual-surname-body">
+        <div class="manual-name-body manual-surname-body">
           <label for="manualSurnameInput">
             <span>Custom surname fragment</span>
             <input id="manualSurnameInput" maxlength="20" autocomplete="off"
               inputmode="text" placeholder="Example: Skater">
           </label>
-          <div class="manual-surname-preview">
+          <div class="manual-name-preview manual-surname-preview">
             <span>Full-name preview</span>
             <strong id="manualSurnameFullName">Start typing to preview</strong>
             <small id="manualSurnameMeta">English letters only · 2–20 characters</small>
           </div>
           <div class="preview-score-pair" id="manualSurnameScores"></div>
-          <button class="manual-surname-save" id="manualSurnameSave" disabled>
+          <button class="manual-name-save manual-surname-save" id="manualSurnameSave" disabled>
             Save manual surname part
           </button>
         </div>
@@ -428,6 +449,6 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=13-5-aug03"></script>
+  <script src="/review/app.js?v=14-0-aug04"></script>
 </body>
 </html>

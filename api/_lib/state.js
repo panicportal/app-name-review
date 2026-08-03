@@ -18,6 +18,15 @@ function seedCuration() {
         decision: part.decision,
         scope: part.scope || null,
         note: part.note || "",
+        replacement_value:
+          part.selected_replacement || part.replacement_value || null,
+        replacement_source: part.replacement_source || "",
+        replacement_trait_source:
+          part.replacement_trait_source || part.replacement_source || "",
+        replacement_language: part.replacement_language || "",
+        replacement_rationale: part.replacement_rationale || "",
+        replacement_scores: part.replacement_scores || null,
+        disabled: Boolean(part.disabled),
         reviewer: part.reviewer || seed.reviewer || "",
         updated_at: part.updated_at || seed.exported_at || new Date().toISOString(),
       };
