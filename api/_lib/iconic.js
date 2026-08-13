@@ -187,6 +187,8 @@ function coverage(iconicState, liveState) {
         Female,
         target_total: Male.target + Female.target,
         approved_total: Male.approved + Female.approved,
+        capacity_approved_total:
+          Math.min(Male.approved, Male.target) + Math.min(Female.approved, Female.target),
         proposed_total: Male.proposed + Female.proposed,
         rejected_total: Male.rejected + Female.rejected,
         needed_total: Male.needed + Female.needed,

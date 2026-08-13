@@ -2143,7 +2143,9 @@ function renderSuggestionTraitSources() {
     els.suggestionPolicy.textContent =
       state.suggestionLanguage === "japanese" && coverage
         ? `Closed artist CSV only · ${coverage.unused_exact_options} unused exact options for this character from Clothing and its other visible traits · Body:${payload.gender_route}.`
-        : "Western first names come only from the curated clothing-theme bank and must be unused across the full collection.";
+        : state.suggestionNameSource === "iconic"
+          ? "Persistent Iconic / Fun bank only · exact Clothing + Body gender · human-approved references · unused collection-wide."
+          : "Western first names come only from the curated clothing-theme bank and must be unused across the full collection.";
     return;
   }
   els.suggestionTraitSourceLabel.textContent = isSurname

@@ -43,12 +43,12 @@
     );
     el("iconicCoverageList").innerHTML = rows.map((row) => {
       const completion = row.target_total
-        ? Math.min(100, Math.round(row.approved_total / row.target_total * 100))
+        ? Math.min(100, Math.round(row.capacity_approved_total / row.target_total * 100))
         : 100;
       return `<button class="iconic-coverage-card ${row.clothing === iconic.selectedTrait ? "active" : ""}"
         data-iconic-trait="${escape(row.clothing)}" style="--coverage:${completion}%">
         <strong>${escape(row.clothing)}</strong><b>${row.needed_total}</b>
-        <small>${row.characters} characters · ${row.approved_total}/${row.target_total} approved</small>
+        <small>${row.characters} characters · ${row.capacity_approved_total}/${row.target_total} active capacity</small>
         <i aria-label="${completion}% capacity"></i>
       </button>`;
     }).join("");
@@ -121,10 +121,11 @@
     const row = selectedCoverage();
     if (!row) return;
     const gender = activeGender(row);
+    const active = row[gender];
     el("iconicTraitTitle").textContent = row.clothing;
     el("iconicTraitSummary").textContent =
       `${row.characters} collection characters · active ${gender} route · ` +
-      `${row.approved_total} approved and ${row.proposed_total} awaiting review. ` +
+      `${active.approved}/${active.target} active capacity approved; ${row.approved_total} approved across both stored gender pools. ` +
       `The normal and Japanese banks remain separate.`;
     el("iconicCapacityStamp").querySelector("strong").textContent = row.needed_total;
     renderLedger(row);
