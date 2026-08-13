@@ -1,5 +1,6 @@
 const crypto = require("node:crypto");
 const seed = require("../../iconic_fun_seed");
+const expansion = require("../../iconic_fun_expansion");
 const review = require("../../review_data.json");
 const { readJson, writeJson } = require("./store");
 
@@ -18,6 +19,15 @@ const CATEGORIES = [
   "Other",
 ];
 const STATUSES = ["approved", "proposed", "rejected"];
+const ICONIC_SEED_VERSION = 4;
+
+function bankSection(category) {
+  if (["Iconic Character", "Internet Culture"].includes(category)) return "Screen, Games & Culture";
+  if (["Historical / Real Person", "Historical / Real Animal"].includes(category)) return "Real Legends";
+  if (["Mythology / Folklore", "Cultural Archetype"].includes(category)) return "Lore & Archetypes";
+  if (["Trait Term", "Nickname"].includes(category)) return "Trait Words, Sounds & Objects";
+  return "Wordplay & Collectible Aliases";
+}
 
 function slug(value) {
   return String(value || "")
@@ -53,6 +63,7 @@ function expandSeed() {
           clothing,
           gender,
           category,
+          bank_section: bankSection(category),
           reference,
           source_url: sourceUrl(reference),
           reason,
@@ -69,13 +80,91 @@ function expandSeed() {
   return candidates;
 }
 
+function titleCase(value) {
+  return String(value || "")
+    .trim()
+    .replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
+}
+
+function expandTraitVocabulary(candidates) {
+  const counts = traitCounts();
+  for (const [clothing, config] of Object.entries(expansion)) {
+    const activeGender = counts[clothing]?.Male > 0 ? "Male" : "Female";
+    const target = capacityTarget(counts[clothing]?.[activeGender] || 0) + 50;
+    const existingNames = new Set(
+      Object.values(candidates)
+        .filter((candidate) => candidate.clothing === clothing && candidate.gender === activeGender)
+        .map((candidate) => candidate.name.toLowerCase())
+    );
+    const add = (name, category, reference, reason, confidence) => {
+      const clean = titleCase(name).replace(/\s+/g, " ");
+      if (!/^[A-Za-z][A-Za-z' -]{1,23}$/.test(clean) || existingNames.has(clean.toLowerCase())) return;
+      existingNames.add(clean.toLowerCase());
+      const id = candidateId(clothing, activeGender, clean, reference);
+      candidates[id] = {
+        id,
+        name: clean,
+        clothing,
+        gender: activeGender,
+        category,
+        bank_section: bankSection(category),
+        reference,
+        source_url: sourceUrl(`${clothing} terminology`),
+        reason,
+        confidence,
+        status: "approved",
+        source_kind: "curated_trait_expansion",
+        created_at: "2026-08-13T00:00:00.000Z",
+        updated_at: "2026-08-13T00:00:00.000Z",
+        updated_by: "Name Studio trait-bank expansion",
+      };
+    };
+    for (const root of config.roots || []) {
+      add(
+        root,
+        "Trait Term",
+        `Curated ${clothing} vocabulary`,
+        `Directly names a recognizable ${clothing} character, role, object, sound, action, or setting.`,
+        91
+      );
+    }
+    const protectedReferenceNames = new Set(
+      Object.values(candidates)
+        .filter(candidate => candidate.clothing === clothing && candidate.gender === activeGender)
+        .filter(candidate => ["Iconic Character", "Historical / Real Person", "Historical / Real Animal"].includes(candidate.category))
+        .map(candidate => candidate.name.toLowerCase())
+    );
+    const combinationRoots = (config.roots || [])
+      .filter(root => !protectedReferenceNames.has(String(root).toLowerCase()));
+    outer:
+    for (const modifier of config.modifiers || []) {
+      for (const root of combinationRoots) {
+        add(
+          `${modifier} ${root}`,
+          "Wordplay",
+          `Curated ${clothing} collectible alias`,
+          `Combines two recognizable ${clothing}-specific ideas into a readable collectible alias.`,
+          84
+        );
+        if (existingNames.size >= target) break outer;
+      }
+    }
+  }
+  return candidates;
+}
+
+function canonicalCandidates() {
+  return expandTraitVocabulary(expandSeed());
+}
+
 function initialIconicState() {
   return {
-    schema_version: "panic-iconic-bank/v1",
+    schema_version: "panic-iconic-bank/v2",
+    seed_version: ICONIC_SEED_VERSION,
     revision: 1,
     updated_at: new Date().toISOString(),
     updated_by: "Name Studio editorial seed",
-    candidates: expandSeed(),
+    candidates: canonicalCandidates(),
     discovery_runs: [],
   };
 }
@@ -84,6 +173,21 @@ async function getOrCreateIconicState() {
   let state = await readJson(ICONIC_STORE_KEY);
   if (!state) {
     state = initialIconicState();
+    await writeJson(ICONIC_STORE_KEY, state);
+  } else if (Number(state.seed_version || 0) < ICONIC_SEED_VERSION) {
+    const canonical = canonicalCandidates();
+    state.candidates ||= {};
+    for (const [id, candidate] of Object.entries(state.candidates)) {
+      if (candidate.source_kind === "curated_trait_expansion" && !canonical[id]) delete state.candidates[id];
+    }
+    for (const [id, candidate] of Object.entries(canonical)) {
+      if (!state.candidates[id]) state.candidates[id] = candidate;
+    }
+    state.schema_version = "panic-iconic-bank/v2";
+    state.seed_version = ICONIC_SEED_VERSION;
+    state.revision = Number(state.revision || 0) + 1;
+    state.updated_at = new Date().toISOString();
+    state.updated_by = "Name Studio trait-bank expansion migration";
     await writeJson(ICONIC_STORE_KEY, state);
   }
   return state;
@@ -96,7 +200,7 @@ async function writeIconicState(state) {
 function capacityTarget(count) {
   const n = Number(count || 0);
   if (n <= 0) return 0;
-  if (n < 100) return Math.ceil((40 + n * 0.95) / 5) * 5;
+  if (n < 100) return Math.max(100, Math.ceil((40 + n * 0.95) / 5) * 5);
   if (n < 200) return Math.ceil((n * 1.5) / 5) * 5;
   return Math.ceil((n + 100) / 5) * 5;
 }
@@ -150,6 +254,7 @@ function enrichedCandidates(iconicState, liveState) {
       poolKeys.add(poolKey);
       return {
         ...candidate,
+        bank_section: candidate.bank_section || bankSection(candidate.category),
         conflicts: {
           assigned: assigned.has(String(candidate.name).toLowerCase()),
           normal_bank: normal.has(String(candidate.name).toLowerCase()),
@@ -231,6 +336,7 @@ module.exports = {
   candidateId,
   capacityTarget,
   CATEGORIES,
+  bankSection,
   coverage,
   enrichedCandidates,
   getOrCreateIconicState,

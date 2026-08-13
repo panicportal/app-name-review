@@ -3,7 +3,7 @@ const catalog = require("../cloud_suggestion_catalog.json");
 const review = require("../review_data.json");
 const { requireSession } = require("./_lib/auth");
 const { getOrCreateState } = require("./_lib/state");
-const { getOrCreateIconicState } = require("./_lib/iconic");
+const { bankSection, getOrCreateIconicState } = require("./_lib/iconic");
 
 const characters = new Map(
   review.characters.map((character) => [String(character.id), character])
@@ -117,6 +117,7 @@ function candidatesFor(
           rank: Math.max(0, 100 - Number(candidate.confidence || 0)),
           iconic_candidate_id: candidate.id,
           iconic_category: candidate.category,
+          iconic_bank_section: candidate.bank_section || bankSection(candidate.category),
           iconic_reference: candidate.reference,
           iconic_source_url: candidate.source_url,
           iconic_confidence: candidate.confidence,
@@ -544,16 +545,20 @@ module.exports = async function handler(req, res) {
     );
     const suggestions = [];
     const seen = new Set();
-    for (const candidate of [
-      ...balanced.slice(0, 18),
-      ...shortest.slice(0, 14),
-      ...leastUsed.slice(0, 10),
-    ]) {
+    const rankedPool = nameSource === "iconic"
+      ? balanced
+      : [
+          ...balanced.slice(0, 18),
+          ...shortest.slice(0, 14),
+          ...leastUsed.slice(0, 10),
+        ];
+    const suggestionLimit = nameSource === "iconic" ? 400 : 36;
+    for (const candidate of rankedPool) {
       const key = candidate.value.toLowerCase();
       if (seen.has(key)) continue;
       seen.add(key);
       suggestions.push(candidate);
-      if (suggestions.length >= 36) break;
+      if (suggestions.length >= suggestionLimit) break;
     }
     return res.status(200).json({
       character_id: id,

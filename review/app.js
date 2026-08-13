@@ -8,7 +8,7 @@ const PACKAGED_PROGRESS_URL = "/cloud_seed_curation.json";
 const PART_KEYS = ["first", "surname_part_1", "surname_part_2"];
 const CLOUD_POLL_MS = 12000;
 const SURNAME_FORMAT_VERSION = 2;
-const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v1";
+const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v2";
 
 function emptyCuration() {
   return {
@@ -49,7 +49,9 @@ const state = {
   cloudHistory: [],
   suggestionPart: null,
   suggestionLanguage: null,
-  suggestionNameSource: "normal",
+  suggestionNameSource: "iconic",
+  suggestionCategory: "all",
+  suggestionSearch: "",
   suggestionSource: null,
   suggestionSort: "balanced",
   suggestionPayload: null,
@@ -68,7 +70,7 @@ const state = {
     lastSpoken: "",
     lastTranscript: "",
     wakeLock: null,
-    settings: { personality: "adaptive", rate: 1 }
+    settings: { personality: "scout", rate: 0.8, voiceURI: "" }
   }
 };
 
@@ -1218,6 +1220,7 @@ function renderCharacter() {
 
   renderCharacterCuration(c);
   renderFocusDeck(c);
+  updateVoiceWorkspace();
 }
 
 function moveSelection(direction) {
@@ -2205,6 +2208,12 @@ function sortedSuggestionEntries() {
       compact: candidate.length_check === "Compact length"
     };
     return { candidate, index, order, preview };
+  }).filter(({ candidate }) => {
+    if (state.suggestionCategory !== "all" && candidate.iconic_bank_section !== state.suggestionCategory) return false;
+    const query = state.suggestionSearch.trim().toLowerCase();
+    if (!query) return true;
+    return [candidate.value, candidate.fit, candidate.iconic_reference, candidate.iconic_category]
+      .some(value => String(value || "").toLowerCase().includes(query));
   });
   if (state.suggestionSort === "shortest") {
     return entries.sort((left, right) =>
@@ -2237,6 +2246,10 @@ function sortedSuggestionEntries() {
 
 function renderSuggestionOptions() {
   const entries = sortedSuggestionEntries();
+  if (els.suggestionResultCount) {
+    const total = state.suggestionPayload?.suggestions?.length || 0;
+    els.suggestionResultCount.textContent = `${entries.length} shown · ${total} available`;
+  }
   if (!entries.length) {
     const message =
       state.suggestionPart === "first" && state.suggestionLanguage === "japanese"
@@ -2262,6 +2275,7 @@ function renderSuggestionOptions() {
         <div class="preview-score-pair">${suggestionScoreMarkup(preview.scores)}</div>
       </div>
       <div class="suggestion-component-change">${escapeHtml(changeLabel)}</div>
+      ${candidate.iconic_bank_section ? `<div class="suggestion-bank-badge">${escapeHtml(candidate.iconic_bank_section)} · ${escapeHtml(candidate.iconic_category || "")}</div>` : ""}
       <p>${escapeHtml(candidate.fit)}</p>
       <small>${escapeHtml(candidate.source)} · ${escapeHtml(candidate.uniqueness)}</small>
       <small>${escapeHtml(preview.scores?.readability_note || "")} · ${escapeHtml(preview.scores?.collectability_note || "")}</small>
@@ -2293,10 +2307,12 @@ async function openSuggestions(part, language = null, source = null, nameSource 
   const requestVersion = ++state.suggestionRequestVersion;
   state.suggestionPart = part;
   state.suggestionLanguage = language || suggestionLanguageFor(state.selected, part);
-  state.suggestionNameSource =
-    part === "first" && state.suggestionLanguage === "western" && nameSource === "iconic"
-      ? "iconic"
-      : "normal";
+  state.suggestionNameSource = part === "first" && state.suggestionLanguage === "western"
+    ? (nameSource === "normal" ? "normal" : "iconic")
+    : "normal";
+  state.suggestionCategory = "all";
+  state.suggestionSearch = "";
+  if (els.suggestionSearch) els.suggestionSearch.value = "";
   const definition = partDefinitions(state.selected).find(item => item.key === part);
   const requestedTraitSource = part.startsWith("surname_") ||
     (part === "first" && state.suggestionLanguage === "japanese")
@@ -2320,6 +2336,11 @@ async function openSuggestions(part, language = null, source = null, nameSource 
   els.suggestionNameSource.querySelectorAll("[data-name-source]").forEach(button => {
     button.classList.toggle("active", button.dataset.nameSource === state.suggestionNameSource);
   });
+  els.suggestionSubBanks.hidden = !(part === "first" && state.suggestionNameSource === "iconic");
+  if (!els.suggestionSubBanks.hidden) {
+    els.suggestionCategoryTabs.innerHTML = `<span class="suggestion-loading-inline">Loading categorized trait names…</span>`;
+    els.suggestionResultCount.textContent = "";
+  }
   els.suggestionPolicy.textContent =
     state.suggestionLanguage === "japanese"
       ? "Japanese mode is closed-bank only: every option must be an exact entry from the artist CSV. Gender routing comes only from Body."
@@ -2363,11 +2384,30 @@ async function openSuggestions(part, language = null, source = null, nameSource 
     if (requestVersion !== state.suggestionRequestVersion) return;
     state.suggestionPayload = payload;
     state.suggestionSource = payload.trait_source;
+    const sections = [...new Set((payload.suggestions || [])
+      .map(candidate => candidate.iconic_bank_section)
+      .filter(Boolean))];
+    els.suggestionSubBanks.hidden = !(state.suggestionPart === "first" && state.suggestionNameSource === "iconic");
+    els.suggestionCategoryTabs.innerHTML = ["all", ...sections].map(section => {
+      const count = section === "all"
+        ? payload.suggestions.length
+        : payload.suggestions.filter(candidate => candidate.iconic_bank_section === section).length;
+      const label = section === "all" ? "All trait names" : section;
+      return `<button class="${section === state.suggestionCategory ? "active" : ""}" data-suggestion-category="${escapeHtml(section)}">${escapeHtml(label)} <b>${count}</b></button>`;
+    }).join("");
+    els.suggestionCategoryTabs.querySelectorAll("[data-suggestion-category]").forEach(button => {
+      button.addEventListener("click", () => {
+        state.suggestionCategory = button.dataset.suggestionCategory;
+        els.suggestionCategoryTabs.querySelectorAll("button").forEach(item => item.classList.toggle("active", item === button));
+        renderSuggestionOptions();
+      });
+    });
     renderSuggestionTraitSources();
     renderSuggestionCurrentPreview();
     renderManualFirstEditor();
     renderManualSurnameEditor();
     renderSuggestionOptions();
+    updateVoiceWorkspace();
   } catch (error) {
     if (requestVersion !== state.suggestionRequestVersion) return;
     els.suggestionList.innerHTML = `<div class="suggestion-empty">${escapeHtml(error.message)}</div>`;
@@ -2507,9 +2547,10 @@ function loadVoiceSettings() {
     const saved = JSON.parse(localStorage.getItem(VOICE_SETTINGS_KEY) || "null");
     if (saved && typeof saved === "object") {
       state.voice.settings.personality = ["adaptive", "scout", "calm", "bold"]
-        .includes(saved.personality) ? saved.personality : "adaptive";
-      state.voice.settings.rate = [0.85, 1, 1.15].includes(Number(saved.rate))
-        ? Number(saved.rate) : 1;
+        .includes(saved.personality) ? saved.personality : "scout";
+      const rate = Number(saved.rate);
+      state.voice.settings.rate = Number.isFinite(rate) ? Math.max(.55, Math.min(1.2, rate)) : .8;
+      state.voice.settings.voiceURI = String(saved.voiceURI || "");
       state.voice.muted = Boolean(saved.muted);
     }
   } catch (_) {
@@ -2532,10 +2573,76 @@ function setVoiceVisualState(status, label, hint = "") {
   document.body.classList.toggle("voice-listening", status === "listening");
 }
 
+function updateVoiceWorkspace() {
+  if (!els.voiceDock || els.voiceDock.hidden || !state.selected) return;
+  const character = state.selected;
+  els.voicePortrait.src = `/pfps_webp/${character.id}.webp`;
+  els.voiceCharacterId.textContent = `Character #${character.id} · ${character.clothing || "Special"}`;
+  els.voiceCharacterName.textContent = effectiveDisplayName(character);
+  els.voiceCharacterTraits.textContent = character.traits
+    .slice(0, 5)
+    .map(trait => `${trait.type}: ${trait.value}`)
+    .join(" · ");
+
+  let stage = "confirm";
+  let hint = "This character is decided. Say “next undecided” to keep moving.";
+  let recommended = ["next undecided"];
+  if (state.voice.pending) {
+    stage = "confirm";
+    hint = `Confirm the pending change: ${state.voice.pending.label}.`;
+    recommended = ["confirm", "cancel"];
+  } else if (els.suggestionDialog?.open) {
+    stage = "options";
+    hint = "The option bank is open. Read choices or choose an option number.";
+    recommended = ["read options", "use option one", "use option two", "use option three"];
+  } else {
+    const nextPart = partDefinitions(character).find(part => {
+      if (!part.available) return false;
+      const review = partReview(character.id, part.key);
+      return review.decision !== "approve" && !(review.decision === "replace" && (review.replacement_value || review.disabled));
+    });
+    if (nextPart) {
+      stage = nextPart.key;
+      const review = partReview(character.id, nextPart.key);
+      const label = voicePartLabel(nextPart.key);
+      if (review.decision === "replace") {
+        hint = `${label} is marked red. Open its fitting bank or dictate a custom replacement.`;
+        recommended = nextPart.key === "first"
+          ? ["suggest first", "iconic options"]
+          : [`suggest surname ${nextPart.key === "surname_part_2" ? "two" : "one"}`];
+      } else {
+        hint = `Review ${label}. Lock it if it fits, or mark it for replacement.`;
+        recommended = nextPart.key === "first"
+          ? ["lock first", "replace first"]
+          : [`lock surname ${nextPart.key === "surname_part_2" ? "two" : "one"}`, `mark surname ${nextPart.key === "surname_part_2" ? "two" : "one"} for replacement`];
+      }
+    }
+  }
+  els.voiceNextStep.textContent = hint;
+  els.voiceCommandBoard.querySelectorAll("[data-voice-stage]").forEach(section => {
+    section.classList.toggle("recommended", section.dataset.voiceStage === stage);
+  });
+  els.voiceCommandBoard.querySelectorAll("[data-voice-command]").forEach(button => {
+    button.classList.toggle("command-recommended", recommended.includes(button.dataset.voiceCommand));
+  });
+}
+
+function populateVoiceChoices() {
+  if (!els.voiceSelect || !("speechSynthesis" in window)) return;
+  const voices = window.speechSynthesis.getVoices()
+    .filter(voice => /^en(?:[-_]|$)/i.test(voice.lang));
+  const previous = state.voice.settings.voiceURI;
+  els.voiceSelect.innerHTML = `<option value="">Default clear English voice</option>` + voices.map(voice =>
+    `<option value="${escapeHtml(voice.voiceURI)}">${escapeHtml(voice.name)} · ${escapeHtml(voice.lang)}${voice.localService ? " · device" : ""}</option>`
+  ).join("");
+  if (voices.some(voice => voice.voiceURI === previous)) els.voiceSelect.value = previous;
+}
+
 function setVoiceDock(open) {
   els.voiceDock.hidden = !open;
   els.voiceModeButton.classList.toggle("active", open);
   els.voiceModeButton.setAttribute("aria-expanded", String(open));
+  document.body.classList.toggle("voice-mode-open", open);
   if (open) {
     setVoiceVisualState(
       state.voice.supported ? "ready" : "unsupported",
@@ -2544,6 +2651,7 @@ function setVoiceDock(open) {
         ? "Tap Listen, or enable hands-free after microphone permission is granted."
         : "Use the microphone on your phone keyboard in the command field."
     );
+    updateVoiceWorkspace();
   } else {
     stopVoiceListening(true);
   }
@@ -2556,8 +2664,8 @@ function voiceProfile() {
     personality = /pirate|king|queen|devil|bull/.test(clothing) ? "bold" :
       /angel|painter|kimono|saint/.test(clothing) ? "calm" : "scout";
   }
-  return personality === "bold" ? { pitch: 0.86, rate: 1.04 } :
-    personality === "calm" ? { pitch: 0.96, rate: 0.92 } :
+  return personality === "bold" ? { pitch: 0.86, rate: 1 } :
+    personality === "calm" ? { pitch: 0.96, rate: 1 } :
       { pitch: 1, rate: 1 };
 }
 
@@ -2578,7 +2686,8 @@ function speakVoice(message, { resume = true } = {}) {
     utterance.pitch = profile.pitch;
     utterance.rate = Math.max(.65, Math.min(1.4, profile.rate * state.voice.settings.rate));
     const voices = window.speechSynthesis.getVoices();
-    utterance.voice = voices.find(voice => /^en[-_]/i.test(voice.lang)) || voices[0] || null;
+    utterance.voice = voices.find(voice => voice.voiceURI === state.voice.settings.voiceURI) ||
+      voices.find(voice => /^en[-_]/i.test(voice.lang)) || voices[0] || null;
     const finish = () => {
       resolve();
       if (resume && state.voice.handsFree && !els.voiceDock.hidden) {
@@ -2741,6 +2850,7 @@ function voicePartLabel(key) {
 function requestVoiceConfirmation(label, action) {
   state.voice.pending = { label, action, characterId: String(state.selected?.id || "") };
   setVoiceVisualState("confirm", "Confirmation needed", `Say “confirm” to ${label}, or “cancel”.`);
+  updateVoiceWorkspace();
   return speakVoice(`Ready to ${label}. Say confirm to save, or cancel.`);
 }
 
@@ -2787,6 +2897,7 @@ async function executeVoiceCommand(raw) {
   if (intent.type === "cancel") {
     state.voice.pending = null;
     setVoiceVisualState("ready", "Cancelled", "No change was saved.");
+    updateVoiceWorkspace();
     return speakVoice("Cancelled. Nothing was changed.");
   }
   if (state.voice.pending) {
@@ -2948,6 +3059,9 @@ function initVoiceControl() {
   loadVoiceSettings();
   els.voicePersonality.value = state.voice.settings.personality;
   els.voiceRate.value = String(state.voice.settings.rate);
+  els.voiceRateValue.textContent = `${state.voice.settings.rate.toFixed(2)}×`;
+  populateVoiceChoices();
+  if ("speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = populateVoiceChoices;
   els.voiceMuteButton.textContent = state.voice.muted ? "Voice back off" : "Voice back on";
   els.voiceMuteButton.setAttribute("aria-pressed", String(state.voice.muted));
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -3044,13 +3158,28 @@ function bindEvents() {
     state.voice.settings.personality = els.voicePersonality.value;
     saveVoiceSettings();
   });
-  els.voiceRate.addEventListener("change", () => {
-    state.voice.settings.rate = Number(els.voiceRate.value) || 1;
+  els.voiceSelect.addEventListener("change", () => {
+    state.voice.settings.voiceURI = els.voiceSelect.value;
+    saveVoiceSettings();
+  });
+  els.voiceRate.addEventListener("input", () => {
+    state.voice.settings.rate = Number(els.voiceRate.value) || .8;
+    els.voiceRateValue.textContent = `${state.voice.settings.rate.toFixed(2)}×`;
     saveVoiceSettings();
   });
   els.voiceTutorialTest.addEventListener("click", () =>
     speakVoice(`Voice check. Character ${state.selected?.id || 1}. Ready for curation.`)
   );
+  els.voiceCommandBoard.querySelectorAll("[data-voice-command]").forEach(button => {
+    button.addEventListener("click", () => executeVoiceCommand(button.dataset.voiceCommand));
+  });
+  els.voiceCommandBoard.querySelectorAll("[data-voice-example]").forEach(button => {
+    button.addEventListener("click", () => {
+      els.voiceCommandInput.value = `${button.dataset.voiceExample} `;
+      els.voiceCommandInput.focus();
+      els.voiceCommandInput.setSelectionRange(els.voiceCommandInput.value.length, els.voiceCommandInput.value.length);
+    });
+  });
   els.viewModeSwitch.querySelectorAll("[data-view-mode]").forEach(button => {
     button.addEventListener("click", () => setViewMode(button.dataset.viewMode));
   });
@@ -3122,7 +3251,10 @@ function bindEvents() {
     els.activityDialog.showModal();
   });
   els.activityClose.addEventListener("click", () => els.activityDialog.close());
-  els.suggestionClose.addEventListener("click", () => els.suggestionDialog.close());
+  els.suggestionClose.addEventListener("click", () => {
+    els.suggestionDialog.close();
+    updateVoiceWorkspace();
+  });
   els.suggestionLanguage.querySelectorAll("[data-language]").forEach(button => {
     button.addEventListener("click", () => {
       openSuggestions(state.suggestionPart, button.dataset.language, state.suggestionSource);
@@ -3137,6 +3269,10 @@ function bindEvents() {
         button.dataset.nameSource
       );
     });
+  });
+  els.suggestionSearch.addEventListener("input", () => {
+    state.suggestionSearch = els.suggestionSearch.value;
+    renderSuggestionOptions();
   });
   els.suggestionTraitSourceApply.addEventListener("click", () => {
     const selectedSource = els.suggestionTraitSource.value;

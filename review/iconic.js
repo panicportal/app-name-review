@@ -71,10 +71,12 @@
     const gender = genderFilter === "active" ? activeGender(row) : genderFilter;
     const status = el("iconicStatusFilter").value;
     const category = el("iconicCategoryFilter").value;
+    const section = el("iconicSectionFilter").value;
     const candidates = iconic.payload.candidates.filter((candidate) =>
       candidate.clothing === row.clothing &&
       (gender === "all" || candidate.gender === gender) &&
       (status === "all" || candidate.status === status) &&
+      (section === "all" || candidate.bank_section === section) &&
       (category === "all" || candidate.category === category)
     );
     const sort = el("iconicSort").value;
@@ -100,7 +102,7 @@
     el("iconicCandidateGrid").innerHTML = candidates.length
       ? candidates.map((candidate) => `<article class="iconic-candidate-card" data-status="${candidate.status}">
           <div class="iconic-candidate-head">
-            <div><h4>${escape(candidate.name)}</h4><div class="iconic-candidate-meta">${escape(candidate.gender)} · ${escape(candidate.category)} · ${escape(candidate.status)}</div></div>
+            <div><h4>${escape(candidate.name)}</h4><div class="iconic-candidate-meta">${escape(candidate.gender)} · ${escape(candidate.bank_section || candidate.category)} · ${escape(candidate.category)} · ${escape(candidate.status)}</div></div>
             <span class="iconic-confidence" title="Relevance confidence">${Number(candidate.confidence || 0)}</span>
           </div>
           <p>${escape(candidate.reason)}</p>
@@ -143,6 +145,9 @@
     el("iconicCategoryFilter").innerHTML =
       `<option value="all">Every category</option>` +
       iconic.payload.categories.map((category) => `<option value="${escape(category)}">${escape(category)}</option>`).join("");
+    const sections = [...new Set(iconic.payload.candidates.map(candidate => candidate.bank_section).filter(Boolean))].sort();
+    el("iconicSectionFilter").innerHTML = `<option value="all">Every sub-bank</option>` +
+      sections.map(section => `<option value="${escape(section)}">${escape(section)}</option>`).join("");
     el("iconicEditCategory").innerHTML = iconic.payload.categories
       .map((category) => `<option value="${escape(category)}">${escape(category)}</option>`).join("");
     el("iconicEditClothing").innerHTML = iconic.payload.coverage
@@ -222,12 +227,12 @@
   }
 
   function exportCsv() {
-    const headers = ["Name", "Clothing", "Gender", "Category", "Reference", "Source URL", "Reason", "Confidence", "Status", "Assigned conflict", "Normal-bank overlap", "Updated at", "Updated by"];
+    const headers = ["Name", "Clothing", "Gender", "Sub-bank", "Category", "Reference", "Source URL", "Reason", "Confidence", "Status", "Assigned conflict", "Normal-bank overlap", "Updated at", "Updated by"];
     const quote = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
     const lines = [headers.map(quote).join(",")];
     for (const candidate of iconic.payload.candidates) {
       lines.push([
-        candidate.name, candidate.clothing, candidate.gender, candidate.category,
+        candidate.name, candidate.clothing, candidate.gender, candidate.bank_section, candidate.category,
         candidate.reference, candidate.source_url, candidate.reason, candidate.confidence,
         candidate.status, candidate.conflicts?.assigned, candidate.conflicts?.normal_bank,
         candidate.updated_at, candidate.updated_by,
@@ -261,7 +266,7 @@
     el("iconicGenderFilter").value = "active";
     render();
   });
-  ["iconicGenderFilter", "iconicStatusFilter", "iconicCategoryFilter", "iconicSort"]
+  ["iconicGenderFilter", "iconicStatusFilter", "iconicCategoryFilter", "iconicSectionFilter", "iconicSort"]
     .forEach((id) => el(id).addEventListener("change", renderWorkbench));
   el("iconicCandidateGrid").addEventListener("click", async (event) => {
     const statusButton = event.target.closest("[data-iconic-status]");

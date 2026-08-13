@@ -4,6 +4,23 @@ This is an additional first-name source inside the existing Name Studio. It does
 not replace or merge the normal Western bank or the artist's closed Japanese
 bank.
 
+The production catalogue now contains more than 7,300 approved trait-connected
+candidates across all 34 Clothing traits. Every active Clothing + Body-gender
+route has at least 100 options, while large traits scale past 300. Western
+first-name replacement opens this source by default so a cowboy cannot silently
+fall back to a generic personal-name list.
+
+Candidates are separated into visible sub-banks:
+
+- Screen, Games & Culture;
+- Real Legends;
+- Lore & Archetypes;
+- Trait Words, Sounds & Objects;
+- Wordplay & Collectible Aliases.
+
+Editorial references stay separate from curated trait vocabulary. Wordplay
+expansion does not synthesize variants from real character or person names.
+
 ## Data contract
 
 Every candidate stores:
@@ -16,6 +33,7 @@ Every candidate stores:
 - reference and source URL;
 - direct-connection reason;
 - confidence from 1–100;
+- visible sub-bank;
 - approval status (`approved`, `proposed`, or `rejected`);
 - discovery source, timestamps, and reviewer.
 
@@ -28,14 +46,15 @@ curation revisions.
 Targets are calculated independently for the real Male/Female counts under each
 Clothing trait:
 
-- below 100 characters: the next multiple of five above `40 + 0.95 × count`;
+- below 100 characters: the next multiple of five above `40 + 0.95 × count`,
+  with a 100-option minimum;
 - 100–199 characters: the next multiple of five above `1.5 × count`;
 - 200 or more characters: the next multiple of five above `count + 100`;
 - zero characters for a gender: zero required capacity, while the gender pool
   remains available for future collection changes.
 
-These produce 60 options for 20 characters, 80 for 40, 100 for 60, 120 for 80,
-150 for 100, 225 for 150, 300 for 200, and 330 for 228.
+These produce at least 100 options for rare active pools, 120 for 80, 150 for
+100, 225 for 150, 300 for 200, and 330 for 228.
 
 ## Online discovery and validation
 

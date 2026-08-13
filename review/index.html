@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=16-0-iconic">
+  <link rel="stylesheet" href="/review/styles.css?v=17-0-trait-voice">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -347,14 +347,22 @@
         <button class="dialog-close" id="suggestionClose" aria-label="Close">×</button>
       </header>
       <div class="language-switch" id="suggestionLanguage">
-        <button data-language="western">Western</button>
+        <button data-language="western">Western-language</button>
         <button data-language="japanese">Japanese</button>
       </div>
       <div class="name-source-switch" id="suggestionNameSource" hidden>
-        <span>Western first-name source</span>
-        <button class="active" data-name-source="normal">Normal bank</button>
-        <button data-name-source="iconic">Iconic / Fun</button>
+        <span>Choose a separate first-name bank</span>
+        <button data-name-source="normal">Normal personal names</button>
+        <button class="active" data-name-source="iconic">Trait-connected · recommended</button>
       </div>
+      <section class="suggestion-sub-banks" id="suggestionSubBanks" hidden>
+        <div>
+          <span>Trait-connected sub-bank</span>
+          <strong id="suggestionResultCount"></strong>
+        </div>
+        <div class="suggestion-category-tabs" id="suggestionCategoryTabs"></div>
+        <label><span>Find a name in this bank</span><input id="suggestionSearch" type="search" placeholder="Kermit, ribbit, hopper…"></label>
+      </section>
       <label class="suggestion-trait-source" id="suggestionTraitSourceWrap">
         <span id="suggestionTraitSourceLabel">Name this surname part from</span>
         <select id="suggestionTraitSource" aria-label="Trait source for surname options"></select>
@@ -501,6 +509,9 @@
               <select id="iconicCategoryFilter" aria-label="Iconic category">
                 <option value="all">Every category</option>
               </select>
+              <select id="iconicSectionFilter" aria-label="Iconic sub-bank">
+                <option value="all">Every sub-bank</option>
+              </select>
               <select id="iconicSort" aria-label="Iconic candidate sort">
                 <option value="confidence">Strongest connection</option>
                 <option value="name">Name</option>
@@ -540,37 +551,47 @@
     </form>
   </dialog>
   <section class="voice-dock" id="voiceDock" aria-label="Voice control" hidden>
-    <div class="voice-orbit" id="voiceOrbit" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div class="voice-dock-main">
-      <div class="voice-state-line">
-        <span class="voice-state-dot" id="voiceStateDot"></span>
-        <div>
-          <b id="voiceStateLabel">Voice ready</b>
-          <small id="voiceHint">Tap the microphone, then say “read character” or “next”.</small>
+    <header class="voice-mode-header">
+      <div><p class="kicker">Hands-free curation workspace</p><h2>Voice Mode</h2><p id="voiceNextStep">Start by reading this character, then decide the first name.</p></div>
+      <button id="voiceCloseButton" aria-label="Close voice controls">Exit Voice Mode</button>
+    </header>
+    <div class="voice-workspace">
+      <aside class="voice-character-panel">
+        <img id="voicePortrait" alt="Current character portrait">
+        <span id="voiceCharacterId">Character</span>
+        <h3 id="voiceCharacterName">—</h3>
+        <p id="voiceCharacterTraits">—</p>
+        <div class="voice-state-line">
+          <span class="voice-state-dot" id="voiceStateDot"></span>
+          <div><b id="voiceStateLabel">Voice ready</b><small id="voiceHint">Tap Listen, then say the highlighted command.</small></div>
         </div>
-      </div>
-      <div class="voice-transcript" aria-live="polite">
-        <span>You said</span>
-        <strong id="voiceTranscript">Waiting for a command…</strong>
-      </div>
-      <form class="voice-command-form" id="voiceCommandForm">
-        <label for="voiceCommandInput">Type or dictate a command</label>
-        <div>
-          <input id="voiceCommandInput" autocomplete="off" enterkeyhint="send"
-            placeholder="Use the phone keyboard microphone here if needed">
-          <button type="submit">Run</button>
+        <div class="voice-transcript" aria-live="polite"><span>You said</span><strong id="voiceTranscript">Waiting for a command…</strong></div>
+        <form class="voice-command-form" id="voiceCommandForm">
+          <label for="voiceCommandInput">Type or use phone keyboard dictation</label>
+          <div><input id="voiceCommandInput" autocomplete="off" enterkeyhint="send" placeholder="Say or type a command"><button type="submit">Run</button></div>
+        </form>
+        <div class="voice-dock-actions">
+          <button class="voice-mic-button" id="voiceMicButton" aria-pressed="false"><span class="voice-mic-icon">●</span><b>Listen now</b></button>
+          <button id="voiceReadButton">Read character</button>
+          <button id="voiceHandsFreeButton" aria-pressed="false">Hands-free off</button>
+          <button id="voiceMuteButton" aria-pressed="false">Voice back on</button>
+          <button id="voiceHelpButton">Tutorial</button>
         </div>
-      </form>
-    </div>
-    <div class="voice-dock-actions">
-      <button class="voice-mic-button" id="voiceMicButton" aria-pressed="false">
-        <span class="voice-mic-icon">●</span><b>Listen</b>
-      </button>
-      <button id="voiceReadButton">Read character</button>
-      <button id="voiceHandsFreeButton" aria-pressed="false">Hands-free off</button>
-      <button id="voiceMuteButton" aria-pressed="false">Voice back on</button>
-      <button id="voiceHelpButton">Commands</button>
-      <button id="voiceCloseButton" aria-label="Close voice controls">Close</button>
+        <section class="voice-live-settings">
+          <label>Voice<select id="voiceSelect" aria-label="Speech voice"><option value="">Default clear English voice</option></select></label>
+          <label>Speed <output id="voiceRateValue">0.80×</output><input id="voiceRate" type="range" min="0.55" max="1.2" step="0.05" value="0.8"></label>
+          <label>Style<select id="voicePersonality"><option value="scout">Clear scout</option><option value="calm">Calm curator</option><option value="bold">Bold announcer</option><option value="adaptive">Adaptive</option></select></label>
+          <button id="voiceTutorialTest">Test selected voice</button>
+        </section>
+      </aside>
+      <main class="voice-command-board" id="voiceCommandBoard">
+        <section data-voice-stage="orientation"><h3><b>1</b> Hear & move</h3><div><button data-voice-command="read character">“Read character”</button><button data-voice-command="next">“Next”</button><button data-voice-command="previous">“Previous”</button><button data-voice-command="next undecided">“Next undecided”</button></div></section>
+        <section data-voice-stage="first"><h3><b>2</b> First name</h3><div><button data-voice-command="lock first">“Lock first”</button><button data-voice-command="replace first">“Replace first”</button><button data-voice-command="suggest first">“Suggest first”</button><button data-voice-command="iconic options">“Iconic options”</button><button data-voice-command="normal options">“Normal options”</button><button data-voice-example="set first name to">“Set first name to …”</button></div></section>
+        <section data-voice-stage="surname_part_1"><h3><b>3</b> Surname part one</h3><div><button data-voice-command="lock surname one">“Lock surname one”</button><button data-voice-command="mark surname one for replacement">“Replace surname one”</button><button data-voice-command="suggest surname one">“Suggest surname one”</button><button data-voice-example="set surname one to">“Set surname one to …”</button></div></section>
+        <section data-voice-stage="surname_part_2"><h3><b>4</b> Surname part two</h3><div><button data-voice-command="lock surname two">“Lock surname two”</button><button data-voice-command="mark surname two for replacement">“Replace surname two”</button><button data-voice-command="suggest surname two">“Suggest surname two”</button><button data-voice-command="flip surname">“Flip surname”</button><button data-voice-example="set surname two to">“Set surname two to …”</button></div></section>
+        <section data-voice-stage="options"><h3><b>5</b> Browse choices</h3><div><button data-voice-command="read options">“Read options”</button><button data-voice-command="use option one">“Use option one”</button><button data-voice-command="use option two">“Use option two”</button><button data-voice-command="use option three">“Use option three”</button><button data-voice-command="shortest options">“Shortest options”</button><button data-voice-command="least used options">“Least used options”</button><button data-voice-command="close options">“Close options”</button></div></section>
+        <section data-voice-stage="confirm"><h3><b>6</b> Confirm & finish</h3><div><button data-voice-command="confirm">“Confirm”</button><button data-voice-command="cancel">“Cancel”</button><button data-voice-command="lock remaining">“Lock remaining”</button><button data-voice-command="clear character">“Clear character”</button><button data-voice-command="next undecided">“Next undecided”</button></div></section>
+      </main>
     </div>
   </section>
   <dialog class="voice-help-dialog" id="voiceHelpDialog">
@@ -600,24 +621,7 @@
         <h3>Android and iPhone</h3>
         <p>If the browser’s Listen button is unavailable, tap the command field and use the microphone on your phone keyboard. Every command and spoken confirmation still works. Keep this site open and the screen awake for hands-free mode.</p>
       </section>
-      <div class="voice-settings">
-        <label>Voice personality
-          <select id="voicePersonality">
-            <option value="adaptive">Adaptive character voice</option>
-            <option value="scout">Clear scout</option>
-            <option value="calm">Calm curator</option>
-            <option value="bold">Bold announcer</option>
-          </select>
-        </label>
-        <label>Speech speed
-          <select id="voiceRate">
-            <option value="0.85">Relaxed</option>
-            <option value="1" selected>Normal</option>
-            <option value="1.15">Fast</option>
-          </select>
-        </label>
-        <button id="voiceTutorialTest">Test voice</button>
-      </div>
+      <p class="voice-guide-settings-note">Voice choice and speed controls now stay visible inside Voice Mode, so you can adjust them without leaving the character.</p>
     </div>
   </dialog>
   <nav class="mobile-review-nav" aria-label="Mobile review controls">
@@ -625,7 +629,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=16-1-iconic"></script>
-  <script src="/review/iconic.js?v=16-1-iconic"></script>
+  <script src="/review/app.js?v=17-0-trait-voice"></script>
+  <script src="/review/iconic.js?v=17-0-trait-voice"></script>
 </body>
 </html>
