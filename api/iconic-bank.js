@@ -49,7 +49,7 @@ const CONCEPTS = {
   "Star king": ["star king character", "celestial king", "king constellation"],
 };
 
-const REJECT_TITLE = /^(list of|category:|index of|outline of|history of|battle of)|\b(in culture|film|album|episode|season|franchise|soundtrack|novel)$|disambiguation/i;
+const REJECT_TITLE = /^(list of|category:|index of|outline of|history of|battle of)|\b(in culture|film|album|episode|season|franchise|soundtrack)$|disambiguation/i;
 const DIRECT_WORDS = /character|fictional|actor|actress|artist|painter|swimmer|outlaw|gunfighter|cowboy|cowgirl|pirate|saint|angel|demon|devil|frog|cat|bull|ape|gorilla|penguin|shiba|queen|king|clown|kimono/i;
 const GROUP_TITLE = /\b(frogs|cats|bulls|apes|gorillas|penguins|cowboys|cowgirls|pirates|angels|devils|demons|saints|clowns|painters|swimmers|characters)\b/i;
 const GENERIC_ROUTE_WORDS = new Set([
@@ -90,12 +90,19 @@ function evidenceCandidate(result, clothing, gender, query, concept) {
   const combined = `${title} ${snippet}`;
   if (!title || REJECT_TITLE.test(title) || !DIRECT_WORDS.test(combined)) return null;
   const description = stripHtml(result.entity_description);
+  if (/\b(film|novel|album|song|episode|television series|video game|franchise|campaign|commercial|event|battle)\b/i.test(description) &&
+      !/\b(character|person|actor|actress|artist|painter|swimmer|outlaw|gunfighter|cowboy|cowgirl|pirate|saint|angel|demon|devil|frog|cat|bull|ape|gorilla|penguin|shiba|queen|king|clown)\b/i.test(description)) {
+    return null;
+  }
   const conceptWords = concept.toLowerCase().split(/\s+/)
     .map((word) => word.replace(/[^a-z]/g, ""))
     .filter((word) => word.length >= 3 && !GENERIC_ROUTE_WORDS.has(word));
   const semanticText = `${title} ${description}`.toLowerCase();
   const directMatches = conceptWords.filter((word) => semanticText.includes(word)).length;
   if (!directMatches) return null;
+  if (/cowboy bebop/i.test(description) && !/\b(cowboy|gunslinger|western outlaw|western lawman)\b/i.test(description.replace(/cowboy bebop/ig, ""))) {
+    return null;
+  }
   const name = displayNameFromTitle(title);
   if (!name) return null;
   const expectedGenderId = gender === "Female" ? "Q6581072" : "Q6581097";
