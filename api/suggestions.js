@@ -3,6 +3,7 @@ const catalog = require("../cloud_suggestion_catalog.json");
 const review = require("../review_data.json");
 const { requireSession } = require("./_lib/auth");
 const { getOrCreateState } = require("./_lib/state");
+const { getOrCreateIconicState } = require("./_lib/iconic");
 
 const characters = new Map(
   review.characters.map((character) => [String(character.id), character])
@@ -20,6 +21,13 @@ const blocked = [
 function safe(value) {
   return (
     /^[A-Za-z][A-Za-z'-]{1,19}$/.test(value) &&
+    !blocked.some((pattern) => pattern.test(value))
+  );
+}
+
+function safeIconic(value) {
+  return (
+    /^[A-Za-z][A-Za-z' -]{1,23}$/.test(value) &&
     !blocked.some((pattern) => pattern.test(value))
   );
 }
@@ -82,8 +90,38 @@ function componentUsage(state, exceptId) {
   return counts;
 }
 
-function candidatesFor(character, part, language, sourceOverride = "") {
+function candidatesFor(
+  character,
+  part,
+  language,
+  sourceOverride = "",
+  nameSource = "normal",
+  iconicState = null
+) {
   if (part === "first") {
+    if (nameSource === "iconic") {
+      return Object.values(iconicState?.candidates || {})
+        .filter((candidate) =>
+          !candidate.deleted_at &&
+          candidate.status === "approved" &&
+          candidate.clothing === character.clothing &&
+          candidate.gender === character.gender_from_body &&
+          safeIconic(candidate.name)
+        )
+        .map((candidate) => ({
+          value: candidate.name,
+          language: "western",
+          source: `Iconic / Fun · ${candidate.category} · ${candidate.reference}`,
+          fit: candidate.reason,
+          fit_type: "direct iconic clothing reference",
+          rank: Math.max(0, 100 - Number(candidate.confidence || 0)),
+          iconic_candidate_id: candidate.id,
+          iconic_category: candidate.category,
+          iconic_reference: candidate.reference,
+          iconic_source_url: candidate.source_url,
+          iconic_confidence: candidate.confidence,
+        }));
+    }
     const bank = catalog.first[character.clothing] || {};
     const matchesBodyGender = (candidate) =>
       !candidate.gender_route ||
@@ -287,7 +325,14 @@ module.exports = async function handler(req, res) {
         : part === "first"
           ? character.first_name_language
           : character.surname_language;
-    const state = await getOrCreateState();
+    const nameSource =
+      part === "first" && String(req.query.name_source || "") === "iconic"
+        ? "iconic"
+        : "normal";
+    const [state, iconicState] = await Promise.all([
+      getOrCreateState(),
+      nameSource === "iconic" ? getOrCreateIconicState() : Promise.resolve(null),
+    ]);
     const record = state.curation?.records?.[id] || {};
     const firstUsed = part === "first" ? usedFirstNames(state, id) : null;
     const usage = part === "first" ? null : componentUsage(state, id);
@@ -379,8 +424,15 @@ module.exports = async function handler(req, res) {
       ),
     };
 
-    const evaluated = candidatesFor(character, part, language, traitSource)
-      .filter((candidate) => safe(candidate.value))
+    const evaluated = candidatesFor(
+      character,
+      part,
+      language,
+      traitSource,
+      nameSource,
+      iconicState
+    )
+      .filter((candidate) => nameSource === "iconic" ? safeIconic(candidate.value) : safe(candidate.value))
       .filter((candidate) => candidate.value.toLowerCase() !== String(current).toLowerCase())
       .filter((candidate) => !firstUsed || !firstUsed.has(candidate.value.toLowerCase()))
       .map((candidate) => {
@@ -468,7 +520,8 @@ module.exports = async function handler(req, res) {
         const previews = Object.values(candidate.order_previews);
         return previews.some((preview) =>
           part === "first"
-            ? candidate.value.length <= 20 && preview.full_name.length <= 34
+            ? candidate.value.length <= (nameSource === "iconic" ? 24 : 20) &&
+              preview.full_name.length <= (nameSource === "iconic" ? 38 : 34)
             : preview.surname.length <= 22 && preview.full_name.length <= 36
         );
       });
@@ -506,13 +559,21 @@ module.exports = async function handler(req, res) {
       character_id: id,
       part,
       language,
+      name_source: nameSource,
       gender_route: character.gender_from_body,
       clothing: character.clothing,
       trait_source:
         traitSource,
       original_trait_source: originalTraitSource,
       available_trait_sources: traitSources,
-      policy: catalog.policy,
+      policy: nameSource === "iconic"
+        ? {
+            source: "Persistent approved Iconic / Fun bank",
+            internet_used_only_for_discovery: true,
+            human_approval_required: true,
+            normal_banks_unchanged: true,
+          }
+        : catalog.policy,
       japanese_coverage: part === "first" && language === "japanese"
         ? {
             exact_artist_bank_options_before_uniqueness: candidatesFor(

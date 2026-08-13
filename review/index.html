@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=15-0-voice">
+  <link rel="stylesheet" href="/review/styles.css?v=16-0-iconic">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -23,6 +23,7 @@
         </div>
         <button class="mobile-filter-button" id="mobileFiltersButton" aria-controls="rosterPanel" aria-expanded="false">Filters</button>
         <button class="voice-mode-button" id="voiceModeButton" aria-controls="voiceDock" aria-expanded="false"><span>●</span> Voice</button>
+        <button class="iconic-bank-button" id="iconicBankButton">Iconic bank</button>
         <span class="cloud-chip connecting" id="cloudChip"><i></i><b>Connecting</b></span>
         <button class="quiet-button" id="nextUndecidedButton">Next undecided</button>
         <button class="quiet-button" id="activityButton">Activity</button>
@@ -349,6 +350,11 @@
         <button data-language="western">Western</button>
         <button data-language="japanese">Japanese</button>
       </div>
+      <div class="name-source-switch" id="suggestionNameSource" hidden>
+        <span>Western first-name source</span>
+        <button class="active" data-name-source="normal">Normal bank</button>
+        <button data-name-source="iconic">Iconic / Fun</button>
+      </div>
       <label class="suggestion-trait-source" id="suggestionTraitSourceWrap">
         <span id="suggestionTraitSourceLabel">Name this surname part from</span>
         <select id="suggestionTraitSource" aria-label="Trait source for surname options"></select>
@@ -445,6 +451,94 @@
       <div class="activity-list" id="activityList"></div>
     </div>
   </dialog>
+  <dialog class="iconic-bank-dialog" id="iconicBankDialog">
+    <div class="iconic-lab-shell">
+      <header class="iconic-lab-header">
+        <div>
+          <p class="kicker">Persistent cultural-reference source</p>
+          <h2>Iconic / Fun Bank</h2>
+          <p>Research online, verify the direct connection, approve the keepers, and remember every rejection.</p>
+        </div>
+        <div class="iconic-header-actions">
+          <button id="iconicExportButton">Export bank CSV</button>
+          <button class="dialog-close" id="iconicBankClose" aria-label="Close Iconic bank">×</button>
+        </div>
+      </header>
+      <div class="iconic-lab-layout">
+        <aside class="iconic-coverage-rail">
+          <label>
+            <span>Find Clothing</span>
+            <input id="iconicTraitSearch" type="search" placeholder="Frog, cowboy, painter…">
+          </label>
+          <div class="iconic-coverage-list" id="iconicCoverageList"></div>
+        </aside>
+        <main class="iconic-workbench">
+          <section class="iconic-trait-hero">
+            <div>
+              <p class="kicker">Selected Clothing</p>
+              <h3 id="iconicTraitTitle">Choose a Clothing trait</h3>
+              <p id="iconicTraitSummary"></p>
+            </div>
+            <div class="iconic-capacity-stamp" id="iconicCapacityStamp">
+              <strong>—</strong><span>still needed</span>
+            </div>
+          </section>
+          <section class="iconic-gender-ledger" id="iconicGenderLedger"></section>
+          <section class="iconic-toolbar">
+            <div class="iconic-filter-group">
+              <select id="iconicGenderFilter" aria-label="Iconic candidate gender">
+                <option value="active">Active gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="all">Both genders</option>
+              </select>
+              <select id="iconicStatusFilter" aria-label="Iconic approval status">
+                <option value="all">Every status</option>
+                <option value="approved">Approved</option>
+                <option value="proposed">Needs review</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <select id="iconicCategoryFilter" aria-label="Iconic category">
+                <option value="all">Every category</option>
+              </select>
+              <select id="iconicSort" aria-label="Iconic candidate sort">
+                <option value="confidence">Strongest connection</option>
+                <option value="name">Name</option>
+                <option value="newest">Newest research</option>
+              </select>
+            </div>
+            <div class="iconic-research-actions">
+              <button id="iconicDiscoverButton">Research this trait online</button>
+              <button id="iconicAddButton">Add candidate</button>
+            </div>
+          </section>
+          <div class="iconic-notice" id="iconicNotice" aria-live="polite"></div>
+          <section class="iconic-candidate-grid" id="iconicCandidateGrid"></section>
+        </main>
+      </div>
+    </div>
+  </dialog>
+  <dialog class="iconic-edit-dialog" id="iconicEditDialog">
+    <form class="dialog-shell iconic-edit-form" id="iconicEditForm">
+      <header>
+        <div><p class="kicker">Evidence record</p><h2 id="iconicEditTitle">Add candidate</h2></div>
+        <button type="button" class="dialog-close" id="iconicEditClose" aria-label="Close candidate editor">×</button>
+      </header>
+      <input id="iconicEditId" type="hidden">
+      <div class="iconic-edit-grid">
+        <label><span>Name</span><input id="iconicEditName" maxlength="24" required></label>
+        <label><span>Clothing</span><select id="iconicEditClothing" required></select></label>
+        <label><span>Gender</span><select id="iconicEditGender"><option>Male</option><option>Female</option></select></label>
+        <label><span>Category</span><select id="iconicEditCategory"></select></label>
+        <label class="wide"><span>Reference / source</span><input id="iconicEditReference" maxlength="160" required></label>
+        <label class="wide"><span>Source URL</span><input id="iconicEditSourceUrl" type="url" maxlength="500"></label>
+        <label class="wide"><span>Why it directly fits this Clothing</span><textarea id="iconicEditReason" maxlength="360" required></textarea></label>
+        <label><span>Confidence</span><input id="iconicEditConfidence" type="number" min="1" max="100" value="85"></label>
+        <label><span>Status</span><select id="iconicEditStatus"><option value="proposed">Needs review</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label>
+      </div>
+      <footer><button type="button" id="iconicEditDelete" class="danger" hidden>Delete record</button><button type="submit">Save candidate</button></footer>
+    </form>
+  </dialog>
   <section class="voice-dock" id="voiceDock" aria-label="Voice control" hidden>
     <div class="voice-orbit" id="voiceOrbit" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="voice-dock-main">
@@ -498,7 +592,7 @@
         <article><h3>Move</h3><p>“Next” · “Previous” · “Next undecided” · “Go to 310” · “Focus mode” · “Browse mode”</p></article>
         <article><h3>Listen</h3><p>“Read character” · “Read name” · “Read traits” · “Read status” · “Repeat” · “Stop speaking”</p></article>
         <article><h3>Decide</h3><p>“Lock first” · “Lock surname one” · “Lock surname two” · “Lock remaining” · “Replace first” · “Replace whole name”</p></article>
-        <article><h3>Find options</h3><p>“Suggest first” · “Suggest surname one” · “Japanese options” · “Western options” · “Shortest options” · “Read options”</p></article>
+        <article><h3>Find options</h3><p>“Suggest first” · “Iconic options” · “Normal options” · “Suggest surname one” · “Japanese options” · “Shortest options” · “Read options”</p></article>
         <article><h3>Choose</h3><p>“Use option one” · “Use option three as one word” · “Flip surname” · “Cancel”</p></article>
         <article><h3>Custom text</h3><p>“Set first name to Skipper” · “Set surname one to Skater” · “Set surname two to Bloom”</p></article>
       </div>
@@ -531,6 +625,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=15-1-voice"></script>
+  <script src="/review/app.js?v=16-0-iconic"></script>
+  <script src="/review/iconic.js?v=16-0-iconic"></script>
 </body>
 </html>

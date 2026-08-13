@@ -49,6 +49,7 @@ const state = {
   cloudHistory: [],
   suggestionPart: null,
   suggestionLanguage: null,
+  suggestionNameSource: "normal",
   suggestionSource: null,
   suggestionSort: "balanced",
   suggestionPayload: null,
@@ -2286,10 +2287,14 @@ function renderSuggestionOptions() {
   });
 }
 
-async function openSuggestions(part, language = null, source = null) {
+async function openSuggestions(part, language = null, source = null, nameSource = null) {
   const requestVersion = ++state.suggestionRequestVersion;
   state.suggestionPart = part;
   state.suggestionLanguage = language || suggestionLanguageFor(state.selected, part);
+  state.suggestionNameSource =
+    part === "first" && state.suggestionLanguage === "western" && nameSource === "iconic"
+      ? "iconic"
+      : "normal";
   const definition = partDefinitions(state.selected).find(item => item.key === part);
   const requestedTraitSource = part.startsWith("surname_") ||
     (part === "first" && state.suggestionLanguage === "japanese")
@@ -2309,11 +2314,17 @@ async function openSuggestions(part, language = null, source = null) {
   els.suggestionLanguage.querySelectorAll("[data-language]").forEach(button => {
     button.classList.toggle("active", button.dataset.language === state.suggestionLanguage);
   });
+  els.suggestionNameSource.hidden = !(part === "first" && state.suggestionLanguage === "western");
+  els.suggestionNameSource.querySelectorAll("[data-name-source]").forEach(button => {
+    button.classList.toggle("active", button.dataset.nameSource === state.suggestionNameSource);
+  });
   els.suggestionPolicy.textContent =
     state.suggestionLanguage === "japanese"
       ? "Japanese mode is closed-bank only: every option must be an exact entry from the artist CSV. Gender routing comes only from Body."
       : part === "first"
-        ? "Western first names come only from the curated clothing-theme bank and must be unused across the full collection."
+        ? state.suggestionNameSource === "iconic"
+          ? "Iconic / Fun options come only from the persistent, human-approved cultural-reference bank for this exact Clothing and Body gender."
+          : "Western first names come only from the curated clothing-theme bank and must be unused across the full collection."
         : "Surname options come from the exact source trait’s reviewed fragment bank, ranked for low repetition.";
   els.suggestionList.innerHTML = `<div class="suggestion-loading">Checking fit, uniqueness, and current team proposals…</div>`;
   els.suggestionFullPreview.hidden = true;
@@ -2336,6 +2347,7 @@ async function openSuggestions(part, language = null, source = null) {
       id: state.selected.id,
       part,
       language: state.suggestionLanguage,
+      name_source: state.suggestionNameSource,
       request: `${requestVersion}-${Date.now()}`
     });
     if (requestedTraitSource) params.set("source", requestedTraitSource);
@@ -2373,6 +2385,7 @@ function chooseSuggestion(candidate, order = "12", single = false) {
     replacement_language: candidate.language || state.suggestionLanguage,
     replacement_rationale:
       `${candidate.fit} ${candidate.uniqueness}. ` +
+      `${candidate.iconic_source_url ? `Iconic-bank evidence: ${candidate.iconic_reference} · ${candidate.iconic_source_url}. ` : ""}` +
       `Chosen full-name preview: ${
         single
           ? candidate.single_preview?.full_name
@@ -2686,6 +2699,8 @@ function parseVoiceIntent(raw) {
     return { type: "sort", sort: text.startsWith("shortest") ? "shortest" : text.startsWith("least") ? "least-used" : "balanced", mutates: false };
   }
   if (/^(japanese|western) options$/.test(text)) return { type: "language", language: text.split(" ")[0], mutates: false };
+  if (/^(iconic|fun|iconic fun) options$/.test(text)) return { type: "name_source", source: "iconic", mutates: false };
+  if (/^(normal|regular) options$/.test(text)) return { type: "name_source", source: "normal", mutates: false };
   const suggest = text.match(/^(?:suggest|find|replace)\s+(?:the\s+)?(first(?: name)?|surname(?: part)?\s*(?:one|two|1|2)|surname\s*(?:one|two|1|2))$/);
   if (suggest) {
     const part = suggest[1].startsWith("first") ? "first" : /(?:two|2)$/.test(suggest[1]) ? "surname_part_2" : "surname_part_1";
@@ -2817,6 +2832,11 @@ async function executeVoiceCommand(raw) {
     if (!state.suggestionPart) return speakVoice("Open a name part first. Say suggest first, surname one, or surname two.");
     await openSuggestions(state.suggestionPart, intent.language, state.suggestionSource);
     return speakVoice(`${intent.language} bank loaded. ${readVoiceOptions()}`);
+  }
+  if (intent.type === "name_source") {
+    if (state.suggestionPart !== "first") return speakVoice("Iconic and normal sources apply to first names. Say suggest first, then iconic options.");
+    await openSuggestions("first", "western", null, intent.source);
+    return speakVoice(`${intent.source === "iconic" ? "Iconic and fun" : "Normal"} first-name bank loaded. ${readVoiceOptions()}`);
   }
   if (intent.type === "suggest") {
     const available = partDefinitions(state.selected).some(part => part.key === intent.part && part.available);
@@ -3106,6 +3126,16 @@ function bindEvents() {
       openSuggestions(state.suggestionPart, button.dataset.language, state.suggestionSource);
     });
   });
+  els.suggestionNameSource.querySelectorAll("[data-name-source]").forEach(button => {
+    button.addEventListener("click", () => {
+      openSuggestions(
+        state.suggestionPart,
+        "western",
+        state.suggestionSource,
+        button.dataset.nameSource
+      );
+    });
+  });
   els.suggestionTraitSourceApply.addEventListener("click", () => {
     const selectedSource = els.suggestionTraitSource.value;
     if (!selectedSource) return;
@@ -3113,7 +3143,8 @@ function bindEvents() {
     openSuggestions(
       state.suggestionPart,
       state.suggestionLanguage,
-      selectedSource
+      selectedSource,
+      state.suggestionNameSource
     );
   });
   els.suggestionToolbar.querySelectorAll("[data-suggestion-sort]").forEach(button => {

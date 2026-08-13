@@ -10,6 +10,11 @@ The production app uses:
 - the closed artist Japanese CSV-derived catalog
 - curated clothing-theme Western first-name banks
 - reviewed source-trait surname fragment banks
+- a separate persistent Iconic / Fun first-name bank with evidence, approval,
+  rejection memory, and dynamic Clothing/gender capacity targets
+
+See `ICONIC_FUN_BANK.md` for the source schema, capacity formula, discovery
+validation, and isolation guarantees.
 
 The August 2 curation export is the initial authoritative cloud seed:
 124 touched characters, 181 approved parts, and 27 replacement requests.

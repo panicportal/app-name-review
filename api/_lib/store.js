@@ -52,4 +52,21 @@ async function writeState(state) {
   return state;
 }
 
-module.exports = { command, readState, STORE_KEY, writeState };
+async function readJson(key) {
+  const raw = await command(["GET", key]);
+  return raw ? JSON.parse(raw) : null;
+}
+
+async function writeJson(key, value) {
+  await command(["SET", key, JSON.stringify(value)]);
+  return value;
+}
+
+module.exports = {
+  command,
+  readJson,
+  readState,
+  STORE_KEY,
+  writeJson,
+  writeState,
+};
