@@ -27,7 +27,7 @@ function safe(value) {
 
 function safeIconic(value) {
   return (
-    /^[A-Za-z][A-Za-z' -]{1,23}$/.test(value) &&
+    /^[A-Za-z][A-Za-z'-]{1,23}$/.test(value) &&
     !blocked.some((pattern) => pattern.test(value))
   );
 }

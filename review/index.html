@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=17-0-trait-voice">
+  <link rel="stylesheet" href="/review/styles.css?v=18-0-oneword-voice">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -519,8 +519,7 @@
               </select>
             </div>
             <div class="iconic-research-actions">
-              <button id="iconicDiscoverButton">Research this trait online</button>
-              <button id="iconicAddButton">Add candidate</button>
+              <span>All approved names are preloaded and immediately available from Replace.</span>
             </div>
           </section>
           <div class="iconic-notice" id="iconicNotice" aria-live="polite"></div>
@@ -537,7 +536,7 @@
       </header>
       <input id="iconicEditId" type="hidden">
       <div class="iconic-edit-grid">
-        <label><span>Name</span><input id="iconicEditName" maxlength="24" required></label>
+        <label><span>One-word name</span><input id="iconicEditName" maxlength="24" pattern="[A-Za-z][A-Za-z'-]{1,23}" required></label>
         <label><span>Clothing</span><select id="iconicEditClothing" required></select></label>
         <label><span>Gender</span><select id="iconicEditGender"><option>Male</option><option>Female</option></select></label>
         <label><span>Category</span><select id="iconicEditCategory"></select></label>
@@ -629,7 +628,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=17-0-trait-voice"></script>
-  <script src="/review/iconic.js?v=17-0-trait-voice"></script>
+  <script src="/review/app.js?v=18-0-oneword-voice"></script>
+  <script src="/review/iconic.js?v=18-0-oneword-voice"></script>
 </body>
 </html>

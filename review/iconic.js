@@ -116,7 +116,7 @@
             <button data-iconic-edit="${candidate.id}">Edit</button>
           </div>
         </article>`).join("")
-      : `<div class="suggestion-empty">No candidates match these filters. Research this trait or add a directly connected name.</div>`;
+      : `<div class="suggestion-empty">No preloaded one-word names match these filters. Clear a filter to see the complete categorized bank.</div>`;
   }
 
   function renderWorkbench() {
@@ -206,26 +206,6 @@
     notice(`${candidate.name} marked ${status}. The permanent bank is synced.`);
   }
 
-  async function research() {
-    const row = selectedCoverage();
-    let gender = el("iconicGenderFilter").value;
-    if (gender === "active" || gender === "all") gender = activeGender(row);
-    el("iconicDiscoverButton").disabled = true;
-    notice(`Researching ${gender} ${row.clothing} references through Wikimedia…`);
-    try {
-      const result = await request("POST", {
-        action: "discover",
-        base_revision: iconic.payload.revision,
-        clothing: row.clothing,
-        gender,
-      });
-      await loadBank({ preserveNotice: true });
-      notice(`Research complete: ${result.found} evidence-qualified results, ${result.added} new proposals saved. Review before approving.`);
-    } finally {
-      el("iconicDiscoverButton").disabled = false;
-    }
-  }
-
   function exportCsv() {
     const headers = ["Name", "Clothing", "Gender", "Sub-bank", "Category", "Reference", "Source URL", "Reason", "Confidence", "Status", "Assigned conflict", "Normal-bank overlap", "Updated at", "Updated by"];
     const quote = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
@@ -281,8 +261,6 @@
       notice(error.message, "error");
     }
   });
-  el("iconicAddButton").addEventListener("click", () => openEditor());
-  el("iconicDiscoverButton").addEventListener("click", () => research().catch((error) => notice(error.message, "error")));
   el("iconicExportButton").addEventListener("click", exportCsv);
   el("iconicEditForm").addEventListener("submit", async (event) => {
     event.preventDefault();

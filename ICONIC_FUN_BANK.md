@@ -16,10 +16,15 @@ Candidates are separated into visible sub-banks:
 - Real Legends;
 - Lore & Archetypes;
 - Trait Words, Sounds & Objects;
-- Wordplay & Collectible Aliases.
+- One-word Trait Compounds.
 
-Editorial references stay separate from curated trait vocabulary. Wordplay
-expansion does not synthesize variants from real character or person names.
+Editorial references stay separate from curated trait vocabulary. Every bank
+entry is one word, and compound expansion does not synthesize variants from
+real character or person names.
+
+The bundled editorial and one-word trait banks are pre-approved and require no
+Add or approval step before character replacement. Online research results, if
+added by a future workflow, remain reviewable proposals.
 
 ## Data contract
 

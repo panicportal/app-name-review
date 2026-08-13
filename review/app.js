@@ -2779,12 +2779,24 @@ function normalizeVoiceText(value) {
   return String(value || "")
     .toLowerCase()
     .replace(/[.,!?;:]/g, " ")
+    .replace(/\b(sir|sur|certain)\s+name\b/g, "surname")
+    .replace(/\bsurname\s+(won|one)\b/g, "surname one")
+    .replace(/\bsurname\s+(too|to|two)\b/g, "surname two")
+    .replace(/\bfirst\s+named?\b/g, "first name")
+    .replace(/\b(luck|look)\b/g, "lock")
+    .replace(/\b(next|neck)\s+on\s+decided\b/g, "next undecided")
+    .replace(/\b(icon|iconics|ionic)\s+options\b/g, "iconic options")
+    .replace(/\b(normal|regular)\s+names\b/g, "$1 options")
+    .replace(/\boption\s+won\b/g, "option one")
+    .replace(/\boption\s+to\b/g, "option two")
+    .replace(/\boption\s+tree\b/g, "option three")
+    .replace(/\b(use|choose|pick)\s+(?:the\s+)?(?:adoption|optional)\b/g, "$1 option")
     .replace(/\b(survivor|character|number|hash)\s+(\d+)\b/g, "$2")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function parseVoiceIntent(raw) {
+function parseVoiceIntentExact(raw) {
   const text = normalizeVoiceText(raw);
   if (!text) return { type: "empty", mutates: false };
   if (/^(confirm|yes|save it|do it)$/.test(text)) return { type: "confirm", mutates: true };
@@ -2822,9 +2834,9 @@ function parseVoiceIntent(raw) {
     const optionNumber = { one: 1, two: 2, three: 3, four: 4, five: 5 }[option[1]] || Number(option[1]);
     return { type: "use_option", index: optionNumber - 1, single: /(?:one|1) word$/.test(text), mutates: true };
   }
-  const customFirst = raw.match(/^\s*set\s+(?:the\s+)?first(?:\s+name)?\s+to\s+(.+?)\s*$/i);
+  const customFirst = text.match(/^set\s+(?:the\s+)?first(?:\s+name)?\s+to\s+(.+?)$/i);
   if (customFirst) return { type: "custom_first", value: customFirst[1], mutates: true };
-  const customSurname = raw.match(/^\s*set\s+(?:the\s+)?surname(?:\s+part)?\s*(one|two|1|2)\s+to\s+(.+?)\s*$/i);
+  const customSurname = text.match(/^set\s+(?:the\s+)?surname(?:\s+part)?\s*(one|two|1|2)\s+to\s+(.+?)$/i);
   if (customSurname) return {
     type: "custom_surname",
     part: /^(two|2)$/i.test(customSurname[1]) ? "surname_part_2" : "surname_part_1",
@@ -2841,6 +2853,73 @@ function parseVoiceIntent(raw) {
     return { type: "part_action", action, part, mutates: true };
   }
   return { type: "unknown", raw: text, mutates: false };
+}
+
+const VOICE_CANONICAL_COMMANDS = [
+  "confirm", "cancel", "stop speaking", "repeat", "next undecided", "next", "previous",
+  "focus mode", "browse mode", "read character", "read name", "read traits", "read status",
+  "read options", "close options", "close voice", "flip surname", "shortest options",
+  "least used options", "best options", "japanese options", "western options", "iconic options",
+  "normal options", "suggest first", "suggest surname one", "suggest surname two",
+  "use option one", "use option two", "use option three", "use option four", "use option five",
+  "lock first", "lock surname one", "lock surname two", "replace first",
+  "mark surname one for replacement", "mark surname two for replacement", "lock remaining",
+  "replace whole name", "clear character"
+];
+
+function editDistance(left, right) {
+  const a = String(left || "");
+  const b = String(right || "");
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i++) {
+    let diagonal = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const previous = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, diagonal + (a[i - 1] === b[j - 1] ? 0 : 1));
+      diagonal = previous;
+    }
+  }
+  return row[b.length];
+}
+
+function voiceSimilarity(left, right) {
+  const a = normalizeVoiceText(left);
+  const b = normalizeVoiceText(right);
+  if (!a || !b) return 0;
+  const characterScore = 1 - editDistance(a, b) / Math.max(a.length, b.length);
+  const aWords = new Set(a.split(" "));
+  const bWords = new Set(b.split(" "));
+  const shared = [...aWords].filter(word => bWords.has(word)).length;
+  const wordScore = shared / Math.max(aWords.size, bWords.size);
+  return characterScore * .68 + wordScore * .32;
+}
+
+function parseVoiceIntent(raw) {
+  const normalized = normalizeVoiceText(raw);
+  let intent = parseVoiceIntentExact(normalized);
+  if (intent.type !== "unknown") {
+    return normalizeVoiceText(raw) === String(raw || "").toLowerCase().trim()
+      ? intent
+      : { ...intent, interpreted_as: normalized, correction_score: 1 };
+  }
+
+  if (/\bfirst\b/.test(normalized) && /\b(suggest|find|show|open|change|replace|options?)\b/.test(normalized)) {
+    return { type: "suggest", part: "first", mutates: false, interpreted_as: "suggest first" };
+  }
+  if (/\bsurname\b/.test(normalized) && /\b(suggest|find|show|open|change|replace|options?)\b/.test(normalized)) {
+    const part = /\b(two|2|second)\b/.test(normalized) ? "surname_part_2" : "surname_part_1";
+    return { type: "suggest", part, mutates: false, interpreted_as: `suggest surname ${part === "surname_part_2" ? "two" : "one"}` };
+  }
+
+  const ranked = VOICE_CANONICAL_COMMANDS
+    .map(command => ({ command, score: voiceSimilarity(normalized, command) }))
+    .sort((left, right) => right.score - left.score);
+  if (ranked[0]?.score >= .67 && ranked[0].score - (ranked[1]?.score || 0) >= .035) {
+    intent = parseVoiceIntentExact(ranked[0].command);
+    if (intent.type !== "unknown") return { ...intent, interpreted_as: ranked[0].command, correction_score: ranked[0].score };
+  }
+  return intent;
 }
 
 function voicePartLabel(key) {
@@ -2874,8 +2953,13 @@ async function executeVoiceCommand(raw) {
   if (!spoken) return;
   setVoiceDock(true);
   state.voice.lastTranscript = spoken;
-  els.voiceTranscript.textContent = spoken;
   const intent = parseVoiceIntent(spoken);
+  els.voiceTranscript.textContent = intent.interpreted_as && spoken.toLowerCase().trim() !== intent.interpreted_as
+    ? `${spoken} → ${intent.interpreted_as}`
+    : spoken;
+  if (intent.interpreted_as) {
+    setVoiceVisualState("ready", "Command corrected", `Understood “${intent.interpreted_as}”.`);
+  }
 
   if (intent.type === "confirm") {
     const pending = state.voice.pending;
@@ -3074,7 +3158,7 @@ function initVoiceControl() {
   recognition.lang = "en-US";
   recognition.continuous = false;
   recognition.interimResults = true;
-  recognition.maxAlternatives = 1;
+  recognition.maxAlternatives = 5;
   recognition.onstart = () => {
     state.voice.listening = true;
     els.voiceMicButton.setAttribute("aria-pressed", "true");
@@ -3085,7 +3169,20 @@ function initVoiceControl() {
     let transcript = "";
     let isFinal = false;
     for (let index = event.resultIndex; index < event.results.length; index++) {
-      transcript += event.results[index][0].transcript;
+      const result = event.results[index];
+      const alternatives = Array.from(result);
+      const rankedAlternatives = alternatives
+        .map(alternative => ({
+          transcript: alternative.transcript,
+          intent: parseVoiceIntent(alternative.transcript),
+          confidence: Number(alternative.confidence || 0)
+        }))
+        .sort((left, right) =>
+          Number(right.intent.type !== "unknown") - Number(left.intent.type !== "unknown") ||
+          Number(right.intent.correction_score || 0) - Number(left.intent.correction_score || 0) ||
+          right.confidence - left.confidence
+        );
+      transcript += rankedAlternatives[0]?.transcript || result[0].transcript;
       isFinal ||= event.results[index].isFinal;
     }
     els.voiceTranscript.textContent = transcript.trim() || "Listening…";

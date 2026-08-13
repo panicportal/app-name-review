@@ -19,14 +19,14 @@ const CATEGORIES = [
   "Other",
 ];
 const STATUSES = ["approved", "proposed", "rejected"];
-const ICONIC_SEED_VERSION = 4;
+const ICONIC_SEED_VERSION = 6;
 
 function bankSection(category) {
   if (["Iconic Character", "Internet Culture"].includes(category)) return "Screen, Games & Culture";
   if (["Historical / Real Person", "Historical / Real Animal"].includes(category)) return "Real Legends";
   if (["Mythology / Folklore", "Cultural Archetype"].includes(category)) return "Lore & Archetypes";
   if (["Trait Term", "Nickname"].includes(category)) return "Trait Words, Sounds & Objects";
-  return "Wordplay & Collectible Aliases";
+  return "One-word Trait Compounds";
 }
 
 function slug(value) {
@@ -56,6 +56,7 @@ function expandSeed() {
     for (const gender of ["Male", "Female"]) {
       for (const tuple of genders[gender] || []) {
         const [name, category, reference, reason, score] = tuple;
+        if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(name)) continue;
         const id = candidateId(clothing, gender, name, reference);
         candidates[id] = {
           id,
@@ -68,7 +69,7 @@ function expandSeed() {
           source_url: sourceUrl(reference),
           reason,
           confidence: Number(score),
-          status: Number(score) >= 90 ? "approved" : "proposed",
+          status: "approved",
           source_kind: "editorial_seed",
           created_at: "2026-08-13T00:00:00.000Z",
           updated_at: "2026-08-13T00:00:00.000Z",
@@ -86,6 +87,20 @@ function titleCase(value) {
     .replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
 }
 
+function oneWord(value) {
+  return titleCase(value)
+    .replace(/[^A-Za-z]/g, "")
+    .slice(0, 24);
+}
+
+function fuseWords(left, right) {
+  const first = oneWord(left);
+  const second = oneWord(right);
+  if (!first || !second || first.toLowerCase() === second.toLowerCase()) return "";
+  const overlap = first.slice(-1).toLowerCase() === second.slice(0, 1).toLowerCase();
+  return `${first}${(overlap ? second.slice(1) : second).toLowerCase()}`.slice(0, 24);
+}
+
 function expandTraitVocabulary(candidates) {
   const counts = traitCounts();
   for (const [clothing, config] of Object.entries(expansion)) {
@@ -97,8 +112,8 @@ function expandTraitVocabulary(candidates) {
         .map((candidate) => candidate.name.toLowerCase())
     );
     const add = (name, category, reference, reason, confidence) => {
-      const clean = titleCase(name).replace(/\s+/g, " ");
-      if (!/^[A-Za-z][A-Za-z' -]{1,23}$/.test(clean) || existingNames.has(clean.toLowerCase())) return;
+      const clean = oneWord(name);
+      if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(clean) || existingNames.has(clean.toLowerCase())) return;
       existingNames.add(clean.toLowerCase());
       const id = candidateId(clothing, activeGender, clean, reference);
       candidates[id] = {
@@ -129,21 +144,34 @@ function expandTraitVocabulary(candidates) {
       );
     }
     const protectedReferenceNames = new Set(
-      Object.values(candidates)
-        .filter(candidate => candidate.clothing === clothing && candidate.gender === activeGender)
-        .filter(candidate => ["Iconic Character", "Historical / Real Person", "Historical / Real Animal"].includes(candidate.category))
-        .map(candidate => candidate.name.toLowerCase())
+      Object.values(expandSeed())
+        .filter(candidate => candidate.clothing === clothing)
+        .map(candidate => oneWord(candidate.name).toLowerCase())
     );
     const combinationRoots = (config.roots || [])
-      .filter(root => !protectedReferenceNames.has(String(root).toLowerCase()));
+      .filter(root => !protectedReferenceNames.has(oneWord(root).toLowerCase()));
+    outerRoots:
+    for (const first of combinationRoots) {
+      for (const second of combinationRoots) {
+        add(
+          fuseWords(first, second),
+          "Wordplay",
+          `Curated ${clothing} one-word compound`,
+          `Fuses two recognizable ${clothing}-specific terms into one collectible first name.`,
+          86
+        );
+        if (existingNames.size >= target) break outerRoots;
+      }
+    }
     outer:
     for (const modifier of config.modifiers || []) {
+      if (/^(mighty|big|little|young|old)$/i.test(modifier)) continue;
       for (const root of combinationRoots) {
         add(
-          `${modifier} ${root}`,
+          fuseWords(modifier, root),
           "Wordplay",
-          `Curated ${clothing} collectible alias`,
-          `Combines two recognizable ${clothing}-specific ideas into a readable collectible alias.`,
+          `Curated ${clothing} one-word compound`,
+          `Fuses recognizable ${clothing}-specific wording into one collectible first name.`,
           84
         );
         if (existingNames.size >= target) break outer;
@@ -178,10 +206,16 @@ async function getOrCreateIconicState() {
     const canonical = canonicalCandidates();
     state.candidates ||= {};
     for (const [id, candidate] of Object.entries(state.candidates)) {
-      if (candidate.source_kind === "curated_trait_expansion" && !canonical[id]) delete state.candidates[id];
+      if (
+        (candidate.source_kind === "curated_trait_expansion" || candidate.source_kind === "editorial_seed") &&
+        !canonical[id]
+      ) delete state.candidates[id];
     }
     for (const [id, candidate] of Object.entries(canonical)) {
       if (!state.candidates[id]) state.candidates[id] = candidate;
+      else if (state.candidates[id].source_kind === "editorial_seed" && state.candidates[id].status === "proposed") {
+        state.candidates[id] = { ...state.candidates[id], status: "approved" };
+      }
     }
     state.schema_version = "panic-iconic-bank/v2";
     state.seed_version = ICONIC_SEED_VERSION;
@@ -246,7 +280,7 @@ function enrichedCandidates(iconicState, liveState) {
   const normal = normalFirstNames();
   const poolKeys = new Set();
   return Object.values(iconicState.candidates || {})
-    .filter((candidate) => !candidate.deleted_at)
+    .filter((candidate) => !candidate.deleted_at && /^[A-Za-z][A-Za-z'-]{1,23}$/.test(candidate.name))
     .map((candidate) => {
       const normalized = slug(candidate.name);
       const poolKey = `${candidate.clothing}|${candidate.gender}|${normalized}`;
@@ -308,7 +342,7 @@ function validateCandidate(input, traits) {
   const gender = String(input.gender || "");
   const category = String(input.category || "Other");
   const status = String(input.status || "proposed");
-  if (!/^[A-Za-z][A-Za-z' -]{1,23}$/.test(name)) throw new Error("Use 2–24 letters, spaces, apostrophes, or hyphens.");
+  if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(name)) throw new Error("Use one first name only: 2–24 letters, with an optional apostrophe or hyphen and no spaces.");
   if (!traits.has(clothing)) throw new Error("Unknown Clothing trait.");
   if (!["Male", "Female"].includes(gender)) throw new Error("Gender must be Male or Female.");
   if (!CATEGORIES.includes(category)) throw new Error("Unknown category.");
