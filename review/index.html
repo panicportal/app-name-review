@@ -140,7 +140,8 @@
         </div>
         <div class="character-title">
           <p id="clothingEyebrow"></p>
-          <h1 id="characterName"></h1>
+          <button class="character-name-button" id="characterName" type="button" aria-label="Edit this full character name"></button>
+          <small class="character-name-edit-hint">Tap the full name to edit it</small>
         </div>
         <div class="character-curation-status">
           <div>
@@ -197,7 +198,10 @@
             <div class="evidence-label"><span>Surname</span><b id="surnameLanguage"></b></div>
             <div class="surname-title-line">
               <h3 id="surname"></h3>
-              <button class="flip-surname-button" id="surnameFlipButton" hidden>⇄ Flip order</button>
+              <div class="surname-structure-actions">
+                <button class="restore-surname-button" id="surnameRestoreButton" hidden>+ Build two-part surname</button>
+                <button class="flip-surname-button" id="surnameFlipButton" hidden>⇄ Flip order</button>
+              </div>
             </div>
             <p id="surnameRationale"></p>
             <div class="fusion-recipe" id="surnameRecipe">
@@ -446,6 +450,31 @@
       <div class="suggestion-list" id="suggestionList"></div>
     </div>
   </dialog>
+  <dialog class="full-name-edit-dialog" id="fullNameEditDialog">
+    <form class="dialog-shell full-name-edit-form" id="fullNameEditForm">
+      <header>
+        <div>
+          <p class="kicker">Direct full-name edit</p>
+          <h2>Edit this character name</h2>
+          <p>The current full name is already filled in. Edit either word, then review and save.</p>
+        </div>
+        <button type="button" class="dialog-close" id="fullNameEditClose" aria-label="Close full-name editor">×</button>
+      </header>
+      <label class="full-name-edit-field" for="fullNameEditInput">
+        <span>First name + one-word surname</span>
+        <input id="fullNameEditInput" maxlength="62" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="full-name-parse-preview">
+        <div><span>First name</span><strong id="fullNameEditFirst">—</strong></div>
+        <div><span>Surname</span><strong id="fullNameEditSurname">—</strong></div>
+      </div>
+      <p class="full-name-edit-status" id="fullNameEditStatus"></p>
+      <div class="full-name-edit-actions">
+        <button type="button" id="fullNameEditCancel">Cancel</button>
+        <button type="submit" class="full-name-edit-save" id="fullNameEditSave">Save edited name</button>
+      </div>
+    </form>
+  </dialog>
   <dialog class="activity-dialog" id="activityDialog">
     <div class="dialog-shell">
       <header>
@@ -628,7 +657,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=18-0-oneword-voice"></script>
-  <script src="/review/iconic.js?v=18-0-oneword-voice"></script>
+  <script src="/review/app.js?v=19-0-surname-restore"></script>
+  <script src="/review/iconic.js?v=19-0-surname-restore"></script>
 </body>
 </html>

@@ -90,13 +90,147 @@ function componentUsage(state, exceptId) {
   return counts;
 }
 
+function titleWord(value) {
+  const text = String(value || "").replace(/[^A-Za-z]/g, "").toLowerCase();
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function originalSurnamePart(character, part) {
+  if (part === "surname_part_1") {
+    return {
+      value: character.surname_component_1 || character.surname_detail?.component_1 || character.surname || "",
+      source: character.surname_source_1 || character.surname_detail?.source_1 || character.surname_source || "",
+    };
+  }
+  return {
+    value: character.surname_component_2 || character.surname_detail?.component_2 || "",
+    source: character.surname_source_2 || character.surname_detail?.source_2 || "",
+  };
+}
+
+function liveSurnameBank(state, traitSource) {
+  const custom = new Map();
+  const greenlit = new Map();
+  const add = (bucket, value, candidate) => {
+    const normalized = titleWord(value);
+    if (!safe(normalized)) return;
+    const key = normalized.toLowerCase();
+    if (!bucket.has(key)) bucket.set(key, { ...candidate, value: normalized });
+  };
+  for (const character of review.characters) {
+    const record = state.curation?.records?.[String(character.id)];
+    if (!record || record.deleted_at) continue;
+    for (const part of ["surname_part_1", "surname_part_2"]) {
+      const saved = record.parts?.[part];
+      if (!saved || saved.deleted_at || saved.disabled) continue;
+      const original = originalSurnamePart(character, part);
+      const source = saved.replacement_trait_source || original.source;
+      if (source !== traitSource) continue;
+      const value = saved.replacement_value || original.value;
+      const isWestern = saved.replacement_language === "western" ||
+        /manual team edit|western/i.test(saved.replacement_source || "");
+      if (saved.replacement_value && isWestern) {
+        add(custom, value, {
+          language: "western",
+          source: `Team custom surname · ${traitSource}`,
+          fit: `A Western surname fragment manually written by the team for ${traitSource}; restored from synced curation history.`,
+          fit_type: "confirmed team custom",
+          rank: 0,
+          surname_bank_section: "Team custom",
+          live_evidence_character_id: String(character.id),
+        });
+      }
+      const originalIsWestern = character.surname_language === "western";
+      if (saved.decision === "approve" && (isWestern || (!saved.replacement_value && originalIsWestern))) {
+        add(greenlit, value, {
+          language: "western",
+          source: `Greenlit team choice · ${traitSource}`,
+          fit: `Already greenlit by the team on Surv!vor #${character.id} for this exact trait route.`,
+          fit_type: "greenlit live choice",
+          rank: 1,
+          surname_bank_section: "Greenlit team choices",
+          live_evidence_character_id: String(character.id),
+        });
+      }
+    }
+  }
+  return { custom: [...custom.values()], greenlit: [...greenlit.values()] };
+}
+
+function inspiredSurnameCandidates(traitSource, catalogCandidates, liveCandidates) {
+  const traitText = String(traitSource || "").split(":").slice(1).join(":");
+  const traitWords = traitText.match(/[A-Za-z]+/g) || [];
+  const seedValues = [
+    ...liveCandidates.map((candidate) => candidate.value),
+    ...catalogCandidates.map((candidate) => candidate.value),
+    ...traitWords,
+  ];
+  const roots = [];
+  const seenRoots = new Set();
+  for (const value of seedValues) {
+    const root = titleWord(value);
+    const key = root.toLowerCase();
+    if (!root || root.length < 3 || root.length > 10 || seenRoots.has(key)) continue;
+    seenRoots.add(key);
+    roots.push(root);
+    if (roots.length >= 8) break;
+  }
+  const suffixes = [
+    "beam", "bloom", "bolt", "brook", "crest", "dash", "drift", "drop", "flare", "flash",
+    "flow", "glint", "glow", "kin", "let", "light", "ling", "mark", "mist", "ray",
+    "rise", "rush", "shade", "shine", "spark", "spell", "spin", "star", "stone", "stream",
+    "trail", "vale", "ward", "wave", "whirl", "wink", "wise", "wood",
+  ];
+  const blockedValues = new Set([
+    ...catalogCandidates,
+    ...liveCandidates,
+  ].map((candidate) => String(candidate.value || "").toLowerCase()));
+  const generated = [];
+  for (const root of roots) {
+    for (const suffix of suffixes) {
+      if (root.toLowerCase().endsWith(suffix)) continue;
+      const value = `${root}${suffix}`;
+      const key = value.toLowerCase();
+      if (!safe(value) || value.length > 16 || blockedValues.has(key)) continue;
+      blockedValues.add(key);
+      generated.push({
+        value,
+        language: "western",
+        source: `Team-inspired wordplay · ${traitSource}`,
+        fit: `New one-word surname play anchored to the reviewed “${root}” wording for ${traitSource}.`,
+        fit_type: "trait-anchored team-inspired wordplay",
+        rank: 12 + generated.length,
+        surname_bank_section: "Team-inspired wordplay",
+      });
+      if (generated.length >= 72) return generated;
+    }
+  }
+  return generated;
+}
+
+function surnameCandidatesFor(state, traitSource, language) {
+  const bank = catalog.surname[traitSource] || {};
+  if (language === "japanese") return bank.japanese || [];
+  const reviewed = (bank.western || []).map((candidate) => ({
+    ...candidate,
+    surname_bank_section: candidate.surname_bank_section || "Reviewed trait bank",
+  }));
+  const live = liveSurnameBank(state, traitSource);
+  const liveCandidates = [...live.custom, ...live.greenlit];
+  const inspired = inspiredSurnameCandidates(traitSource, reviewed, liveCandidates);
+  const western = [...live.custom, ...live.greenlit, ...reviewed, ...inspired];
+  if (language === "western") return western;
+  return [...western, ...(bank.japanese || [])];
+}
+
 function candidatesFor(
   character,
   part,
   language,
   sourceOverride = "",
   nameSource = "normal",
-  iconicState = null
+  iconicState = null,
+  liveState = null
 ) {
   if (part === "first") {
     if (nameSource === "iconic") {
@@ -156,11 +290,7 @@ function candidatesFor(
       ? character.surname_source_1
       : character.surname_source_2
   );
-  const bank = catalog.surname[source] || {};
-  if (language === "any") {
-    return [...(bank.western || []), ...(bank.japanese || [])];
-  }
-  return bank[language] || [];
+  return surnameCandidatesFor(liveState || { curation: { records: {} } }, source, language);
 }
 
 function availableFirstTraitSources(character) {
@@ -188,16 +318,17 @@ function availableFirstTraitSources(character) {
     .filter((item) => item.japanese_count);
 }
 
-function availableTraitSources(character) {
+function availableTraitSources(character, state) {
   return (character.traits || [])
     .map((trait) => {
       const source = `${trait.type}:${trait.value}`;
-      const bank = catalog.surname[source] || {};
+      const western = surnameCandidatesFor(state, source, "western");
+      const japanese = surnameCandidatesFor(state, source, "japanese");
       return {
         source,
         label: `${trait.type} · ${trait.value}`,
-        western_count: (bank.western || []).filter((candidate) => safe(candidate.value)).length,
-        japanese_count: (bank.japanese || []).filter((candidate) => safe(candidate.value)).length,
+        western_count: western.filter((candidate) => safe(candidate.value)).length,
+        japanese_count: japanese.filter((candidate) => safe(candidate.value)).length,
       };
     })
     .filter((item) => item.western_count || item.japanese_count);
@@ -352,7 +483,7 @@ module.exports = async function handler(req, res) {
           : `Clothing:${character.clothing}`;
     const traitSources = part === "first"
       ? language === "japanese" ? availableFirstTraitSources(character) : []
-      : availableTraitSources(character);
+      : availableTraitSources(character, state);
     // Some serverless/dev query parsers preserve URLSearchParams' "+" for
     // spaces. Normalize it so exact trait keys such as "Lovely Pink" survive.
     const requestedSource = String(req.query.source || "").replace(/\+/g, " ");
@@ -431,7 +562,8 @@ module.exports = async function handler(req, res) {
       language,
       traitSource,
       nameSource,
-      iconicState
+      iconicState,
+      state
     )
       .filter((candidate) => nameSource === "iconic" ? safeIconic(candidate.value) : safe(candidate.value))
       .filter((candidate) => candidate.value.toLowerCase() !== String(current).toLowerCase())
@@ -545,14 +677,15 @@ module.exports = async function handler(req, res) {
     );
     const suggestions = [];
     const seen = new Set();
-    const rankedPool = nameSource === "iconic"
+    const isWesternSurname = part.startsWith("surname_") && language === "western";
+    const rankedPool = nameSource === "iconic" || isWesternSurname
       ? balanced
       : [
           ...balanced.slice(0, 18),
           ...shortest.slice(0, 14),
           ...leastUsed.slice(0, 10),
         ];
-    const suggestionLimit = nameSource === "iconic" ? 400 : 36;
+    const suggestionLimit = nameSource === "iconic" ? 400 : isWesternSurname ? 120 : 36;
     for (const candidate of rankedPool) {
       const key = candidate.value.toLowerCase();
       if (seen.has(key)) continue;

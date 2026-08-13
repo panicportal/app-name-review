@@ -408,7 +408,18 @@ function splitSource(source = "") {
 
 function partDefinitions(character) {
   const detail = character.surname_detail || {};
-  const hasSecondPart = Boolean(detail.source_2 || character.surname_source_2);
+  const storedPart2 = state.curation.records?.[String(character.id)]?.parts?.surname_part_2;
+  const hasLivePart2 = Boolean(
+    storedPart2 && !storedPart2.deleted_at && (
+      storedPart2.disabled ||
+      storedPart2.decision ||
+      storedPart2.replacement_value ||
+      storedPart2.replacement_source ||
+      storedPart2.replacement_trait_source
+    )
+  );
+  const hasSecondPart = Boolean(detail.source_2 || character.surname_source_2 || hasLivePart2);
+  const hasActiveSecondPart = hasSecondPart && !storedPart2?.disabled;
   return [
     {
       key: "first",
@@ -420,8 +431,8 @@ function partDefinitions(character) {
     },
     {
       key: "surname_part_1",
-      short: hasSecondPart ? "S1" : "S",
-      label: hasSecondPart ? "Surname part 1" : "Surname",
+      short: hasActiveSecondPart ? "S1" : "S",
+      label: hasActiveSecondPart ? "Surname part 1" : "Surname",
       value: detail.component_1 || character.surname_component_1 || character.surname || "",
       source: detail.source_1 || character.surname_source_1 || character.surname_source || "",
       usage_count: Number(detail.component_1_count || 0),
@@ -434,7 +445,7 @@ function partDefinitions(character) {
       value: detail.component_2 || character.surname_component_2 || "",
       source: detail.source_2 || character.surname_source_2 || "",
       usage_count: Number(detail.component_2_count || 0),
-      available: Boolean(character.surname && hasSecondPart)
+      available: Boolean(character.surname && hasActiveSecondPart)
     }
   ];
 }
@@ -563,6 +574,134 @@ function effectiveDisplayName(character) {
     effectivePartValue(character, "first"),
     effectiveSurname(character)
   ].filter(Boolean).join(" ");
+}
+
+function parseFullNameEdit(value) {
+  const words = String(value || "").trim().split(/\s+/).filter(Boolean);
+  if (words.length !== 2) return { error: "Use exactly two words: one first name and one surname." };
+  const first = normalizeManualFirstName(words[0]);
+  const surnameRaw = words[1];
+  const surname = /^[A-Za-z]{2,32}$/.test(surnameRaw)
+    ? surnameRaw.charAt(0).toUpperCase() + surnameRaw.slice(1).toLowerCase()
+    : null;
+  if (!first) return { error: "First name must use 2–20 safe English letters, apostrophe, or hyphen." };
+  if (!surname) return { error: "Surname must be one word using 2–32 English letters." };
+  return { first, surname };
+}
+
+function fullNameAlreadyUsed(first, surname) {
+  const target = `${first} ${surname}`.toLowerCase();
+  return state.data.characters.some(character =>
+    character.id !== state.selected?.id && effectiveDisplayName(character).toLowerCase() === target
+  );
+}
+
+function updateFullNameEditPreview() {
+  const parsed = parseFullNameEdit(els.fullNameEditInput.value);
+  const currentFirst = effectivePartValue(state.selected, "first");
+  const currentSurname = effectiveSurname(state.selected);
+  const error = parsed.error ||
+    (parsed.first.toLowerCase() !== currentFirst.toLowerCase() && manualFirstNameUsage(parsed.first)
+      ? `First name “${parsed.first}” is already used by another character.`
+      : fullNameAlreadyUsed(parsed.first, parsed.surname)
+        ? "That complete full name is already used by another character."
+        : "");
+  els.fullNameEditInput.classList.toggle("invalid", Boolean(error));
+  els.fullNameEditFirst.textContent = parsed.first || "—";
+  els.fullNameEditSurname.textContent = parsed.surname || "—";
+  els.fullNameEditStatus.textContent = error || (
+    parsed.first === currentFirst && parsed.surname === currentSurname
+      ? "This matches the current live name."
+      : "Ready to save. Only the words you changed will be updated."
+  );
+  els.fullNameEditStatus.classList.toggle("error", Boolean(error));
+  els.fullNameEditSave.disabled = Boolean(error) ||
+    (parsed.first === currentFirst && parsed.surname === currentSurname);
+  return error ? null : parsed;
+}
+
+function openFullNameEditor() {
+  if (!state.selected) return;
+  els.fullNameEditInput.value = effectiveDisplayName(state.selected);
+  updateFullNameEditPreview();
+  els.fullNameEditDialog.showModal();
+  requestAnimationFrame(() => {
+    els.fullNameEditInput.focus();
+    els.fullNameEditInput.setSelectionRange(0, els.fullNameEditInput.value.length);
+  });
+}
+
+function saveFullNameEdit(event) {
+  event.preventDefault();
+  const parsed = updateFullNameEditPreview();
+  if (!parsed) return;
+  const character = state.selected;
+  const currentFirst = effectivePartValue(character, "first");
+  const currentSurname = effectiveSurname(character);
+  const timestamp = nowIso();
+  const record = ensureRecord(character.id);
+  if (parsed.first !== currentFirst) {
+    const current = partReview(character.id, "first");
+    record.parts.first = {
+      ...current,
+      decision: "replace",
+      scope: "this_character",
+      disabled: false,
+      replacement_value: parsed.first,
+      replacement_source: "Direct full-name edit · Western clothing theme",
+      replacement_trait_source: `Clothing:${character.clothing || "No clothing trait"}`,
+      replacement_language: "western",
+      replacement_rationale: `Direct team edit of the full-name field for Surv!vor #${character.id}.`,
+      replacement_scores: null,
+      updated_at: timestamp,
+      reviewer: state.curation.reviewer || current.reviewer || "",
+      deleted_at: null
+    };
+  }
+  if (parsed.surname !== currentSurname) {
+    const fallbackTrait = character.traits?.find(trait => trait.type !== "Body");
+    const source = effectivePartSource(character, "surname_part_1") ||
+      (fallbackTrait ? `${fallbackTrait.type}:${fallbackTrait.value}` : "Trait:Team custom");
+    const current1 = partReview(character.id, "surname_part_1");
+    const current2 = partReview(character.id, "surname_part_2");
+    record.parts.surname_part_1 = {
+      ...current1,
+      decision: "replace",
+      scope: "this_character",
+      disabled: false,
+      replacement_value: parsed.surname,
+      replacement_source: "Manual team edit",
+      replacement_trait_source: source,
+      replacement_language: "western",
+      replacement_rationale: `Direct team edit of the one-word surname for Surv!vor #${character.id}.`,
+      replacement_scores: null,
+      updated_at: timestamp,
+      reviewer: state.curation.reviewer || current1.reviewer || "",
+      deleted_at: null
+    };
+    record.parts.surname_part_2 = {
+      ...current2,
+      decision: "replace",
+      scope: current2.scope || "this_character",
+      disabled: true,
+      note: current2.note || "Removed to use a single-word surname.",
+      updated_at: timestamp,
+      reviewer: state.curation.reviewer || current2.reviewer || "",
+      deleted_at: null
+    };
+    record.surname_order = "12";
+    record.surname_order_updated_at = timestamp;
+    record.surname_join_style = "lower_second";
+    record.surname_format_version = SURNAME_FORMAT_VERSION;
+    record.surname_join_style_updated_at = timestamp;
+  }
+  record.updated_at = timestamp;
+  saveCuration();
+  renderCharacter();
+  updateProgress();
+  renderRoster();
+  els.fullNameEditDialog.close();
+  showToast(`Saved edited name ${effectiveDisplayName(character)}.`, "success");
 }
 
 function liveSurnameRationale(character) {
@@ -1173,10 +1312,17 @@ function renderCharacter() {
   const usage2 = surnameComponentUsage(liveUsagePart2);
   els.surnameComponentCount2.textContent = usageText(liveUsagePart2);
   els.surnameComponentCount2.classList.toggle("has-rejections", usage2.rejected > 0);
-  const hasSecondSurnamePart = Boolean(detail.source_2);
+  const secondDefinition = partDefinitions(c).find(part => part.key === "surname_part_2");
+  const hasSecondSurnamePart = Boolean(secondDefinition?.available && !review2.disabled && livePart2);
   els.surnameFusionOperator.hidden = !hasSecondSurnamePart;
   els.surnameFusionPart2.hidden = !hasSecondSurnamePart;
   els.surnameRecipe.classList.toggle("single-surname", !hasSecondSurnamePart);
+  els.surnameRestoreButton.hidden = hasSecondSurnamePart || !c.surname;
+  if (!els.surnameRestoreButton.hidden) {
+    els.surnameRestoreButton.textContent = review2.disabled || secondDefinition?.value
+      ? "+ Restore two-part surname"
+      : "+ Build two-part surname";
+  }
   const scoredReviews = [review1, review2]
     .filter(review => review.replacement_scores)
     .sort((left, right) => timestamp(right.updated_at) - timestamp(left.updated_at));
@@ -1361,6 +1507,44 @@ function keepOnlySurnamePart(keepKey, { replacement = null, closeDialog = true }
   renderRoster();
   if (closeDialog) els.suggestionDialog.close();
   showToast(`Saved one-word surname ${effectiveSurname(state.selected)}.`, "success");
+}
+
+function restoreTwoPartSurname() {
+  const character = state.selected;
+  if (!character?.surname) return;
+  const record = ensureRecord(character.id);
+  const timestamp = nowIso();
+  const definitions = partDefinitions(character);
+  const disabledKey = ["surname_part_1", "surname_part_2"]
+    .find(key => partReview(character.id, key).disabled);
+  const restoreKey = disabledKey || "surname_part_2";
+  const current = partReview(character.id, restoreKey);
+  record.parts[restoreKey] = {
+    ...current,
+    decision: current.replacement_value ? "replace" : current.decision || "replace",
+    scope: current.scope || "this_character",
+    disabled: false,
+    note: current.note === "Removed to use a single-word surname." ? "" : current.note,
+    replacement_rationale: current.replacement_value
+      ? current.replacement_rationale
+      : `Restored as an active second surname component for Surv!vor #${character.id}.`,
+    updated_at: timestamp,
+    reviewer: state.curation.reviewer || current.reviewer || "",
+    deleted_at: null
+  };
+  record.updated_at = timestamp;
+  saveCuration();
+  renderCharacter();
+  updateProgress();
+  renderRoster();
+  const restoredValue = effectivePartValue(character, restoreKey);
+  if (restoredValue) {
+    showToast(`Restored two-part surname ${effectiveSurname(character)}.`, "success");
+    return;
+  }
+  const definition = definitions.find(part => part.key === restoreKey);
+  openSuggestions(restoreKey, "western", current.replacement_trait_source || definition?.source || null);
+  showToast("Choose a Western trait fragment to complete the two-part surname.", "success");
 }
 
 function setPartDecision(key, decision) {
@@ -2195,6 +2379,10 @@ function candidateOrder(candidate) {
   return available[preferred] ? preferred : Object.keys(available)[0] || "12";
 }
 
+function candidateBankSection(candidate) {
+  return candidate.iconic_bank_section || candidate.surname_bank_section || "";
+}
+
 function sortedSuggestionEntries() {
   const suggestions = state.suggestionPayload?.suggestions || [];
   const entries = suggestions.map((candidate, index) => {
@@ -2209,10 +2397,10 @@ function sortedSuggestionEntries() {
     };
     return { candidate, index, order, preview };
   }).filter(({ candidate }) => {
-    if (state.suggestionCategory !== "all" && candidate.iconic_bank_section !== state.suggestionCategory) return false;
+    if (state.suggestionCategory !== "all" && candidateBankSection(candidate) !== state.suggestionCategory) return false;
     const query = state.suggestionSearch.trim().toLowerCase();
     if (!query) return true;
-    return [candidate.value, candidate.fit, candidate.iconic_reference, candidate.iconic_category]
+    return [candidate.value, candidate.fit, candidate.iconic_reference, candidate.iconic_category, candidate.source]
       .some(value => String(value || "").toLowerCase().includes(query));
   });
   if (state.suggestionSort === "shortest") {
@@ -2275,7 +2463,7 @@ function renderSuggestionOptions() {
         <div class="preview-score-pair">${suggestionScoreMarkup(preview.scores)}</div>
       </div>
       <div class="suggestion-component-change">${escapeHtml(changeLabel)}</div>
-      ${candidate.iconic_bank_section ? `<div class="suggestion-bank-badge">${escapeHtml(candidate.iconic_bank_section)} · ${escapeHtml(candidate.iconic_category || "")}</div>` : ""}
+      ${candidateBankSection(candidate) ? `<div class="suggestion-bank-badge">${escapeHtml(candidateBankSection(candidate))}${candidate.iconic_category ? ` · ${escapeHtml(candidate.iconic_category)}` : ""}</div>` : ""}
       <p>${escapeHtml(candidate.fit)}</p>
       <small>${escapeHtml(candidate.source)} · ${escapeHtml(candidate.uniqueness)}</small>
       <small>${escapeHtml(preview.scores?.readability_note || "")} · ${escapeHtml(preview.scores?.collectability_note || "")}</small>
@@ -2336,9 +2524,17 @@ async function openSuggestions(part, language = null, source = null, nameSource 
   els.suggestionNameSource.querySelectorAll("[data-name-source]").forEach(button => {
     button.classList.toggle("active", button.dataset.nameSource === state.suggestionNameSource);
   });
-  els.suggestionSubBanks.hidden = !(part === "first" && state.suggestionNameSource === "iconic");
+  const showCategorizedBank = (part === "first" && state.suggestionNameSource === "iconic") ||
+    (part.startsWith("surname_") && state.suggestionLanguage === "western");
+  els.suggestionSubBanks.hidden = !showCategorizedBank;
   if (!els.suggestionSubBanks.hidden) {
-    els.suggestionCategoryTabs.innerHTML = `<span class="suggestion-loading-inline">Loading categorized trait names…</span>`;
+    els.suggestionSubBanks.querySelector("span").textContent = part === "first"
+      ? "Trait-connected first-name sub-bank"
+      : "Surname source bank";
+    els.suggestionSearch.placeholder = part === "first"
+      ? "Kermit, ribbit, hopper…"
+      : "Search custom, greenlit, or wordplay…";
+    els.suggestionCategoryTabs.innerHTML = `<span class="suggestion-loading-inline">Loading categorized trait options…</span>`;
     els.suggestionResultCount.textContent = "";
   }
   els.suggestionPolicy.textContent =
@@ -2385,14 +2581,19 @@ async function openSuggestions(part, language = null, source = null, nameSource 
     state.suggestionPayload = payload;
     state.suggestionSource = payload.trait_source;
     const sections = [...new Set((payload.suggestions || [])
-      .map(candidate => candidate.iconic_bank_section)
+      .map(candidateBankSection)
       .filter(Boolean))];
-    els.suggestionSubBanks.hidden = !(state.suggestionPart === "first" && state.suggestionNameSource === "iconic");
+    const showCategorizedBank =
+      (state.suggestionPart === "first" && state.suggestionNameSource === "iconic") ||
+      (state.suggestionPart?.startsWith("surname_") && state.suggestionLanguage === "western");
+    els.suggestionSubBanks.hidden = !showCategorizedBank;
     els.suggestionCategoryTabs.innerHTML = ["all", ...sections].map(section => {
       const count = section === "all"
         ? payload.suggestions.length
-        : payload.suggestions.filter(candidate => candidate.iconic_bank_section === section).length;
-      const label = section === "all" ? "All trait names" : section;
+        : payload.suggestions.filter(candidate => candidateBankSection(candidate) === section).length;
+      const label = section === "all"
+        ? state.suggestionPart === "first" ? "All trait names" : "All surname options"
+        : section;
       return `<button class="${section === state.suggestionCategory ? "active" : ""}" data-suggestion-category="${escapeHtml(section)}">${escapeHtml(label)} <b>${count}</b></button>`;
     }).join("");
     els.suggestionCategoryTabs.querySelectorAll("[data-suggestion-category]").forEach(button => {
@@ -3424,7 +3625,13 @@ function bindEvents() {
   els.focusApproveNextButton.addEventListener("click", approveRemainingAndNext);
   els.focusNextUndecidedButton.addEventListener("click", nextUndecided);
   els.surnameFlipButton.addEventListener("click", () => toggleSurnameOrder());
+  els.surnameRestoreButton.addEventListener("click", restoreTwoPartSurname);
   els.focusFlipButton.addEventListener("click", () => toggleSurnameOrder());
+  els.characterName.addEventListener("click", openFullNameEditor);
+  els.fullNameEditClose.addEventListener("click", () => els.fullNameEditDialog.close());
+  els.fullNameEditCancel.addEventListener("click", () => els.fullNameEditDialog.close());
+  els.fullNameEditInput.addEventListener("input", updateFullNameEditPreview);
+  els.fullNameEditForm.addEventListener("submit", saveFullNameEdit);
   els.surnameOptions1.addEventListener("click", () => openSuggestions("surname_part_1"));
   els.surnameOptions2.addEventListener("click", () => openSuggestions("surname_part_2"));
   els.focusExportButton.addEventListener("click", exportReviews);

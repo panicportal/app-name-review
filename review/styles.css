@@ -621,11 +621,32 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.character-title h1 {
+.character-title .character-name-button {
+  display: block;
   max-width: 720px;
   margin: 0;
+  padding: 0 0 5px;
+  border: 0;
+  border-bottom: 2px dashed rgba(255, 179, 57, .42);
+  background: transparent;
+  color: var(--paper);
   font: 900 clamp(30px, 4vw, 58px)/.94 var(--display);
   letter-spacing: -.045em;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.character-title .character-name-button:hover,
+.character-title .character-name-button:focus-visible {
+  border-bottom-color: var(--amber);
+  color: var(--amber);
+}
+.character-name-edit-hint {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font: 8px/1 var(--utility);
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 .character-curation-status {
   display: flex;
@@ -748,12 +769,22 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   gap: 10px;
 }
 .surname-title-line h3 { min-width: 0; }
+.surname-structure-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
 .flip-surname-button {
   flex: 0 0 auto;
   padding: 8px 10px;
   border: 1px solid #b47b22;
   background: #fff3d8;
   color: #805214;
+  font: 800 8px/1 var(--utility);
+  text-transform: uppercase;
+}
+.restore-surname-button {
+  flex: 0 0 auto;
+  padding: 8px 10px;
+  border: 1px solid #37846f;
+  background: #e4f6ed;
+  color: #1f6655;
   font: 800 8px/1 var(--utility);
   text-transform: uppercase;
 }
@@ -1332,6 +1363,36 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   color: white;
 }
 .suggestion-dialog { width: min(940px, calc(100% - 28px)); }
+.full-name-edit-dialog { width: min(650px, calc(100% - 24px)); }
+.full-name-edit-form { border-top: 5px solid var(--amber); }
+.full-name-edit-field { display: grid; gap: 8px; margin-top: 22px; }
+.full-name-edit-field span,
+.full-name-parse-preview span {
+  color: #60716d;
+  font: 9px/1 var(--utility);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.full-name-edit-field input {
+  width: 100%;
+  min-height: 58px;
+  padding: 10px 13px;
+  border: 2px solid #9eb1ab;
+  background: #fffdf5;
+  color: var(--ink);
+  font: 800 clamp(21px, 5vw, 31px)/1.1 var(--display);
+}
+.full-name-edit-field input:focus { border-color: var(--amber-deep); outline: 3px solid rgba(255,179,57,.2); }
+.full-name-edit-field input.invalid { border-color: var(--rose); }
+.full-name-parse-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.full-name-parse-preview > div { padding: 12px; border: 1px solid #bdc9c5; background: #eef4f0; }
+.full-name-parse-preview strong { display: block; margin-top: 6px; overflow-wrap: anywhere; font: 900 22px/1 var(--display); }
+.full-name-edit-status { min-height: 34px; margin: 12px 0 0; color: #566763; font-size: 12px; }
+.full-name-edit-status.error { color: #9f343f; }
+.full-name-edit-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.full-name-edit-actions button { min-height: 44px; padding: 0 16px; }
+.full-name-edit-actions .full-name-edit-save { border-color: #2f7c68; background: #2f7c68; color: white; }
+.full-name-edit-actions .full-name-edit-save:disabled { opacity: .45; cursor: default; }
 .suggestion-dialog.voice-nonmodal {
   position: fixed;
   inset: 14px;
@@ -1852,6 +1913,9 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   .manual-name-body .preview-score-pair { grid-template-columns: repeat(2, 1fr); }
   .manual-name-save { width: 100%; }
   .surname-title-line { align-items: flex-start; flex-direction: column; }
+  .surname-structure-actions { width: 100%; justify-content: flex-start; }
+  .full-name-parse-preview { grid-template-columns: 1fr; }
+  .full-name-edit-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .flip-surname-button { min-height: 42px; }
   .dialog-shell { padding: 18px; }
   .activity-item { grid-template-columns: 1fr auto; }
