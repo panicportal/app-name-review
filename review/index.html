@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=13-2-aug03">
+  <link rel="stylesheet" href="/review/styles.css?v=15-0-voice">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -22,6 +22,7 @@
           <button data-view-mode="focus">Focus</button>
         </div>
         <button class="mobile-filter-button" id="mobileFiltersButton" aria-controls="rosterPanel" aria-expanded="false">Filters</button>
+        <button class="voice-mode-button" id="voiceModeButton" aria-controls="voiceDock" aria-expanded="false"><span>●</span> Voice</button>
         <span class="cloud-chip connecting" id="cloudChip"><i></i><b>Connecting</b></span>
         <button class="quiet-button" id="nextUndecidedButton">Next undecided</button>
         <button class="quiet-button" id="activityButton">Activity</button>
@@ -444,11 +445,92 @@
       <div class="activity-list" id="activityList"></div>
     </div>
   </dialog>
+  <section class="voice-dock" id="voiceDock" aria-label="Voice control" hidden>
+    <div class="voice-orbit" id="voiceOrbit" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="voice-dock-main">
+      <div class="voice-state-line">
+        <span class="voice-state-dot" id="voiceStateDot"></span>
+        <div>
+          <b id="voiceStateLabel">Voice ready</b>
+          <small id="voiceHint">Tap the microphone, then say “read character” or “next”.</small>
+        </div>
+      </div>
+      <div class="voice-transcript" aria-live="polite">
+        <span>You said</span>
+        <strong id="voiceTranscript">Waiting for a command…</strong>
+      </div>
+      <form class="voice-command-form" id="voiceCommandForm">
+        <label for="voiceCommandInput">Type or dictate a command</label>
+        <div>
+          <input id="voiceCommandInput" autocomplete="off" enterkeyhint="send"
+            placeholder="Use the phone keyboard microphone here if needed">
+          <button type="submit">Run</button>
+        </div>
+      </form>
+    </div>
+    <div class="voice-dock-actions">
+      <button class="voice-mic-button" id="voiceMicButton" aria-pressed="false">
+        <span class="voice-mic-icon">●</span><b>Listen</b>
+      </button>
+      <button id="voiceReadButton">Read character</button>
+      <button id="voiceHandsFreeButton" aria-pressed="false">Hands-free off</button>
+      <button id="voiceMuteButton" aria-pressed="false">Voice back on</button>
+      <button id="voiceHelpButton">Commands</button>
+      <button id="voiceCloseButton" aria-label="Close voice controls">Close</button>
+    </div>
+  </section>
+  <dialog class="voice-help-dialog" id="voiceHelpDialog">
+    <div class="dialog-shell voice-guide-shell">
+      <header>
+        <div>
+          <p class="kicker">Field-radio guide</p>
+          <h2>Control Name Studio by voice</h2>
+          <p>Say one clear command at a time. Name-changing commands ask for confirmation before saving.</p>
+        </div>
+        <button class="dialog-close" id="voiceHelpClose" aria-label="Close voice guide">×</button>
+      </header>
+      <div class="voice-guide-intro">
+        <div><b>1</b><span>Tap <strong>Listen</strong> and allow microphone access.</span></div>
+        <div><b>2</b><span>Say a command. The app repeats changes before saving.</span></div>
+        <div><b>3</b><span>Say <strong>confirm</strong> or <strong>cancel</strong>.</span></div>
+      </div>
+      <div class="voice-command-grid">
+        <article><h3>Move</h3><p>“Next” · “Previous” · “Next undecided” · “Go to 310” · “Focus mode” · “Browse mode”</p></article>
+        <article><h3>Listen</h3><p>“Read character” · “Read name” · “Read traits” · “Read status” · “Repeat” · “Stop speaking”</p></article>
+        <article><h3>Decide</h3><p>“Lock first” · “Lock surname one” · “Lock surname two” · “Lock remaining” · “Replace first” · “Replace whole name”</p></article>
+        <article><h3>Find options</h3><p>“Suggest first” · “Suggest surname one” · “Japanese options” · “Western options” · “Shortest options” · “Read options”</p></article>
+        <article><h3>Choose</h3><p>“Use option one” · “Use option three as one word” · “Flip surname” · “Cancel”</p></article>
+        <article><h3>Custom text</h3><p>“Set first name to Skipper” · “Set surname one to Skater” · “Set surname two to Bloom”</p></article>
+      </div>
+      <section class="voice-mobile-note">
+        <h3>Android and iPhone</h3>
+        <p>If the browser’s Listen button is unavailable, tap the command field and use the microphone on your phone keyboard. Every command and spoken confirmation still works. Keep this site open and the screen awake for hands-free mode.</p>
+      </section>
+      <div class="voice-settings">
+        <label>Voice personality
+          <select id="voicePersonality">
+            <option value="adaptive">Adaptive character voice</option>
+            <option value="scout">Clear scout</option>
+            <option value="calm">Calm curator</option>
+            <option value="bold">Bold announcer</option>
+          </select>
+        </label>
+        <label>Speech speed
+          <select id="voiceRate">
+            <option value="0.85">Relaxed</option>
+            <option value="1" selected>Normal</option>
+            <option value="1.15">Fast</option>
+          </select>
+        </label>
+        <button id="voiceTutorialTest">Test voice</button>
+      </div>
+    </div>
+  </dialog>
   <nav class="mobile-review-nav" aria-label="Mobile review controls">
     <button id="mobilePrevious">←<span>Previous</span></button>
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=14-0-aug04"></script>
+  <script src="/review/app.js?v=15-0-voice"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@ const PACKAGED_PROGRESS_URL = "/cloud_seed_curation.json";
 const PART_KEYS = ["first", "surname_part_1", "surname_part_2"];
 const CLOUD_POLL_MS = 12000;
 const SURNAME_FORMAT_VERSION = 2;
+const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v1";
 
 function emptyCuration() {
   return {
@@ -54,7 +55,20 @@ const state = {
   suggestionPreviewOrder: "12",
   suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
-  focusSwipeStart: null
+  focusSwipeStart: null,
+  voice: {
+    recognition: null,
+    supported: Boolean(window.SpeechRecognition || window.webkitSpeechRecognition),
+    listening: false,
+    handsFree: false,
+    muted: false,
+    pending: null,
+    manualStop: false,
+    lastSpoken: "",
+    lastTranscript: "",
+    wakeLock: null,
+    settings: { personality: "adaptive", rate: 1 }
+  }
 };
 
 const $ = id => document.getElementById(id);
@@ -2468,7 +2482,548 @@ async function loginToCloud(event) {
   }
 }
 
+function loadVoiceSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(VOICE_SETTINGS_KEY) || "null");
+    if (saved && typeof saved === "object") {
+      state.voice.settings.personality = ["adaptive", "scout", "calm", "bold"]
+        .includes(saved.personality) ? saved.personality : "adaptive";
+      state.voice.settings.rate = [0.85, 1, 1.15].includes(Number(saved.rate))
+        ? Number(saved.rate) : 1;
+      state.voice.muted = Boolean(saved.muted);
+    }
+  } catch (_) {
+    // Invalid voice preferences safely fall back to the clear default voice.
+  }
+}
+
+function saveVoiceSettings() {
+  localStorage.setItem(VOICE_SETTINGS_KEY, JSON.stringify({
+    ...state.voice.settings,
+    muted: state.voice.muted
+  }));
+}
+
+function setVoiceVisualState(status, label, hint = "") {
+  if (!els.voiceDock) return;
+  els.voiceDock.dataset.state = status;
+  els.voiceStateLabel.textContent = label;
+  if (hint) els.voiceHint.textContent = hint;
+  document.body.classList.toggle("voice-listening", status === "listening");
+}
+
+function setVoiceDock(open) {
+  els.voiceDock.hidden = !open;
+  els.voiceModeButton.classList.toggle("active", open);
+  els.voiceModeButton.setAttribute("aria-expanded", String(open));
+  if (open) {
+    setVoiceVisualState(
+      state.voice.supported ? "ready" : "unsupported",
+      state.voice.supported ? "Voice ready" : "Dictation fallback ready",
+      state.voice.supported
+        ? "Tap Listen, or enable hands-free after microphone permission is granted."
+        : "Use the microphone on your phone keyboard in the command field."
+    );
+  } else {
+    stopVoiceListening(true);
+  }
+}
+
+function voiceProfile() {
+  let personality = state.voice.settings.personality;
+  if (personality === "adaptive") {
+    const clothing = String(state.selected?.clothing || "").toLowerCase();
+    personality = /pirate|king|queen|devil|bull/.test(clothing) ? "bold" :
+      /angel|painter|kimono|saint/.test(clothing) ? "calm" : "scout";
+  }
+  return personality === "bold" ? { pitch: 0.86, rate: 1.04 } :
+    personality === "calm" ? { pitch: 0.96, rate: 0.92 } :
+      { pitch: 1, rate: 1 };
+}
+
+function speakVoice(message, { resume = true } = {}) {
+  const text = String(message || "").trim();
+  if (!text) return Promise.resolve();
+  state.voice.lastSpoken = text;
+  if (state.voice.muted || !("speechSynthesis" in window)) {
+    if (resume && state.voice.handsFree) setTimeout(startVoiceListening, 180);
+    return Promise.resolve();
+  }
+  stopVoiceListening(false);
+  window.speechSynthesis.cancel();
+  return new Promise(resolve => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    const profile = voiceProfile();
+    utterance.lang = "en-US";
+    utterance.pitch = profile.pitch;
+    utterance.rate = Math.max(.65, Math.min(1.4, profile.rate * state.voice.settings.rate));
+    const voices = window.speechSynthesis.getVoices();
+    utterance.voice = voices.find(voice => /^en[-_]/i.test(voice.lang)) || voices[0] || null;
+    const finish = () => {
+      resolve();
+      if (resume && state.voice.handsFree && !els.voiceDock.hidden) {
+        setTimeout(startVoiceListening, 220);
+      }
+    };
+    utterance.onend = finish;
+    utterance.onerror = finish;
+    window.speechSynthesis.speak(utterance);
+  });
+}
+
+async function acquireVoiceWakeLock() {
+  if (!("wakeLock" in navigator) || state.voice.wakeLock) return;
+  try {
+    state.voice.wakeLock = await navigator.wakeLock.request("screen");
+    state.voice.wakeLock.addEventListener("release", () => {
+      state.voice.wakeLock = null;
+    });
+  } catch (_) {
+    // Wake Lock is optional; voice control still works while the page stays visible.
+  }
+}
+
+function releaseVoiceWakeLock() {
+  state.voice.wakeLock?.release?.().catch(() => {});
+  state.voice.wakeLock = null;
+}
+
+function stopVoiceListening(manual = true) {
+  state.voice.manualStop = manual;
+  try { state.voice.recognition?.abort(); } catch (_) {}
+  state.voice.listening = false;
+  els.voiceMicButton?.setAttribute("aria-pressed", "false");
+  els.voiceMicButton?.classList.remove("active");
+  if (manual && !els.voiceDock?.hidden) {
+    setVoiceVisualState("ready", "Voice ready", "Tap Listen for another command.");
+  }
+}
+
+function startVoiceListening() {
+  if (!state.voice.supported) {
+    setVoiceVisualState(
+      "unsupported",
+      "Use phone dictation",
+      "Tap the command field, use your keyboard microphone, then press Run."
+    );
+    els.voiceCommandInput?.focus();
+    return;
+  }
+  if (state.voice.listening || els.voiceDock.hidden) return;
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  state.voice.manualStop = false;
+  try {
+    state.voice.recognition.start();
+  } catch (_) {
+    // Mobile browsers can reject a duplicate start while the previous session ends.
+  }
+}
+
+function readCurrentCharacter(section = "character") {
+  if (!state.selected) return "No character is selected.";
+  const character = state.selected;
+  const name = effectiveDisplayName(character) || "name required";
+  if (section === "name") return `${name}.`;
+  if (section === "traits") {
+    const traits = character.traits
+      .filter(trait => trait.value)
+      .map(trait => `${trait.type}, ${trait.value}`)
+      .join(". ");
+    return `Character ${character.id}. ${traits}.`;
+  }
+  if (section === "status") {
+    const status = curationStatus(character);
+    return `Character ${character.id}. ${status.decided} of ${status.total} name parts decided. ${status.rejected || 0} marked for replacement.`;
+  }
+  return `Character ${character.id}. ${name}. Clothing, ${character.clothing || "not listed"}. Say read traits for every trait, or suggest a name part.`;
+}
+
+function readVoiceOptions() {
+  const entries = sortedSuggestionEntries().slice(0, 5);
+  if (!entries.length) return "No fitting options are loaded. Say suggest first, suggest surname one, or suggest surname two.";
+  return entries.map(({ candidate, preview }, index) =>
+    `Option ${index + 1}, ${preview.full_name || candidate.preview_full_name || candidate.value}`
+  ).join(". ") + ". Say use option and its number.";
+}
+
+function normalizeVoiceText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[.,!?;:]/g, " ")
+    .replace(/\b(survivor|character|number|hash)\s+(\d+)\b/g, "$2")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseVoiceIntent(raw) {
+  const text = normalizeVoiceText(raw);
+  if (!text) return { type: "empty", mutates: false };
+  if (/^(confirm|yes|save it|do it)$/.test(text)) return { type: "confirm", mutates: true };
+  if (/^(cancel|no|never mind|nevermind)$/.test(text)) return { type: "cancel", mutates: false };
+  if (/^(stop speaking|be quiet|silence)$/.test(text)) return { type: "stop_speaking", mutates: false };
+  if (/^(repeat|say that again)$/.test(text)) return { type: "repeat", mutates: false };
+  if (/^next undecided$/.test(text)) return { type: "next_undecided", mutates: false };
+  if (/^(next|next character)$/.test(text)) return { type: "move", direction: 1, mutates: false };
+  if (/^(previous|back|previous character)$/.test(text)) return { type: "move", direction: -1, mutates: false };
+  const goTo = text.match(/^(?:go to|open)\s+(\d{1,4})$/);
+  if (goTo) return { type: "go_to", id: goTo[1], mutates: false };
+  if (/^focus( mode)?$/.test(text)) return { type: "view", mode: "focus", mutates: false };
+  if (/^browse( mode)?$/.test(text)) return { type: "view", mode: "browse", mutates: false };
+  if (/^read( current)? character$/.test(text)) return { type: "read", section: "character", mutates: false };
+  if (/^read( the)? name$/.test(text)) return { type: "read", section: "name", mutates: false };
+  if (/^read( the)? traits$/.test(text)) return { type: "read", section: "traits", mutates: false };
+  if (/^read( the)? status$/.test(text)) return { type: "read", section: "status", mutates: false };
+  if (/^read( the)? options$/.test(text)) return { type: "read_options", mutates: false };
+  if (/^close options$/.test(text)) return { type: "close_options", mutates: false };
+  if (/^close voice$/.test(text)) return { type: "close_voice", mutates: false };
+  if (/^flip( the)? surname$/.test(text)) return { type: "flip", mutates: true };
+  if (/^(shortest|least used|best|balanced) options$/.test(text)) {
+    return { type: "sort", sort: text.startsWith("shortest") ? "shortest" : text.startsWith("least") ? "least-used" : "balanced", mutates: false };
+  }
+  if (/^(japanese|western) options$/.test(text)) return { type: "language", language: text.split(" ")[0], mutates: false };
+  const suggest = text.match(/^(?:suggest|find|replace)\s+(?:the\s+)?(first(?: name)?|surname(?: part)?\s*(?:one|two|1|2)|surname\s*(?:one|two|1|2))$/);
+  if (suggest) {
+    const part = suggest[1].startsWith("first") ? "first" : /(?:two|2)$/.test(suggest[1]) ? "surname_part_2" : "surname_part_1";
+    return { type: "suggest", part, mutates: false };
+  }
+  const option = text.match(/^use option\s+(one|two|three|four|five|1|2|3|4|5)(?:\s+as\s+(?:a\s+)?(?:one|1) word)?$/);
+  if (option) {
+    const optionNumber = { one: 1, two: 2, three: 3, four: 4, five: 5 }[option[1]] || Number(option[1]);
+    return { type: "use_option", index: optionNumber - 1, single: /(?:one|1) word$/.test(text), mutates: true };
+  }
+  const customFirst = raw.match(/^\s*set\s+(?:the\s+)?first(?:\s+name)?\s+to\s+(.+?)\s*$/i);
+  if (customFirst) return { type: "custom_first", value: customFirst[1], mutates: true };
+  const customSurname = raw.match(/^\s*set\s+(?:the\s+)?surname(?:\s+part)?\s*(one|two|1|2)\s+to\s+(.+?)\s*$/i);
+  if (customSurname) return {
+    type: "custom_surname",
+    part: /^(two|2)$/i.test(customSurname[1]) ? "surname_part_2" : "surname_part_1",
+    value: customSurname[2],
+    mutates: true
+  };
+  if (/^lock( the)? remaining$|^lock all$/.test(text)) return { type: "lock_remaining", mutates: true };
+  if (/^replace( the)? whole name$|^mark( the)? whole name( for)? replacement$/.test(text)) return { type: "replace_whole", mutates: true };
+  if (/^clear( the)? character$|^clear all decisions$/.test(text)) return { type: "clear_character", mutates: true };
+  const partAction = text.match(/^(lock|approve|clear|mark)\s+(?:the\s+)?(first(?: name)?|surname(?: part)?\s*(?:one|two|1|2)|surname\s*(?:one|two|1|2))(?:\s+for\s+replacement)?$/);
+  if (partAction) {
+    const part = partAction[2].startsWith("first") ? "first" : /(?:two|2)$/.test(partAction[2]) ? "surname_part_2" : "surname_part_1";
+    const action = partAction[1] === "approve" ? "lock" : partAction[1];
+    return { type: "part_action", action, part, mutates: true };
+  }
+  return { type: "unknown", raw: text, mutates: false };
+}
+
+function voicePartLabel(key) {
+  return key === "first" ? "first name" : key === "surname_part_2" ? "surname part two" : "surname part one";
+}
+
+function requestVoiceConfirmation(label, action) {
+  state.voice.pending = { label, action, characterId: String(state.selected?.id || "") };
+  setVoiceVisualState("confirm", "Confirmation needed", `Say “confirm” to ${label}, or “cancel”.`);
+  return speakVoice(`Ready to ${label}. Say confirm to save, or cancel.`);
+}
+
+function clearCharacterConfirmed() {
+  const timestamp = nowIso();
+  state.curation.records[state.selected.id] = {
+    note: "",
+    note_updated_at: timestamp,
+    updated_at: timestamp,
+    deleted_at: timestamp,
+    parts: {}
+  };
+  saveCuration();
+  renderCharacter();
+  updateProgress();
+  renderRoster();
+}
+
+async function executeVoiceCommand(raw) {
+  const spoken = String(raw || "").trim();
+  if (!spoken) return;
+  setVoiceDock(true);
+  state.voice.lastTranscript = spoken;
+  els.voiceTranscript.textContent = spoken;
+  const intent = parseVoiceIntent(spoken);
+
+  if (intent.type === "confirm") {
+    const pending = state.voice.pending;
+    if (!pending) return speakVoice("There is no pending change to confirm.");
+    if (pending.characterId !== String(state.selected?.id || "")) {
+      state.voice.pending = null;
+      return speakVoice("That confirmation was cancelled because the selected character changed.");
+    }
+    state.voice.pending = null;
+    try {
+      await pending.action();
+      setVoiceVisualState("ready", "Saved", `Saved for character ${state.selected.id}.`);
+      return speakVoice(`Saved. The current full name is ${effectiveDisplayName(state.selected)}.`);
+    } catch (error) {
+      setVoiceVisualState("error", "Could not save", error.message);
+      return speakVoice(`I could not save that change. ${error.message}`);
+    }
+  }
+  if (intent.type === "cancel") {
+    state.voice.pending = null;
+    setVoiceVisualState("ready", "Cancelled", "No change was saved.");
+    return speakVoice("Cancelled. Nothing was changed.");
+  }
+  if (state.voice.pending) {
+    return speakVoice("A change is waiting. Say confirm or cancel before another command.");
+  }
+  if (intent.type === "stop_speaking") {
+    window.speechSynthesis?.cancel();
+    return;
+  }
+  if (intent.type === "repeat") return speakVoice(state.voice.lastSpoken || readCurrentCharacter());
+  if (intent.type === "move") {
+    moveSelection(intent.direction);
+    return speakVoice(readCurrentCharacter("character"));
+  }
+  if (intent.type === "next_undecided") {
+    nextUndecided();
+    return speakVoice(readCurrentCharacter("character"));
+  }
+  if (intent.type === "go_to") {
+    const exists = state.data.characters.some(character => String(character.id) === intent.id);
+    if (!exists) return speakVoice(`Character ${intent.id} was not found.`);
+    selectById(intent.id);
+    return speakVoice(readCurrentCharacter("character"));
+  }
+  if (intent.type === "view") {
+    setViewMode(intent.mode);
+    return speakVoice(`${intent.mode} mode enabled.`);
+  }
+  if (intent.type === "read") return speakVoice(readCurrentCharacter(intent.section));
+  if (intent.type === "read_options") return speakVoice(readVoiceOptions());
+  if (intent.type === "close_options") {
+    if (els.suggestionDialog.open) els.suggestionDialog.close();
+    return speakVoice("Options closed.");
+  }
+  if (intent.type === "close_voice") {
+    setVoiceDock(false);
+    return;
+  }
+  if (intent.type === "sort") {
+    state.suggestionSort = intent.sort;
+    renderSuggestionOptions();
+    return speakVoice(`${intent.sort.replace("-", " ")} ranking selected. ${readVoiceOptions()}`);
+  }
+  if (intent.type === "language") {
+    if (!state.suggestionPart) return speakVoice("Open a name part first. Say suggest first, surname one, or surname two.");
+    await openSuggestions(state.suggestionPart, intent.language, state.suggestionSource);
+    return speakVoice(`${intent.language} bank loaded. ${readVoiceOptions()}`);
+  }
+  if (intent.type === "suggest") {
+    const available = partDefinitions(state.selected).some(part => part.key === intent.part && part.available);
+    if (!available) return speakVoice(`${voicePartLabel(intent.part)} is not active on this character.`);
+    await openSuggestions(intent.part);
+    return speakVoice(readVoiceOptions());
+  }
+  if (intent.type === "use_option") {
+    const entry = sortedSuggestionEntries()[intent.index];
+    if (!entry) return speakVoice("That option is not available. Say read options.");
+    const fullName = intent.single
+      ? entry.candidate.single_preview?.full_name || entry.candidate.value
+      : entry.preview.full_name || entry.candidate.preview_full_name || entry.candidate.value;
+    return requestVoiceConfirmation(`use ${fullName}`, () =>
+      chooseSuggestion(entry.candidate, entry.order, intent.single)
+    );
+  }
+  if (intent.type === "flip") {
+    if (!canFlipSurname(state.selected)) return speakVoice("This character does not have two active surname parts to flip.");
+    const flipped = surnameOrder(state.selected) === "12" ? "21" : "12";
+    const currentId = state.selected.id;
+    const preview = composeSurname(
+      state.selected,
+      effectivePartValue(state.selected, "surname_part_1"),
+      effectivePartValue(state.selected, "surname_part_2"),
+      flipped,
+      surnameJoinStyle(state.selected)
+    );
+    return requestVoiceConfirmation(`flip the surname to ${preview}`, () => {
+      if (state.selected.id !== currentId) throw new Error("Character changed.");
+      setSurnameOrder(flipped, { announce: false });
+    });
+  }
+  if (intent.type === "custom_first") {
+    const value = normalizeManualFirstName(intent.value);
+    if (!value) return speakVoice("That first name is not valid. Use two to twenty English letters, with an optional apostrophe or hyphen.");
+    const usageCount = manualFirstNameUsage(value);
+    if (usageCount) return speakVoice(`${value} is already used ${usageCount} times elsewhere. First names must remain unique.`);
+    const fullName = `${value} ${effectiveSurname(state.selected)}`.trim();
+    return requestVoiceConfirmation(`set the Western first name to ${value}. Full name ${fullName}`, () => {
+      const definition = partDefinitions(state.selected).find(part => part.key === "first");
+      const traitSource = `Clothing:${state.selected.clothing || "No clothing trait"}`;
+      updatePartReview("first", {
+        decision: "replace", scope: "this_character", disabled: false,
+        replacement_value: value,
+        replacement_source: "Manual team edit · Western clothing theme",
+        replacement_trait_source: traitSource,
+        replacement_language: "western",
+        replacement_rationale: `Voice-curated Western first name for ${traitSource}. Replaced “${definition?.value || ""}” with the collection-unique “${value}”. Full-name preview: ${fullName}.`,
+        replacement_scores: null
+      });
+    });
+  }
+  if (intent.type === "custom_surname") {
+    const value = normalizeManualSurnamePart(intent.value);
+    if (!value) return speakVoice("That surname fragment is not valid. Use two to twenty English letters with no spaces or symbols.");
+    const available = partDefinitions(state.selected).some(part => part.key === intent.part && part.available);
+    if (!available) return speakVoice(`${voicePartLabel(intent.part)} is not active on this character.`);
+    state.suggestionPart = intent.part;
+    state.suggestionLanguage = "western";
+    state.suggestionSource = effectivePartSource(state.selected, intent.part);
+    state.suggestionPreviewOrder = surnameOrder(state.selected);
+    state.suggestionJoinStyle = surnameJoinStyle(state.selected);
+    const preview = manualSurnamePreview(value);
+    if (!preview) return speakVoice("I could not build a safe surname preview from that fragment.");
+    return requestVoiceConfirmation(`set ${voicePartLabel(intent.part)} to ${value}. Full name ${preview.fullName}`, () => {
+      const definition = partDefinitions(state.selected).find(part => part.key === intent.part);
+      const traitSource = state.suggestionSource || definition?.source || "";
+      updatePartReview(intent.part, {
+        decision: "replace", scope: "this_character", disabled: false,
+        replacement_value: value,
+        replacement_source: "Manual team edit",
+        replacement_trait_source: traitSource,
+        replacement_language: "western",
+        replacement_rationale: `Voice-curated by the team for ${traitSource || "this character's trait"}. Replaced “${definition?.value || ""}” with “${value}”. Full-name preview: ${preview.fullName}. Readability ${preview.scores.readability.toFixed(1)}/10; collectability ${preview.scores.collectability.toFixed(1)}/10.`,
+        replacement_scores: preview.scores
+      });
+    });
+  }
+  if (intent.type === "lock_remaining") {
+    return requestVoiceConfirmation("lock every undecided name part", approveRemaining);
+  }
+  if (intent.type === "replace_whole") {
+    return requestVoiceConfirmation("mark the whole name for replacement", replaceWholeName);
+  }
+  if (intent.type === "clear_character") {
+    return requestVoiceConfirmation("clear all decisions for this character", clearCharacterConfirmed);
+  }
+  if (intent.type === "part_action") {
+    const available = partDefinitions(state.selected).some(part => part.key === intent.part && part.available);
+    if (!available) return speakVoice(`${voicePartLabel(intent.part)} is not active on this character.`);
+    const label = intent.action === "lock" ? `lock ${voicePartLabel(intent.part)}` :
+      intent.action === "clear" ? `clear the decision on ${voicePartLabel(intent.part)}` :
+        `mark ${voicePartLabel(intent.part)} for replacement`;
+    const decision = intent.action === "lock" ? "approve" : intent.action === "clear" ? "clear" : "replace";
+    return requestVoiceConfirmation(label, () => setPartDecision(intent.part, decision));
+  }
+  setVoiceVisualState("error", "Command not recognized", "Say “commands” to open the guide.");
+  if (/^(commands|help|voice help)$/.test(normalizeVoiceText(spoken))) {
+    els.voiceHelpDialog.showModal();
+    return speakVoice("The voice command guide is open.");
+  }
+  return speakVoice("I did not recognize that command. Say commands to open the guide.");
+}
+
+function initVoiceControl() {
+  loadVoiceSettings();
+  els.voicePersonality.value = state.voice.settings.personality;
+  els.voiceRate.value = String(state.voice.settings.rate);
+  els.voiceMuteButton.textContent = state.voice.muted ? "Voice back off" : "Voice back on";
+  els.voiceMuteButton.setAttribute("aria-pressed", String(state.voice.muted));
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!Recognition) {
+    els.voiceMicButton.disabled = true;
+    els.voiceMicButton.querySelector("b").textContent = "Use dictation";
+    return;
+  }
+  const recognition = new Recognition();
+  recognition.lang = "en-US";
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 1;
+  recognition.onstart = () => {
+    state.voice.listening = true;
+    els.voiceMicButton.setAttribute("aria-pressed", "true");
+    els.voiceMicButton.classList.add("active");
+    setVoiceVisualState("listening", "Listening", "Say one command clearly.");
+  };
+  recognition.onresult = event => {
+    let transcript = "";
+    let isFinal = false;
+    for (let index = event.resultIndex; index < event.results.length; index++) {
+      transcript += event.results[index][0].transcript;
+      isFinal ||= event.results[index].isFinal;
+    }
+    els.voiceTranscript.textContent = transcript.trim() || "Listening…";
+    if (isFinal) executeVoiceCommand(transcript.trim());
+  };
+  recognition.onerror = event => {
+    state.voice.listening = false;
+    if (event.error === "aborted") return;
+    const denied = event.error === "not-allowed" || event.error === "service-not-allowed";
+    setVoiceVisualState(
+      "error",
+      denied ? "Microphone blocked" : "Could not hear that",
+      denied
+        ? "Allow microphone access, or use phone keyboard dictation below."
+        : "Tap Listen and try one short command."
+    );
+  };
+  recognition.onend = () => {
+    state.voice.listening = false;
+    els.voiceMicButton.setAttribute("aria-pressed", "false");
+    els.voiceMicButton.classList.remove("active");
+    document.body.classList.remove("voice-listening");
+    if (state.voice.handsFree && !state.voice.manualStop && !window.speechSynthesis?.speaking && !els.voiceDock.hidden) {
+      setTimeout(startVoiceListening, 320);
+    }
+  };
+  state.voice.recognition = recognition;
+}
+
 function bindEvents() {
+  els.voiceModeButton.addEventListener("click", () => setVoiceDock(els.voiceDock.hidden));
+  els.voiceCloseButton.addEventListener("click", () => setVoiceDock(false));
+  els.voiceMicButton.addEventListener("click", () => {
+    if (state.voice.listening) stopVoiceListening(true);
+    else startVoiceListening();
+  });
+  els.voiceReadButton.addEventListener("click", () => speakVoice(readCurrentCharacter()));
+  els.voiceHandsFreeButton.addEventListener("click", async () => {
+    state.voice.handsFree = !state.voice.handsFree;
+    els.voiceHandsFreeButton.classList.toggle("active", state.voice.handsFree);
+    els.voiceHandsFreeButton.setAttribute("aria-pressed", String(state.voice.handsFree));
+    els.voiceHandsFreeButton.textContent = state.voice.handsFree ? "Hands-free on" : "Hands-free off";
+    if (state.voice.handsFree) {
+      await acquireVoiceWakeLock();
+      speakVoice("Hands-free mode on. I will listen again after each reply.");
+    } else {
+      stopVoiceListening(true);
+      releaseVoiceWakeLock();
+      speakVoice("Hands-free mode off.", { resume: false });
+    }
+  });
+  els.voiceMuteButton.addEventListener("click", () => {
+    state.voice.muted = !state.voice.muted;
+    els.voiceMuteButton.classList.toggle("active", state.voice.muted);
+    els.voiceMuteButton.setAttribute("aria-pressed", String(state.voice.muted));
+    els.voiceMuteButton.textContent = state.voice.muted ? "Voice back off" : "Voice back on";
+    saveVoiceSettings();
+    if (state.voice.muted) window.speechSynthesis?.cancel();
+    else speakVoice("Voice feedback is on.");
+  });
+  els.voiceHelpButton.addEventListener("click", () => els.voiceHelpDialog.showModal());
+  els.voiceHelpClose.addEventListener("click", () => els.voiceHelpDialog.close());
+  els.voiceCommandForm.addEventListener("submit", event => {
+    event.preventDefault();
+    const command = els.voiceCommandInput.value.trim();
+    els.voiceCommandInput.value = "";
+    executeVoiceCommand(command);
+  });
+  els.voicePersonality.addEventListener("change", () => {
+    state.voice.settings.personality = els.voicePersonality.value;
+    saveVoiceSettings();
+  });
+  els.voiceRate.addEventListener("change", () => {
+    state.voice.settings.rate = Number(els.voiceRate.value) || 1;
+    saveVoiceSettings();
+  });
+  els.voiceTutorialTest.addEventListener("click", () =>
+    speakVoice(`Voice check. Character ${state.selected?.id || 1}. Ready for curation.`)
+  );
   els.viewModeSwitch.querySelectorAll("[data-view-mode]").forEach(button => {
     button.addEventListener("click", () => setViewMode(button.dataset.viewMode));
   });
@@ -2683,7 +3238,13 @@ function bindEvents() {
   });
   window.addEventListener("pagehide", flushCloudState);
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") flushCloudState();
+    if (document.visibilityState === "hidden") {
+      flushCloudState();
+      stopVoiceListening(false);
+    } else if (state.voice.handsFree) {
+      acquireVoiceWakeLock();
+      startVoiceListening();
+    }
   });
 }
 
@@ -2729,6 +3290,7 @@ async function init() {
       <span><b>${audit.hand_authored_names_required}</b> specials need names</span>`;
     els.reviewerName.value = state.curation.reviewer || "";
 
+    initVoiceControl();
     bindEvents();
     setViewMode(state.viewMode);
     const requestedId = location.hash.slice(1);
@@ -2744,6 +3306,17 @@ async function init() {
       updateProgress();
       applyFilters();
     }
+    window.__nameStudioVoiceTest = {
+      parse: parseVoiceIntent,
+      execute: executeVoiceCommand,
+      read: readCurrentCharacter,
+      state: () => ({
+        supported: state.voice.supported,
+        listening: state.voice.listening,
+        handsFree: state.voice.handsFree,
+        pending: state.voice.pending?.label || null
+      })
+    };
   } catch (error) {
     $("boot").textContent =
       `Could not load review data: ${error.message}. Start the app with the included launcher.`;
