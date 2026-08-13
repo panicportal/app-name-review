@@ -2325,7 +2325,12 @@ async function openSuggestions(part, language = null, source = null) {
   els.suggestionTraitSourceApply.disabled = true;
   renderManualFirstEditor();
   renderManualSurnameEditor();
-  if (!els.suggestionDialog.open) els.suggestionDialog.showModal();
+  if (!els.suggestionDialog.open) {
+    const voiceNonmodal = !els.voiceDock.hidden;
+    els.suggestionDialog.classList.toggle("voice-nonmodal", voiceNonmodal);
+    if (voiceNonmodal) els.suggestionDialog.show();
+    else els.suggestionDialog.showModal();
+  }
   try {
     const params = new URLSearchParams({
       id: state.selected.id,

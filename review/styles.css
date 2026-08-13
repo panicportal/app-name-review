@@ -1332,6 +1332,13 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   color: white;
 }
 .suggestion-dialog { width: min(940px, calc(100% - 28px)); }
+.suggestion-dialog.voice-nonmodal {
+  position: fixed;
+  inset: 14px;
+  z-index: 50;
+  margin: auto;
+  overflow-y: auto;
+}
 .suggestion-full-preview {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
