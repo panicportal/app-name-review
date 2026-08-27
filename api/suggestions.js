@@ -4,6 +4,7 @@ const review = require("../review_data.json");
 const { requireSession } = require("./_lib/auth");
 const { getOrCreateState } = require("./_lib/state");
 const { bankSection, getOrCreateIconicState } = require("./_lib/iconic");
+const { getNameBanks } = require("./_lib/name-banks");
 
 const characters = new Map(
   review.characters.map((character) => [String(character.id), character])
@@ -230,7 +231,8 @@ function candidatesFor(
   sourceOverride = "",
   nameSource = "normal",
   iconicState = null,
-  liveState = null
+  liveState = null,
+  uploadedNameBankState = null
 ) {
   if (part === "first") {
     if (nameSource === "iconic") {
@@ -279,11 +281,29 @@ function candidatesFor(
           ...(routed[character.gender_from_body] || []),
           ...(routed.Any || []),
         ]).filter(matchesBodyGender);
+    const uploadedWestern = (uploadedNameBankState?.banks || [])
+      .filter((uploaded) =>
+        uploaded.active &&
+        uploaded.clothing === character.clothing &&
+        uploaded.gender === character.gender_from_body
+      )
+      .flatMap((uploaded) => (uploaded.entries || []).map((entry) => ({
+        value: entry.name,
+        language: "western",
+        source: `Team Markdown bank · ${uploaded.filename} · ${entry.tier || "Unranked"}`,
+        fit: entry.reference || `Team-curated ${character.clothing} name`,
+        fit_type: "team uploaded clothing research bank",
+        rank: /^S/i.test(entry.tier || "") ? 0 : /^A/i.test(entry.tier || "") ? 4 : /^B/i.test(entry.tier || "") ? 8 : 12,
+        name_bank_filename: uploaded.filename,
+        name_bank_version: uploaded.version,
+      })));
+    const western = unique([...uploadedWestern, ...(bank.western || [])]).filter(matchesBodyGender);
     if (language === "any") {
-      return unique([...(bank.western || []), ...japanese]).filter(matchesBodyGender);
+      return unique([...western, ...japanese]).filter(matchesBodyGender);
     }
     if (language === "japanese") return japanese;
-    return (bank[language] || []).filter(matchesBodyGender);
+    if (language === "western") return western;
+    return unique(bank[language] || []).filter(matchesBodyGender);
   }
   const source = sourceOverride || (
     part === "surname_part_1"
@@ -461,9 +481,10 @@ module.exports = async function handler(req, res) {
       part === "first" && String(req.query.name_source || "") === "iconic"
         ? "iconic"
         : "normal";
-    const [state, iconicState] = await Promise.all([
+    const [state, iconicState, uploadedNameBankState] = await Promise.all([
       getOrCreateState(),
       nameSource === "iconic" ? getOrCreateIconicState() : Promise.resolve(null),
+      part === "first" && nameSource === "normal" ? getNameBanks() : Promise.resolve(null),
     ]);
     const record = state.curation?.records?.[id] || {};
     const firstUsed = part === "first" ? usedFirstNames(state, id) : null;
@@ -563,7 +584,8 @@ module.exports = async function handler(req, res) {
       traitSource,
       nameSource,
       iconicState,
-      state
+      state,
+      uploadedNameBankState
     )
       .filter((candidate) => nameSource === "iconic" ? safeIconic(candidate.value) : safe(candidate.value))
       .filter((candidate) => candidate.value.toLowerCase() !== String(current).toLowerCase())
@@ -718,7 +740,11 @@ module.exports = async function handler(req, res) {
               character,
               part,
               language,
-              traitSource
+              traitSource,
+              nameSource,
+              iconicState,
+              state,
+              uploadedNameBankState
             ).filter((candidate) => safe(candidate.value)).length,
             unused_exact_options: evaluated.length,
             route: "Selected visible trait bank, Body-gender only",

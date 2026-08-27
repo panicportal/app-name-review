@@ -139,3 +139,21 @@ test("saved-chat handoff copies before opening the real conversation URL", () =>
   assert.ok(handler.indexOf("startClipboardTextWrite") < handler.indexOf("window.open(target"));
   assert.match(handler, /window\.open\(target, "panic-name-studio-chatgpt"\)/);
 });
+
+test("ChatGPT handoff rejects shared snapshots and carries live bank choices", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(source, /\^\\\/\(share\|s\)/);
+  assert.match(source, /public Shared conversation link/);
+  assert.match(source, /Start with 15–20 ranked one-word first-name choices/);
+  assert.match(source, /fetchHandoffFirstNameCandidates/);
+  assert.match(source, /LIVE FIRST-NAME BANK FOR THIS CHARACTER/);
+  assert.match(source, /activeChatGptHandoffPacket\(\)/);
+});
+
+test("normal replacement suggestions include active team Markdown banks", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "api", "suggestions.js"), "utf8");
+  assert.match(source, /getNameBanks/);
+  assert.match(source, /uploaded\.active/);
+  assert.match(source, /Team Markdown bank/);
+  assert.match(source, /unique\(\[\.\.\.uploadedWestern, \.\.\.\(bank\.western \|\| \[\]\)\]\)/);
+});

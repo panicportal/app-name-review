@@ -63,7 +63,7 @@ const state = {
   suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
   namingAssistant: { payload: null, loading: false, configured: null },
-  chatGptHandoff: { generation: 0, bundle: null },
+  chatGptHandoff: { generation: 0, characterId: null, bundle: null, packet: null, firstNameCandidates: [] },
   surnameRepairIndex: {},
   surnameRepairSummary: { detected: 0, unresolved: 0 },
   surnameDetectTimer: null,
@@ -3952,10 +3952,37 @@ function reviewPacketText(character) {
   ].join("\n\n");
 }
 
-function chatGptHandoffText(character) {
+function handoffFirstNameBankText(character, candidates = []) {
+  const language = effectiveFirstLanguage(character);
+  const route = `Clothing:${character.clothing} + Body:${character.gender_from_body}`;
+  if (!candidates.length) {
+    return [
+      `LIVE FIRST-NAME BANK FOR THIS CHARACTER`,
+      `Route: ${route}`,
+      `Language: ${language}`,
+      `No unused alternatives were returned by the live bank. Do not invent replacements; review the current first name only.`
+    ].join("\n");
+  }
+  return [
+    `LIVE FIRST-NAME BANK FOR THIS CHARACTER — ${candidates.length} UNUSED OPTIONS`,
+    `Route: ${route}`,
+    `Language: ${language}`,
+    `These options were fetched from the current Name Studio bank and checked against all current/proposed first names. They remain authoritative even if an older ChatGPT upload expired.`,
+    ...candidates.map((candidate, index) =>
+      `${index + 1}. ${candidate.name} — ${candidate.source}${candidate.connection ? ` — ${candidate.connection}` : ""}`
+    )
+  ].join("\n");
+}
+
+function chatGptHandoffText(character, firstNameCandidates = []) {
+  const firstDecision = partReview(character.id, "first").decision;
+  const surnameOpen = ["surname_part_1", "surname_part_2"].some(key =>
+    partDefinitions(character).find(part => part.key === key)?.available &&
+    partReview(character.id, key).decision !== "approve"
+  );
   return [
     `Continue our existing ?an!c Name Studio naming workflow for the attached character.`,
-    `Use the master naming instructions and Markdown name-bank files already attached in this ChatGPT conversation. Treat the exact live data below as current.`,
+    `Use the master naming instructions and any Markdown research files already attached in this editable ChatGPT conversation. Treat the exact live data and inline bank below as current.`,
     `Rules for this review:`,
     `- Never change a component marked GREENLIT.`,
     `- Respect the Body-only gender route for first names.`,
@@ -3963,26 +3990,85 @@ function chatGptHandoffText(character) {
     `- Do not invent Japanese names; use only the closed Japanese bank already supplied.`,
     `- Prefer readable, collectible, trait-recognizable combinations and explain the two exact source routes.`,
     `- Do not save or assume a replacement until I approve it.`,
+    `Required response format:`,
+    firstDecision === "approve"
+      ? `- The first name is GREENLIT. Preserve it and do not offer first-name replacements.`
+      : `- Start with 15–20 ranked one-word first-name choices selected ONLY from the inline live bank below. If fewer than 15 are supplied, show every supplied option and report the exact shortage. Never say the bank is unavailable and never invent an option.`,
+    surnameOpen
+      ? `- Then provide 20–30 strong Western surname choices using exactly two different eligible traits from this packet, followed by the 5 strongest complete full-name combinations.`
+      : `- Preserve every GREENLIT surname component. Only discuss an alternative if a surname component is open or RED X.`,
+    `- Keep the answer easy to scan: first-name table, surname table, then top full-name combinations.`,
     `Portrait URL: ${window.location.origin}/pfps_webp/${character.id}.webp`,
-    `Please inspect the portrait and packet, identify only the parts still open or marked for replacement, and offer your strongest concise options.`,
+    handoffFirstNameBankText(character, firstNameCandidates),
+    `Inspect the portrait and packet, identify only the parts still open or marked for replacement, and obey the option counts above.`,
     reviewPacketText(character)
   ].join("\n\n");
+}
+
+async function fetchHandoffFirstNameCandidates(character) {
+  const language = effectiveFirstLanguage(character);
+  const sources = language === "western" ? ["iconic", "normal"] : ["normal"];
+  const responses = await Promise.allSettled(sources.map(async nameSource => {
+    const params = new URLSearchParams({
+      id: character.id,
+      part: "first",
+      language,
+      name_source: nameSource,
+      request: `handoff-${Date.now()}-${nameSource}`
+    });
+    const response = await fetch(`/api/suggestions?${params}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    return (payload.suggestions || []).map(candidate => ({
+      name: candidate.value,
+      source: candidate.source || `${language} ${character.clothing} bank`,
+      connection: candidate.fit || candidate.iconic_reference || "",
+      nameSource
+    }));
+  }));
+  const bySource = Object.fromEntries(sources.map((source, index) => [
+    source,
+    responses[index].status === "fulfilled" ? responses[index].value : []
+  ]));
+  const pool = language === "western"
+    ? [...(bySource.iconic || []).slice(0, 10), ...(bySource.normal || []).slice(0, 24)]
+    : [...(bySource.normal || []).slice(0, 24)];
+  const seen = new Set();
+  return pool.filter(candidate => {
+    const key = String(candidate.name || "").toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, 24);
+}
+
+function activeChatGptHandoffPacket(character = state.selected) {
+  return state.chatGptHandoff.characterId === String(character?.id) && state.chatGptHandoff.packet
+    ? state.chatGptHandoff.packet
+    : chatGptHandoffText(character, []);
 }
 
 function validChatGptConversationUrl(value) {
   if (!String(value || "").trim()) {
     throw new Error("Paste the address of your prepared ChatGPT conversation first. Name Studio will remember it on this device.");
   }
+  let url;
   try {
-    const url = new URL(String(value).trim());
-    const host = url.hostname.toLowerCase();
-    if (url.protocol !== "https:" || !["chatgpt.com", "www.chatgpt.com", "chat.openai.com"].includes(host)) {
-      throw new Error("Use a chatgpt.com conversation link.");
-    }
-    return url.href;
+    url = new URL(String(value).trim());
   } catch (_) {
     throw new Error("Enter a valid ChatGPT conversation link, such as https://chatgpt.com/c/…");
   }
+  const host = url.hostname.toLowerCase();
+  if (url.protocol !== "https:" || !["chatgpt.com", "www.chatgpt.com", "chat.openai.com"].includes(host)) {
+    throw new Error("Use the private address of an editable chatgpt.com conversation.");
+  }
+  if (/^\/(share|s)(\/|$)/i.test(url.pathname)) {
+    throw new Error("This is a public Shared conversation link. It is read-only and creates a separate chat. Open your original editable conversation and copy its /c/ address instead.");
+  }
+  if (!/\/c\/[^/]+/i.test(url.pathname)) {
+    throw new Error("This is not an editable conversation address. Open the exact ChatGPT chat, then copy the address containing /c/ from Chrome’s top bar.");
+  }
+  return url.href;
 }
 
 function updateSavedChatControls() {
@@ -3993,14 +4079,16 @@ function updateSavedChatControls() {
     try {
       const url = validChatGptConversationUrl(raw);
       valid = true;
-      message = `Ready to reopen ${url.includes("/c/") ? "this exact conversation" : "this saved ChatGPT page"}.`;
+      message = state.chatGptHandoff.packet
+        ? "Ready: editable conversation verified and live first-name bank attached."
+        : "Editable conversation verified. Preparing the live first-name bank…";
     } catch (error) {
       message = error.message;
     }
   }
-  els.chatgptOpenSavedChat.disabled = !valid;
+  els.chatgptOpenSavedChat.disabled = !valid || !state.chatGptHandoff.packet;
   els.chatgptSavedChatState.textContent = message;
-  els.chatgptSavedChatState.className = `chatgpt-saved-chat-state ${valid ? "success" : ""}`.trim();
+  els.chatgptSavedChatState.className = `chatgpt-saved-chat-state ${valid ? "success" : raw ? "error" : ""}`.trim();
 }
 
 async function characterPortraitPngBlob(character = state.selected) {
@@ -4038,7 +4126,10 @@ function setChatGptHandoffStatus(message, tone = "") {
 function openChatGptHandoff() {
   const character = state.selected;
   const generation = ++state.chatGptHandoff.generation;
+  state.chatGptHandoff.characterId = String(character.id);
   state.chatGptHandoff.bundle = null;
+  state.chatGptHandoff.packet = null;
+  state.chatGptHandoff.firstNameCandidates = [];
   els.chatgptHandoffPortrait.src = `/pfps_webp/${character.id}.webp`;
   els.chatgptHandoffPortrait.alt = `Portrait of survivor ${character.id}`;
   els.chatgptHandoffToken.textContent = `Survivor #${character.id}`;
@@ -4046,8 +4137,9 @@ function openChatGptHandoff() {
   els.chatgptHandoffTrait.textContent = `${character.clothing} · ${character.gender_from_body} Body route`;
   els.chatgptChatUrl.value = localStorage.getItem(CHATGPT_HANDOFF_KEY) || "";
   updateSavedChatControls();
-  els.chatgptPacketPreview.value = chatGptHandoffText(character);
+  els.chatgptPacketPreview.value = "Loading live unused first-name candidates for this character…";
   els.chatgptNativeShare.disabled = true;
+  els.chatgptCopyPacket.disabled = true;
   els.chatgptNativeShare.querySelector("b").textContent = "Preparing secure share…";
   setChatGptHandoffStatus("Preparing the portrait before enabling Android sharing…");
   els.chatgptHandoffDialog.showModal();
@@ -4055,20 +4147,31 @@ function openChatGptHandoff() {
 }
 
 async function prepareChatGptShareBundle(character, generation) {
-  const packet = chatGptHandoffText(character);
   try {
-    const png = await characterPortraitPngBlob(character);
+    const [png, firstNameCandidates] = await Promise.all([
+      characterPortraitPngBlob(character),
+      fetchHandoffFirstNameCandidates(character)
+    ]);
+    const packet = chatGptHandoffText(character, firstNameCandidates);
     const portraitFile = new File([png], `panic-survivor-${character.id}.png`, { type: "image/png" });
     const packetFile = new File([packet], `panic-survivor-${character.id}-review.md`, { type: "text/markdown" });
     if (generation !== state.chatGptHandoff.generation || String(character.id) !== String(state.selected?.id)) return;
+    state.chatGptHandoff.packet = packet;
+    state.chatGptHandoff.firstNameCandidates = firstNameCandidates;
     state.chatGptHandoff.bundle = { characterId: String(character.id), packet, portraitFile, packetFile };
+    els.chatgptPacketPreview.value = packet;
     els.chatgptNativeShare.disabled = false;
+    els.chatgptCopyPacket.disabled = false;
     els.chatgptNativeShare.querySelector("b").textContent = "Share portrait + packet";
-    setChatGptHandoffStatus("Ready. Tap the green button to open Android or iPhone sharing.", "success");
+    updateSavedChatControls();
+    setChatGptHandoffStatus(`Ready with ${firstNameCandidates.length} unused first-name options from the live bank. ChatGPT is instructed to rank 15–20 when the first name is open.`, "success");
   } catch (error) {
     if (generation !== state.chatGptHandoff.generation) return;
+    state.chatGptHandoff.packet = null;
     els.chatgptNativeShare.disabled = true;
+    els.chatgptCopyPacket.disabled = true;
     els.chatgptNativeShare.querySelector("b").textContent = "Share unavailable";
+    updateSavedChatControls();
     setChatGptHandoffStatus(error.message || "The portrait could not be prepared for sharing.", "error");
   }
 }
@@ -4146,7 +4249,7 @@ async function copyPacketAndOpenSavedChat() {
     els.chatgptChatUrl.focus();
     return;
   }
-  const packet = chatGptHandoffText(state.selected);
+  const packet = activeChatGptHandoffPacket();
   // Begin copying before opening another tab. Opening first makes Android
   // remove focus and reject Clipboard.writeText with "Permission denied".
   const copyResult = startClipboardTextWrite(packet);
@@ -4574,7 +4677,7 @@ function bindEvents() {
   els.chatgptOpenSavedChat.addEventListener("click", copyPacketAndOpenSavedChat);
   els.chatgptCopyPacket.addEventListener("click", async () => {
     try {
-      const result = startClipboardTextWrite(chatGptHandoffText(state.selected));
+      const result = startClipboardTextWrite(activeChatGptHandoffPacket());
       if (!await result.completion) throw new Error("Clipboard blocked");
       setChatGptHandoffStatus("Copied the complete ChatGPT review packet.", "success");
     } catch (_) {

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=22-2-same-chat-fix">
+  <link rel="stylesheet" href="/review/styles.css?v=22-3-live-bank-handoff">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v22.2 same-chat handoff / closed Japanese bank</small></span>
+        <span><strong>NAME STUDIO</strong><small>v22.3 live-bank handoff / closed Japanese bank</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -512,15 +512,15 @@
         <div><span id="chatgptHandoffToken"></span><strong id="chatgptHandoffName"></strong><small id="chatgptHandoffTrait"></small></div>
       </section>
       <label class="chatgpt-chat-link" for="chatgptChatUrl">
-        <span>Step 1 · Save your prepared ChatGPT conversation</span>
+        <span>Step 1 · Save the private editable ChatGPT conversation</span>
         <input id="chatgptChatUrl" type="url" inputmode="url" autocomplete="url" placeholder="https://chatgpt.com/c/…">
-        <small>In Chrome, open the ChatGPT conversation that contains your master prompt and Markdown banks, copy its address from the top bar, then paste it here once. Do not use a public /share/ link.</small>
+        <small>Open the original chat where you can type, then copy the address containing /c/ from Chrome’s top bar. A /share/ URL is a read-only snapshot and will be rejected.</small>
       </label>
       <p class="chatgpt-saved-chat-state" id="chatgptSavedChatState">No conversation saved yet.</p>
       <div class="chatgpt-handoff-actions">
         <button class="chatgpt-native-share" id="chatgptNativeShare" type="button" disabled><b>Preparing secure share…</b><span>Best on Android and iPhone</span></button>
-        <button id="chatgptOpenSavedChat" type="button" disabled><b>Copy packet + open saved chat</b><span>Reuses one tab and returns to the conversation saved above</span></button>
-        <button id="chatgptCopyPacket" type="button">Copy packet only</button>
+        <button id="chatgptOpenSavedChat" type="button" disabled><b>Copy full packet + open editable chat</b><span>Includes 15–20 requested first names and reuses one ChatGPT tab</span></button>
+        <button id="chatgptCopyPacket" type="button" disabled>Copy full packet only</button>
         <button id="chatgptCopyPortrait" type="button">Copy portrait only</button>
       </div>
       <p class="chatgpt-handoff-status" id="chatgptHandoffStatus">Nothing is sent until you choose an action.</p>
@@ -739,7 +739,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=22-2-same-chat-fix"></script>
+  <script src="/review/app.js?v=22-3-live-bank-handoff"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>
