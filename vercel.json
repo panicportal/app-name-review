@@ -3,11 +3,28 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/review",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "web-share=(self), clipboard-write=(self)"
+        }
+      ]
+    },
+    {
       "source": "/review/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "web-share=(self), clipboard-write=(self)"
         }
       ]
     },

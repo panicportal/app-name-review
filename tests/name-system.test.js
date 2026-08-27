@@ -116,3 +116,15 @@ test("UI contains copy, ChatGPT handoff, repair, assistant, and bank controls", 
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
 });
+
+test("mobile ChatGPT share is prepared before the user-activation click", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  const start = source.indexOf("async function shareCharacterToChatGpt()");
+  const end = source.indexOf("async function copyPacketAndOpenSavedChat()", start);
+  const handler = source.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.doesNotMatch(handler, /await characterPortraitPngBlob/);
+  assert.match(handler, /const shareOperation = navigator\.share/);
+  assert.match(handler, /files: \[bundle\.portraitFile\]/);
+  assert.match(source, /async function prepareChatGptShareBundle[\s\S]*await characterPortraitPngBlob/);
+});

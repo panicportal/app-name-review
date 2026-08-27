@@ -63,6 +63,7 @@ const state = {
   suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
   namingAssistant: { payload: null, loading: false, configured: null },
+  chatGptHandoff: { generation: 0, bundle: null },
   surnameRepairIndex: {},
   surnameRepairSummary: { detected: 0, unresolved: 0 },
   surnameDetectTimer: null,
@@ -3976,6 +3977,8 @@ function setChatGptHandoffStatus(message, tone = "") {
 
 function openChatGptHandoff() {
   const character = state.selected;
+  const generation = ++state.chatGptHandoff.generation;
+  state.chatGptHandoff.bundle = null;
   els.chatgptHandoffPortrait.src = `/pfps_webp/${character.id}.webp`;
   els.chatgptHandoffPortrait.alt = `Portrait of survivor ${character.id}`;
   els.chatgptHandoffToken.textContent = `Survivor #${character.id}`;
@@ -3983,52 +3986,93 @@ function openChatGptHandoff() {
   els.chatgptHandoffTrait.textContent = `${character.clothing} · ${character.gender_from_body} Body route`;
   els.chatgptChatUrl.value = localStorage.getItem(CHATGPT_HANDOFF_KEY) || "";
   els.chatgptPacketPreview.value = chatGptHandoffText(character);
-  setChatGptHandoffStatus("Nothing is sent until you choose an action.");
+  els.chatgptNativeShare.disabled = true;
+  els.chatgptNativeShare.querySelector("b").textContent = "Preparing secure share…";
+  setChatGptHandoffStatus("Preparing the portrait before enabling Android sharing…");
   els.chatgptHandoffDialog.showModal();
+  prepareChatGptShareBundle(character, generation);
 }
 
-async function shareCharacterToChatGpt() {
-  const character = state.selected;
+async function prepareChatGptShareBundle(character, generation) {
   const packet = chatGptHandoffText(character);
-  setChatGptHandoffStatus("Preparing the portrait and Markdown packet…");
   try {
     const png = await characterPortraitPngBlob(character);
     const portraitFile = new File([png], `panic-survivor-${character.id}.png`, { type: "image/png" });
     const packetFile = new File([packet], `panic-survivor-${character.id}-review.md`, { type: "text/markdown" });
-    if (navigator.share && navigator.canShare?.({ files: [portraitFile, packetFile] })) {
-      await navigator.share({
-        files: [portraitFile, packetFile],
-        title: `?an!c survivor #${character.id} naming review`,
-        text: "Use the attached portrait and review packet with the master prompt and name banks already in our ChatGPT conversation."
+    if (generation !== state.chatGptHandoff.generation || String(character.id) !== String(state.selected?.id)) return;
+    state.chatGptHandoff.bundle = { characterId: String(character.id), packet, portraitFile, packetFile };
+    els.chatgptNativeShare.disabled = false;
+    els.chatgptNativeShare.querySelector("b").textContent = "Share portrait + packet";
+    setChatGptHandoffStatus("Ready. Tap the green button to open Android or iPhone sharing.", "success");
+  } catch (error) {
+    if (generation !== state.chatGptHandoff.generation) return;
+    els.chatgptNativeShare.disabled = true;
+    els.chatgptNativeShare.querySelector("b").textContent = "Share unavailable";
+    setChatGptHandoffStatus(error.message || "The portrait could not be prepared for sharing.", "error");
+  }
+}
+
+async function fallbackChatGptShare(bundle) {
+  let copied = false;
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(bundle.packet);
+    copied = true;
+  } else {
+    downloadExportFile(bundle.packetFile, bundle.packetFile.name);
+  }
+  downloadExportFile(bundle.portraitFile, bundle.portraitFile.name);
+  setChatGptHandoffStatus(
+    copied
+      ? "Native sharing is unavailable here. The packet was copied and the portrait downloaded; paste both into your ChatGPT conversation."
+      : "Native sharing and clipboard access are unavailable here. The portrait and Markdown packet were downloaded for you to attach in ChatGPT.",
+    "success"
+  );
+}
+
+async function shareCharacterToChatGpt() {
+  const bundle = state.chatGptHandoff.bundle;
+  if (!bundle || bundle.characterId !== String(state.selected?.id)) {
+    setChatGptHandoffStatus("The share packet is still preparing. Wait for the green button to say it is ready.", "error");
+    return;
+  }
+  try {
+    if (navigator.share && navigator.canShare?.({ files: [bundle.portraitFile] })) {
+      // Call share immediately inside the tap handler. Android expires the required
+      // user activation if image fetching or conversion happens before this call.
+      const shareOperation = navigator.share({
+        files: [bundle.portraitFile],
+        title: `?an!c survivor #${bundle.characterId} naming review`,
+        text: bundle.packet
       });
-      setChatGptHandoffStatus("Shared the portrait and complete review packet. No Name Studio data changed.", "success");
+      setChatGptHandoffStatus("Opening your phone’s share sheet…");
+      await shareOperation;
+      setChatGptHandoffStatus("Shared the portrait and complete review text. No Name Studio data changed.", "success");
       return;
     }
-    if (navigator.share && navigator.canShare?.({ files: [portraitFile] })) {
-      await navigator.share({ files: [portraitFile], title: `?an!c survivor #${character.id}`, text: packet });
-      setChatGptHandoffStatus("Shared the portrait with the review instructions. No Name Studio data changed.", "success");
+    if (navigator.share) {
+      const shareOperation = navigator.share({
+        title: `?an!c survivor #${bundle.characterId} naming review`,
+        text: bundle.packet
+      });
+      setChatGptHandoffStatus("This browser cannot attach the portrait automatically. Opening a text share instead…");
+      await shareOperation;
+      downloadExportFile(bundle.portraitFile, bundle.portraitFile.name);
+      setChatGptHandoffStatus("Shared the review text and downloaded the portrait for attachment.", "success");
       return;
     }
-    let copied = false;
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(packet);
-      copied = true;
-    } else {
-      downloadExportFile(packetFile, packetFile.name);
-    }
-    downloadExportFile(portraitFile, portraitFile.name);
-    setChatGptHandoffStatus(
-      copied
-        ? "Native sharing is unavailable here. The packet was copied and the portrait downloaded; paste both into your ChatGPT conversation."
-        : "Native sharing and clipboard access are unavailable here. The portrait and Markdown packet were downloaded for you to attach in ChatGPT.",
-      "success"
-    );
+    await fallbackChatGptShare(bundle);
   } catch (error) {
     if (error?.name === "AbortError") {
       setChatGptHandoffStatus("Sharing cancelled. No Name Studio data changed.");
       return;
     }
-    setChatGptHandoffStatus(error.message || "The handoff could not be prepared.", "error");
+    const denied = error?.name === "NotAllowedError" || /permission denied/i.test(String(error?.message || ""));
+    setChatGptHandoffStatus(
+      denied
+        ? "Android blocked the native share sheet. Tap Copy packet + open saved chat below; the portrait is also available with Copy portrait."
+        : (error.message || "The handoff could not be shared."),
+      "error"
+    );
   }
 }
 
