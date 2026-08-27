@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=21-2-compound-repair">
+  <link rel="stylesheet" href="/review/styles.css?v=22-0-chatgpt-handoff">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v21 compound repair / closed Japanese bank</small></span>
+        <span><strong>NAME STUDIO</strong><small>v22 ChatGPT handoff / closed Japanese bank</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -148,6 +148,7 @@
           <button id="copyTraitsButton" type="button">Copy traits</button>
           <button id="copyImageButton" type="button">Copy image</button>
           <button id="copyPacketButton" type="button">Copy review packet</button>
+          <button class="chatgpt-share-button" id="chatgptShareButton" type="button">Share to ChatGPT</button>
           <button class="ask-ai-button" id="askAiButton" type="button">Ask AI</button>
         </div>
         <div class="surname-repair-banner" id="surnameRepairBanner" hidden>
@@ -496,6 +497,38 @@
       </div>
     </form>
   </dialog>
+  <dialog class="chatgpt-handoff-dialog" id="chatgptHandoffDialog">
+    <div class="dialog-shell chatgpt-handoff-shell">
+      <header>
+        <div>
+          <p class="kicker">Use your existing ChatGPT subscription</p>
+          <h2>Send this character</h2>
+          <p>Share the portrait and an auditable Markdown packet, or copy the packet and open the exact conversation that already contains your master prompt and name-bank files.</p>
+        </div>
+        <button type="button" class="dialog-close" id="chatgptHandoffClose" aria-label="Close ChatGPT handoff">×</button>
+      </header>
+      <section class="chatgpt-handoff-character">
+        <img id="chatgptHandoffPortrait" alt="">
+        <div><span id="chatgptHandoffToken"></span><strong id="chatgptHandoffName"></strong><small id="chatgptHandoffTrait"></small></div>
+      </section>
+      <label class="chatgpt-chat-link" for="chatgptChatUrl">
+        <span>Optional saved ChatGPT conversation link</span>
+        <input id="chatgptChatUrl" type="url" inputmode="url" autocomplete="url" placeholder="https://chatgpt.com/c/…">
+        <small>Saved only on this device. Use a chat where your master prompt and Markdown banks are already attached.</small>
+      </label>
+      <div class="chatgpt-handoff-actions">
+        <button class="chatgpt-native-share" id="chatgptNativeShare" type="button"><b>Share portrait + packet</b><span>Best on Android and iPhone</span></button>
+        <button id="chatgptOpenSavedChat" type="button"><b>Copy packet + open saved chat</b><span>Best for continuing the same conversation</span></button>
+        <button id="chatgptCopyPacket" type="button">Copy packet only</button>
+        <button id="chatgptCopyPortrait" type="button">Copy portrait only</button>
+      </div>
+      <p class="chatgpt-handoff-status" id="chatgptHandoffStatus">Nothing is sent until you choose an action.</p>
+      <details class="chatgpt-packet-preview">
+        <summary>Preview exactly what ChatGPT receives</summary>
+        <textarea id="chatgptPacketPreview" rows="14" readonly></textarea>
+      </details>
+    </div>
+  </dialog>
   <dialog class="naming-assistant-dialog" id="namingAssistantDialog">
     <div class="naming-assistant-shell">
       <header>
@@ -705,7 +738,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=21-2-compound-repair"></script>
+  <script src="/review/app.js?v=22-0-chatgpt-handoff"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>

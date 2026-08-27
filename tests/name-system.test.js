@@ -110,9 +110,9 @@ test("structured surname rejects Body, Clothing, duplicate routes, and display d
   assert.ok(validation.errors.some((error) => error.includes("visible surname")));
 });
 
-test("UI contains the copy toolbar, repair editor, assistant, and bank upload controls", () => {
+test("UI contains copy, ChatGPT handoff, repair, assistant, and bank controls", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
-  for (const id of ["copyTraitsButton", "copyImageButton", "copyPacketButton", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
+  for (const id of ["copyTraitsButton", "copyImageButton", "copyPacketButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
 });

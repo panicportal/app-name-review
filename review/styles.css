@@ -1866,6 +1866,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .character-copy-toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .character-copy-toolbar button { min-height: 38px; padding: 0 10px; border: 1px solid #48655f; background: #102b31; color: #dce8e3; font: 900 8px/1 var(--utility); text-transform: uppercase; }
 .character-copy-toolbar button:hover { border-color: var(--amber); color: white; }
+.character-copy-toolbar .chatgpt-share-button { border-color: #73d7b5; background: #174d40; color: #f3fff9; }
 .character-copy-toolbar .ask-ai-button { border-color: var(--amber); background: var(--amber); color: var(--ink); }
 .surname-repair-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; padding: 11px 12px; border-left: 5px solid #d65b64; background: #3a2528; color: white; }
 .surname-repair-banner div { display: grid; gap: 4px; }
@@ -1900,6 +1901,28 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .surname-seam-preview span, .surname-seam-preview strong { font: 900 24px/1 var(--display); }
 .surname-seam-preview small { grid-column: 1 / -1; color: #9db6af; font: 8px/1.35 var(--utility); }
 .single-surname-mode .surname-seam { display: none; }
+.chatgpt-handoff-dialog { width: min(700px, calc(100% - 24px)); }
+.chatgpt-handoff-shell { overflow-y: auto; max-height: min(860px, calc(100dvh - 28px)); }
+.chatgpt-handoff-character { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 13px; margin-top: 15px; padding: 11px; border-left: 5px solid #68cfae; background: #102b31; color: white; }
+.chatgpt-handoff-character img { width: 76px; height: 76px; border: 1px solid #77948d; background: #132128; object-fit: contain; image-rendering: pixelated; }
+.chatgpt-handoff-character div { display: grid; gap: 5px; min-width: 0; }
+.chatgpt-handoff-character span, .chatgpt-handoff-character small { color: #9fb7b0; font: 800 8px/1.25 var(--utility); text-transform: uppercase; }
+.chatgpt-handoff-character strong { overflow-wrap: anywhere; font: 900 24px/1 var(--display); }
+.chatgpt-chat-link { display: grid; gap: 6px; margin-top: 13px; padding: 12px; border: 1px solid #a6b5b0; background: #edf1e9; color: #526661; font: 900 8px/1.25 var(--utility); text-transform: uppercase; }
+.chatgpt-chat-link input { width: 100%; min-height: 46px; padding: 9px 11px; border: 1px solid #879d96; background: white; color: var(--ink); font: 14px/1.2 var(--body); text-transform: none; }
+.chatgpt-chat-link small { color: #6a7874; font: 9px/1.4 var(--body); text-transform: none; }
+.chatgpt-handoff-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
+.chatgpt-handoff-actions button { min-height: 46px; padding: 10px; border: 1px solid #82958f; background: transparent; color: var(--ink); font: 900 8px/1.2 var(--utility); text-transform: uppercase; }
+.chatgpt-handoff-actions button b, .chatgpt-handoff-actions button span { display: block; }
+.chatgpt-handoff-actions button span { margin-top: 5px; color: #657570; font-size: 7px; }
+.chatgpt-handoff-actions .chatgpt-native-share { border-color: #2d846d; background: #2d846d; color: white; }
+.chatgpt-handoff-actions .chatgpt-native-share span { color: #d6f3e9; }
+.chatgpt-handoff-status { min-height: 36px; margin: 11px 0 0; padding: 9px 11px; border-left: 4px solid var(--amber); background: #f4edda; color: #5c563e; font-size: 10px; line-height: 1.4; }
+.chatgpt-handoff-status.success { border-left-color: #2d846d; background: #e2f3eb; color: #245c4e; }
+.chatgpt-handoff-status.error { border-left-color: #d65b64; background: #f8e5e7; color: #8f3039; }
+.chatgpt-packet-preview { margin-top: 10px; border: 1px solid #a6b5b0; background: #f8f7ef; }
+.chatgpt-packet-preview summary { padding: 11px; cursor: pointer; font: 900 8px/1 var(--utility); text-transform: uppercase; }
+.chatgpt-packet-preview textarea { display: block; width: calc(100% - 20px); margin: 0 10px 10px; padding: 10px; border: 1px solid #a6b5b0; background: white; color: #344943; font: 10px/1.45 var(--utility); resize: vertical; }
 .naming-assistant-dialog { inset: 0 0 0 auto; width: min(720px, 56vw); max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; overflow: hidden; border-left: 1px solid #607a73; background: #e9e9df; }
 .naming-assistant-dialog::backdrop { background: rgba(2, 12, 16, .68); }
 .naming-assistant-shell { display: grid; grid-template-rows: auto auto auto 1fr; height: 100%; min-height: 0; }
@@ -1954,6 +1977,10 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   .surname-repair-banner { align-items: stretch; flex-direction: column; }
   .full-name-paste-row, .full-name-edit-grid, .surname-source-grid { grid-template-columns: 1fr; }
   .full-name-edit-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
+  .chatgpt-handoff-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
+  .chatgpt-handoff-shell { max-height: 100dvh; }
+  .chatgpt-handoff-actions { grid-template-columns: 1fr; }
+  .character-copy-toolbar .chatgpt-share-button { grid-column: 1 / -1; }
   .full-name-edit-form { min-height: 100%; }
   .surname-source-grid > i { transform: rotate(90deg); }
   .naming-assistant-dialog { inset: 0; width: 100%; height: 100dvh; }

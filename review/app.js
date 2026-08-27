@@ -12,6 +12,7 @@ const ELIGIBLE_SURNAME_TRAIT_TYPES = new Set([
   "Background", "Back", "Front", "Hair", "Eyes", "Eyebrows", "Mouth"
 ]);
 const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v2";
+const CHATGPT_HANDOFF_KEY = "panic-name-studio-chatgpt-handoff-v1";
 
 function emptyCuration() {
   return {
@@ -3889,15 +3890,20 @@ function reviewPacketText(character) {
   const components = (normalized.surname_components || []).map(component =>
     `${component.order}. ${component.text} ← ${component.source_raw}`
   ).join("\n") || "Unresolved — use Fix surname sources";
+  const decisionLabel = decision => decision === "approve"
+    ? "GREENLIT — do not change"
+    : decision === "replace"
+      ? "RED X — replacement requested"
+      : "UNDECIDED";
   return [
     `?an!c Name Studio review packet`,
     `Character: #${character.id}`,
     `Current name: ${effectiveDisplayName(character)}`,
     `Clothing: ${character.clothing}`,
     `Body gender route: ${character.gender_from_body}`,
-    `First-name status: ${partReview(character.id, "first").decision || "undecided"}`,
-    `Surname part 1 status: ${partReview(character.id, "surname_part_1").decision || "undecided"}`,
-    `Surname part 2 status: ${partReview(character.id, "surname_part_2").decision || "undecided"}`,
+    `First name: ${effectivePartValue(character, "first")} — ${decisionLabel(partReview(character.id, "first").decision)}`,
+    `Surname part 1: ${effectivePartValue(character, "surname_part_1") || "—"} — ${decisionLabel(partReview(character.id, "surname_part_1").decision)}`,
+    `Surname part 2: ${effectivePartValue(character, "surname_part_2") || "—"} — ${decisionLabel(partReview(character.id, "surname_part_2").decision)}`,
     `Curation: ${status.label}`,
     `Surname repair needed: ${normalized.needs_surname_component_repair ? "yes" : "no"}`,
     `Surname components:\n${components}`,
@@ -3906,16 +3912,149 @@ function reviewPacketText(character) {
   ].join("\n\n");
 }
 
-async function copyCharacterImage() {
-  const response = await fetch(`/pfps_webp/${state.selected.id}.webp`);
+function chatGptHandoffText(character) {
+  return [
+    `Continue our existing ?an!c Name Studio naming workflow for the attached character.`,
+    `Use the master naming instructions and Markdown name-bank files already attached in this ChatGPT conversation. Treat the exact live data below as current.`,
+    `Rules for this review:`,
+    `- Never change a component marked GREENLIT.`,
+    `- Respect the Body-only gender route for first names.`,
+    `- Keep a Western surname as one collector-visible word made from exactly two auditable, eligible character-trait components unless I explicitly request a one-word Japanese surname.`,
+    `- Do not invent Japanese names; use only the closed Japanese bank already supplied.`,
+    `- Prefer readable, collectible, trait-recognizable combinations and explain the two exact source routes.`,
+    `- Do not save or assume a replacement until I approve it.`,
+    `Please inspect the portrait and packet, identify only the parts still open or marked for replacement, and offer your strongest concise options.`,
+    reviewPacketText(character)
+  ].join("\n\n");
+}
+
+function validChatGptConversationUrl(value) {
+  if (!String(value || "").trim()) return "https://chatgpt.com/";
+  try {
+    const url = new URL(String(value).trim());
+    const host = url.hostname.toLowerCase();
+    if (url.protocol !== "https:" || !["chatgpt.com", "www.chatgpt.com", "chat.openai.com"].includes(host)) {
+      throw new Error("Use a chatgpt.com conversation link.");
+    }
+    return url.href;
+  } catch (_) {
+    throw new Error("Enter a valid ChatGPT conversation link, such as https://chatgpt.com/c/…");
+  }
+}
+
+async function characterPortraitPngBlob(character = state.selected) {
+  const response = await fetch(`/pfps_webp/${character.id}.webp`);
   if (!response.ok) throw new Error("Portrait could not be loaded.");
   const sourceBlob = await response.blob();
-  const bitmap = await createImageBitmap(sourceBlob);
+  let drawable;
+  let cleanup = () => {};
+  if (window.createImageBitmap) {
+    drawable = await createImageBitmap(sourceBlob);
+    cleanup = () => drawable.close?.();
+  } else {
+    const objectUrl = URL.createObjectURL(sourceBlob);
+    const image = new Image();
+    image.src = objectUrl;
+    await image.decode();
+    drawable = image;
+    cleanup = () => URL.revokeObjectURL(objectUrl);
+  }
   const canvas = document.createElement("canvas");
-  canvas.width = bitmap.width;
-  canvas.height = bitmap.height;
-  canvas.getContext("2d").drawImage(bitmap, 0, 0);
+  canvas.width = drawable.width || drawable.naturalWidth;
+  canvas.height = drawable.height || drawable.naturalHeight;
+  canvas.getContext("2d").drawImage(drawable, 0, 0);
+  cleanup();
   const png = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+  if (!png) throw new Error("Portrait could not be converted for sharing.");
+  return png;
+}
+
+function setChatGptHandoffStatus(message, tone = "") {
+  els.chatgptHandoffStatus.textContent = message;
+  els.chatgptHandoffStatus.className = `chatgpt-handoff-status ${tone}`.trim();
+}
+
+function openChatGptHandoff() {
+  const character = state.selected;
+  els.chatgptHandoffPortrait.src = `/pfps_webp/${character.id}.webp`;
+  els.chatgptHandoffPortrait.alt = `Portrait of survivor ${character.id}`;
+  els.chatgptHandoffToken.textContent = `Survivor #${character.id}`;
+  els.chatgptHandoffName.textContent = effectiveDisplayName(character);
+  els.chatgptHandoffTrait.textContent = `${character.clothing} · ${character.gender_from_body} Body route`;
+  els.chatgptChatUrl.value = localStorage.getItem(CHATGPT_HANDOFF_KEY) || "";
+  els.chatgptPacketPreview.value = chatGptHandoffText(character);
+  setChatGptHandoffStatus("Nothing is sent until you choose an action.");
+  els.chatgptHandoffDialog.showModal();
+}
+
+async function shareCharacterToChatGpt() {
+  const character = state.selected;
+  const packet = chatGptHandoffText(character);
+  setChatGptHandoffStatus("Preparing the portrait and Markdown packet…");
+  try {
+    const png = await characterPortraitPngBlob(character);
+    const portraitFile = new File([png], `panic-survivor-${character.id}.png`, { type: "image/png" });
+    const packetFile = new File([packet], `panic-survivor-${character.id}-review.md`, { type: "text/markdown" });
+    if (navigator.share && navigator.canShare?.({ files: [portraitFile, packetFile] })) {
+      await navigator.share({
+        files: [portraitFile, packetFile],
+        title: `?an!c survivor #${character.id} naming review`,
+        text: "Use the attached portrait and review packet with the master prompt and name banks already in our ChatGPT conversation."
+      });
+      setChatGptHandoffStatus("Shared the portrait and complete review packet. No Name Studio data changed.", "success");
+      return;
+    }
+    if (navigator.share && navigator.canShare?.({ files: [portraitFile] })) {
+      await navigator.share({ files: [portraitFile], title: `?an!c survivor #${character.id}`, text: packet });
+      setChatGptHandoffStatus("Shared the portrait with the review instructions. No Name Studio data changed.", "success");
+      return;
+    }
+    let copied = false;
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(packet);
+      copied = true;
+    } else {
+      downloadExportFile(packetFile, packetFile.name);
+    }
+    downloadExportFile(portraitFile, portraitFile.name);
+    setChatGptHandoffStatus(
+      copied
+        ? "Native sharing is unavailable here. The packet was copied and the portrait downloaded; paste both into your ChatGPT conversation."
+        : "Native sharing and clipboard access are unavailable here. The portrait and Markdown packet were downloaded for you to attach in ChatGPT.",
+      "success"
+    );
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      setChatGptHandoffStatus("Sharing cancelled. No Name Studio data changed.");
+      return;
+    }
+    setChatGptHandoffStatus(error.message || "The handoff could not be prepared.", "error");
+  }
+}
+
+async function copyPacketAndOpenSavedChat() {
+  let target;
+  try {
+    target = validChatGptConversationUrl(els.chatgptChatUrl.value);
+  } catch (error) {
+    setChatGptHandoffStatus(error.message, "error");
+    els.chatgptChatUrl.focus();
+    return;
+  }
+  const opened = window.open("about:blank", "_blank");
+  try {
+    await navigator.clipboard.writeText(chatGptHandoffText(state.selected));
+    if (opened) opened.location.replace(target);
+    else throw new Error("The browser blocked the ChatGPT tab. Allow pop-ups and try again; the packet is already copied.");
+    setChatGptHandoffStatus("Copied the complete packet and opened your saved ChatGPT conversation. Paste it, then attach or share the portrait.", "success");
+  } catch (error) {
+    opened?.close();
+    setChatGptHandoffStatus(error.message || "Could not open the saved ChatGPT conversation.", "error");
+  }
+}
+
+async function copyCharacterImage() {
+  const png = await characterPortraitPngBlob(state.selected);
   try {
     if (!navigator.clipboard?.write || !window.ClipboardItem) throw new Error("Image clipboard unsupported");
     await navigator.clipboard.write([new ClipboardItem({ "image/png": png })]);
@@ -4310,6 +4449,24 @@ function bindEvents() {
   els.copyTraitsButton.addEventListener("click", () => copyText(exactTraitsText(state.selected), `Copied all exact traits for #${state.selected.id}.`));
   els.copyPacketButton.addEventListener("click", () => copyText(reviewPacketText(state.selected), `Copied review packet for #${state.selected.id}.`));
   els.copyImageButton.addEventListener("click", () => copyCharacterImage().catch(error => showToast(error.message, "error")));
+  els.chatgptShareButton.addEventListener("click", openChatGptHandoff);
+  els.chatgptHandoffClose.addEventListener("click", () => els.chatgptHandoffDialog.close());
+  els.chatgptChatUrl.addEventListener("input", () => {
+    localStorage.setItem(CHATGPT_HANDOFF_KEY, els.chatgptChatUrl.value.trim());
+  });
+  els.chatgptNativeShare.addEventListener("click", shareCharacterToChatGpt);
+  els.chatgptOpenSavedChat.addEventListener("click", copyPacketAndOpenSavedChat);
+  els.chatgptCopyPacket.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(chatGptHandoffText(state.selected));
+      setChatGptHandoffStatus("Copied the complete ChatGPT review packet.", "success");
+    } catch (_) {
+      setChatGptHandoffStatus("This browser blocked clipboard access.", "error");
+    }
+  });
+  els.chatgptCopyPortrait.addEventListener("click", () => copyCharacterImage()
+    .then(() => setChatGptHandoffStatus("Copied the portrait as PNG.", "success"))
+    .catch(error => setChatGptHandoffStatus(error.message, "error")));
   els.askAiButton.addEventListener("click", openNamingAssistant);
   els.fullNameEditClose.addEventListener("click", () => els.fullNameEditDialog.close());
   els.fullNameEditCancel.addEventListener("click", () => els.fullNameEditDialog.close());
