@@ -1911,10 +1911,14 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .chatgpt-chat-link { display: grid; gap: 6px; margin-top: 13px; padding: 12px; border: 1px solid #a6b5b0; background: #edf1e9; color: #526661; font: 900 8px/1.25 var(--utility); text-transform: uppercase; }
 .chatgpt-chat-link input { width: 100%; min-height: 46px; padding: 9px 11px; border: 1px solid #879d96; background: white; color: var(--ink); font: 14px/1.2 var(--body); text-transform: none; }
 .chatgpt-chat-link small { color: #6a7874; font: 9px/1.4 var(--body); text-transform: none; }
+.chatgpt-saved-chat-state { margin: 0; padding: 8px 11px; border: 1px solid #b7c3bf; border-top: 0; background: #f4f2e8; color: #7a5c2a; font: 800 8px/1.35 var(--utility); text-transform: uppercase; }
+.chatgpt-saved-chat-state.success { border-left: 4px solid #2d846d; background: #e2f3eb; color: #245c4e; }
 .chatgpt-handoff-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
 .chatgpt-handoff-actions button { min-height: 46px; padding: 10px; border: 1px solid #82958f; background: transparent; color: var(--ink); font: 900 8px/1.2 var(--utility); text-transform: uppercase; }
 .chatgpt-handoff-actions button b, .chatgpt-handoff-actions button span { display: block; }
 .chatgpt-handoff-actions button span { margin-top: 5px; color: #657570; font-size: 7px; }
+.chatgpt-handoff-actions button:disabled { border-color: #b1bdb9; background: #e1e6e2; color: #7c8984; cursor: not-allowed; }
+.chatgpt-handoff-actions button:disabled span { color: #87938f; }
 .chatgpt-handoff-actions .chatgpt-native-share { border-color: #2d846d; background: #2d846d; color: white; }
 .chatgpt-handoff-actions .chatgpt-native-share span { color: #d6f3e9; }
 .chatgpt-handoff-actions .chatgpt-native-share:disabled { border-color: #8ba099; background: #d4ddd8; color: #53655f; cursor: wait; }

@@ -3876,8 +3876,47 @@ function initVoiceControl() {
 }
 
 async function copyText(value, successMessage) {
-  await navigator.clipboard.writeText(String(value || ""));
+  const result = startClipboardTextWrite(value);
+  if (!await result.completion) throw new Error("This browser blocked clipboard access.");
   showToast(successMessage, "success");
+}
+
+function legacyClipboardTextWrite(value) {
+  const textarea = document.createElement("textarea");
+  textarea.value = String(value || "");
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.inset = "0 auto auto -9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+  let copied = false;
+  try {
+    copied = Boolean(document.execCommand?.("copy"));
+  } catch (_) {
+    copied = false;
+  }
+  textarea.remove();
+  return copied;
+}
+
+function startClipboardTextWrite(value) {
+  const text = String(value || "");
+  // Start both copy paths while the Name Studio tab is still focused and the
+  // button tap still carries Android's transient clipboard permission.
+  const legacyCopied = legacyClipboardTextWrite(text);
+  let modernCopy = null;
+  try {
+    modernCopy = navigator.clipboard?.writeText ? navigator.clipboard.writeText(text) : null;
+  } catch (_) {
+    modernCopy = null;
+  }
+  return {
+    legacyCopied,
+    completion: modernCopy
+      ? Promise.resolve(modernCopy).then(() => true).catch(() => legacyCopied)
+      : Promise.resolve(legacyCopied)
+  };
 }
 
 function exactTraitsText(character) {
@@ -3924,13 +3963,16 @@ function chatGptHandoffText(character) {
     `- Do not invent Japanese names; use only the closed Japanese bank already supplied.`,
     `- Prefer readable, collectible, trait-recognizable combinations and explain the two exact source routes.`,
     `- Do not save or assume a replacement until I approve it.`,
+    `Portrait URL: ${window.location.origin}/pfps_webp/${character.id}.webp`,
     `Please inspect the portrait and packet, identify only the parts still open or marked for replacement, and offer your strongest concise options.`,
     reviewPacketText(character)
   ].join("\n\n");
 }
 
 function validChatGptConversationUrl(value) {
-  if (!String(value || "").trim()) return "https://chatgpt.com/";
+  if (!String(value || "").trim()) {
+    throw new Error("Paste the address of your prepared ChatGPT conversation first. Name Studio will remember it on this device.");
+  }
   try {
     const url = new URL(String(value).trim());
     const host = url.hostname.toLowerCase();
@@ -3941,6 +3983,24 @@ function validChatGptConversationUrl(value) {
   } catch (_) {
     throw new Error("Enter a valid ChatGPT conversation link, such as https://chatgpt.com/c/…");
   }
+}
+
+function updateSavedChatControls() {
+  const raw = els.chatgptChatUrl.value.trim();
+  let valid = false;
+  let message = "No conversation saved yet.";
+  if (raw) {
+    try {
+      const url = validChatGptConversationUrl(raw);
+      valid = true;
+      message = `Ready to reopen ${url.includes("/c/") ? "this exact conversation" : "this saved ChatGPT page"}.`;
+    } catch (error) {
+      message = error.message;
+    }
+  }
+  els.chatgptOpenSavedChat.disabled = !valid;
+  els.chatgptSavedChatState.textContent = message;
+  els.chatgptSavedChatState.className = `chatgpt-saved-chat-state ${valid ? "success" : ""}`.trim();
 }
 
 async function characterPortraitPngBlob(character = state.selected) {
@@ -3985,6 +4045,7 @@ function openChatGptHandoff() {
   els.chatgptHandoffName.textContent = effectiveDisplayName(character);
   els.chatgptHandoffTrait.textContent = `${character.clothing} · ${character.gender_from_body} Body route`;
   els.chatgptChatUrl.value = localStorage.getItem(CHATGPT_HANDOFF_KEY) || "";
+  updateSavedChatControls();
   els.chatgptPacketPreview.value = chatGptHandoffText(character);
   els.chatgptNativeShare.disabled = true;
   els.chatgptNativeShare.querySelector("b").textContent = "Preparing secure share…";
@@ -4085,14 +4146,24 @@ async function copyPacketAndOpenSavedChat() {
     els.chatgptChatUrl.focus();
     return;
   }
-  const opened = window.open("about:blank", "_blank");
+  const packet = chatGptHandoffText(state.selected);
+  // Begin copying before opening another tab. Opening first makes Android
+  // remove focus and reject Clipboard.writeText with "Permission denied".
+  const copyResult = startClipboardTextWrite(packet);
+  // Keep one named ChatGPT tab so repeated handoffs return to the same
+  // prepared conversation instead of creating another blank/new chat tab.
+  const opened = window.open(target, "panic-name-studio-chatgpt");
+  if (opened) opened.opener = null;
   try {
-    await navigator.clipboard.writeText(chatGptHandoffText(state.selected));
-    if (opened) opened.location.replace(target);
-    else throw new Error("The browser blocked the ChatGPT tab. Allow pop-ups and try again; the packet is already copied.");
-    setChatGptHandoffStatus("Copied the complete packet and opened your saved ChatGPT conversation. Paste it, then attach or share the portrait.", "success");
+    const copied = await copyResult.completion;
+    if (!copied) throw new Error("Chrome blocked clipboard access. Use Copy packet only, then tap Open saved chat again.");
+    if (!opened) {
+      setChatGptHandoffStatus("The packet is copied. Chrome blocked the new tab, so opening the saved chat in this tab…", "success");
+      window.location.assign(target);
+      return;
+    }
+    setChatGptHandoffStatus("Copied the complete packet and opened the same saved ChatGPT conversation. Paste it there; the packet also contains the public portrait URL.", "success");
   } catch (error) {
-    opened?.close();
     setChatGptHandoffStatus(error.message || "Could not open the saved ChatGPT conversation.", "error");
   }
 }
@@ -4497,12 +4568,14 @@ function bindEvents() {
   els.chatgptHandoffClose.addEventListener("click", () => els.chatgptHandoffDialog.close());
   els.chatgptChatUrl.addEventListener("input", () => {
     localStorage.setItem(CHATGPT_HANDOFF_KEY, els.chatgptChatUrl.value.trim());
+    updateSavedChatControls();
   });
   els.chatgptNativeShare.addEventListener("click", shareCharacterToChatGpt);
   els.chatgptOpenSavedChat.addEventListener("click", copyPacketAndOpenSavedChat);
   els.chatgptCopyPacket.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(chatGptHandoffText(state.selected));
+      const result = startClipboardTextWrite(chatGptHandoffText(state.selected));
+      if (!await result.completion) throw new Error("Clipboard blocked");
       setChatGptHandoffStatus("Copied the complete ChatGPT review packet.", "success");
     } catch (_) {
       setChatGptHandoffStatus("This browser blocked clipboard access.", "error");

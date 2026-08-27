@@ -128,3 +128,14 @@ test("mobile ChatGPT share is prepared before the user-activation click", () => 
   assert.match(handler, /files: \[bundle\.portraitFile\]/);
   assert.match(source, /async function prepareChatGptShareBundle[\s\S]*await characterPortraitPngBlob/);
 });
+
+test("saved-chat handoff copies before opening the real conversation URL", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  const start = source.indexOf("async function copyPacketAndOpenSavedChat()");
+  const end = source.indexOf("async function copyCharacterImage()", start);
+  const handler = source.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.equal(handler.includes("about:blank"), false);
+  assert.ok(handler.indexOf("startClipboardTextWrite") < handler.indexOf("window.open(target"));
+  assert.match(handler, /window\.open\(target, "panic-name-studio-chatgpt"\)/);
+});
