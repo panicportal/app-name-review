@@ -62,6 +62,9 @@ const state = {
   suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
   namingAssistant: { payload: null, loading: false, configured: null },
+  surnameRepairIndex: {},
+  surnameRepairSummary: { detected: 0, unresolved: 0 },
+  surnameDetectTimer: null,
   focusSwipeStart: null,
   voice: {
     recognition: null,
@@ -240,6 +243,12 @@ function timestamp(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function normalizedJoinStyle(value) {
+  return ["lower_second", "camel", "overlap_one"].includes(value)
+    ? value
+    : "lower_second";
+}
+
 function newerPart(left = {}, right = {}) {
   return timestamp(left.updated_at || left.deleted_at) >=
     timestamp(right.updated_at || right.deleted_at) ? left : right;
@@ -277,8 +286,8 @@ function mergeCurationStates(local, remote) {
           : (current.surname_order_updated_at || null),
       surname_join_style:
         timestamp(incoming.surname_join_style_updated_at) >= timestamp(current.surname_join_style_updated_at)
-          ? (incoming.surname_join_style === "lower_second" ? "lower_second" : "camel")
-          : (current.surname_join_style === "lower_second" ? "lower_second" : "camel"),
+          ? normalizedJoinStyle(incoming.surname_join_style)
+          : normalizedJoinStyle(current.surname_join_style),
       surname_join_style_updated_at:
         timestamp(incoming.surname_join_style_updated_at) >= timestamp(current.surname_join_style_updated_at)
           ? (incoming.surname_join_style_updated_at || null)
@@ -433,6 +442,7 @@ function splitSource(source = "") {
 
 function partDefinitions(character) {
   const detail = character.surname_detail || {};
+  const autoRepair = state.surnameRepairIndex?.[String(character.id)];
   const storedPart2 = state.curation.records?.[String(character.id)]?.parts?.surname_part_2;
   const hasLivePart2 = Boolean(
     storedPart2 && !storedPart2.deleted_at && (
@@ -443,8 +453,8 @@ function partDefinitions(character) {
       storedPart2.replacement_trait_source
     )
   );
-  const hasSecondPart = Boolean(detail.source_2 || character.surname_source_2 || hasLivePart2);
-  const hasActiveSecondPart = hasSecondPart && !storedPart2?.disabled;
+  const hasSecondPart = Boolean(autoRepair || detail.source_2 || character.surname_source_2 || hasLivePart2);
+  const hasActiveSecondPart = Boolean(autoRepair) || (hasSecondPart && !storedPart2?.disabled);
   return [
     {
       key: "first",
@@ -458,8 +468,8 @@ function partDefinitions(character) {
       key: "surname_part_1",
       short: hasActiveSecondPart ? "S1" : "S",
       label: hasActiveSecondPart ? "Surname part 1" : "Surname",
-      value: detail.component_1 || character.surname_component_1 || character.surname || "",
-      source: detail.source_1 || character.surname_source_1 || character.surname_source || "",
+      value: autoRepair?.surname_components?.[0]?.text || detail.component_1 || character.surname_component_1 || character.surname || "",
+      source: autoRepair?.surname_components?.[0]?.source_raw || detail.source_1 || character.surname_source_1 || character.surname_source || "",
       usage_count: Number(detail.component_1_count || 0),
       available: Boolean(character.surname)
     },
@@ -467,8 +477,8 @@ function partDefinitions(character) {
       key: "surname_part_2",
       short: "S2",
       label: "Surname part 2",
-      value: detail.component_2 || character.surname_component_2 || "",
-      source: detail.source_2 || character.surname_source_2 || "",
+      value: autoRepair?.surname_components?.[1]?.text || detail.component_2 || character.surname_component_2 || "",
+      source: autoRepair?.surname_components?.[1]?.source_raw || detail.source_2 || character.surname_source_2 || "",
       usage_count: Number(detail.component_2_count || 0),
       available: Boolean(character.surname && hasActiveSecondPart)
     }
@@ -478,12 +488,18 @@ function partDefinitions(character) {
 function effectivePartValue(character, key) {
   const part = partDefinitions(character).find(item => item.key === key);
   const review = partReview(character.id, key);
+  const autoRepair = state.surnameRepairIndex?.[String(character.id)];
+  if (autoRepair && key === "surname_part_1") return autoRepair.surname_components[0].text;
+  if (autoRepair && key === "surname_part_2") return autoRepair.surname_components[1].text;
   if (review.disabled) return "";
   return review.replacement_value || part?.value || "";
 }
 
 function effectivePartSource(character, key) {
   const definition = partDefinitions(character).find(item => item.key === key);
+  const autoRepair = state.surnameRepairIndex?.[String(character.id)];
+  if (autoRepair && key === "surname_part_1") return autoRepair.surname_components[0].source_raw;
+  if (autoRepair && key === "surname_part_2") return autoRepair.surname_components[1].source_raw;
   return partReview(character.id, key).replacement_trait_source ||
     partReview(character.id, key).replacement_source ||
     definition?.source ||
@@ -537,6 +553,7 @@ function canFlipSurname(character) {
 }
 
 function surnameOrder(character) {
+  if (state.surnameRepairIndex?.[String(character.id)]) return "12";
   return canFlipSurname(character) && recordFor(character.id).surname_order === "21"
     ? "21"
     : "12";
@@ -549,6 +566,14 @@ function compoundComponent(value) {
 
 function surnameJoinStyle(character) {
   const record = recordFor(character.id);
+  const autoRepair = state.surnameRepairIndex?.[String(character.id)];
+  if (autoRepair?.join_style === "overlap_one") return "overlap_one";
+  if (
+    Number(record.surname_format_version || 0) >= SURNAME_FORMAT_VERSION &&
+    record.surname_join_style === "overlap_one"
+  ) {
+    return "overlap_one";
+  }
   // v1 stored "camel" as an automatic default, not an editorial decision.
   // Treat all legacy records as the new metadata-clean style. A capitalized
   // second fragment remains available only when explicitly selected in v2.
@@ -572,6 +597,9 @@ function composeSurname(
   if (!secondPart) return compoundComponent(firstPart) || character.surname || "";
   const left = order === "21" ? secondPart : firstPart;
   const right = order === "21" ? firstPart : secondPart;
+  if (joinStyle === "overlap_one" && String(left).slice(-1).toLowerCase() === String(right).slice(0, 1).toLowerCase()) {
+    return `${compoundComponent(left)}${String(right).slice(1).toLowerCase()}`;
+  }
   const rightText = joinStyle === "lower_second"
     ? String(right || "").trim().toLowerCase()
     : compoundComponent(right);
@@ -616,6 +644,19 @@ function cleanSurnameComponent(value) {
 
 function normalizedSurnameFor(character) {
   const record = recordFor(character.id);
+  const autoRepair = state.surnameRepairIndex?.[String(character.id)];
+  if (autoRepair) {
+    return {
+      first_name: effectivePartValue(character, "first"),
+      surname_display: autoRepair.surname_display,
+      surname_components: autoRepair.surname_components.map((component) => ({ ...component, confidence: autoRepair.confidence })),
+      surname_join_style: autoRepair.join_style || "lower_second",
+      surname_format_version: 3,
+      derivation_method: "auto_detected_unconfirmed",
+      needs_surname_component_repair: true,
+      recovery_evidence: autoRepair.evidence,
+    };
+  }
   const normalized = record.normalized_name;
   if (Number(normalized?.surname_format_version) >= 3 && Array.isArray(normalized.surname_components)) {
     return normalized;
@@ -668,6 +709,212 @@ function fullNameAlreadyUsed(first, surname) {
   );
 }
 
+function surnameFromEditorComponents() {
+  const first = cleanSurnameComponent(els.fullNameEditComponent1.value);
+  const second = cleanSurnameComponent(els.fullNameEditComponent2.value);
+  if (!first || !second) return "";
+  const order = els.fullNameEditForm.dataset.order === "21" ? "21" : "12";
+  const ordered = order === "21" ? [second, first] : [first, second];
+  const joinStyle = normalizedJoinStyle(els.fullNameEditForm.dataset.joinStyle);
+  if (
+    joinStyle === "overlap_one" &&
+    ordered[0].slice(-1).toLowerCase() === ordered[1].slice(0, 1).toLowerCase()
+  ) {
+    return `${ordered[0]}${ordered[1].slice(1).toLowerCase()}`;
+  }
+  return `${ordered[0]}${ordered[1].charAt(0).toLowerCase()}${ordered[1].slice(1)}`;
+}
+
+function syncSurnameFromComponents() {
+  const surname = surnameFromEditorComponents();
+  if (surname) {
+    els.fullNameEditSurnameInput.value = surname;
+    const first = normalizeManualFirstName(els.fullNameEditFirstInput.value);
+    if (first) els.fullNamePasteInput.value = `${first} ${surname}`;
+  }
+  updateFullNameEditPreview();
+}
+
+function applySurnameRepairProposal(proposal) {
+  if (!proposal?.surname_components?.length || proposal.surname_components.length !== 2) return false;
+  const [first, second] = proposal.surname_components;
+  els.fullNameEditComponent1.value = first.text || "";
+  els.fullNameEditComponent2.value = second.text || "";
+  els.fullNameEditSource1.value = first.source_raw || "";
+  els.fullNameEditSource2.value = second.source_raw || "";
+  els.fullNameEditForm.dataset.order = "12";
+  els.fullNameEditForm.dataset.joinStyle = normalizedJoinStyle(proposal.join_style);
+  els.fullNameEditForm.dataset.repairingCollapsed = proposal.corrects_current_display ? "true" : "false";
+  els.fullNameEditSurnameInput.value = proposal.surname_display || surnameFromEditorComponents();
+  const givenName = normalizeManualFirstName(els.fullNameEditFirstInput.value);
+  if (givenName) els.fullNamePasteInput.value = `${givenName} ${els.fullNameEditSurnameInput.value}`;
+  const route1 = first.source_raw || "unknown route";
+  const route2 = second.source_raw || "unknown route";
+  els.fullNameDetectStatus.textContent = proposal.corrects_current_display
+    ? `Detected ${first.text} + ${second.text}. ${route1} + ${route2}. The broken “${proposal.current_display}” preview will be corrected to “${proposal.surname_display}” only when you press Save.`
+    : `Detected ${first.text} + ${second.text}. ${route1} + ${route2}. Review both parts, then press Save to confirm them.`;
+  els.fullNameDetectStatus.classList.remove("error");
+  els.fullNameDetectStatus.classList.add("success");
+  updateFullNameEditPreview();
+  return true;
+}
+
+function parsePastedFullName({ quiet = false } = {}) {
+  const words = String(els.fullNamePasteInput.value || "").trim().split(/\s+/).filter(Boolean);
+  if (words.length !== 2) {
+    if (!quiet) {
+      els.fullNameDetectStatus.textContent = "Paste exactly two words: one first name and one combined surname, for example Angela Gingerwine.";
+      els.fullNameDetectStatus.classList.add("error");
+      els.fullNameDetectStatus.classList.remove("success");
+    }
+    return null;
+  }
+  const first = normalizeManualFirstName(words[0]);
+  const surname = cleanSurnameComponent(words[1]);
+  if (!first || !surname) {
+    if (!quiet) {
+      els.fullNameDetectStatus.textContent = "Use one safe first-name word and one combined surname word.";
+      els.fullNameDetectStatus.classList.add("error");
+      els.fullNameDetectStatus.classList.remove("success");
+    }
+    return null;
+  }
+  els.fullNameEditFirstInput.value = first;
+  els.fullNameEditSurnameInput.value = surname;
+  return { first, surname };
+}
+
+async function requestSurnameDetection({ quiet = false, onlyIfRepair = false } = {}) {
+  if (!state.selected) return;
+  const parsed = parsePastedFullName({ quiet });
+  if (!parsed) {
+    updateFullNameEditPreview();
+    return;
+  }
+  if (els.fullNameEditForm.dataset.surnameLanguage === "japanese") {
+    els.fullNameDetectStatus.textContent = "This is an atomic Japanese surname, so it stays as one surname word.";
+    els.fullNameDetectStatus.classList.remove("error", "success");
+    updateFullNameEditPreview();
+    return;
+  }
+  if (!state.cloudAuthenticated) {
+    const cached = state.surnameRepairIndex?.[String(state.selected.id)];
+    if (cached && cached.surname_display?.toLowerCase() === parsed.surname.toLowerCase()) {
+      applySurnameRepairProposal(cached);
+      return;
+    }
+    if (onlyIfRepair) {
+      updateFullNameEditPreview();
+      return;
+    }
+    els.fullNameDetectStatus.textContent = "Connect to shared sync to auto-detect exact routes. You can still enter both component words and choose their traits manually.";
+    els.fullNameDetectStatus.classList.add("error");
+    els.fullNameDetectStatus.classList.remove("success");
+    updateFullNameEditPreview();
+    return;
+  }
+  els.fullNameDetectStatus.textContent = `Detecting the two trait words inside “${parsed.surname}”…`;
+  els.fullNameDetectStatus.classList.remove("error", "success");
+  try {
+    const response = await fetch(`/api/surname-repair?id=${encodeURIComponent(state.selected.id)}&surname=${encodeURIComponent(parsed.surname)}`, { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Could not detect surname parts.");
+    const proposal = payload.proposals?.[0];
+    if (proposal && (!onlyIfRepair || payload.needs_repair)) {
+      applySurnameRepairProposal(proposal);
+      return;
+    }
+    if (onlyIfRepair) {
+      updateFullNameEditPreview();
+      return;
+    }
+    els.fullNameEditComponent1.value = "";
+    els.fullNameEditComponent2.value = "";
+    els.fullNameEditSource1.value = "";
+    els.fullNameEditSource2.value = "";
+    els.fullNameDetectStatus.textContent = `“${parsed.surname}” is preserved, but its exact two trait words could not be confirmed automatically. Type the two words and choose both exact routes; nothing will be guessed.`;
+    els.fullNameDetectStatus.classList.add("error");
+    els.fullNameDetectStatus.classList.remove("success");
+    updateFullNameEditPreview();
+  } catch (error) {
+    els.fullNameDetectStatus.textContent = error.message;
+    els.fullNameDetectStatus.classList.add("error");
+    els.fullNameDetectStatus.classList.remove("success");
+    updateFullNameEditPreview();
+  }
+}
+
+function scheduleSurnameDetection() {
+  clearTimeout(state.surnameDetectTimer);
+  state.surnameDetectTimer = setTimeout(() => requestSurnameDetection({ quiet: true }), 450);
+}
+
+function beginPastedFullNameDetection() {
+  const parsed = parsePastedFullName({ quiet: true });
+  if (!parsed) {
+    updateFullNameEditPreview();
+    return;
+  }
+  if (els.fullNameEditForm.dataset.surnameLanguage !== "japanese") {
+    const existingCompound = surnameFromEditorComponents();
+    if (!existingCompound || existingCompound.toLowerCase() !== parsed.surname.toLowerCase()) {
+      els.fullNameEditComponent1.value = "";
+      els.fullNameEditComponent2.value = "";
+      els.fullNameEditSource1.value = "";
+      els.fullNameEditSource2.value = "";
+      els.fullNameEditForm.dataset.order = "12";
+      els.fullNameEditForm.dataset.joinStyle = "lower_second";
+      els.fullNameDetectStatus.textContent = `Using “${parsed.first} ${parsed.surname}” as the new full name. Detecting its two surname traits now; the old surname slots will not be appended.`;
+      els.fullNameDetectStatus.classList.remove("error", "success");
+    }
+  }
+  updateFullNameEditPreview();
+  scheduleSurnameDetection();
+}
+
+async function loadSurnameRepairIndex() {
+  if (!state.cloudAuthenticated) return;
+  try {
+    const response = await fetch("/api/surname-repair?all=1", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Could not load surname repair proposals.");
+    state.surnameRepairIndex = payload.repairs || {};
+    state.surnameRepairSummary = {
+      detected: Number(payload.detected || 0),
+      unresolved: Number(payload.unresolved || 0)
+    };
+    const selectedRepair = state.selected && state.surnameRepairIndex[String(state.selected.id)];
+    if (selectedRepair && els.fullNameEditDialog?.open) applySurnameRepairProposal(selectedRepair);
+    if (state.selected) renderCharacter();
+    updateProgress();
+    applyFilters();
+  } catch (error) {
+    console.warn("Surname repair proposals unavailable:", error);
+  }
+}
+
+async function loadSelectedSurnameRepair(character = state.selected) {
+  if (!state.cloudAuthenticated || !character || effectiveSurnameLanguage(character) !== "western") return;
+  try {
+    const response = await fetch(`/api/surname-repair?id=${encodeURIComponent(character.id)}&surname=${encodeURIComponent(effectiveSurname(character))}`, { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Could not inspect this surname.");
+    if (!payload.needs_repair || !payload.proposals?.[0]) return;
+    state.surnameRepairIndex[String(character.id)] = payload.proposals[0];
+    state.surnameRepairSummary.detected = Object.keys(state.surnameRepairIndex).length;
+    if (state.selected?.id === character.id) {
+      renderCharacter();
+      if (els.fullNameEditDialog?.open) applySurnameRepairProposal(payload.proposals[0]);
+    }
+  } catch (error) {
+    console.warn(`Surname repair check failed for #${character.id}:`, error);
+  }
+}
+
+function scheduleFullSurnameRepairScan() {
+  setTimeout(() => loadSurnameRepairIndex(), 2500);
+}
+
 function fullNameEditorValue() {
   const first = normalizeManualFirstName(els.fullNameEditFirstInput.value);
   const component1 = cleanSurnameComponent(els.fullNameEditComponent1.value);
@@ -675,6 +922,7 @@ function fullNameEditorValue() {
   const source1 = els.fullNameEditSource1.value;
   const source2 = els.fullNameEditSource2.value;
   const order = els.fullNameEditForm.dataset.order === "21" ? "21" : "12";
+  const joinStyle = els.fullNameEditForm.dataset.joinStyle === "overlap_one" ? "overlap_one" : "lower_second";
   const japanese = els.fullNameEditForm.dataset.surnameLanguage === "japanese";
   if (!first) return { error: "First name must use 2–20 safe English letters, apostrophe, or hyphen." };
   if (japanese) {
@@ -690,7 +938,14 @@ function fullNameEditorValue() {
   if (!source1 || !source2) return { error: "Select an exact source trait for both surname components." };
   if (source1 === source2) return { error: "Surname component 1 and 2 must use different traits." };
   const ordered = order === "21" ? [component2, component1] : [component1, component2];
-  const surname = `${ordered[0]}${ordered[1].charAt(0).toLowerCase()}${ordered[1].slice(1)}`;
+  const surname = joinStyle === "overlap_one" && ordered[0].slice(-1).toLowerCase() === ordered[1].slice(0, 1).toLowerCase()
+    ? `${ordered[0]}${ordered[1].slice(1).toLowerCase()}`
+    : `${ordered[0]}${ordered[1].charAt(0).toLowerCase()}${ordered[1].slice(1)}`;
+  const requestedSurname = cleanSurnameComponent(els.fullNameEditSurnameInput.value);
+  if (!requestedSurname) return { error: "Final surname must be one word using 2–24 English letters." };
+  if (requestedSurname.toLowerCase() !== surname.toLowerCase()) {
+    return { error: `Those two components make “${surname}”, not “${requestedSurname}”. Run auto-detect or adjust the component words.` };
+  }
   const traits = new Set(eligibleSurnameTraits(state.selected).map(trait => `${trait.type}:${trait.value}`));
   if (!traits.has(source1) || !traits.has(source2)) return { error: "A selected surname source no longer exists on this character." };
   const component = (text, source, componentOrder) => {
@@ -704,7 +959,7 @@ function fullNameEditorValue() {
       confidence: "confirmed"
     };
   };
-  return { first, surname, japanese: false, order, components: [component(component1, source1, 1), component(component2, source2, 2)] };
+  return { first, surname, japanese: false, order, join_style: joinStyle, components: [component(component1, source1, 1), component(component2, source2, 2)] };
 }
 
 function updateFullNameEditPreview() {
@@ -714,12 +969,13 @@ function updateFullNameEditPreview() {
   const record = recordFor(state.selected.id);
   const firstLocked = partReview(state.selected.id, "first").decision === "approve";
   const surnameLocked = ["surname_part_1", "surname_part_2"].some(key => partReview(state.selected.id, key).decision === "approve");
+  const confirmedRepair = els.fullNameEditForm.dataset.repairingCollapsed === "true";
   const error = parsed.error ||
     (parsed.first.toLowerCase() !== currentFirst.toLowerCase() && manualFirstNameUsage(parsed.first)
       ? `First name “${parsed.first}” is already used by another character.`
       : firstLocked && parsed.first !== currentFirst
         ? "The first name is greenlit. Unlock it before changing it."
-        : surnameLocked && parsed.surname !== currentSurname
+        : surnameLocked && parsed.surname !== currentSurname && !confirmedRepair
           ? "A surname component is greenlit. Unlock it before changing the structured surname."
       : fullNameAlreadyUsed(parsed.first, parsed.surname)
         ? "That complete full name is already used by another character."
@@ -727,7 +983,6 @@ function updateFullNameEditPreview() {
   els.fullNameEditFirstInput.classList.toggle("invalid", Boolean(error));
   els.fullNameEditFirst.textContent = parsed.first || "—";
   els.fullNameEditSurname.textContent = parsed.surname || "—";
-  els.fullNameEditSurnameInput.value = parsed.surname || els.fullNameEditSurnameInput.value;
   els.fullNameEditSeamLabel.textContent = parsed.japanese
     ? "Atomic Japanese surname"
     : parsed.components?.length === 2
@@ -760,20 +1015,33 @@ function openFullNameEditor() {
   els.fullNameEditSource2.innerHTML = options;
   els.fullNameEditFirstInput.value = effectivePartValue(character, "first");
   els.fullNameEditSurnameInput.value = effectiveSurname(character);
+  els.fullNamePasteInput.value = effectiveDisplayName(character);
   els.fullNameEditForm.dataset.surnameLanguage = japanese ? "japanese" : "western";
   els.fullNameEditForm.dataset.order = surnameOrder(character);
+  els.fullNameEditForm.dataset.joinStyle = normalized.surname_join_style || "lower_second";
+  els.fullNameEditForm.dataset.repairingCollapsed = "false";
   els.fullNameEditForm.classList.toggle("single-surname-mode", japanese);
   const components = normalized.surname_components || [];
   els.fullNameEditComponent1.value = components.find(component => Number(component.order) === 1)?.text || "";
   els.fullNameEditComponent2.value = components.find(component => Number(component.order) === 2)?.text || "";
   els.fullNameEditSource1.value = components.find(component => Number(component.order) === 1)?.source_raw || "";
   els.fullNameEditSource2.value = components.find(component => Number(component.order) === 2)?.source_raw || "";
-  els.fullNameEditSurnameInput.readOnly = !japanese;
+  els.fullNameEditSurnameInput.readOnly = false;
+  const autoRepair = state.surnameRepairIndex?.[String(character.id)];
+  els.fullNameDetectStatus.classList.remove("error", "success");
+  els.fullNameDetectStatus.textContent = autoRepair
+    ? `Auto-detected ${autoRepair.surname_components[0].text} + ${autoRepair.surname_components[1].text} from ${autoRepair.surname_components[0].source_raw} + ${autoRepair.surname_components[1].source_raw}.${autoRepair.corrects_current_display ? ` The broken “${autoRepair.current_display}” preview is corrected to “${autoRepair.surname_display}”.` : " Confirm and save the recovered structure."}`
+    : "Paste the complete two-word name from ChatGPT. Name Studio will recover the two surname words and exact traits.";
   updateFullNameEditPreview();
   els.fullNameEditDialog.showModal();
+  if (autoRepair) {
+    applySurnameRepairProposal(autoRepair);
+  } else if (!japanese) {
+    requestSurnameDetection({ quiet: true, onlyIfRepair: true });
+  }
   requestAnimationFrame(() => {
-    els.fullNameEditFirstInput.focus();
-    els.fullNameEditFirstInput.setSelectionRange(0, els.fullNameEditFirstInput.value.length);
+    els.fullNamePasteInput.focus();
+    els.fullNamePasteInput.setSelectionRange(0, els.fullNamePasteInput.value.length);
   });
 }
 
@@ -820,12 +1088,17 @@ async function saveFullNameEdit(event) {
       record.parts.surname_part_1 = { ...current1, decision: current1.decision || "replace", scope: current1.scope || "this_character", disabled: false, replacement_value: parsed.surname, replacement_source: "Manual team edit · atomic Japanese surname", replacement_trait_source: current1.replacement_trait_source || character.surname_source_1 || "Japanese surname bank", replacement_language: "japanese", replacement_rationale: `Direct team edit of the atomic Japanese surname for Surv!vor #${character.id}.`, replacement_scores: null, updated_at: timestamp, reviewer: state.curation.reviewer || current1.reviewer || "", deleted_at: null };
       record.parts.surname_part_2 = { ...current2, decision: current2.decision || "replace", scope: current2.scope || "this_character", disabled: true, updated_at: timestamp, reviewer: state.curation.reviewer || current2.reviewer || "", deleted_at: null };
     } else {
+      const repairingApprovedCompound = (needsSurnameComponentRepair(character) ||
+        els.fullNameEditForm.dataset.repairingCollapsed === "true") &&
+        [current1, current2].some((part) => part.decision === "approve");
       parsed.components.forEach((component, index) => {
         const key = index === 0 ? "surname_part_1" : "surname_part_2";
         const current = index === 0 ? current1 : current2;
         record.parts[key] = {
           ...current,
-          decision: current.decision || "replace", scope: current.scope || "this_character", disabled: false,
+          decision: repairingApprovedCompound ? "approve" : (current.decision || "replace"),
+          scope: repairingApprovedCompound ? null : (current.scope || "this_character"),
+          disabled: false,
           replacement_value: component.text,
           replacement_source: "Manual structured full-name edit",
           replacement_trait_source: component.source_raw,
@@ -838,19 +1111,20 @@ async function saveFullNameEdit(event) {
     }
     record.surname_order = parsed.order;
     record.surname_order_updated_at = timestamp;
-    record.surname_join_style = "lower_second";
+    record.surname_join_style = parsed.join_style || "lower_second";
     record.surname_format_version = SURNAME_FORMAT_VERSION;
     record.surname_join_style_updated_at = timestamp;
     record.normalized_name = {
       first_name: parsed.first,
       surname_display: parsed.surname,
       surname_components: parsed.components,
-      surname_join_style: "lower_second",
+      surname_join_style: parsed.join_style || "lower_second",
       surname_format_version: SURNAME_FORMAT_VERSION,
       derivation_method: parsed.japanese ? "manual_atomic_japanese" : "manual_structured",
       needs_surname_component_repair: false
     };
     record.normalized_name_updated_at = timestamp;
+    delete state.surnameRepairIndex[String(character.id)];
   }
   if (parsed.first !== currentFirst && record.normalized_name) {
     record.normalized_name = { ...record.normalized_name, first_name: parsed.first };
@@ -1158,6 +1432,9 @@ function selectById(id) {
   setMobileRoster(false);
   renderCharacter();
   renderRoster();
+  if (state.cloudAuthenticated && !state.surnameRepairIndex[String(character.id)]) {
+    loadSelectedSurnameRepair(character);
+  }
 }
 
 function renderDecisionControls(character) {
@@ -1992,7 +2269,7 @@ function mergeImportedPayload(payload) {
         timestamp(local.surname_join_style_updated_at)
     ) {
       local.surname_join_style =
-        importedRecord.surname_join_style === "lower_second" ? "lower_second" : "camel";
+        normalizedJoinStyle(importedRecord.surname_join_style);
       local.surname_format_version = Number(
         importedRecord.surname_format_version || SURNAME_FORMAT_VERSION
       );
@@ -2880,6 +3157,8 @@ async function checkCloudSession() {
     state.curation.reviewer = state.curation.reviewer || payload.reviewer || "";
     els.loginGate.hidden = true;
     await pullCloudState();
+    await loadSelectedSurnameRepair();
+    scheduleFullSurnameRepairScan();
     clearInterval(state.cloudPollTimer);
     state.cloudPollTimer = setInterval(syncCloudTick, CLOUD_POLL_MS);
     return true;
@@ -2914,6 +3193,8 @@ async function loginToCloud(event) {
     els.loginPasscode.value = "";
     els.loginGate.hidden = true;
     await pullCloudState();
+    await loadSelectedSurnameRepair();
+    scheduleFullSurnameRepairScan();
     scheduleCloudSave();
     clearInterval(state.cloudPollTimer);
     state.cloudPollTimer = setInterval(syncCloudTick, CLOUD_POLL_MS);
@@ -4032,11 +4313,25 @@ function bindEvents() {
   els.askAiButton.addEventListener("click", openNamingAssistant);
   els.fullNameEditClose.addEventListener("click", () => els.fullNameEditDialog.close());
   els.fullNameEditCancel.addEventListener("click", () => els.fullNameEditDialog.close());
-  [els.fullNameEditFirstInput, els.fullNameEditSurnameInput, els.fullNameEditComponent1, els.fullNameEditComponent2].forEach(input => input.addEventListener("input", updateFullNameEditPreview));
+  els.fullNamePasteInput.addEventListener("input", beginPastedFullNameDetection);
+  els.fullNameDetectButton.addEventListener("click", () => requestSurnameDetection());
+  els.fullNameEditFirstInput.addEventListener("input", () => {
+    const first = normalizeManualFirstName(els.fullNameEditFirstInput.value);
+    if (first && els.fullNameEditSurnameInput.value) {
+      els.fullNamePasteInput.value = `${first} ${els.fullNameEditSurnameInput.value}`;
+    }
+    updateFullNameEditPreview();
+  });
+  els.fullNameEditSurnameInput.addEventListener("input", () => {
+    const first = normalizeManualFirstName(els.fullNameEditFirstInput.value);
+    if (first) els.fullNamePasteInput.value = `${first} ${els.fullNameEditSurnameInput.value.trim()}`;
+    beginPastedFullNameDetection();
+  });
+  [els.fullNameEditComponent1, els.fullNameEditComponent2].forEach(input => input.addEventListener("input", syncSurnameFromComponents));
   [els.fullNameEditSource1, els.fullNameEditSource2].forEach(select => select.addEventListener("change", updateFullNameEditPreview));
   els.fullNameEditFlip.addEventListener("click", () => {
     els.fullNameEditForm.dataset.order = els.fullNameEditForm.dataset.order === "21" ? "12" : "21";
-    updateFullNameEditPreview();
+    syncSurnameFromComponents();
   });
   els.fullNameEditForm.addEventListener("submit", saveFullNameEdit);
   els.namingAssistantClose.addEventListener("click", () => els.namingAssistantDialog.close());
@@ -4202,6 +4497,10 @@ async function init() {
     renderRoster();
     $("boot").hidden = true;
     $("app").hidden = false;
+    window.__nameStudioSurnameRepairTest = () => ({
+      ...state.surnameRepairSummary,
+      selected: state.selected ? state.surnameRepairIndex[String(state.selected.id)] || null : null
+    });
     await checkCloudSession();
     if (state.cloudAuthenticated) {
       els.reviewerName.value = state.curation.reviewer || "";

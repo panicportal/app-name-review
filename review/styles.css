@@ -1389,7 +1389,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .full-name-parse-preview strong { display: block; margin-top: 6px; overflow-wrap: anywhere; font: 900 22px/1 var(--display); }
 .full-name-edit-status { min-height: 34px; margin: 12px 0 0; color: #566763; font-size: 12px; }
 .full-name-edit-status.error { color: #9f343f; }
-.full-name-edit-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.full-name-edit-actions { position: sticky; bottom: 0; z-index: 4; display: flex; justify-content: flex-end; gap: 8px; margin: 14px -18px -18px; padding: 12px 18px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid #aab7b2; background: rgba(239, 242, 234, .97); box-shadow: 0 -8px 18px rgba(8, 27, 33, .08); }
 .full-name-edit-actions button { min-height: 44px; padding: 0 16px; }
 .full-name-edit-actions .full-name-edit-save { border-color: #2f7c68; background: #2f7c68; color: white; }
 .full-name-edit-actions .full-name-edit-save:disabled { opacity: .45; cursor: default; }
@@ -1874,6 +1874,14 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .surname-repair-banner button { flex: 0 0 auto; min-height: 38px; border: 1px solid #f5a5ac; background: transparent; color: white; font: 900 8px/1 var(--utility); text-transform: uppercase; }
 .full-name-edit-dialog { width: min(820px, calc(100% - 24px)); }
 .full-name-edit-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+.full-name-paste-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 8px; margin-top: 15px; padding: 12px; border: 1px solid #9ead9f; border-left: 5px solid var(--amber); background: #edf1e8; }
+.full-name-paste-row label { display: grid; gap: 6px; color: #5d6e68; font: 900 8px/1 var(--utility); text-transform: uppercase; }
+.full-name-paste-row input { width: 100%; min-height: 50px; padding: 9px 12px; border: 2px solid #8ea19b; background: #fffdf5; color: var(--ink); font: 900 22px/1 var(--display); }
+.full-name-paste-row input:focus { border-color: var(--amber-deep); outline: 3px solid rgba(255,179,57,.2); }
+.full-name-paste-row button { min-height: 50px; padding: 0 13px; border: 1px solid var(--ink); background: var(--ink); color: white; font: 900 8px/1.2 var(--utility); text-transform: uppercase; }
+.surname-detect-status { min-height: 38px; padding: 9px 12px; border: 1px solid #aab7b2; border-top: 0; background: #f7f4e8; color: #526661; font-size: 10px; line-height: 1.45; }
+.surname-detect-status.success { border-left: 5px solid #2f8d73; background: #e2f3eb; color: #245c4e; }
+.surname-detect-status.error { border-left: 5px solid #d65b64; background: #f8e5e7; color: #8f3039; }
 .full-name-edit-grid .full-name-edit-field { margin-top: 16px; }
 .full-name-edit-grid input[readonly] { background: #e8eee9; color: #36524b; }
 .surname-seam { margin-top: 13px; padding: 14px; border: 1px solid #8ea19b; border-top: 5px solid var(--amber); background: #edf1e8; }
@@ -1944,7 +1952,9 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 @media (max-width: 760px) {
   .character-copy-toolbar { display: grid; grid-template-columns: 1fr 1fr; }
   .surname-repair-banner { align-items: stretch; flex-direction: column; }
-  .full-name-edit-grid, .surname-source-grid { grid-template-columns: 1fr; }
+  .full-name-paste-row, .full-name-edit-grid, .surname-source-grid { grid-template-columns: 1fr; }
+  .full-name-edit-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
+  .full-name-edit-form { min-height: 100%; }
   .surname-source-grid > i { transform: rotate(90deg); }
   .naming-assistant-dialog { inset: 0; width: 100%; height: 100dvh; }
   .naming-assistant-shell > header { padding: 12px; }

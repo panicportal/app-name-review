@@ -3,6 +3,12 @@ const { readState, writeState } = require("./store");
 
 const SCHEMA_VERSION = "panic-name-curation/v2";
 
+function surnameJoinStyle(value) {
+  return ["lower_second", "camel", "overlap_one"].includes(value)
+    ? value
+    : "lower_second";
+}
+
 function timestamp(value) {
   const parsed = Date.parse(value || "");
   return Number.isFinite(parsed) ? parsed : 0;
@@ -37,7 +43,7 @@ function seedCuration() {
       surname_order: item.surname_order === "21" ? "21" : "12",
       surname_order_updated_at: item.surname_order_updated_at || null,
       surname_join_style:
-        item.surname_join_style === "lower_second" ? "lower_second" : "camel",
+        surnameJoinStyle(item.surname_join_style),
       surname_format_version: Number(item.surname_format_version || 0),
       surname_join_style_updated_at: item.surname_join_style_updated_at || null,
       normalized_name: item.normalized_name || null,
@@ -117,8 +123,8 @@ function mergeRecord(stored = {}, incoming = {}) {
     surname_join_style:
       timestamp(incoming.surname_join_style_updated_at) >=
       timestamp(stored.surname_join_style_updated_at)
-        ? incoming.surname_join_style === "lower_second" ? "lower_second" : "camel"
-        : stored.surname_join_style === "lower_second" ? "lower_second" : "camel",
+        ? surnameJoinStyle(incoming.surname_join_style)
+        : surnameJoinStyle(stored.surname_join_style),
     surname_join_style_updated_at:
       timestamp(incoming.surname_join_style_updated_at) >=
       timestamp(stored.surname_join_style_updated_at)

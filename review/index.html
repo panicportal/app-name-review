@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=20-0-structured-ai">
+  <link rel="stylesheet" href="/review/styles.css?v=21-2-compound-repair">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v20 structured naming / closed Japanese bank</small></span>
+        <span><strong>NAME STUDIO</strong><small>v21 compound repair / closed Japanese bank</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -471,9 +471,14 @@
         </div>
         <button type="button" class="dialog-close" id="fullNameEditClose" aria-label="Close full-name editor">×</button>
       </header>
+      <div class="full-name-paste-row">
+        <label><span>Fast copy-paste · first name + final surname</span><input id="fullNamePasteInput" maxlength="76" autocomplete="off" spellcheck="false"></label>
+        <button type="button" id="fullNameDetectButton">Detect 2 surname parts</button>
+      </div>
+      <div class="surname-detect-status" id="fullNameDetectStatus">Paste the complete two-word name from ChatGPT. Name Studio will recover the two surname words and exact traits.</div>
       <div class="full-name-edit-grid">
         <label class="full-name-edit-field"><span>First name</span><input id="fullNameEditFirstInput" maxlength="24" autocomplete="off" spellcheck="false"></label>
-        <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false" readonly></label>
+        <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false"></label>
       </div>
       <section class="surname-seam" aria-label="Two surname sources">
         <div class="surname-seam-head"><div><span>Hidden semantic seam</span><b>Two traits · one surname</b></div><button type="button" id="fullNameEditFlip">Swap order</button></div>
@@ -700,7 +705,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=20-0-structured-ai"></script>
+  <script src="/review/app.js?v=21-2-compound-repair"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>

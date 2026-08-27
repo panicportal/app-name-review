@@ -32,6 +32,12 @@ function composeSurname(components, order = "12", joinStyle = "lower_second") {
   const values = order === "21" ? [indexed[2], indexed[1]] : [indexed[1], indexed[2]];
   const active = values.filter(Boolean);
   if (active.length < 2) return active[0] || "";
+  if (
+    joinStyle === "overlap_one" &&
+    active[0].slice(-1).toLowerCase() === active[1].slice(0, 1).toLowerCase()
+  ) {
+    return `${active[0]}${active[1].slice(1).toLowerCase()}`;
+  }
   return joinStyle === "camel"
     ? active.join("")
     : `${active[0]}${active[1].charAt(0).toLowerCase()}${active[1].slice(1)}`;
