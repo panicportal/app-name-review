@@ -7,7 +7,10 @@ const SCHEMA_VERSION = "panic-name-curation/v2";
 const PACKAGED_PROGRESS_URL = "/cloud_seed_curation.json";
 const PART_KEYS = ["first", "surname_part_1", "surname_part_2"];
 const CLOUD_POLL_MS = 12000;
-const SURNAME_FORMAT_VERSION = 2;
+const SURNAME_FORMAT_VERSION = 3;
+const ELIGIBLE_SURNAME_TRAIT_TYPES = new Set([
+  "Background", "Back", "Front", "Hair", "Eyes", "Eyebrows", "Mouth"
+]);
 const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v2";
 
 function emptyCuration() {
@@ -58,6 +61,7 @@ const state = {
   suggestionPreviewOrder: "12",
   suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
+  namingAssistant: { payload: null, loading: false, configured: null },
   focusSwipeStart: null,
   voice: {
     recognition: null,
@@ -123,6 +127,9 @@ function recordFor(id) {
     surname_join_style: "lower_second",
     surname_format_version: SURNAME_FORMAT_VERSION,
     surname_join_style_updated_at: null,
+    normalized_name: null,
+    normalized_name_updated_at: null,
+    naming_assistant_history: [],
     parts: {}
   };
 }
@@ -146,6 +153,9 @@ function ensureRecord(id) {
       surname_join_style: "lower_second",
       surname_format_version: SURNAME_FORMAT_VERSION,
       surname_join_style_updated_at: null,
+      normalized_name: null,
+      normalized_name_updated_at: null,
+      naming_assistant_history: [],
       parts: {}
     };
   }
@@ -164,6 +174,8 @@ function isRecordTouched(record) {
     record?.note?.trim() ||
     record?.surname_order_updated_at ||
     record?.surname_join_style_updated_at ||
+    record?.normalized_name_updated_at ||
+    record?.naming_assistant_history?.length ||
     Object.values(record?.parts || {}).some(isPartTouched)
   );
 }
@@ -275,6 +287,18 @@ function mergeCurationStates(local, remote) {
         timestamp(incoming.surname_join_style_updated_at) >= timestamp(current.surname_join_style_updated_at)
           ? Number(incoming.surname_format_version || 0)
           : Number(current.surname_format_version || 0),
+      normalized_name:
+        timestamp(incoming.normalized_name_updated_at) >= timestamp(current.normalized_name_updated_at)
+          ? (incoming.normalized_name || null)
+          : (current.normalized_name || null),
+      normalized_name_updated_at:
+        timestamp(incoming.normalized_name_updated_at) >= timestamp(current.normalized_name_updated_at)
+          ? (incoming.normalized_name_updated_at || null)
+          : (current.normalized_name_updated_at || null),
+      naming_assistant_history:
+        timestamp(incoming.updated_at) >= timestamp(current.updated_at)
+          ? (incoming.naming_assistant_history || current.naming_assistant_history || []).slice(-20)
+          : (current.naming_assistant_history || []).slice(-20),
       parts: { ...(current.parts || {}) }
     };
     Object.entries(incoming.parts || {}).forEach(([key, part]) => {
@@ -286,6 +310,7 @@ function mergeCurationStates(local, remote) {
       result.note_updated_at,
       result.surname_order_updated_at,
       result.surname_join_style_updated_at,
+      result.normalized_name_updated_at,
       ...Object.values(result.parts).map(part => part.updated_at || part.deleted_at)
     ]);
     merged.records[id] = result;
@@ -576,17 +601,64 @@ function effectiveDisplayName(character) {
   ].filter(Boolean).join(" ");
 }
 
-function parseFullNameEdit(value) {
-  const words = String(value || "").trim().split(/\s+/).filter(Boolean);
-  if (words.length !== 2) return { error: "Use exactly two words: one first name and one surname." };
-  const first = normalizeManualFirstName(words[0]);
-  const surnameRaw = words[1];
-  const surname = /^[A-Za-z]{2,32}$/.test(surnameRaw)
-    ? surnameRaw.charAt(0).toUpperCase() + surnameRaw.slice(1).toLowerCase()
-    : null;
-  if (!first) return { error: "First name must use 2–20 safe English letters, apostrophe, or hyphen." };
-  if (!surname) return { error: "Surname must be one word using 2–32 English letters." };
-  return { first, surname };
+function eligibleSurnameTraits(character) {
+  return (character?.traits || []).filter(trait =>
+    ELIGIBLE_SURNAME_TRAIT_TYPES.has(trait.type) && trait.value
+  );
+}
+
+function cleanSurnameComponent(value) {
+  const text = String(value || "").trim();
+  return /^[A-Za-z]{2,24}$/.test(text)
+    ? text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+    : "";
+}
+
+function normalizedSurnameFor(character) {
+  const record = recordFor(character.id);
+  const normalized = record.normalized_name;
+  if (Number(normalized?.surname_format_version) >= 3 && Array.isArray(normalized.surname_components)) {
+    return normalized;
+  }
+  const firstPart = partReview(character.id, "surname_part_1");
+  const secondPart = partReview(character.id, "surname_part_2");
+  const value1 = effectivePartValue(character, "surname_part_1");
+  const value2 = effectivePartValue(character, "surname_part_2");
+  const source1 = effectivePartSource(character, "surname_part_1");
+  const source2 = effectivePartSource(character, "surname_part_2");
+  const directCollapsed = Boolean(
+    firstPart.replacement_value &&
+    /manual team edit|direct full-name edit/i.test(firstPart.replacement_source || "") &&
+    secondPart.disabled
+  );
+  if (directCollapsed) {
+    return {
+      first_name: effectivePartValue(character, "first"),
+      surname_display: effectiveSurname(character),
+      surname_components: [],
+      surname_join_style: surnameJoinStyle(character),
+      surname_format_version: 2,
+      derivation_method: "unknown",
+      needs_surname_component_repair: true
+    };
+  }
+  const components = [
+    value1 && source1 ? { order: 1, text: value1, source_raw: source1 } : null,
+    value2 && source2 ? { order: 2, text: value2, source_raw: source2 } : null
+  ].filter(Boolean);
+  return {
+    first_name: effectivePartValue(character, "first"),
+    surname_display: effectiveSurname(character),
+    surname_components: components,
+    surname_join_style: surnameJoinStyle(character),
+    surname_format_version: components.length === 2 ? 3 : 1,
+    derivation_method: components.length === 2 ? "legacy_migrated" : "existing",
+    needs_surname_component_repair: effectiveSurnameLanguage(character) === "western" && components.length !== 2
+  };
+}
+
+function needsSurnameComponentRepair(character) {
+  return Boolean(normalizedSurnameFor(character).needs_surname_component_repair);
 }
 
 function fullNameAlreadyUsed(first, surname) {
@@ -596,42 +668,116 @@ function fullNameAlreadyUsed(first, surname) {
   );
 }
 
+function fullNameEditorValue() {
+  const first = normalizeManualFirstName(els.fullNameEditFirstInput.value);
+  const component1 = cleanSurnameComponent(els.fullNameEditComponent1.value);
+  const component2 = cleanSurnameComponent(els.fullNameEditComponent2.value);
+  const source1 = els.fullNameEditSource1.value;
+  const source2 = els.fullNameEditSource2.value;
+  const order = els.fullNameEditForm.dataset.order === "21" ? "21" : "12";
+  const japanese = els.fullNameEditForm.dataset.surnameLanguage === "japanese";
+  if (!first) return { error: "First name must use 2–20 safe English letters, apostrophe, or hyphen." };
+  if (japanese) {
+    const surname = String(els.fullNameEditSurnameInput.value || "").trim();
+    if (!/^[A-Za-z]{2,32}$/.test(surname)) return { error: "Japanese surname romanization must be one word using 2–32 English letters." };
+    return { first, surname, japanese, order: "12", components: [] };
+  }
+  const hasAnyStructuredInput = Boolean(component1 || component2 || source1 || source2);
+  if (needsSurnameComponentRepair(state.selected) && !hasAnyStructuredInput) {
+    return { first, surname: effectiveSurname(state.selected), japanese: false, order, components: [], preserve_unresolved_surname: true };
+  }
+  if (!component1 || !component2) return { error: "Add two one-word surname components." };
+  if (!source1 || !source2) return { error: "Select an exact source trait for both surname components." };
+  if (source1 === source2) return { error: "Surname component 1 and 2 must use different traits." };
+  const ordered = order === "21" ? [component2, component1] : [component1, component2];
+  const surname = `${ordered[0]}${ordered[1].charAt(0).toLowerCase()}${ordered[1].slice(1)}`;
+  const traits = new Set(eligibleSurnameTraits(state.selected).map(trait => `${trait.type}:${trait.value}`));
+  if (!traits.has(source1) || !traits.has(source2)) return { error: "A selected surname source no longer exists on this character." };
+  const component = (text, source, componentOrder) => {
+    const divider = source.indexOf(":");
+    return {
+      order: componentOrder,
+      text,
+      trait_category: source.slice(0, divider),
+      trait_value: source.slice(divider + 1),
+      source_raw: source,
+      confidence: "confirmed"
+    };
+  };
+  return { first, surname, japanese: false, order, components: [component(component1, source1, 1), component(component2, source2, 2)] };
+}
+
 function updateFullNameEditPreview() {
-  const parsed = parseFullNameEdit(els.fullNameEditInput.value);
+  const parsed = fullNameEditorValue();
   const currentFirst = effectivePartValue(state.selected, "first");
   const currentSurname = effectiveSurname(state.selected);
+  const record = recordFor(state.selected.id);
+  const firstLocked = partReview(state.selected.id, "first").decision === "approve";
+  const surnameLocked = ["surname_part_1", "surname_part_2"].some(key => partReview(state.selected.id, key).decision === "approve");
   const error = parsed.error ||
     (parsed.first.toLowerCase() !== currentFirst.toLowerCase() && manualFirstNameUsage(parsed.first)
       ? `First name “${parsed.first}” is already used by another character.`
+      : firstLocked && parsed.first !== currentFirst
+        ? "The first name is greenlit. Unlock it before changing it."
+        : surnameLocked && parsed.surname !== currentSurname
+          ? "A surname component is greenlit. Unlock it before changing the structured surname."
       : fullNameAlreadyUsed(parsed.first, parsed.surname)
         ? "That complete full name is already used by another character."
         : "");
-  els.fullNameEditInput.classList.toggle("invalid", Boolean(error));
+  els.fullNameEditFirstInput.classList.toggle("invalid", Boolean(error));
   els.fullNameEditFirst.textContent = parsed.first || "—";
   els.fullNameEditSurname.textContent = parsed.surname || "—";
+  els.fullNameEditSurnameInput.value = parsed.surname || els.fullNameEditSurnameInput.value;
+  els.fullNameEditSeamLabel.textContent = parsed.japanese
+    ? "Atomic Japanese surname"
+    : parsed.components?.length === 2
+      ? `${parsed.components[parsed.order === "21" ? 1 : 0].source_raw} + ${parsed.components[parsed.order === "21" ? 0 : 1].source_raw}`
+      : "Two source traits required";
   els.fullNameEditStatus.textContent = error || (
-    parsed.first === currentFirst && parsed.surname === currentSurname
-      ? "This matches the current live name."
-      : "Ready to save. Only the words you changed will be updated."
+    parsed.first === currentFirst && parsed.surname === currentSurname && !needsSurnameComponentRepair(state.selected)
+      ? "This matches the current live name and its surname sources are structured."
+      : needsSurnameComponentRepair(state.selected)
+        ? parsed.preserve_unresolved_surname
+          ? "The surname remains visibly unchanged and unresolved. You may save a first-name-only edit, or add both confirmed surname sources."
+          : "Visible name preserved. Choose the two confirmed source traits and component words to repair the audit record."
+        : "Ready to save as one atomic structured name update."
   );
   els.fullNameEditStatus.classList.toggle("error", Boolean(error));
   els.fullNameEditSave.disabled = Boolean(error) ||
-    (parsed.first === currentFirst && parsed.surname === currentSurname);
+    (parsed.first === currentFirst && parsed.surname === currentSurname &&
+      (!needsSurnameComponentRepair(state.selected) || parsed.preserve_unresolved_surname));
   return error ? null : parsed;
 }
 
 function openFullNameEditor() {
   if (!state.selected) return;
-  els.fullNameEditInput.value = effectiveDisplayName(state.selected);
+  const character = state.selected;
+  const normalized = normalizedSurnameFor(character);
+  const japanese = effectiveSurnameLanguage(character) === "japanese";
+  const sources = eligibleSurnameTraits(character).map(trait => `${trait.type}:${trait.value}`);
+  const options = `<option value="">Choose exact trait…</option>` + sources.map(source => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`).join("");
+  els.fullNameEditSource1.innerHTML = options;
+  els.fullNameEditSource2.innerHTML = options;
+  els.fullNameEditFirstInput.value = effectivePartValue(character, "first");
+  els.fullNameEditSurnameInput.value = effectiveSurname(character);
+  els.fullNameEditForm.dataset.surnameLanguage = japanese ? "japanese" : "western";
+  els.fullNameEditForm.dataset.order = surnameOrder(character);
+  els.fullNameEditForm.classList.toggle("single-surname-mode", japanese);
+  const components = normalized.surname_components || [];
+  els.fullNameEditComponent1.value = components.find(component => Number(component.order) === 1)?.text || "";
+  els.fullNameEditComponent2.value = components.find(component => Number(component.order) === 2)?.text || "";
+  els.fullNameEditSource1.value = components.find(component => Number(component.order) === 1)?.source_raw || "";
+  els.fullNameEditSource2.value = components.find(component => Number(component.order) === 2)?.source_raw || "";
+  els.fullNameEditSurnameInput.readOnly = !japanese;
   updateFullNameEditPreview();
   els.fullNameEditDialog.showModal();
   requestAnimationFrame(() => {
-    els.fullNameEditInput.focus();
-    els.fullNameEditInput.setSelectionRange(0, els.fullNameEditInput.value.length);
+    els.fullNameEditFirstInput.focus();
+    els.fullNameEditFirstInput.setSelectionRange(0, els.fullNameEditFirstInput.value.length);
   });
 }
 
-function saveFullNameEdit(event) {
+async function saveFullNameEdit(event) {
   event.preventDefault();
   const parsed = updateFullNameEditPreview();
   if (!parsed) return;
@@ -641,6 +787,15 @@ function saveFullNameEdit(event) {
   const timestamp = nowIso();
   const record = ensureRecord(character.id);
   if (parsed.first !== currentFirst) {
+    if (state.cloudAuthenticated) {
+      const response = await fetch(`/api/first-name-availability?value=${encodeURIComponent(parsed.first)}&except_id=${encodeURIComponent(character.id)}`);
+      const availability = await response.json();
+      if (!response.ok || !availability.available) {
+        els.fullNameEditStatus.textContent = availability.error || `First name “${parsed.first}” is already used.`;
+        els.fullNameEditStatus.classList.add("error");
+        return;
+      }
+    }
     const current = partReview(character.id, "first");
     record.parts.first = {
       ...current,
@@ -658,42 +813,48 @@ function saveFullNameEdit(event) {
       deleted_at: null
     };
   }
-  if (parsed.surname !== currentSurname) {
-    const fallbackTrait = character.traits?.find(trait => trait.type !== "Body");
-    const source = effectivePartSource(character, "surname_part_1") ||
-      (fallbackTrait ? `${fallbackTrait.type}:${fallbackTrait.value}` : "Trait:Team custom");
+  if (parsed.surname !== currentSurname || (needsSurnameComponentRepair(character) && !parsed.preserve_unresolved_surname)) {
     const current1 = partReview(character.id, "surname_part_1");
     const current2 = partReview(character.id, "surname_part_2");
-    record.parts.surname_part_1 = {
-      ...current1,
-      decision: "replace",
-      scope: "this_character",
-      disabled: false,
-      replacement_value: parsed.surname,
-      replacement_source: "Manual team edit",
-      replacement_trait_source: source,
-      replacement_language: "western",
-      replacement_rationale: `Direct team edit of the one-word surname for Surv!vor #${character.id}.`,
-      replacement_scores: null,
-      updated_at: timestamp,
-      reviewer: state.curation.reviewer || current1.reviewer || "",
-      deleted_at: null
-    };
-    record.parts.surname_part_2 = {
-      ...current2,
-      decision: "replace",
-      scope: current2.scope || "this_character",
-      disabled: true,
-      note: current2.note || "Removed to use a single-word surname.",
-      updated_at: timestamp,
-      reviewer: state.curation.reviewer || current2.reviewer || "",
-      deleted_at: null
-    };
-    record.surname_order = "12";
+    if (parsed.japanese) {
+      record.parts.surname_part_1 = { ...current1, decision: current1.decision || "replace", scope: current1.scope || "this_character", disabled: false, replacement_value: parsed.surname, replacement_source: "Manual team edit · atomic Japanese surname", replacement_trait_source: current1.replacement_trait_source || character.surname_source_1 || "Japanese surname bank", replacement_language: "japanese", replacement_rationale: `Direct team edit of the atomic Japanese surname for Surv!vor #${character.id}.`, replacement_scores: null, updated_at: timestamp, reviewer: state.curation.reviewer || current1.reviewer || "", deleted_at: null };
+      record.parts.surname_part_2 = { ...current2, decision: current2.decision || "replace", scope: current2.scope || "this_character", disabled: true, updated_at: timestamp, reviewer: state.curation.reviewer || current2.reviewer || "", deleted_at: null };
+    } else {
+      parsed.components.forEach((component, index) => {
+        const key = index === 0 ? "surname_part_1" : "surname_part_2";
+        const current = index === 0 ? current1 : current2;
+        record.parts[key] = {
+          ...current,
+          decision: current.decision || "replace", scope: current.scope || "this_character", disabled: false,
+          replacement_value: component.text,
+          replacement_source: "Manual structured full-name edit",
+          replacement_trait_source: component.source_raw,
+          replacement_language: "western",
+          replacement_rationale: `Confirmed semantic component ${index + 1} for ${component.source_raw}. Collector-visible surname: ${parsed.surname}.`,
+          replacement_scores: null, updated_at: timestamp,
+          reviewer: state.curation.reviewer || current.reviewer || "", deleted_at: null
+        };
+      });
+    }
+    record.surname_order = parsed.order;
     record.surname_order_updated_at = timestamp;
     record.surname_join_style = "lower_second";
     record.surname_format_version = SURNAME_FORMAT_VERSION;
     record.surname_join_style_updated_at = timestamp;
+    record.normalized_name = {
+      first_name: parsed.first,
+      surname_display: parsed.surname,
+      surname_components: parsed.components,
+      surname_join_style: "lower_second",
+      surname_format_version: SURNAME_FORMAT_VERSION,
+      derivation_method: parsed.japanese ? "manual_atomic_japanese" : "manual_structured",
+      needs_surname_component_repair: false
+    };
+    record.normalized_name_updated_at = timestamp;
+  }
+  if (parsed.first !== currentFirst && record.normalized_name) {
+    record.normalized_name = { ...record.normalized_name, first_name: parsed.first };
+    record.normalized_name_updated_at = timestamp;
   }
   record.updated_at = timestamp;
   saveCuration();
@@ -860,6 +1021,7 @@ function matchesStatus(character, status) {
   if (status === "replacement-picked") {
     return PART_KEYS.some(key => Boolean(partReview(character.id, key).replacement_value));
   }
+  if (status === "surname-repair") return needsSurnameComponentRepair(character);
   if (status === "needs-suggestion") {
     return PART_KEYS.some(key => {
       const review = partReview(character.id, key);
@@ -1218,6 +1380,8 @@ function renderCharacter() {
   els.characterName.textContent = previewName;
   els.characterName.title = previewName !== c.display_name
     ? `Original: ${c.display_name}` : "";
+  const repairNeeded = needsSurnameComponentRepair(c);
+  els.surnameRepairBanner.hidden = !repairNeeded;
   els.firstName.textContent = effectivePartValue(c, "first") || "—";
   els.surname.textContent = effectiveSurname(c) || "—";
   els.surnameFlipButton.hidden = !canFlipSurname(c);
@@ -1682,6 +1846,9 @@ function exportRecord(character) {
     surname_join_style: surnameJoinStyle(character),
     surname_format_version: SURNAME_FORMAT_VERSION,
     surname_join_style_updated_at: record.surname_join_style_updated_at || null,
+    normalized_name: record.normalized_name || normalizedSurnameFor(character),
+    normalized_name_updated_at: record.normalized_name_updated_at || null,
+    naming_assistant_history: record.naming_assistant_history || [],
     curation_status: status.key,
     decided_parts: status.decided,
     available_parts: status.total,
@@ -1806,6 +1973,18 @@ function mergeImportedPayload(payload) {
       local.surname_order = importedRecord.surname_order === "21" ? "21" : "12";
       local.surname_order_updated_at = importedRecord.surname_order_updated_at;
       imported++;
+    }
+    if (
+      importedRecord.normalized_name &&
+      timestamp(importedRecord.normalized_name_updated_at || importedRecord.updated_at) >=
+        timestamp(local.normalized_name_updated_at)
+    ) {
+      local.normalized_name = importedRecord.normalized_name;
+      local.normalized_name_updated_at = importedRecord.normalized_name_updated_at || importedRecord.updated_at || payload.exported_at || nowIso();
+      imported++;
+    }
+    if (Array.isArray(importedRecord.naming_assistant_history)) {
+      local.naming_assistant_history = importedRecord.naming_assistant_history.slice(-20);
     }
     if (
       importedRecord.surname_join_style_updated_at &&
@@ -3413,6 +3592,224 @@ function initVoiceControl() {
   state.voice.recognition = recognition;
 }
 
+async function copyText(value, successMessage) {
+  await navigator.clipboard.writeText(String(value || ""));
+  showToast(successMessage, "success");
+}
+
+function exactTraitsText(character) {
+  return (character.traits || []).map(trait => `${trait.type}: ${trait.value}`).join("\n");
+}
+
+function reviewPacketText(character) {
+  const normalized = normalizedSurnameFor(character);
+  const status = curationStatus(character);
+  const record = recordFor(character.id);
+  const components = (normalized.surname_components || []).map(component =>
+    `${component.order}. ${component.text} ← ${component.source_raw}`
+  ).join("\n") || "Unresolved — use Fix surname sources";
+  return [
+    `?an!c Name Studio review packet`,
+    `Character: #${character.id}`,
+    `Current name: ${effectiveDisplayName(character)}`,
+    `Clothing: ${character.clothing}`,
+    `Body gender route: ${character.gender_from_body}`,
+    `First-name status: ${partReview(character.id, "first").decision || "undecided"}`,
+    `Surname part 1 status: ${partReview(character.id, "surname_part_1").decision || "undecided"}`,
+    `Surname part 2 status: ${partReview(character.id, "surname_part_2").decision || "undecided"}`,
+    `Curation: ${status.label}`,
+    `Surname repair needed: ${normalized.needs_surname_component_repair ? "yes" : "no"}`,
+    `Surname components:\n${components}`,
+    `Exact traits:\n${exactTraitsText(character)}`,
+    `Character note: ${record.note || "—"}`,
+  ].join("\n\n");
+}
+
+async function copyCharacterImage() {
+  const response = await fetch(`/pfps_webp/${state.selected.id}.webp`);
+  if (!response.ok) throw new Error("Portrait could not be loaded.");
+  const sourceBlob = await response.blob();
+  const bitmap = await createImageBitmap(sourceBlob);
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  canvas.getContext("2d").drawImage(bitmap, 0, 0);
+  const png = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+  try {
+    if (!navigator.clipboard?.write || !window.ClipboardItem) throw new Error("Image clipboard unsupported");
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": png })]);
+    showToast(`Copied survivor #${state.selected.id} portrait as PNG.`, "success");
+  } catch (_) {
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(png);
+    link.download = `panic-survivor-${state.selected.id}.png`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1500);
+    showToast("This browser blocks image clipboard access, so the PNG was downloaded instead.", "warning");
+  }
+}
+
+function normalizeAssistantComponent(component, order) {
+  const source = String(component?.source_raw || "");
+  const divider = source.indexOf(":");
+  return {
+    order,
+    text: cleanSurnameComponent(component?.text),
+    trait_category: source.slice(0, divider),
+    trait_value: source.slice(divider + 1),
+    source_raw: source,
+    confidence: "ai_proposed_team_selected"
+  };
+}
+
+async function applyAssistantName(firstName, surnameCandidate, source = "AI structured workshop") {
+  const character = state.selected;
+  const record = ensureRecord(character.id);
+  const currentFirst = effectivePartValue(character, "first");
+  const first = normalizeManualFirstName(firstName || currentFirst);
+  if (!first) throw new Error("The proposed first name is not a safe one-word name.");
+  if (first !== currentFirst && partReview(character.id, "first").decision === "approve") {
+    throw new Error("The first name is greenlit. Unlock it before changing it.");
+  }
+  if (first !== currentFirst && manualFirstNameUsage(first)) throw new Error(`First name “${first}” is already used.`);
+  const components = [
+    normalizeAssistantComponent(surnameCandidate.component_1, 1),
+    normalizeAssistantComponent(surnameCandidate.component_2, 2)
+  ];
+  const legal = new Set(eligibleSurnameTraits(character).map(trait => `${trait.type}:${trait.value}`));
+  if (components.some(component => !component.text || !legal.has(component.source_raw))) {
+    throw new Error("The AI surname contains an invalid component or source route.");
+  }
+  if (components[0].source_raw === components[1].source_raw) throw new Error("The AI surname reused the same trait twice.");
+  const surname = `${components[0].text}${components[1].text.charAt(0).toLowerCase()}${components[1].text.slice(1)}`;
+  if (String(surnameCandidate.surname || "").toLowerCase() !== surname.toLowerCase()) {
+    throw new Error(`The AI display surname does not match its components (${surname}).`);
+  }
+  if (fullNameAlreadyUsed(first, surname)) throw new Error("That complete full name is already used.");
+  if (["surname_part_1", "surname_part_2"].some(key => partReview(character.id, key).decision === "approve")) {
+    throw new Error("A surname component is greenlit. Unlock it before applying a new surname.");
+  }
+  if (first !== currentFirst && state.cloudAuthenticated) {
+    const response = await fetch(`/api/first-name-availability?value=${encodeURIComponent(first)}&except_id=${character.id}`);
+    const availability = await response.json();
+    if (!response.ok || !availability.available) throw new Error(availability.error || `First name “${first}” is no longer available.`);
+  }
+  const timestamp = nowIso();
+  if (first !== currentFirst) {
+    const current = partReview(character.id, "first");
+    record.parts.first = { ...current, decision: "replace", scope: "this_character", disabled: false, replacement_value: first, replacement_source: source, replacement_trait_source: `Clothing:${character.clothing}`, replacement_language: "western", replacement_rationale: "Selected from the structured in-app naming workshop and revalidated for collection-wide uniqueness at apply time.", updated_at: timestamp, reviewer: state.curation.reviewer || current.reviewer || "", deleted_at: null };
+  }
+  components.forEach((component, index) => {
+    const key = index ? "surname_part_2" : "surname_part_1";
+    const current = partReview(character.id, key);
+    record.parts[key] = { ...current, decision: "replace", scope: "this_character", disabled: false, replacement_value: component.text, replacement_source: source, replacement_trait_source: component.source_raw, replacement_language: "western", replacement_rationale: surnameCandidate.reason || `AI-proposed component for ${component.source_raw}; selected by the team.`, replacement_scores: { readability: surnameCandidate.readability, collectability: surnameCandidate.collectability }, updated_at: timestamp, reviewer: state.curation.reviewer || current.reviewer || "", deleted_at: null };
+  });
+  record.surname_order = "12";
+  record.surname_order_updated_at = timestamp;
+  record.surname_join_style = "lower_second";
+  record.surname_join_style_updated_at = timestamp;
+  record.surname_format_version = SURNAME_FORMAT_VERSION;
+  record.normalized_name = { first_name: first, surname_display: surname, surname_components: components, surname_join_style: "lower_second", surname_format_version: SURNAME_FORMAT_VERSION, derivation_method: "ai_structured", needs_surname_component_repair: false };
+  record.normalized_name_updated_at = timestamp;
+  record.naming_assistant_history = [...(record.naming_assistant_history || []), { at: timestamp, by: state.curation.reviewer || "Team", action: "applied", full_name: `${first} ${surname}`, source }].slice(-20);
+  record.updated_at = timestamp;
+  saveCuration();
+  renderCharacter();
+  updateProgress();
+  renderRoster();
+  showToast(`Applied ${first} ${surname} with two verified trait sources.`, "success");
+}
+
+function assistantCard(title, subtitle, body, actions = "") {
+  return `<article class="assistant-card"><header><div><span>${escapeHtml(subtitle)}</span><h4>${escapeHtml(title)}</h4></div></header><p>${escapeHtml(body)}</p>${actions}</article>`;
+}
+
+function renderNamingAssistant() {
+  const payload = state.namingAssistant.payload;
+  if (!payload?.result) {
+    els.namingAssistantResults.innerHTML = `<div class="assistant-empty"><b>Ready for a trait-locked workshop</b><p>Generate ranked first names, structured two-trait surnames, and full-name combinations for the selected survivor.</p><button id="assistantGenerateButton">Generate workshop</button></div>`;
+    $("assistantGenerateButton").addEventListener("click", () => requestNamingWorkshop());
+    return;
+  }
+  const result = payload.result;
+  els.namingAssistantResults.innerHTML = `
+    <section><div class="assistant-section-title"><span>Best complete combinations</span><b>${result.full_names.length}</b></div><div class="assistant-card-grid">${result.full_names.map((item, index) => assistantCard(`${item.first_name} ${item.surname}`, `Full name · ${item.readability}/10 read · ${item.collectability}/10 collect`, item.reason, `<button data-ai-apply-full="${index}">Apply exact full name</button><button data-ai-copy-full="${index}">Copy</button>`)).join("")}</div></section>
+    <section><div class="assistant-section-title"><span>First-name bank choices</span><b>${result.first_names.length}</b></div><div class="assistant-chip-grid">${result.first_names.map((item, index) => `<button data-ai-first="${index}"><b>${escapeHtml(item.name)}</b><span>${escapeHtml(item.tier)} · ${Number(item.score).toFixed(1)}</span><small>${escapeHtml(item.reason)}</small></button>`).join("")}</div></section>
+    <section><div class="assistant-section-title"><span>Two-trait surname choices</span><b>${result.surnames.length}</b></div><div class="assistant-card-grid">${result.surnames.map((item, index) => assistantCard(item.surname, `${item.component_1.source_raw} + ${item.component_2.source_raw}`, item.reason, `<div class="assistant-score-row"><span>Read ${item.readability}/10</span><span>Collect ${item.collectability}/10</span></div><button data-ai-surname="${index}">Apply surname</button><button data-ai-copy-surname="${index}">Copy</button>`)).join("")}</div></section>`;
+  els.namingAssistantResults.querySelectorAll("[data-ai-first]").forEach(button => button.addEventListener("click", () => {
+    const item = result.first_names[Number(button.dataset.aiFirst)];
+    els.fullNameEditFirstInput.value = item.name;
+    openFullNameEditor();
+    els.fullNameEditFirstInput.value = item.name;
+    updateFullNameEditPreview();
+  }));
+  els.namingAssistantResults.querySelectorAll("[data-ai-surname]").forEach(button => button.addEventListener("click", async () => {
+    try { await applyAssistantName(effectivePartValue(state.selected, "first"), result.surnames[Number(button.dataset.aiSurname)]); } catch (error) { showToast(error.message, "error"); }
+  }));
+  els.namingAssistantResults.querySelectorAll("[data-ai-apply-full]").forEach(button => button.addEventListener("click", async () => {
+    const full = result.full_names[Number(button.dataset.aiApplyFull)];
+    const surname = result.surnames.find(item => item.surname.toLowerCase() === full.surname.toLowerCase());
+    try { if (!surname) throw new Error("This full-name card lost its structured surname record."); await applyAssistantName(full.first_name, surname); } catch (error) { showToast(error.message, "error"); }
+  }));
+  els.namingAssistantResults.querySelectorAll("[data-ai-copy-full]").forEach(button => button.addEventListener("click", () => {
+    const item = result.full_names[Number(button.dataset.aiCopyFull)];
+    copyText(`${item.first_name} ${item.surname}`, "Copied full name.");
+  }));
+  els.namingAssistantResults.querySelectorAll("[data-ai-copy-surname]").forEach(button => button.addEventListener("click", () => {
+    copyText(result.surnames[Number(button.dataset.aiCopySurname)].surname, "Copied surname.");
+  }));
+}
+
+async function requestNamingWorkshop(feedback = "") {
+  if (state.namingAssistant.loading) return;
+  state.namingAssistant.loading = true;
+  els.namingAssistantStatus.textContent = "Researching this portrait and its legal trait routes…";
+  els.namingAssistantResults.innerHTML = `<div class="assistant-loading"><i></i><b>Building a structured workshop</b><span>This can take a minute. No names are changed until you press Apply.</span></div>`;
+  try {
+    const response = await fetch("/api/naming-assistant", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ character_id: state.selected.id, feedback }) });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "AI workshop failed.");
+    state.namingAssistant.payload = payload;
+    els.namingAssistantStatus.textContent = payload.bank ? `${payload.bank.filename} · ${payload.bank.candidates_sent} unused candidates sent securely` : "No matching Clothing Markdown bank is active; surname workshop uses exact traits only.";
+    renderNamingAssistant();
+  } catch (error) {
+    els.namingAssistantStatus.textContent = error.message;
+    els.namingAssistantResults.innerHTML = `<div class="assistant-empty error"><b>Workshop unavailable</b><p>${escapeHtml(error.message)}</p><button id="assistantRetryButton">Try again</button></div>`;
+    $("assistantRetryButton").addEventListener("click", () => requestNamingWorkshop(feedback));
+  } finally {
+    state.namingAssistant.loading = false;
+  }
+}
+
+async function openNamingAssistant() {
+  state.namingAssistant.payload = null;
+  els.namingAssistantContext.textContent = `#${state.selected.id} · ${state.selected.clothing} · ${state.selected.gender_from_body} Body route`;
+  els.namingAssistantDialog.showModal();
+  renderNamingAssistant();
+  try {
+    const response = await fetch("/api/naming-assistant", { cache: "no-store" });
+    const status = await response.json();
+    state.namingAssistant.configured = Boolean(status.configured);
+    els.namingAssistantStatus.textContent = status.configured
+      ? `Secure server assistant ready · ${status.model}`
+      : "Setup needed: add OPENAI_API_KEY in Vercel. Your ChatGPT login cannot be embedded or exposed to this website.";
+  } catch (_) {
+    els.namingAssistantStatus.textContent = "Could not check the secure AI connection.";
+  }
+}
+
+async function loadNameBanks() {
+  const response = await fetch("/api/name-banks", { cache: "no-store" });
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || "Could not load banks.");
+  els.nameBankList.innerHTML = payload.banks.length ? payload.banks.map(bank => `<article><div><b>${escapeHtml(bank.clothing)} · ${escapeHtml(bank.gender)}</b><span>${escapeHtml(bank.filename)}</span></div><strong>${bank.entries.length.toLocaleString()} names</strong><small>v${escapeHtml(bank.version)} · ${escapeHtml(bank.source_kind)}</small></article>`).join("") : `<p>No Markdown banks uploaded yet.</p>`;
+}
+
+async function openNameBanks() {
+  els.nameBankDialog.showModal();
+  try { await loadNameBanks(); } catch (error) { els.nameBankList.innerHTML = `<p>${escapeHtml(error.message)}</p>`; }
+}
+
 function bindEvents() {
   els.voiceModeButton.addEventListener("click", () => setVoiceDock(els.voiceDock.hidden));
   els.voiceCloseButton.addEventListener("click", () => setVoiceDock(false));
@@ -3628,10 +4025,37 @@ function bindEvents() {
   els.surnameRestoreButton.addEventListener("click", restoreTwoPartSurname);
   els.focusFlipButton.addEventListener("click", () => toggleSurnameOrder());
   els.characterName.addEventListener("click", openFullNameEditor);
+  els.repairSurnameButton.addEventListener("click", openFullNameEditor);
+  els.copyTraitsButton.addEventListener("click", () => copyText(exactTraitsText(state.selected), `Copied all exact traits for #${state.selected.id}.`));
+  els.copyPacketButton.addEventListener("click", () => copyText(reviewPacketText(state.selected), `Copied review packet for #${state.selected.id}.`));
+  els.copyImageButton.addEventListener("click", () => copyCharacterImage().catch(error => showToast(error.message, "error")));
+  els.askAiButton.addEventListener("click", openNamingAssistant);
   els.fullNameEditClose.addEventListener("click", () => els.fullNameEditDialog.close());
   els.fullNameEditCancel.addEventListener("click", () => els.fullNameEditDialog.close());
-  els.fullNameEditInput.addEventListener("input", updateFullNameEditPreview);
+  [els.fullNameEditFirstInput, els.fullNameEditSurnameInput, els.fullNameEditComponent1, els.fullNameEditComponent2].forEach(input => input.addEventListener("input", updateFullNameEditPreview));
+  [els.fullNameEditSource1, els.fullNameEditSource2].forEach(select => select.addEventListener("change", updateFullNameEditPreview));
+  els.fullNameEditFlip.addEventListener("click", () => {
+    els.fullNameEditForm.dataset.order = els.fullNameEditForm.dataset.order === "21" ? "12" : "21";
+    updateFullNameEditPreview();
+  });
   els.fullNameEditForm.addEventListener("submit", saveFullNameEdit);
+  els.namingAssistantClose.addEventListener("click", () => els.namingAssistantDialog.close());
+  els.nameBankButton.addEventListener("click", openNameBanks);
+  els.nameBankClose.addEventListener("click", () => els.nameBankDialog.close());
+  els.assistantFeedback.querySelectorAll("[data-ai-feedback]").forEach(button => button.addEventListener("click", () => requestNamingWorkshop(button.dataset.aiFeedback)));
+  els.nameBankForm.addEventListener("submit", async event => {
+    event.preventDefault();
+    const [file] = els.nameBankFile.files;
+    if (!file) return;
+    try {
+      const response = await fetch("/api/name-banks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ clothing: els.nameBankClothing.value, gender: els.nameBankGender.value, version: els.nameBankVersion.value, filename: file.name, raw_markdown: await file.text(), active: true }) });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Upload failed.");
+      showToast(`Saved ${payload.entries.length} parsed names from ${payload.filename}.`, "success");
+      els.nameBankFile.value = "";
+      await loadNameBanks();
+    } catch (error) { showToast(error.message, "error"); }
+  });
   els.surnameOptions1.addEventListener("click", () => openSuggestions("surname_part_1"));
   els.surnameOptions2.addEventListener("click", () => openSuggestions("surname_part_2"));
   els.focusExportButton.addEventListener("click", exportReviews);
@@ -3751,6 +4175,7 @@ async function init() {
         .map(([trait, count]) =>
           `<option value="${escapeHtml(trait)}">${escapeHtml(trait)} (${count})</option>`
         ).join("");
+    els.nameBankClothing.innerHTML = Object.keys(clothingCounts).sort().map(trait => `<option value="${escapeHtml(trait)}">${escapeHtml(trait)}</option>`).join("");
     const traitTypes = [...new Set(
       state.data.characters.flatMap(character =>
         character.traits.map(trait => trait.type)

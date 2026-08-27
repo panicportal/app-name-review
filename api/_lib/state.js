@@ -40,6 +40,11 @@ function seedCuration() {
         item.surname_join_style === "lower_second" ? "lower_second" : "camel",
       surname_format_version: Number(item.surname_format_version || 0),
       surname_join_style_updated_at: item.surname_join_style_updated_at || null,
+      normalized_name: item.normalized_name || null,
+      normalized_name_updated_at: item.normalized_name_updated_at || null,
+      naming_assistant_history: Array.isArray(item.naming_assistant_history)
+        ? item.naming_assistant_history.slice(-20)
+        : [],
       updated_at: item.updated_at || seed.exported_at || null,
       parts,
     };
@@ -124,6 +129,18 @@ function mergeRecord(stored = {}, incoming = {}) {
       timestamp(stored.surname_join_style_updated_at)
         ? Number(incoming.surname_format_version || 0)
         : Number(stored.surname_format_version || 0),
+    normalized_name:
+      timestamp(incoming.normalized_name_updated_at) >= timestamp(stored.normalized_name_updated_at)
+        ? incoming.normalized_name || null
+        : stored.normalized_name || null,
+    normalized_name_updated_at:
+      timestamp(incoming.normalized_name_updated_at) >= timestamp(stored.normalized_name_updated_at)
+        ? incoming.normalized_name_updated_at || null
+        : stored.normalized_name_updated_at || null,
+    naming_assistant_history:
+      timestamp(incoming.updated_at) >= timestamp(stored.updated_at)
+        ? (incoming.naming_assistant_history || stored.naming_assistant_history || []).slice(-20)
+        : (stored.naming_assistant_history || []).slice(-20),
     parts: { ...(stored.parts || {}) },
   };
   for (const [key, part] of Object.entries(incoming.parts || {})) {
@@ -135,6 +152,7 @@ function mergeRecord(stored = {}, incoming = {}) {
     merged.note_updated_at,
     merged.surname_order_updated_at,
     merged.surname_join_style_updated_at,
+    merged.normalized_name_updated_at,
     ...Object.values(merged.parts).map((part) => part.updated_at || part.deleted_at),
   ]
     .filter(Boolean)

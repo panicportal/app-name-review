@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=18-0-oneword-voice">
+  <link rel="stylesheet" href="/review/styles.css?v=20-0-structured-ai">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v12 shared curation / closed Japanese bank</small></span>
+        <span><strong>NAME STUDIO</strong><small>v20 structured naming / closed Japanese bank</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -107,6 +107,7 @@
           <option value="complete-approved">Fully locked</option>
           <option value="has-rejection">Has red X</option>
           <option value="replacement-picked">Replacement selected</option>
+          <option value="surname-repair">Surname sources need repair</option>
           <option value="needs-suggestion">Red X needs a replacement</option>
           <option value="complete-rejected">Complete with replacement request</option>
           <option value="first-online">Online first-name replacements</option>
@@ -142,6 +143,16 @@
           <p id="clothingEyebrow"></p>
           <button class="character-name-button" id="characterName" type="button" aria-label="Edit this full character name"></button>
           <small class="character-name-edit-hint">Tap the full name to edit it</small>
+        </div>
+        <div class="character-copy-toolbar" aria-label="Copy and naming tools">
+          <button id="copyTraitsButton" type="button">Copy traits</button>
+          <button id="copyImageButton" type="button">Copy image</button>
+          <button id="copyPacketButton" type="button">Copy review packet</button>
+          <button class="ask-ai-button" id="askAiButton" type="button">Ask AI</button>
+        </div>
+        <div class="surname-repair-banner" id="surnameRepairBanner" hidden>
+          <div><b>Compound sources need repair</b><span>The visible name is preserved, but an older full-name edit stored both surname ideas in one slot.</span></div>
+          <button id="repairSurnameButton" type="button">Fix surname sources</button>
         </div>
         <div class="character-curation-status">
           <div>
@@ -456,24 +467,56 @@
         <div>
           <p class="kicker">Direct full-name edit</p>
           <h2>Edit this character name</h2>
-          <p>The current full name is already filled in. Edit either word, then review and save.</p>
+          <p>The current name is prefilled. A Western surname keeps one collector-visible word and two auditable trait components.</p>
         </div>
         <button type="button" class="dialog-close" id="fullNameEditClose" aria-label="Close full-name editor">×</button>
       </header>
-      <label class="full-name-edit-field" for="fullNameEditInput">
-        <span>First name + one-word surname</span>
-        <input id="fullNameEditInput" maxlength="62" autocomplete="off" spellcheck="false">
-      </label>
-      <div class="full-name-parse-preview">
-        <div><span>First name</span><strong id="fullNameEditFirst">—</strong></div>
-        <div><span>Surname</span><strong id="fullNameEditSurname">—</strong></div>
+      <div class="full-name-edit-grid">
+        <label class="full-name-edit-field"><span>First name</span><input id="fullNameEditFirstInput" maxlength="24" autocomplete="off" spellcheck="false"></label>
+        <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false" readonly></label>
       </div>
+      <section class="surname-seam" aria-label="Two surname sources">
+        <div class="surname-seam-head"><div><span>Hidden semantic seam</span><b>Two traits · one surname</b></div><button type="button" id="fullNameEditFlip">Swap order</button></div>
+        <div class="surname-source-grid">
+          <fieldset><legend>Source 1</legend><label>Exact character trait<select id="fullNameEditSource1"></select></label><label>Component word<input id="fullNameEditComponent1" maxlength="24" autocomplete="off"></label></fieldset>
+          <i>+</i>
+          <fieldset><legend>Source 2</legend><label>Exact character trait<select id="fullNameEditSource2"></select></label><label>Component word<input id="fullNameEditComponent2" maxlength="24" autocomplete="off"></label></fieldset>
+        </div>
+        <div class="surname-seam-preview"><span id="fullNameEditFirst">—</span><strong id="fullNameEditSurname">—</strong><small id="fullNameEditSeamLabel">Select two traits</small></div>
+      </section>
       <p class="full-name-edit-status" id="fullNameEditStatus"></p>
       <div class="full-name-edit-actions">
         <button type="button" id="fullNameEditCancel">Cancel</button>
         <button type="submit" class="full-name-edit-save" id="fullNameEditSave">Save edited name</button>
       </div>
     </form>
+  </dialog>
+  <dialog class="naming-assistant-dialog" id="namingAssistantDialog">
+    <div class="naming-assistant-shell">
+      <header>
+        <div><p class="kicker">Trait-locked naming workshop</p><h2>AI naming assistant</h2><p id="namingAssistantContext">Uses this portrait, exact JSON traits, and the active Clothing name bank.</p></div>
+        <div><button id="nameBankButton" type="button">Name banks</button><button class="dialog-close" id="namingAssistantClose" type="button" aria-label="Close AI assistant">×</button></div>
+      </header>
+      <div class="assistant-status" id="namingAssistantStatus">Checking secure server connection…</div>
+      <div class="assistant-feedback" id="assistantFeedback">
+        <span>Refine results</span>
+        <button data-ai-feedback="Simpler and more readable">Simpler</button><button data-ai-feedback="More collectible">More collectible</button><button data-ai-feedback="More iconic first names">More iconic</button><button data-ai-feedback="Use a rarer legal trait pair">Use rare trait</button><button data-ai-feedback="Avoid repeated roots">Avoid used roots</button>
+      </div>
+      <main class="assistant-results" id="namingAssistantResults"></main>
+    </div>
+  </dialog>
+  <dialog class="name-bank-dialog" id="nameBankDialog">
+    <div class="dialog-shell name-bank-shell">
+      <header><div><p class="kicker">Persistent Clothing source</p><h2>Markdown name banks</h2><p>Upload a Clothing- and Body-gender-specific research bank. The original file and parsed one-word entries are saved together.</p></div><button class="dialog-close" id="nameBankClose" type="button">×</button></header>
+      <form id="nameBankForm" class="name-bank-form">
+        <label><span>Clothing</span><select id="nameBankClothing" required></select></label>
+        <label><span>Gender from Body</span><select id="nameBankGender"><option>Male</option><option>Female</option></select></label>
+        <label><span>Version</span><input id="nameBankVersion" value="2026-08-27"></label>
+        <label class="wide"><span>Markdown file</span><input id="nameBankFile" type="file" accept=".md,text/markdown,text/plain" required></label>
+        <button type="submit">Upload and parse bank</button>
+      </form>
+      <div class="name-bank-list" id="nameBankList"></div>
+    </div>
   </dialog>
   <dialog class="activity-dialog" id="activityDialog">
     <div class="dialog-shell">
@@ -657,7 +700,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=19-0-surname-restore"></script>
-  <script src="/review/iconic.js?v=19-0-surname-restore"></script>
+  <script src="/review/app.js?v=20-0-structured-ai"></script>
+  <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>
