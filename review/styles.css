@@ -1868,6 +1868,8 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .character-copy-toolbar button:hover { border-color: var(--amber); color: white; }
 .character-copy-toolbar .chatgpt-share-button { border-color: #73d7b5; background: #174d40; color: #f3fff9; }
 .character-copy-toolbar .ask-ai-button { border-color: var(--amber); background: var(--amber); color: var(--ink); }
+.character-copy-toolbar .bank-prompt-button { border-color: #d3a743; background: #302711; color: #ffe09a; }
+.feature-paused { display: none !important; }
 .surname-repair-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; padding: 11px 12px; border-left: 5px solid #d65b64; background: #3a2528; color: white; }
 .surname-repair-banner div { display: grid; gap: 4px; }
 .surname-repair-banner b { font: 900 10px/1 var(--utility); text-transform: uppercase; }

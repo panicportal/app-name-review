@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=22-3-live-bank-handoff">
+  <link rel="stylesheet" href="/review/styles.css?v=23-0-wide-workshop">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v22.3 live-bank handoff / closed Japanese bank</small></span>
+        <span><strong>NAME STUDIO</strong><small>v23.0 wide review workshop / closed Japanese bank</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -22,7 +22,7 @@
           <button data-view-mode="focus">Focus</button>
         </div>
         <button class="mobile-filter-button" id="mobileFiltersButton" aria-controls="rosterPanel" aria-expanded="false">Filters</button>
-        <button class="voice-mode-button" id="voiceModeButton" aria-controls="voiceDock" aria-expanded="false"><span>●</span> Voice</button>
+        <button class="voice-mode-button feature-paused" id="voiceModeButton" aria-controls="voiceDock" aria-expanded="false"><span>●</span> Voice</button>
         <button class="iconic-bank-button" id="iconicBankButton">Iconic bank</button>
         <span class="cloud-chip connecting" id="cloudChip"><i></i><b>Connecting</b></span>
         <button class="quiet-button" id="nextUndecidedButton">Next undecided</button>
@@ -147,9 +147,10 @@
         <div class="character-copy-toolbar" aria-label="Copy and naming tools">
           <button id="copyTraitsButton" type="button">Copy traits</button>
           <button id="copyImageButton" type="button">Copy image</button>
-          <button id="copyPacketButton" type="button">Copy review packet</button>
+          <button id="copyPacketButton" type="button">Copy wide review packet</button>
+          <button class="bank-prompt-button" id="copyNameBankPromptButton" type="button">Copy bank prompt</button>
           <button class="chatgpt-share-button" id="chatgptShareButton" type="button">Share to ChatGPT</button>
-          <button class="ask-ai-button" id="askAiButton" type="button">Ask AI</button>
+          <button class="ask-ai-button feature-paused" id="askAiButton" type="button">Ask AI</button>
         </div>
         <div class="surname-repair-banner" id="surnameRepairBanner" hidden>
           <div><b>Compound sources need repair</b><span>The visible name is preserved, but an older full-name edit stored both surname ideas in one slot.</span></div>
@@ -519,7 +520,7 @@
       <p class="chatgpt-saved-chat-state" id="chatgptSavedChatState">No conversation saved yet.</p>
       <div class="chatgpt-handoff-actions">
         <button class="chatgpt-native-share" id="chatgptNativeShare" type="button" disabled><b>Preparing secure share…</b><span>Best on Android and iPhone</span></button>
-        <button id="chatgptOpenSavedChat" type="button" disabled><b>Copy full packet + open editable chat</b><span>Includes 15–20 requested first names and reuses one ChatGPT tab</span></button>
+        <button id="chatgptOpenSavedChat" type="button" disabled><b>Copy wide packet + open editable chat</b><span>Includes 24–30 ranked first names and seven rotating surname families</span></button>
         <button id="chatgptCopyPacket" type="button" disabled>Copy full packet only</button>
         <button id="chatgptCopyPortrait" type="button">Copy portrait only</button>
       </div>
@@ -739,7 +740,7 @@
     <button id="mobileApprove">✓<span>Lock rest</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=22-3-live-bank-handoff"></script>
+  <script src="/review/app.js?v=23-0-wide-workshop"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>

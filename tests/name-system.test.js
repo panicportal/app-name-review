@@ -112,9 +112,17 @@ test("structured surname rejects Body, Clothing, duplicate routes, and display d
 
 test("UI contains copy, ChatGPT handoff, repair, assistant, and bank controls", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
-  for (const id of ["copyTraitsButton", "copyImageButton", "copyPacketButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
+  for (const id of ["copyTraitsButton", "copyImageButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
+});
+
+test("voice and paid AI entry points are paused without deleting their implementation", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "review", "styles.css"), "utf8");
+  assert.match(html, /voice-mode-button feature-paused/);
+  assert.match(html, /ask-ai-button feature-paused/);
+  assert.match(css, /\.feature-paused \{ display: none !important; \}/);
 });
 
 test("mobile ChatGPT share is prepared before the user-activation click", () => {
@@ -140,14 +148,30 @@ test("saved-chat handoff copies before opening the real conversation URL", () =>
   assert.match(handler, /window\.open\(target, "panic-name-studio-chatgpt"\)/);
 });
 
-test("ChatGPT handoff rejects shared snapshots and carries live bank choices", () => {
+test("ChatGPT handoff rejects shared snapshots and carries a wide rotating workshop", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(source, /\^\\\/\(share\|s\)/);
   assert.match(source, /public Shared conversation link/);
-  assert.match(source, /Start with 15–20 ranked one-word first-name choices/);
+  assert.match(source, /Start with 24–30 ranked one-word first-name choices/);
+  assert.match(source, /7 distinct surname family tables with 8–10 options per family \(56–70 total\)/);
+  assert.match(source, /SURNAME WORKSHOP ROTATION — PASS/);
+  assert.match(source, /nextReviewPacketRotation/);
   assert.match(source, /fetchHandoffFirstNameCandidates/);
-  assert.match(source, /LIVE FIRST-NAME BANK FOR THIS CHARACTER/);
+  assert.match(source, /LIVE FIRST-NAME SOURCE AUDIT/);
+  assert.match(source, /fetchHandoffSurnameRootBanks/);
+  assert.match(source, /uploaded Clothing \+ Body MD bank → curated Clothing bank → approved Iconic\/Fun bank/);
+  assert.match(source, /LIVE TEAM STYLE REFERENCES — CURRENT SYNCED WEBSITE/);
   assert.match(source, /activeChatGptHandoffPacket\(\)/);
+});
+
+test("name-bank research prompt audits Markdown first and produces parseable one-word banks", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(source, /function nameBankGenerationPrompt/);
+  assert.match(source, /Audit every matching attached or supplied MD bank before doing online research/);
+  assert.match(source, /One word only; letters, apostrophe, or hyphen/);
+  assert.match(source, /Do not pad to \$\{target\}/);
+  assert.match(source, /\*\*Clothing:\*\* \$\{clothing\}/);
+  assert.match(source, /copyNameBankPromptButton\.addEventListener\("click", copyNameBankGenerationPrompt\)/);
 });
 
 test("normal replacement suggestions include active team Markdown banks", () => {

@@ -13,6 +13,7 @@ const ELIGIBLE_SURNAME_TRAIT_TYPES = new Set([
 ]);
 const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v2";
 const CHATGPT_HANDOFF_KEY = "panic-name-studio-chatgpt-handoff-v1";
+const REVIEW_PACKET_ROTATION_KEY = "panic-name-studio-review-packet-rotation-v1";
 
 function emptyCuration() {
   return {
@@ -63,7 +64,7 @@ const state = {
   suggestionJoinStyle: "lower_second",
   suggestionRequestVersion: 0,
   namingAssistant: { payload: null, loading: false, configured: null },
-  chatGptHandoff: { generation: 0, characterId: null, bundle: null, packet: null, firstNameCandidates: [] },
+  chatGptHandoff: { generation: 0, characterId: null, rotationPass: 0, bundle: null, packet: null, firstNameCandidates: [], surnameRootBanks: [] },
   surnameRepairIndex: {},
   surnameRepairSummary: { detected: 0, unresolved: 0 },
   surnameDetectTimer: null,
@@ -3952,29 +3953,144 @@ function reviewPacketText(character) {
   ].join("\n\n");
 }
 
-function handoffFirstNameBankText(character, candidates = []) {
+function nextReviewPacketRotation(characterId) {
+  let rotations = {};
+  try { rotations = JSON.parse(localStorage.getItem(REVIEW_PACKET_ROTATION_KEY) || "{}"); } catch (_) {}
+  const key = String(characterId);
+  const next = Number(rotations[key] || 0) + 1;
+  rotations[key] = next;
+  localStorage.setItem(REVIEW_PACKET_ROTATION_KEY, JSON.stringify(rotations));
+  return next;
+}
+
+function rotatePacketOptions(values = [], pass = 1, stride = 7) {
+  if (!values.length) return [];
+  const offset = ((Math.max(1, Number(pass || 1)) - 1) * stride) % values.length;
+  return [...values.slice(offset), ...values.slice(0, offset)];
+}
+
+function liveLockedExamplesForClothing(clothing, limit = 10) {
+  if (!state.data) return [];
+  return state.data.characters
+    .filter(character => character.clothing === clothing)
+    .filter(character => {
+      const active = partDefinitions(character).filter(part => part.available);
+      return active.length && active.every(part => partReview(character.id, part.key).decision === "approve");
+    })
+    .map(character => ({ id: character.id, name: effectiveDisplayName(character) }))
+    .slice(0, limit);
+}
+
+function liveStyleReferenceText(character) {
+  const clothings = [...new Set([
+    character.clothing,
+    "Aware frog",
+    "Brownie cowboy",
+    "Blood crowned saint"
+  ])];
+  const sections = clothings.map(clothing => {
+    const examples = liveLockedExamplesForClothing(clothing, 10);
+    return examples.length
+      ? `${clothing}: ${examples.map(example => `${example.name} (#${example.id})`).join(", ")}`
+      : `${clothing}: no fully locked live examples yet`;
+  });
+  return [
+    `LIVE TEAM STYLE REFERENCES — CURRENT SYNCED WEBSITE`,
+    `Use these only to learn the team’s preferred compactness, auditable roots, and playful tone. Do not copy a full name or force unrelated wording onto this character.`,
+    ...sections
+  ].join("\n");
+}
+
+function handoffFirstNameBankText(character, firstContext = {}) {
+  const candidates = firstContext.candidates || [];
   const language = effectiveFirstLanguage(character);
   const route = `Clothing:${character.clothing} + Body:${character.gender_from_body}`;
+  const files = firstContext.matchingFiles || [];
   if (!candidates.length) {
     return [
-      `LIVE FIRST-NAME BANK FOR THIS CHARACTER`,
+      `LIVE FIRST-NAME SOURCE AUDIT`,
       `Route: ${route}`,
       `Language: ${language}`,
-      `No unused alternatives were returned by the live bank. Do not invent replacements; review the current first name only.`
+      `Matching uploaded MD files: ${files.length ? files.join(", ") : "none"}`,
+      `No unused bank alternatives were returned. Do not invent a replacement. Online research is allowed only for Western names and only as a clearly labeled PROPOSED bank-building section.`
     ].join("\n");
   }
   return [
-    `LIVE FIRST-NAME BANK FOR THIS CHARACTER — ${candidates.length} UNUSED OPTIONS`,
+    `LIVE FIRST-NAME SOURCE AUDIT — ${candidates.length} UNUSED OPTIONS SUPPLIED`,
     `Route: ${route}`,
     `Language: ${language}`,
-    `These options were fetched from the current Name Studio bank and checked against all current/proposed first names. They remain authoritative even if an older ChatGPT upload expired.`,
+    `Source order enforced: uploaded Clothing + Body MD bank → curated Clothing bank → approved Iconic/Fun bank → online research only if the first three sources are genuinely short.`,
+    `Matching uploaded MD files checked first: ${files.length ? files.join(", ") : "none for this exact route"}.`,
+    `Source counts in this packet: MD ${Number(firstContext.sourceCounts?.md || 0)} · curated ${Number(firstContext.sourceCounts?.normal || 0)} · Iconic/Fun ${Number(firstContext.sourceCounts?.iconic || 0)}.`,
+    firstContext.onlineResearchNeeded
+      ? `The stored sources supplied fewer than 24 unused names. You may add a separate ONLINE RESEARCH PROPOSAL section for Western names, with direct Clothing evidence and URLs; do not present researched names as bank-approved.`
+      : `The stored sources are sufficient. Do not browse for or invent additional first names in this review.`,
     ...candidates.map((candidate, index) =>
-      `${index + 1}. ${candidate.name} — ${candidate.source}${candidate.connection ? ` — ${candidate.connection}` : ""}`
+      `${index + 1}. ${candidate.name} [${candidate.origin}] — ${candidate.source}${candidate.connection ? ` — ${candidate.connection}` : ""}`
     )
   ].join("\n");
 }
 
-function chatGptHandoffText(character, firstNameCandidates = []) {
+function handoffSurnameRootBanksText(rootBanks = []) {
+  if (!rootBanks.length) return `LIVE SURNAME ROOT BANKS\nNo root-bank response was available. Use only transparent literal or lightly transformed roots from the exact JSON trait wording.`;
+  return [
+    `LIVE SURNAME ROOT BANKS — EXACT ROUTES`,
+    `Prefer these synced custom, greenlit, and reviewed roots. Usage is collection-wide and is a diversity signal, not permission to break the route.`,
+    ...rootBanks.map(bank =>
+      `${bank.source}: ${bank.roots.length ? bank.roots.map(root => `${root.value} (${root.usage}×; ${root.section})`).join(", ") : "no reviewed roots — literal/light transformation only"}`
+    )
+  ].join("\n");
+}
+
+function surnamePairPlan(character, rotationPass) {
+  const traits = eligibleSurnameTraits(character);
+  const priority = { Front: 0, Mouth: 1, Hair: 2, Background: 3, Eyes: 4, Eyebrows: 5, Back: 6 };
+  const pairs = [];
+  for (let left = 0; left < traits.length; left++) {
+    for (let right = left + 1; right < traits.length; right++) {
+      const pair = [traits[left], traits[right]].sort((a, b) => (priority[a.type] ?? 9) - (priority[b.type] ?? 9));
+      pairs.push(pair);
+    }
+  }
+  pairs.sort((a, b) =>
+    ((priority[a[0].type] ?? 9) + (priority[a[1].type] ?? 9)) -
+    ((priority[b[0].type] ?? 9) + (priority[b[1].type] ?? 9))
+  );
+  const rotated = rotatePacketOptions(pairs, rotationPass, 5).slice(0, 7);
+  const attacks = rotatePacketOptions([
+    "literal recognizable roots",
+    "short action or function roots",
+    "visual shape, material, color, or motion roots",
+    "personality and expression roots",
+    "comic contrast between the two traits",
+    "surname-like smoothing with light transformation",
+    "reverse-order rhythm",
+    "single-letter seam overlap or clean lowercase join"
+  ], rotationPass, 3);
+  return rotated.map((pair, index) => ({
+    left: `${pair[0].type}:${pair[0].value}`,
+    right: `${pair[1].type}:${pair[1].value}`,
+    primaryAttack: attacks[index % attacks.length],
+    secondaryAttack: attacks[(index + 3) % attacks.length]
+  }));
+}
+
+function surnameAttackPlanText(character, rotationPass) {
+  const plan = surnamePairPlan(character, rotationPass);
+  return [
+    `SURNAME WORKSHOP ROTATION — PASS ${rotationPass}`,
+    `This pass deliberately changes pair order and word-formation emphasis. Do not repeat the same shortlist from an earlier pass unless a repeated name is still the clear winner.`,
+    ...plan.map((item, index) =>
+      `${index + 1}. ${item.left} × ${item.right} — lead with ${item.primaryAttack}; also test ${item.secondaryAttack}`
+    ),
+    `Within every family, vary both trait roots—not one repeated root with eight generic suffixes. Test both component orders when both read naturally.`
+  ].join("\n");
+}
+
+function chatGptHandoffText(character, context = {}) {
+  const firstContext = context.firstContext || {};
+  const rootBanks = context.surnameRootBanks || [];
+  const rotationPass = Number(context.rotationPass || 1);
   const firstDecision = partReview(character.id, "first").decision;
   const surnameOpen = ["surname_part_1", "surname_part_2"].some(key =>
     partDefinitions(character).find(part => part.key === key)?.available &&
@@ -3993,59 +4109,148 @@ function chatGptHandoffText(character, firstNameCandidates = []) {
     `Required response format:`,
     firstDecision === "approve"
       ? `- The first name is GREENLIT. Preserve it and do not offer first-name replacements.`
-      : `- Start with 15–20 ranked one-word first-name choices selected ONLY from the inline live bank below. If fewer than 15 are supplied, show every supplied option and report the exact shortage. Never say the bank is unavailable and never invent an option.`,
+      : `- Start with 24–30 ranked one-word first-name choices from the supplied source audit. Include the current name. Use the uploaded MD candidates first. If fewer than 24 unused stored choices are supplied, show all of them before any clearly separated online proposals.`,
     surnameOpen
-      ? `- Then provide 20–30 strong Western surname choices using exactly two different eligible traits from this packet, followed by the 5 strongest complete full-name combinations.`
+      ? `- Build 7 distinct surname family tables with 8–10 options per family (56–70 total), then rank the strongest 15 surnames and 8 complete full names. Every surname must use exactly two different eligible traits.`
       : `- Preserve every GREENLIT surname component. Only discuss an alternative if a surname component is open or RED X.`,
-    `- Keep the answer easy to scan: first-name table, surname table, then top full-name combinations.`,
+    `- Each surname table must show surname, exact two-route derivation, word-formation method, component usage warning, readability score, and collectability score.`,
+    `- Avoid mechanical mashups, generic word soup, repeated suffix padding, and recycling the current weak construction. Prefer compact surnames that plausibly function as character names.`,
+    `- Finish with one Best / lock candidate, but label duplicate status as “requires final Name Studio validation” unless the exact full name was checked against the live 3,333-name state.`,
     `Portrait URL: ${window.location.origin}/pfps_webp/${character.id}.webp`,
-    handoffFirstNameBankText(character, firstNameCandidates),
+    handoffFirstNameBankText(character, firstContext),
+    handoffSurnameRootBanksText(rootBanks),
+    surnameAttackPlanText(character, rotationPass),
+    liveStyleReferenceText(character),
     `Inspect the portrait and packet, identify only the parts still open or marked for replacement, and obey the option counts above.`,
     reviewPacketText(character)
   ].join("\n\n");
 }
 
-async function fetchHandoffFirstNameCandidates(character) {
+async function fetchHandoffFirstNameCandidates(character, rotationPass) {
   const language = effectiveFirstLanguage(character);
   const sources = language === "western" ? ["iconic", "normal"] : ["normal"];
-  const responses = await Promise.allSettled(sources.map(async nameSource => {
-    const params = new URLSearchParams({
-      id: character.id,
-      part: "first",
-      language,
-      name_source: nameSource,
-      request: `handoff-${Date.now()}-${nameSource}`
-    });
-    const response = await fetch(`/api/suggestions?${params}`, { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const payload = await response.json();
-    return (payload.suggestions || []).map(candidate => ({
-      name: candidate.value,
-      source: candidate.source || `${language} ${character.clothing} bank`,
-      connection: candidate.fit || candidate.iconic_reference || "",
-      nameSource
-    }));
-  }));
+  const [bankResult, ...responses] = await Promise.allSettled([
+    fetch("/api/name-banks", { cache: "no-store" }).then(async response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    }),
+    ...sources.map(async nameSource => {
+      const params = new URLSearchParams({
+        id: character.id,
+        part: "first",
+        language,
+        name_source: nameSource,
+        request: `handoff-${Date.now()}-${nameSource}`
+      });
+      const response = await fetch(`/api/suggestions?${params}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      return (payload.suggestions || []).map(candidate => ({
+        name: candidate.value,
+        source: candidate.source || `${language} ${character.clothing} bank`,
+        connection: candidate.fit || candidate.iconic_reference || "",
+        origin: nameSource === "iconic" ? "Iconic/Fun bank" : "Curated Clothing bank"
+      }));
+    })
+  ]);
   const bySource = Object.fromEntries(sources.map((source, index) => [
     source,
     responses[index].status === "fulfilled" ? responses[index].value : []
   ]));
+  const used = new Set(state.data.characters
+    .filter(item => String(item.id) !== String(character.id))
+    .map(item => effectivePartValue(item, "first").toLowerCase())
+    .filter(Boolean));
+  const matchingBanks = bankResult.status === "fulfilled"
+    ? (bankResult.value.banks || []).filter(bank =>
+        bank.active && bank.clothing === character.clothing && bank.gender === character.gender_from_body
+      )
+    : [];
+  const mdCandidates = matchingBanks.flatMap(bank => (bank.entries || []).map(entry => ({
+    name: entry.name,
+    source: `${bank.filename} · ${entry.tier || "Unranked"}`,
+    connection: entry.reference || `Team-researched ${character.clothing} name`,
+    origin: "Uploaded MD bank"
+  }))).filter(candidate => !used.has(String(candidate.name || "").toLowerCase()));
+  const rotatedMd = rotatePacketOptions(mdCandidates, rotationPass, 17);
+  const rotatedNormal = rotatePacketOptions(bySource.normal || [], rotationPass, 11);
+  const rotatedIconic = rotatePacketOptions(bySource.iconic || [], rotationPass, 7);
   const pool = language === "western"
-    ? [...(bySource.iconic || []).slice(0, 10), ...(bySource.normal || []).slice(0, 24)]
-    : [...(bySource.normal || []).slice(0, 24)];
+    ? [...rotatedMd.slice(0, 30), ...rotatedNormal.slice(0, 22), ...rotatedIconic.slice(0, 18)]
+    : [...rotatedNormal.slice(0, 48)];
   const seen = new Set();
-  return pool.filter(candidate => {
+  const candidates = pool.filter(candidate => {
     const key = String(candidate.name || "").toLowerCase();
     if (!key || seen.has(key)) return false;
     seen.add(key);
     return true;
-  }).slice(0, 24);
+  }).slice(0, 52);
+  const sourceCounts = candidates.reduce((counts, candidate) => {
+    const key = candidate.origin === "Uploaded MD bank" ? "md" : candidate.origin === "Iconic/Fun bank" ? "iconic" : "normal";
+    counts[key] += 1;
+    return counts;
+  }, { md: 0, normal: 0, iconic: 0 });
+  return {
+    candidates,
+    sourceCounts,
+    matchingFiles: matchingBanks.map(bank => `${bank.filename} (${bank.entries.length} names)`),
+    onlineResearchNeeded: language === "western" && candidates.length < 24
+  };
+}
+
+async function fetchHandoffSurnameRootBanks(character, rotationPass) {
+  const traits = eligibleSurnameTraits(character);
+  const results = await Promise.allSettled(traits.map(async trait => {
+    const source = `${trait.type}:${trait.value}`;
+    const params = new URLSearchParams({
+      id: character.id,
+      part: "surname_part_1",
+      language: "western",
+      source,
+      request: `packet-roots-${rotationPass}-${Date.now()}`
+    });
+    const response = await fetch(`/api/suggestions?${params}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    const preferred = (payload.suggestions || []).filter(candidate =>
+      candidate.surname_bank_section !== "Team-inspired wordplay"
+    );
+    const seen = new Set();
+    const roots = rotatePacketOptions(preferred, rotationPass, 5).filter(candidate => {
+      const key = String(candidate.value || "").toLowerCase();
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0, 12).map(candidate => ({
+      value: candidate.value,
+      usage: Number(candidate.usage_count || 0),
+      section: candidate.surname_bank_section || "Reviewed trait bank"
+    }));
+    return { source, roots };
+  }));
+  return results.map((result, index) => result.status === "fulfilled"
+    ? result.value
+    : { source: `${traits[index].type}:${traits[index].value}`, roots: [] }
+  );
+}
+
+async function buildAdvancedReviewPacket(character, rotationPass = nextReviewPacketRotation(character.id)) {
+  const [firstContext, surnameRootBanks] = await Promise.all([
+    fetchHandoffFirstNameCandidates(character, rotationPass),
+    fetchHandoffSurnameRootBanks(character, rotationPass)
+  ]);
+  return {
+    packet: chatGptHandoffText(character, { firstContext, surnameRootBanks, rotationPass }),
+    firstContext,
+    surnameRootBanks,
+    rotationPass
+  };
 }
 
 function activeChatGptHandoffPacket(character = state.selected) {
   return state.chatGptHandoff.characterId === String(character?.id) && state.chatGptHandoff.packet
     ? state.chatGptHandoff.packet
-    : chatGptHandoffText(character, []);
+    : chatGptHandoffText(character, { rotationPass: 1 });
 }
 
 function validChatGptConversationUrl(value) {
@@ -4080,8 +4285,8 @@ function updateSavedChatControls() {
       const url = validChatGptConversationUrl(raw);
       valid = true;
       message = state.chatGptHandoff.packet
-        ? "Ready: editable conversation verified and live first-name bank attached."
-        : "Editable conversation verified. Preparing the live first-name bank…";
+        ? "Ready: editable conversation verified and advanced live-bank packet attached."
+        : "Editable conversation verified. Preparing first-name and surname banks…";
     } catch (error) {
       message = error.message;
     }
@@ -4127,9 +4332,11 @@ function openChatGptHandoff() {
   const character = state.selected;
   const generation = ++state.chatGptHandoff.generation;
   state.chatGptHandoff.characterId = String(character.id);
+  state.chatGptHandoff.rotationPass = nextReviewPacketRotation(character.id);
   state.chatGptHandoff.bundle = null;
   state.chatGptHandoff.packet = null;
   state.chatGptHandoff.firstNameCandidates = [];
+  state.chatGptHandoff.surnameRootBanks = [];
   els.chatgptHandoffPortrait.src = `/pfps_webp/${character.id}.webp`;
   els.chatgptHandoffPortrait.alt = `Portrait of survivor ${character.id}`;
   els.chatgptHandoffToken.textContent = `Survivor #${character.id}`;
@@ -4137,34 +4344,35 @@ function openChatGptHandoff() {
   els.chatgptHandoffTrait.textContent = `${character.clothing} · ${character.gender_from_body} Body route`;
   els.chatgptChatUrl.value = localStorage.getItem(CHATGPT_HANDOFF_KEY) || "";
   updateSavedChatControls();
-  els.chatgptPacketPreview.value = "Loading live unused first-name candidates for this character…";
+  els.chatgptPacketPreview.value = "Loading the uploaded MD bank, unused first names, live surname roots, and rotating surname workshop…";
   els.chatgptNativeShare.disabled = true;
   els.chatgptCopyPacket.disabled = true;
   els.chatgptNativeShare.querySelector("b").textContent = "Preparing secure share…";
-  setChatGptHandoffStatus("Preparing the portrait before enabling Android sharing…");
+  setChatGptHandoffStatus(`Preparing workshop rotation ${state.chatGptHandoff.rotationPass} and the portrait…`);
   els.chatgptHandoffDialog.showModal();
   prepareChatGptShareBundle(character, generation);
 }
 
 async function prepareChatGptShareBundle(character, generation) {
   try {
-    const [png, firstNameCandidates] = await Promise.all([
+    const [png, advanced] = await Promise.all([
       characterPortraitPngBlob(character),
-      fetchHandoffFirstNameCandidates(character)
+      buildAdvancedReviewPacket(character, state.chatGptHandoff.rotationPass)
     ]);
-    const packet = chatGptHandoffText(character, firstNameCandidates);
+    const packet = advanced.packet;
     const portraitFile = new File([png], `panic-survivor-${character.id}.png`, { type: "image/png" });
     const packetFile = new File([packet], `panic-survivor-${character.id}-review.md`, { type: "text/markdown" });
     if (generation !== state.chatGptHandoff.generation || String(character.id) !== String(state.selected?.id)) return;
     state.chatGptHandoff.packet = packet;
-    state.chatGptHandoff.firstNameCandidates = firstNameCandidates;
+    state.chatGptHandoff.firstNameCandidates = advanced.firstContext.candidates;
+    state.chatGptHandoff.surnameRootBanks = advanced.surnameRootBanks;
     state.chatGptHandoff.bundle = { characterId: String(character.id), packet, portraitFile, packetFile };
     els.chatgptPacketPreview.value = packet;
     els.chatgptNativeShare.disabled = false;
     els.chatgptCopyPacket.disabled = false;
     els.chatgptNativeShare.querySelector("b").textContent = "Share portrait + packet";
     updateSavedChatControls();
-    setChatGptHandoffStatus(`Ready with ${firstNameCandidates.length} unused first-name options from the live bank. ChatGPT is instructed to rank 15–20 when the first name is open.`, "success");
+    setChatGptHandoffStatus(`Ready: rotation ${advanced.rotationPass}, ${advanced.firstContext.candidates.length} unused first names, and ${advanced.surnameRootBanks.length} exact surname root banks.`, "success");
   } catch (error) {
     if (generation !== state.chatGptHandoff.generation) return;
     state.chatGptHandoff.packet = null;
@@ -4448,6 +4656,136 @@ async function openNameBanks() {
   try { await loadNameBanks(); } catch (error) { els.nameBankList.innerHTML = `<p>${escapeHtml(error.message)}</p>`; }
 }
 
+function nameBankCapacityTarget(count) {
+  const value = Number(count || 0);
+  if (value <= 0) return 0;
+  if (value < 100) return Math.max(100, Math.ceil((40 + value * .95) / 5) * 5);
+  if (value < 200) return Math.ceil((value * 1.5) / 5) * 5;
+  return Math.ceil((value + 100) / 5) * 5;
+}
+
+function nameBankGenerationPrompt(character, matchingBanks = []) {
+  const clothing = character.clothing;
+  const gender = character.gender_from_body;
+  const routedCharacters = state.data.characters.filter(item =>
+    item.clothing === clothing && item.gender_from_body === gender
+  );
+  const assigned = [...new Set(routedCharacters
+    .map(item => effectivePartValue(item, "first"))
+    .filter(Boolean))].sort((a, b) => a.localeCompare(b));
+  const existingEntries = [];
+  const seen = new Set();
+  matchingBanks.forEach(bank => (bank.entries || []).forEach(entry => {
+    const key = String(entry.name || "").toLowerCase();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    existingEntries.push(`${entry.name} [${entry.tier || "Unranked"}] — ${entry.reference || "no stored reference"}`);
+  }));
+  const target = nameBankCapacityTarget(routedCharacters.length);
+  const referenceTraits = [...new Set([clothing, "Aware frog", "Brownie cowboy", "Blood crowned saint"])];
+  const references = referenceTraits.map(trait => {
+    const examples = liveLockedExamplesForClothing(trait, 14);
+    return `${trait}: ${examples.length ? examples.map(example => `${example.name} (#${example.id})`).join(", ") : "no fully locked live examples"}`;
+  });
+  return [
+    `# ?an!c CLOTHING FIRST-NAME BANK RESEARCH TASK`,
+    `Create or improve a persistent Western first-name Markdown bank for Name Studio. Do not modify the live app or curation state.`,
+    `Clothing: ${clothing}`,
+    `Gender: ${gender}`,
+    `Characters on this exact Clothing + Body-gender route: ${routedCharacters.length}`,
+    `Capacity target: approximately ${target} strong unique one-word options`,
+    `Currently assigned on this route: ${assigned.length}`,
+    `SOURCE ORDER — NON-NEGOTIABLE`,
+    `1. Audit every matching attached or supplied MD bank before doing online research. Preserve its exact valid entries, tier, and reference.`,
+    `2. Compare the audited bank against the current assigned-name list and live greenlit examples below.`,
+    `3. Only then research online to fill genuine thematic or capacity gaps.`,
+    `4. Online discoveries are PROPOSED until human approval. Do not silently treat search results as approved bank entries.`,
+    `5. This task is Western-only. Never generate Japanese-looking names; Japanese names remain confined to the closed artist CSV.`,
+    `MATCHING MD BANKS FOUND BY NAME STUDIO`,
+    matchingBanks.length
+      ? matchingBanks.map(bank => `- ${bank.filename} · ${bank.entries.length} parsed entries · v${bank.version || "unknown"}`).join("\n")
+      : `- None for this exact Clothing + Body-gender route. State this clearly before researching.`,
+    `EXISTING MD ENTRIES TO AUDIT`,
+    existingEntries.length ? existingEntries.join("\n") : `None supplied.`,
+    `CURRENT ASSIGNED FIRST NAMES — DO NOT CREATE DUPLICATE ASSIGNMENTS`,
+    assigned.length ? assigned.join(", ") : `None`,
+    `LIVE GREENLIT STYLE REFERENCES FROM THE WEBSITE`,
+    ...references,
+    `QUALITY CALIBRATION`,
+    `- Frog-bank strengths: direct references and clean frog words such as Tiana, Froppy, Ribbit, Hoppy, Lily, Tadpole, Polly, Puddles, Croaky, Rana, Ribella, and Hopscotch.`,
+    `- Frog-bank weakness to remove or flag: bulk mechanical term-on-term compounds such as Croakamphibian, Polliwogbullfrog, or Pondtreefrog. A high count does not excuse low collectability.`,
+    `- Cowboy-bank strength: recognizable Western characters, historical figures, cinema/game associations, and compact frontier names. Preserve direct evidence and meaningful tiering.`,
+    `- Blood crowned saint strength: reverent, saintly, martyr, sacred, crown, blood, and iconographic associations that still read naturally as one-word first names.`,
+    `DISCOVERY ATTACKS — USE IN ORDER`,
+    `A. Direct iconic characters literally associated with ${clothing}.`,
+    `B. Famous real or historical figures directly associated with ${clothing}.`,
+    `C. Mythology, folklore, legends, saints, archetypes, or cultural roles with a direct relationship.`,
+    `D. Trait-specific terminology, sounds, actions, tools, objects, places, species, titles, and nicknames.`,
+    `E. Strong one-word wordplay that remains immediately recognizable as ${clothing}.`,
+    `F. Invented names only after stronger sources are exhausted; never pad with mechanical suffix variants or random fantasy syllables.`,
+    `VALIDATION`,
+    `- One word only; letters, apostrophe, or hyphen; no aliases such as Mighty, Little, Captain, or Wild before another name.`,
+    `- Respect the ${gender} route of the actual reference. Gender-neutral terms are allowed only when genuinely neutral.`,
+    `- Reject vague aesthetic associations. Every candidate needs a direct Clothing connection and a concise evidence explanation.`,
+    `- Deduplicate case-insensitively against the existing MD entries, assigned names, and within the new output.`,
+    `- Rank by directness, recognizability, memorability, collectability, gender correctness, evidence strength, and uniqueness.`,
+    `- Do not pad to ${target}. Report a shortfall instead of adding weak names.`,
+    `REQUIRED MARKDOWN OUTPUT`,
+    `Use this exact parseable structure:`,
+    `**Version:** YYYY-MM-DD`,
+    `**Clothing:** ${clothing}`,
+    `**Gender:** ${gender}`,
+    `## S-tier`,
+    `| Name | Tier | Direct connection / reference | Category | Source URL | Status |`,
+    `|---|---|---|---|---|---|`,
+    `| Example | S | Direct evidence | Iconic Character | https://... | proposed |`,
+    `Then provide A-tier and B-tier tables using the same columns. End with counts for preserved MD entries, newly researched proposals, rejected duplicates, rejected weak candidates, and remaining capacity shortfall.`
+  ].join("\n\n");
+}
+
+async function copyNameBankGenerationPrompt() {
+  const character = state.selected;
+  const originalLabel = els.copyNameBankPromptButton.textContent;
+  els.copyNameBankPromptButton.disabled = true;
+  els.copyNameBankPromptButton.textContent = "Checking MD bank…";
+  try {
+    const response = await fetch("/api/name-banks", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    const matching = (payload.banks || []).filter(bank =>
+      bank.active && bank.clothing === character.clothing && bank.gender === character.gender_from_body
+    );
+    await copyText(
+      nameBankGenerationPrompt(character, matching),
+      `Copied a ${character.clothing} · ${character.gender_from_body} name-bank research prompt.`
+    );
+  } catch (error) {
+    showToast(`Could not prepare bank prompt: ${error.message}`, "error");
+  } finally {
+    els.copyNameBankPromptButton.disabled = false;
+    els.copyNameBankPromptButton.textContent = originalLabel;
+  }
+}
+
+async function copyAdvancedReviewPacket() {
+  const character = state.selected;
+  const originalLabel = els.copyPacketButton.textContent;
+  els.copyPacketButton.disabled = true;
+  els.copyPacketButton.textContent = "Building wider workshop…";
+  try {
+    const advanced = await buildAdvancedReviewPacket(character);
+    await copyText(
+      advanced.packet,
+      `Copied rotation ${advanced.rotationPass}: ${advanced.firstContext.candidates.length} first names and ${advanced.surnameRootBanks.length} surname root banks.`
+    );
+  } catch (error) {
+    showToast(`Could not build review packet: ${error.message}`, "error");
+  } finally {
+    els.copyPacketButton.disabled = false;
+    els.copyPacketButton.textContent = originalLabel;
+  }
+}
+
 function bindEvents() {
   els.voiceModeButton.addEventListener("click", () => setVoiceDock(els.voiceDock.hidden));
   els.voiceCloseButton.addEventListener("click", () => setVoiceDock(false));
@@ -4665,7 +5003,8 @@ function bindEvents() {
   els.characterName.addEventListener("click", openFullNameEditor);
   els.repairSurnameButton.addEventListener("click", openFullNameEditor);
   els.copyTraitsButton.addEventListener("click", () => copyText(exactTraitsText(state.selected), `Copied all exact traits for #${state.selected.id}.`));
-  els.copyPacketButton.addEventListener("click", () => copyText(reviewPacketText(state.selected), `Copied review packet for #${state.selected.id}.`));
+  els.copyPacketButton.addEventListener("click", copyAdvancedReviewPacket);
+  els.copyNameBankPromptButton.addEventListener("click", copyNameBankGenerationPrompt);
   els.copyImageButton.addEventListener("click", () => copyCharacterImage().catch(error => showToast(error.message, "error")));
   els.chatgptShareButton.addEventListener("click", openChatGptHandoff);
   els.chatgptHandoffClose.addEventListener("click", () => els.chatgptHandoffDialog.close());
