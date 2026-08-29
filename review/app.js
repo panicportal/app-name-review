@@ -526,6 +526,29 @@ function replacementLanguage(review, fallback = "western") {
   return fallback;
 }
 
+async function detectManualNameOrigin(part, value, source = "") {
+  if (!state.cloudAuthenticated || !state.selected || !String(value || "").trim()) return null;
+  const query = new URLSearchParams({
+    id: String(state.selected.id),
+    part,
+    value: String(value).trim(),
+  });
+  if (source) query.set("source", source);
+  try {
+    const response = await fetch(`/api/name-origin?${query.toString()}`, { cache: "no-store" });
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (_) {
+    return null;
+  }
+}
+
+function originMatch(detection, origin) {
+  if (!detection) return null;
+  if (detection.origin === origin && detection.best_match) return detection.best_match;
+  return detection[`${origin}_matches`]?.[0] || null;
+}
+
 function effectiveFirstLanguage(character) {
   return replacementLanguage(
     partReview(character.id, "first"),
@@ -794,6 +817,27 @@ async function requestSurnameDetection({ quiet = false, onlyIfRepair = false } =
     updateFullNameEditPreview();
     return;
   }
+  if (state.cloudAuthenticated) {
+    const origin = await detectManualNameOrigin("surname_atomic", parsed.surname);
+    const japaneseMatch = originMatch(origin, "japanese");
+    if (origin?.origin === "japanese" && japaneseMatch) {
+      els.fullNameEditForm.dataset.surnameLanguage = "japanese";
+      els.fullNameEditForm.classList.add("single-surname-mode");
+      els.fullNameEditSource1.value = japaneseMatch.route || "";
+      els.fullNameEditComponent1.value = "";
+      els.fullNameEditComponent2.value = "";
+      els.fullNameEditSource2.value = "";
+      els.fullNameDetectStatus.textContent = `Detected exact Japanese surname “${parsed.surname}” from ${japaneseMatch.route}. It will be saved as one atomic Japanese-bank surname.`;
+      els.fullNameDetectStatus.classList.remove("error");
+      els.fullNameDetectStatus.classList.add("success");
+      updateFullNameEditPreview();
+      return;
+    }
+    if (els.fullNameEditForm.dataset.surnameLanguage === "japanese" && origin?.origin === "western") {
+      els.fullNameEditForm.dataset.surnameLanguage = "western";
+      els.fullNameEditForm.classList.remove("single-surname-mode");
+    }
+  }
   if (els.fullNameEditForm.dataset.surnameLanguage === "japanese") {
     els.fullNameDetectStatus.textContent = "This is an atomic Japanese surname, so it stays as one surname word.";
     els.fullNameDetectStatus.classList.remove("error", "success");
@@ -1050,11 +1094,37 @@ function openFullNameEditor() {
 
 async function saveFullNameEdit(event) {
   event.preventDefault();
-  const parsed = updateFullNameEditPreview();
-  if (!parsed) return;
   const character = state.selected;
+  const characterId = String(character.id);
+  const rawFirst = normalizeManualFirstName(els.fullNameEditFirstInput.value);
+  const rawSurname = String(els.fullNameEditSurnameInput.value || "").trim();
   const currentFirst = effectivePartValue(character, "first");
   const currentSurname = effectiveSurname(character);
+  const firstChanged = Boolean(rawFirst && rawFirst !== currentFirst);
+  const surnameChanged = Boolean(rawSurname && rawSurname.toLowerCase() !== currentSurname.toLowerCase());
+  const [firstOrigin, surnameOrigin] = await Promise.all([
+    firstChanged ? detectManualNameOrigin("first", rawFirst) : Promise.resolve(null),
+    surnameChanged ? detectManualNameOrigin("surname_atomic", rawSurname) : Promise.resolve(null),
+  ]);
+  if (String(state.selected?.id) !== characterId) return;
+  if (surnameChanged && surnameOrigin?.origin === "japanese") {
+    els.fullNameEditForm.dataset.surnameLanguage = "japanese";
+    els.fullNameEditForm.classList.add("single-surname-mode");
+    els.fullNameEditSource1.value = surnameOrigin.best_match?.route || "";
+  } else if (surnameChanged && surnameOrigin?.origin === "western" &&
+    els.fullNameEditForm.dataset.surnameLanguage === "japanese") {
+    els.fullNameEditForm.dataset.surnameLanguage = "western";
+    els.fullNameEditForm.classList.remove("single-surname-mode");
+  }
+  const parsed = updateFullNameEditPreview();
+  if (!parsed) return;
+  if (parsed.japanese && surnameChanged && !originMatch(surnameOrigin, "japanese")) {
+    els.fullNameEditStatus.textContent = surnameOrigin?.exact_global_japanese_match
+      ? "That Japanese surname exists in the artist CSV, but not for an eligible trait on this character."
+      : "That surname is not an exact eligible entry in the authoritative Japanese bank.";
+    els.fullNameEditStatus.classList.add("error");
+    return;
+  }
   const timestamp = nowIso();
   const record = ensureRecord(character.id);
   if (parsed.first !== currentFirst) {
@@ -1068,16 +1138,23 @@ async function saveFullNameEdit(event) {
       }
     }
     const current = partReview(character.id, "first");
+    const detectedFirstOrigin = firstOrigin?.origin === "japanese" ? "japanese" : "western";
+    const detectedFirstMatch = originMatch(firstOrigin, detectedFirstOrigin);
+    const detectedFirstRoute = detectedFirstMatch?.route || `Clothing:${character.clothing || "No clothing trait"}`;
     record.parts.first = {
       ...current,
       decision: "replace",
       scope: "this_character",
       disabled: false,
       replacement_value: parsed.first,
-      replacement_source: "Direct full-name edit · Western clothing theme",
-      replacement_trait_source: `Clothing:${character.clothing || "No clothing trait"}`,
-      replacement_language: "western",
-      replacement_rationale: `Direct team edit of the full-name field for Surv!vor #${character.id}.`,
+      replacement_source: detectedFirstOrigin === "japanese"
+        ? "Japanese names surnames.csv · exact authoritative bank match"
+        : "Direct full-name edit · Western clothing theme",
+      replacement_trait_source: detectedFirstRoute,
+      replacement_language: detectedFirstOrigin,
+      replacement_rationale: detectedFirstOrigin === "japanese"
+        ? `Exact artist Japanese first-name entry for ${detectedFirstRoute} and Body:${character.gender_from_body}. Detected automatically during the full-name edit.`
+        : `Direct team edit of the full-name field for Surv!vor #${character.id}.`,
       replacement_scores: null,
       updated_at: timestamp,
       reviewer: state.curation.reviewer || current.reviewer || "",
@@ -1088,7 +1165,9 @@ async function saveFullNameEdit(event) {
     const current1 = partReview(character.id, "surname_part_1");
     const current2 = partReview(character.id, "surname_part_2");
     if (parsed.japanese) {
-      record.parts.surname_part_1 = { ...current1, decision: current1.decision || "replace", scope: current1.scope || "this_character", disabled: false, replacement_value: parsed.surname, replacement_source: "Manual team edit · atomic Japanese surname", replacement_trait_source: current1.replacement_trait_source || character.surname_source_1 || "Japanese surname bank", replacement_language: "japanese", replacement_rationale: `Direct team edit of the atomic Japanese surname for Surv!vor #${character.id}.`, replacement_scores: null, updated_at: timestamp, reviewer: state.curation.reviewer || current1.reviewer || "", deleted_at: null };
+      const japaneseMatch = originMatch(surnameOrigin, "japanese");
+      const japaneseRoute = japaneseMatch?.route || current1.replacement_trait_source || character.surname_source_1 || "Japanese surname bank";
+      record.parts.surname_part_1 = { ...current1, decision: current1.decision || "replace", scope: current1.scope || "this_character", disabled: false, replacement_value: parsed.surname, replacement_source: "Japanese names surnames.csv · exact authoritative bank match", replacement_trait_source: japaneseRoute, replacement_language: "japanese", replacement_rationale: `Exact artist Japanese surname entry for ${japaneseRoute}. Detected automatically during the full-name edit for Surv!vor #${character.id}.`, replacement_scores: null, updated_at: timestamp, reviewer: state.curation.reviewer || current1.reviewer || "", deleted_at: null };
       record.parts.surname_part_2 = { ...current2, decision: current2.decision || "replace", scope: current2.scope || "this_character", disabled: true, updated_at: timestamp, reviewer: state.curation.reviewer || current2.reviewer || "", deleted_at: null };
     } else {
       const repairingApprovedCompound = (needsSurnameComponentRepair(character) ||
@@ -2645,21 +2724,28 @@ function renderManualFirstEditor() {
   updateManualFirstPreview();
 }
 
-function saveManualFirstName() {
+async function saveManualFirstName() {
   const preview = manualFirstPreview(els.manualFirstInput.value);
   if (!preview || preview.usageCount || state.suggestionLanguage !== "western") return;
+  const characterId = String(state.selected.id);
   const definition = partDefinitions(state.selected).find(part => part.key === "first");
-  const traitSource = `Clothing:${state.selected.clothing || "No clothing trait"}`;
+  const detection = await detectManualNameOrigin("first", preview.value);
+  if (String(state.selected?.id) !== characterId) return;
+  const language = detection?.origin === "japanese" ? "japanese" : "western";
+  const match = originMatch(detection, language);
+  const traitSource = match?.route || `Clothing:${state.selected.clothing || "No clothing trait"}`;
   updatePartReview("first", {
     decision: "replace",
     scope: "this_character",
     disabled: false,
     replacement_value: preview.value,
-    replacement_source: "Manual team edit · Western clothing theme",
+    replacement_source: language === "japanese"
+      ? "Japanese names surnames.csv · exact authoritative bank match"
+      : "Manual team edit · Western clothing theme",
     replacement_trait_source: traitSource,
-    replacement_language: "western",
+    replacement_language: language,
     replacement_rationale:
-      `Manually curated by the team as a Western first name for ${traitSource}. ` +
+      `Manually curated by the team as a ${language === "japanese" ? "Japanese closed-bank" : "Western"} first name for ${traitSource}. ` +
       `Replaced “${definition?.value || ""}” with the collection-unique “${preview.value}” ` +
       `for Surv!vor #${state.selected.id} only. Saved full-name preview: ${preview.fullName}.`,
     replacement_scores: null
@@ -2764,9 +2850,78 @@ function renderManualSurnameEditor() {
   updateManualSurnamePreview();
 }
 
-function saveManualSurnamePart() {
+async function saveManualSurnamePart() {
   const preview = manualSurnamePreview(els.manualSurnameInput.value);
   if (!preview || state.suggestionLanguage !== "western") return;
+  const characterId = String(state.selected.id);
+  const definition = partDefinitions(state.selected)
+    .find(part => part.key === state.suggestionPart);
+  const traitSource =
+    state.suggestionSource ||
+    state.suggestionPayload?.trait_source ||
+    definition?.source ||
+    "";
+  const detection = await detectManualNameOrigin("surname", preview.value, traitSource);
+  if (String(state.selected?.id) !== characterId) return;
+  if (detection?.origin === "japanese") {
+    const otherKey = state.suggestionPart === "surname_part_1" ? "surname_part_2" : "surname_part_1";
+    if (partReview(state.selected.id, otherKey).decision === "approve") {
+      showToast("Unlock the other surname component before replacing the compound with one Japanese surname.", "error");
+      return;
+    }
+    const record = ensureRecord(state.selected.id);
+    const timestamp = nowIso();
+    const firstPart = partReview(state.selected.id, "surname_part_1");
+    const secondPart = partReview(state.selected.id, "surname_part_2");
+    const route = detection.best_match?.route || traitSource;
+    record.parts.surname_part_1 = {
+      ...firstPart,
+      decision: firstPart.decision || "replace",
+      scope: firstPart.scope || "this_character",
+      disabled: false,
+      replacement_value: preview.value,
+      replacement_source: "Japanese names surnames.csv · exact authoritative bank match",
+      replacement_trait_source: route,
+      replacement_language: "japanese",
+      replacement_rationale: `Exact artist Japanese surname entry for ${route}. Detected automatically from the manual surname editor.`,
+      replacement_scores: null,
+      updated_at: timestamp,
+      reviewer: state.curation.reviewer || firstPart.reviewer || "",
+      deleted_at: null
+    };
+    record.parts.surname_part_2 = {
+      ...secondPart,
+      decision: secondPart.decision || "replace",
+      scope: secondPart.scope || "this_character",
+      disabled: true,
+      updated_at: timestamp,
+      reviewer: state.curation.reviewer || secondPart.reviewer || "",
+      deleted_at: null
+    };
+    record.surname_order = "12";
+    record.surname_order_updated_at = timestamp;
+    record.surname_join_style = "lower_second";
+    record.surname_join_style_updated_at = timestamp;
+    record.surname_format_version = SURNAME_FORMAT_VERSION;
+    record.normalized_name = {
+      first_name: effectivePartValue(state.selected, "first"),
+      surname_display: preview.value,
+      surname_components: [],
+      surname_join_style: "lower_second",
+      surname_format_version: SURNAME_FORMAT_VERSION,
+      derivation_method: "manual_atomic_japanese",
+      needs_surname_component_repair: false
+    };
+    record.normalized_name_updated_at = timestamp;
+    record.updated_at = timestamp;
+    saveCuration();
+    renderCharacter();
+    updateProgress();
+    renderRoster();
+    els.suggestionDialog.close();
+    showToast(`Saved ${preview.value} as an exact Japanese-bank surname.`, "success");
+    return;
+  }
   if (canFlipSurname(state.selected)) {
     setSurnameOrder(state.suggestionPreviewOrder, {
       rerender: false,
@@ -2777,13 +2932,6 @@ function saveManualSurnamePart() {
     rerender: false,
     announce: false
   });
-  const definition = partDefinitions(state.selected)
-    .find(part => part.key === state.suggestionPart);
-  const traitSource =
-    state.suggestionSource ||
-    state.suggestionPayload?.trait_source ||
-    definition?.source ||
-    "";
   updatePartReview(state.suggestionPart, {
     decision: "replace",
     scope: "this_character",

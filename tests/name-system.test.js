@@ -5,6 +5,7 @@ const path = require("node:path");
 const { parseMarkdownNameBank } = require("../api/_lib/name-bank-parser");
 const { composeSurname, validateStructuredSurname } = require("../api/_lib/name-model");
 const { repairCandidates, safeAutomaticRepair, shouldOfferRepair } = require("../api/_lib/surname-repair");
+const { auditOriginMismatches, characters, detectFirstOrigin, detectSurnameOrigin } = require("../api/_lib/name-origin");
 
 const character = {
   traits: [
@@ -259,6 +260,46 @@ test("confirm all force-approves every active part without discarding pasted val
     }
   );
   assert.equal(records["668"].parts.first.decision, "replace");
+});
+
+test("bank-origin detector uses exact eligible routes instead of name appearance", () => {
+  const kotoha = detectFirstOrigin(characters.get("41"), "Kotoha");
+  assert.equal(kotoha.origin, "japanese");
+  assert.equal(kotoha.best_match.route, "Clothing:Vintage sweatshirt");
+  const yui = detectFirstOrigin(characters.get("182"), "Yui");
+  assert.equal(yui.origin, "ambiguous");
+  const daichi = detectFirstOrigin(characters.get("6"), "Daichi");
+  assert.equal(daichi.origin, "unknown");
+  assert.equal(daichi.evidence, "japanese_name_not_eligible_for_character_route");
+
+  const fireCharacter = { traits: [{ type: "Back", value: "Fire" }] };
+  assert.equal(detectSurnameOrigin(fireCharacter, "Shiranui", "Back:Fire").origin, "japanese");
+  assert.equal(detectSurnameOrigin(fireCharacter, "Blaze", "Back:Fire").origin, "western");
+});
+
+test("origin audit corrects provenance only for unambiguous replacement-bank mismatches", () => {
+  const state = {
+    curation: { records: {
+      "41": { parts: { first: { decision: "approve", replacement_value: "Kotoha", replacement_language: "western" } } },
+      "182": { parts: { first: { decision: "approve", replacement_value: "Yui", replacement_language: "japanese" } } },
+    } }
+  };
+  const audit = auditOriginMismatches(state);
+  assert.deepEqual(audit.corrections.map((row) => [row.character_id, row.detected_origin]), [["41", "japanese"]]);
+  assert.equal(audit.ambiguous.some((row) => row.character_id === "182"), true);
+  assert.equal(state.curation.records["41"].parts.first.decision, "approve");
+});
+
+test("manual entry detects Japanese first and surname banks before saving", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
+  assert.match(source, /async function detectManualNameOrigin/);
+  assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
+  assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
+  assert.match(source, /replacement_language: detectedFirstOrigin/);
+  assert.match(source, /replacement_language: "japanese"/);
+  assert.match(endpoint, /stateDecisionSignature\(next\) !== beforeSignature/);
+  assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
 });
 
 test("review packet prioritizes rare routes and requires visible literal trait evidence", () => {
