@@ -4,7 +4,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { parseMarkdownNameBank } = require("../api/_lib/name-bank-parser");
 const { composeSurname, validateStructuredSurname } = require("../api/_lib/name-model");
-const { repairCandidates, shouldOfferRepair } = require("../api/_lib/surname-repair");
+const { repairCandidates, safeAutomaticRepair, shouldOfferRepair } = require("../api/_lib/surname-repair");
 
 const character = {
   traits: [
@@ -81,6 +81,29 @@ test("damaged Gingerwine plus Gleam state is corrected instead of accepting a th
   assert.equal(proposal.current_display, "Gingerwinegleam");
   assert.equal(proposal.surname_display, "Gingerwine");
   assert.equal(proposal.corrects_current_display, true);
+});
+
+test("surname recovery prefers a literal exact trait over a broad semantic association", () => {
+  const literalCharacter = {
+    id: "2796",
+    surname: "Ickycloud",
+    surname_language: "western",
+    traits: [
+      { type: "Background", value: "Outlook Sky Blue" },
+      { type: "Mouth", value: "Grimace" },
+      { type: "Back", value: "White cloud" },
+    ],
+  };
+  const record = {
+    parts: {
+      surname_part_1: { decision: "approve", replacement_value: "Ickycloud", replacement_language: "western" },
+      surname_part_2: { decision: "replace", disabled: true },
+    },
+  };
+  const cloud = { curation: { records: { "2796": record } } };
+  const proposals = repairCandidates(literalCharacter, record, cloud);
+  assert.equal(proposals[0].surname_components[1].source_raw, "Back:White cloud");
+  assert.equal(safeAutomaticRepair(proposals).safe, true);
 });
 
 test("structured Western surname accepts two exact eligible traits", () => {
@@ -172,6 +195,34 @@ test("name-bank research prompt audits Markdown first and produces parseable one
   assert.match(source, /Do not pad to \$\{target\}/);
   assert.match(source, /\*\*Clothing:\*\* \$\{clothing\}/);
   assert.match(source, /copyNameBankPromptButton\.addEventListener\("click", copyNameBankGenerationPrompt\)/);
+});
+
+test("collection search indexes live replacements and individual surname components", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(source, /effectiveDisplayName\(character\)/);
+  assert.match(source, /effectivePartValue\(character, "surname_part_1"\)/);
+  assert.match(source, /effectivePartValue\(character, "surname_part_2"\)/);
+  assert.match(source, /function normalizeSearchText/);
+  assert.match(source, /tokens\.every\(token => index\.includes\(token\)\)/);
+});
+
+test("review packet prioritizes rare routes and requires visible literal trait evidence", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(source, /RARE TRAITS FIRST/);
+  assert.match(source, /LITERAL TRAIT RULE/);
+  assert.match(source, /Exact trait wording/);
+  assert.match(source, /same component root more than four times/);
+  assert.match(source, /LIVE TEAM STYLE REFERENCES — CURRENT SYNCED WEBSITE/);
+});
+
+test("automatic repair endpoint uses revision-checked atomic storage", () => {
+  const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "surname-repair.js"), "utf8");
+  const store = fs.readFileSync(path.join(__dirname, "..", "api", "_lib", "store.js"), "utf8");
+  assert.match(endpoint, /mode !== "apply_confirmed"/);
+  assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
+  assert.match(endpoint, /visible_surname_would_change/);
+  assert.match(store, /async function compareAndSwapState/);
+  assert.match(store, /decoded\.revision/);
 });
 
 test("normal replacement suggestions include active team Markdown banks", () => {

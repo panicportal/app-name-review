@@ -48,6 +48,43 @@ const RECOVERY_ALIASES = {
   "Front:Tuna sushi": ["Fin", "Maki"],
 };
 
+const TRAIT_WORD_STOPLIST = new Set([
+  "a", "an", "and", "at", "for", "from", "in", "into", "of", "on", "the", "to", "with",
+]);
+
+const EVIDENCE_WEIGHT = {
+  exact_trait_word: 58,
+  team_recovery_alias: 56,
+  stored_team_fragment: 52,
+  reviewed_trait_bank: 42,
+};
+
+function sourceTraitWords(source) {
+  const value = String(source || "").split(":").slice(1).join(":");
+  return value
+    .split(/[^A-Za-z]+/)
+    .map((word) => cleanComponent(word))
+    .filter((word) => word && !TRAIT_WORD_STOPLIST.has(word.toLowerCase()));
+}
+
+function literalRelationScore(text, source) {
+  const target = cleanComponent(text).toLowerCase();
+  if (!target) return 0;
+  const words = sourceTraitWords(source).map((word) => word.toLowerCase());
+  if (words.includes(target)) return 44;
+  if (target.length >= 4 && words.some((word) =>
+    word.length >= 4 && (word.startsWith(target) || target.startsWith(word))
+  )) return 32;
+  const compact = words.join("");
+  if (target.length >= 4 && compact.includes(target)) return 24;
+  return 0;
+}
+
+function relationScore(candidate) {
+  return Number(EVIDENCE_WEIGHT[candidate.evidence] || 20) +
+    literalRelationScore(candidate.text, candidate.source_raw);
+}
+
 function partValue(record, key, fallback = "") {
   const part = record?.parts?.[key];
   if (part?.disabled) return "";
@@ -65,6 +102,9 @@ function sourceCandidates(character, state) {
   const bySource = new Map();
   for (const source of characterTraitSources(character)) {
     const candidates = [];
+    for (const word of sourceTraitWords(source)) {
+      candidates.push({ text: word, source_raw: source, rank: 0, evidence: "exact_trait_word" });
+    }
     for (const item of catalog.surname?.[source]?.western || []) {
       const text = cleanComponent(item.value);
       if (text) candidates.push({ text, source_raw: source, rank: Number(item.rank || 0), evidence: "reviewed_trait_bank" });
@@ -92,7 +132,13 @@ function sourceCandidates(character, state) {
     const unique = new Map();
     values.forEach((candidate) => {
       const key = candidate.text.toLowerCase();
-      if (!unique.has(key) || candidate.rank < unique.get(key).rank) unique.set(key, candidate);
+      candidate.relation_score = relationScore(candidate);
+      const stored = unique.get(key);
+      if (
+        !stored ||
+        candidate.relation_score > stored.relation_score ||
+        (candidate.relation_score === stored.relation_score && candidate.rank < stored.rank)
+      ) unique.set(key, candidate);
     });
     bySource.set(source, [...unique.values()]);
   }
@@ -118,6 +164,10 @@ function exactSplits(target, character, state) {
           const display = joinStyle === "overlap_one"
             ? `${left.text}${right.text.slice(1).toLowerCase()}`
             : `${left.text}${right.text.charAt(0).toLowerCase()}${right.text.slice(1)}`;
+          const confidenceScore = Math.max(0, Math.min(100, Math.round(
+            50 + ((left.relation_score + right.relation_score) / 2.5) -
+            ((left.rank + right.rank) / 10)
+          )));
           proposals.push({
             surname_display: display,
             surname_components: [
@@ -126,8 +176,9 @@ function exactSplits(target, character, state) {
             ],
             confidence: "very_high",
             join_style: joinStyle,
-            confidence_score: Math.max(90, 100 - left.rank - right.rank),
+            confidence_score: confidenceScore,
             evidence: `${left.evidence} + ${right.evidence}`,
+            relation_scores: [left.relation_score, right.relation_score],
           });
         }
       }
@@ -139,6 +190,25 @@ function exactSplits(target, character, state) {
     if (!unique.has(key) || proposal.confidence_score > unique.get(key).confidence_score) unique.set(key, proposal);
   });
   return [...unique.values()].sort((a, b) => b.confidence_score - a.confidence_score);
+}
+
+function safeAutomaticRepair(proposals = []) {
+  const top = proposals[0];
+  if (!top || Number(top.confidence_score || 0) < 85) {
+    return { safe: false, proposal: top || null, reason: "confidence_below_85" };
+  }
+  const runnerUp = proposals[1];
+  const margin = runnerUp ? Number(top.score || 0) - Number(runnerUp.score || 0) : 999;
+  if (runnerUp && margin < 8) {
+    return { safe: false, proposal: top, reason: "ambiguous_routes", margin };
+  }
+  if (
+    top.current_display &&
+    String(top.current_display).toLowerCase() !== String(top.surname_display).toLowerCase()
+  ) {
+    return { safe: false, proposal: top, reason: "visible_surname_would_change", margin };
+  }
+  return { safe: true, proposal: top, reason: "confirmed_exact_split", margin };
 }
 
 function isGreenlit(record) {
@@ -216,5 +286,7 @@ module.exports = {
   isGreenlit,
   liveSurname,
   repairCandidates,
+  safeAutomaticRepair,
   shouldOfferRepair,
+  sourceTraitWords,
 };

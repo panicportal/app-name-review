@@ -52,6 +52,26 @@ async function writeState(state) {
   return state;
 }
 
+async function compareAndSwapState(expectedRevision, state) {
+  const script = `
+    local current = redis.call("GET", KEYS[1])
+    if not current then return -1 end
+    local decoded = cjson.decode(current)
+    if tonumber(decoded.revision or 0) ~= tonumber(ARGV[1]) then return 0 end
+    redis.call("SET", KEYS[1], ARGV[2])
+    return 1
+  `;
+  const result = Number(await command([
+    "EVAL",
+    script,
+    "1",
+    STORE_KEY,
+    String(Number(expectedRevision || 0)),
+    JSON.stringify(state),
+  ]));
+  return result === 1;
+}
+
 async function readJson(key) {
   const raw = await command(["GET", key]);
   return raw ? JSON.parse(raw) : null;
@@ -63,6 +83,7 @@ async function writeJson(key, value) {
 }
 
 module.exports = {
+  compareAndSwapState,
   command,
   readJson,
   readState,

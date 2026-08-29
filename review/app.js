@@ -1270,9 +1270,18 @@ function partBadge(part, decision) {
 }
 
 function searchable(character) {
-  return [
+  const record = recordFor(character.id);
+  const normalized = normalizedSurnameFor(character);
+  const values = [
     character.id,
     character.name,
+    effectiveDisplayName(character),
+    effectivePartValue(character, "first"),
+    effectiveSurname(character),
+    effectivePartValue(character, "surname_part_1"),
+    effectivePartValue(character, "surname_part_2"),
+    effectivePartSource(character, "surname_part_1"),
+    effectivePartSource(character, "surname_part_2"),
     character.first,
     character.surname,
     character.v7_first,
@@ -1284,8 +1293,41 @@ function searchable(character) {
     character.surname_source_2,
     character.surname_component_1,
     character.surname_component_2,
+    record.note,
+    normalized.surname_display,
+    ...(normalized.surname_components || []).flatMap(component => [component.text, component.source_raw]),
+    ...PART_KEYS.flatMap(key => {
+      const part = record.parts?.[key] || {};
+      return [
+        part.replacement_value,
+        part.replacement_source,
+        part.replacement_trait_source,
+        part.replacement_rationale,
+        part.note,
+      ];
+    }),
     ...character.traits.flatMap(trait => [trait.type, trait.value])
-  ].join(" ").toLowerCase();
+  ].filter(Boolean);
+  const normalizedValues = values.map(normalizeSearchText).filter(Boolean);
+  return `${normalizedValues.join(" ")} ${normalizedValues.map(value => value.replace(/\s+/g, "")).join(" ")}`;
+}
+
+function normalizeSearchText(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function matchesSearchQuery(character, query) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return true;
+  const index = searchable(character);
+  const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
+  if (tokens.every(token => index.includes(token))) return true;
+  return index.includes(normalizedQuery.replace(/\s+/g, ""));
 }
 
 function matchesStatus(character, status) {
@@ -1326,7 +1368,7 @@ function matchesStatus(character, status) {
 }
 
 function applyFilters() {
-  const query = els.search.value.trim().toLowerCase();
+  const query = els.search.value;
   const clothing = els.clothingFilter.value;
   const traitType = els.traitTypeFilter.value;
   const traitValue = els.traitValueFilter.value;
@@ -1339,7 +1381,7 @@ function applyFilters() {
     const effectiveSurname = effectiveSurnameLanguage(character);
     const characterMix = `${effectiveFirst}+${effectiveSurname}`;
     return (
-      (!query || searchable(character).includes(query)) &&
+      matchesSearchQuery(character, query) &&
       (
         state.traitFilterMode === "clothing"
           ? (!clothing || character.clothing === clothing)
@@ -3977,8 +4019,54 @@ function liveLockedExamplesForClothing(clothing, limit = 10) {
       const active = partDefinitions(character).filter(part => part.available);
       return active.length && active.every(part => partReview(character.id, part.key).decision === "approve");
     })
-    .map(character => ({ id: character.id, name: effectiveDisplayName(character) }))
+    .map(character => ({
+      id: character.id,
+      name: effectiveDisplayName(character),
+      normalized: normalizedSurnameFor(character),
+    }))
     .slice(0, limit);
+}
+
+function traitCollectionCount(source) {
+  const [type, value] = splitSource(source);
+  if (!type || !value || !state.data) return 0;
+  return state.data.characters.reduce((count, character) =>
+    count + (character.traits.some(trait => trait.type === type && trait.value === value) ? 1 : 0), 0
+  );
+}
+
+function traitRarityLabel(count) {
+  if (count <= 0) return "unknown frequency";
+  if (count <= 20) return "very rare";
+  if (count <= 60) return "rare";
+  if (count <= 140) return "uncommon";
+  return "common";
+}
+
+function traitLiteralRoots(value) {
+  const stop = new Set(["a", "an", "and", "at", "for", "from", "in", "into", "of", "on", "the", "to", "with"]);
+  const seen = new Set();
+  return String(value || "")
+    .split(/[^A-Za-z]+/)
+    .map(word => cleanSurnameComponent(word))
+    .filter(word => {
+      const key = word.toLowerCase();
+      if (!word || stop.has(key) || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function surnameRootUsageCount(root) {
+  const target = String(root || "").toLowerCase();
+  if (!target || !state.data) return 0;
+  let count = 0;
+  state.data.characters.forEach(character => {
+    ["surname_part_1", "surname_part_2"].forEach(key => {
+      if (effectivePartValue(character, key).toLowerCase() === target) count++;
+    });
+  });
+  return count;
 }
 
 function liveStyleReferenceText(character) {
@@ -3991,7 +4079,13 @@ function liveStyleReferenceText(character) {
   const sections = clothings.map(clothing => {
     const examples = liveLockedExamplesForClothing(clothing, 10);
     return examples.length
-      ? `${clothing}: ${examples.map(example => `${example.name} (#${example.id})`).join(", ")}`
+      ? `${clothing}: ${examples.map(example => {
+          const components = example.normalized?.surname_components || [];
+          const derivation = components.length === 2
+            ? ` = ${components.map(component => `${component.text} [${component.source_raw}]`).join(" + ")}`
+            : "";
+          return `${example.name} (#${example.id})${derivation}`;
+        }).join("; ")}`
       : `${clothing}: no fully locked live examples yet`;
   });
   return [
@@ -4035,32 +4129,43 @@ function handoffSurnameRootBanksText(rootBanks = []) {
   if (!rootBanks.length) return `LIVE SURNAME ROOT BANKS\nNo root-bank response was available. Use only transparent literal or lightly transformed roots from the exact JSON trait wording.`;
   return [
     `LIVE SURNAME ROOT BANKS — EXACT ROUTES`,
-    `Prefer these synced custom, greenlit, and reviewed roots. Usage is collection-wide and is a diversity signal, not permission to break the route.`,
+    `Exact trait wording is listed first. Prefer the rarest real character traits before common Background/Eyes routes. Usage is collection-wide and is a diversity signal, not permission to break the route.`,
     ...rootBanks.map(bank =>
-      `${bank.source}: ${bank.roots.length ? bank.roots.map(root => `${root.value} (${root.usage}×; ${root.section})`).join(", ") : "no reviewed roots — literal/light transformation only"}`
+      `${bank.source} — ${bank.collectionCount} collection characters · ${bank.rarity}: ${bank.roots.length ? bank.roots.map(root => `${root.value} (${root.usage}×; ${root.section})`).join(", ") : "no reviewed roots — literal/light transformation only"}`
     )
   ].join("\n");
 }
 
 function surnamePairPlan(character, rotationPass) {
-  const traits = eligibleSurnameTraits(character);
-  const priority = { Front: 0, Mouth: 1, Hair: 2, Background: 3, Eyes: 4, Eyebrows: 5, Back: 6 };
+  const traits = eligibleSurnameTraits(character).map(trait => {
+    const source = `${trait.type}:${trait.value}`;
+    return { ...trait, source, collectionCount: traitCollectionCount(source) };
+  }).sort((a, b) => a.collectionCount - b.collectionCount || a.source.localeCompare(b.source));
   const pairs = [];
   for (let left = 0; left < traits.length; left++) {
     for (let right = left + 1; right < traits.length; right++) {
-      const pair = [traits[left], traits[right]].sort((a, b) => (priority[a.type] ?? 9) - (priority[b.type] ?? 9));
+      const pair = [traits[left], traits[right]].sort((a, b) => a.collectionCount - b.collectionCount);
       pairs.push(pair);
     }
   }
   pairs.sort((a, b) =>
-    ((priority[a[0].type] ?? 9) + (priority[a[1].type] ?? 9)) -
-    ((priority[b[0].type] ?? 9) + (priority[b[1].type] ?? 9))
+    (a[0].collectionCount * 2 + a[1].collectionCount) -
+    (b[0].collectionCount * 2 + b[1].collectionCount)
   );
-  const rotated = rotatePacketOptions(pairs, rotationPass, 5).slice(0, 7);
+  const rarestSource = traits[0]?.source || "";
+  const anchorPairs = pairs.filter(pair => pair.some(trait => trait.source === rarestSource));
+  const otherPairs = pairs.filter(pair => !pair.some(trait => trait.source === rarestSource));
+  const rotated = [
+    ...rotatePacketOptions(anchorPairs, rotationPass, 1).slice(0, 3),
+    ...rotatePacketOptions(otherPairs, rotationPass, 5),
+  ].filter((pair, index, values) =>
+    values.findIndex(candidate => candidate.map(trait => trait.source).sort().join("|") === pair.map(trait => trait.source).sort().join("|")) === index
+  ).slice(0, 7);
   const attacks = rotatePacketOptions([
-    "literal recognizable roots",
+    "literal trait-name roots",
     "short action or function roots",
-    "visual shape, material, color, or motion roots",
+    "rare-trait literal root plus a smoother supporting root",
+    "visual shape, material, color, or motion roots from the exact wording",
     "personality and expression roots",
     "comic contrast between the two traits",
     "surname-like smoothing with light transformation",
@@ -4068,8 +4173,11 @@ function surnamePairPlan(character, rotationPass) {
     "single-letter seam overlap or clean lowercase join"
   ], rotationPass, 3);
   return rotated.map((pair, index) => ({
-    left: `${pair[0].type}:${pair[0].value}`,
-    right: `${pair[1].type}:${pair[1].value}`,
+    left: pair[0].source,
+    right: pair[1].source,
+    leftCount: pair[0].collectionCount,
+    rightCount: pair[1].collectionCount,
+    rareAnchor: pair.some(trait => trait.source === rarestSource),
     primaryAttack: attacks[index % attacks.length],
     secondaryAttack: attacks[(index + 3) % attacks.length]
   }));
@@ -4079,11 +4187,11 @@ function surnameAttackPlanText(character, rotationPass) {
   const plan = surnamePairPlan(character, rotationPass);
   return [
     `SURNAME WORKSHOP ROTATION — PASS ${rotationPass}`,
-    `This pass deliberately changes pair order and word-formation emphasis. Do not repeat the same shortlist from an earlier pass unless a repeated name is still the clear winner.`,
+    `This pass deliberately changes pair order and word-formation emphasis. The first three families anchor the rarest available exact trait. Do not repeat the same shortlist from an earlier pass unless a repeated name is still the clear winner.`,
     ...plan.map((item, index) =>
-      `${index + 1}. ${item.left} × ${item.right} — lead with ${item.primaryAttack}; also test ${item.secondaryAttack}`
+      `${index + 1}. ${item.left} (${item.leftCount}× collection-wide) × ${item.right} (${item.rightCount}×)${item.rareAnchor ? " — RARE-TRAIT PRIORITY" : ""} — lead with ${item.primaryAttack}; also test ${item.secondaryAttack}`
     ),
-    `Within every family, vary both trait roots—not one repeated root with eight generic suffixes. Test both component orders when both read naturally.`
+    `Within every family, vary both trait roots—not one repeated root with eight generic suffixes. Every surname must visibly retain a literal trait word or a very light grammatical shortening from at least one exact route. Test both component orders when both read naturally.`
   ].join("\n");
 }
 
@@ -4113,8 +4221,11 @@ function chatGptHandoffText(character, context = {}) {
     surnameOpen
       ? `- Build 7 distinct surname family tables with 8–10 options per family (56–70 total), then rank the strongest 15 surnames and 8 complete full names. Every surname must use exactly two different eligible traits.`
       : `- Preserve every GREENLIT surname component. Only discuss an alternative if a surname component is open or RED X.`,
-    `- Each surname table must show surname, exact two-route derivation, word-formation method, component usage warning, readability score, and collectability score.`,
-    `- Avoid mechanical mashups, generic word soup, repeated suffix padding, and recycling the current weak construction. Prefer compact surnames that plausibly function as character names.`,
+    `- RARE TRAITS FIRST: use the collection frequencies in the packet. The first three surname families must include the rarest eligible exact trait; do not default to common Background, Eyes, or Mouth routes when a rarer Front, Back, Hair, or other exact value is present.`,
+    `- LITERAL TRAIT RULE: every surname must visibly preserve at least one exact trait word or an immediately recognizable light shortening of it. At least half the options in each family must use the rarer trait's literal wording. Reject combinations where both halves are abstract synonyms that no collector could trace back to the JSON.`,
+    `- Each surname table must show surname, exact two-route derivation, the visible literal trait evidence, word-formation method, component usage warning, readability score, and collectability score.`,
+    `- Diversity limit: do not use the same component root more than four times across the entire workshop. Vary both routes, both roots, and component order instead of attaching many generic endings to one word.`,
+    `- Avoid mechanical mashups, generic word soup, repeated suffix padding, and recycling the current weak construction. Prefer compact surnames that plausibly function as character names while remaining auditable.`,
     `- Finish with one Best / lock candidate, but label duplicate status as “requires final Name Studio validation” unless the exact full name was checked against the live 3,333-name state.`,
     `Portrait URL: ${window.location.origin}/pfps_webp/${character.id}.webp`,
     handoffFirstNameBankText(character, firstContext),
@@ -4215,22 +4326,37 @@ async function fetchHandoffSurnameRootBanks(character, rotationPass) {
     const preferred = (payload.suggestions || []).filter(candidate =>
       candidate.surname_bank_section !== "Team-inspired wordplay"
     );
+    const literal = traitLiteralRoots(trait.value).map(value => ({
+      value,
+      usage_count: surnameRootUsageCount(value),
+      surname_bank_section: "Exact trait wording",
+    }));
     const seen = new Set();
-    const roots = rotatePacketOptions(preferred, rotationPass, 5).filter(candidate => {
+    const roots = [...literal, ...rotatePacketOptions(preferred, rotationPass, 5)].filter(candidate => {
       const key = String(candidate.value || "").toLowerCase();
       if (!key || seen.has(key)) return false;
       seen.add(key);
       return true;
-    }).slice(0, 12).map(candidate => ({
+    }).slice(0, 16).map(candidate => ({
       value: candidate.value,
       usage: Number(candidate.usage_count || 0),
       section: candidate.surname_bank_section || "Reviewed trait bank"
     }));
-    return { source, roots };
+    const collectionCount = traitCollectionCount(source);
+    return { source, roots, collectionCount, rarity: traitRarityLabel(collectionCount) };
   }));
   return results.map((result, index) => result.status === "fulfilled"
     ? result.value
-    : { source: `${traits[index].type}:${traits[index].value}`, roots: [] }
+    : {
+        source: `${traits[index].type}:${traits[index].value}`,
+        roots: traitLiteralRoots(traits[index].value).map(value => ({
+          value,
+          usage: surnameRootUsageCount(value),
+          section: "Exact trait wording",
+        })),
+        collectionCount: traitCollectionCount(`${traits[index].type}:${traits[index].value}`),
+        rarity: traitRarityLabel(traitCollectionCount(`${traits[index].type}:${traits[index].value}`)),
+      }
   );
 }
 
