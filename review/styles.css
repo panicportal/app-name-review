@@ -687,6 +687,11 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   border-color: #3f8d78;
   color: var(--mint);
 }
+.quick-controls .confirm-all-button {
+  border-color: var(--amber);
+  background: #183d35;
+  color: #fff4d6;
+}
 .quick-controls .replace-all-button {
   border-color: #a84f58;
   color: var(--rose);
@@ -2066,7 +2071,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
     inset: auto 0 0;
     z-index: 30;
     display: grid;
-    grid-template-columns: 1fr 1.25fr 1fr;
+    grid-template-columns: 1fr .72fr .72fr 1fr;
     height: calc(64px + env(safe-area-inset-bottom));
     padding-bottom: env(safe-area-inset-bottom);
     border-top: 1px solid #42615a;
@@ -2082,7 +2087,12 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
     color: white;
     font-size: 18px;
   }
-  .mobile-review-nav button:nth-child(2) { background: #1f705a; }
+  .mobile-review-nav #mobileApprove { background: #185846; }
+  .mobile-review-nav .mobile-confirm-all {
+    background: #27866a;
+    box-shadow: inset 0 3px 0 var(--amber);
+  }
+  .mobile-review-nav button:disabled { opacity: .38; }
   .mobile-review-nav span { font: 700 8px/1 var(--utility); text-transform: uppercase; }
 }
 @media (prefers-reduced-motion: no-preference) {

@@ -206,6 +206,61 @@ test("collection search indexes live replacements and individual surname compone
   assert.match(source, /tokens\.every\(token => index\.includes\(token\)\)/);
 });
 
+test("confirm all force-approves every active part without discarding pasted values", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(html, /id="confirmAllButton"/);
+  assert.match(html, /id="mobileConfirmAll"/);
+  const start = source.indexOf("function confirmAll()");
+  const end = source.indexOf("function approveRemainingAndNext()", start);
+  const handler = source.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.match(handler, /const current = partReview/);
+  assert.match(handler, /\.\.\.current/);
+  assert.match(handler, /decision: "approve"/);
+  assert.match(handler, /scope: null/);
+  assert.doesNotMatch(handler, /blankPart\(\)/);
+  assert.match(source, /mobileConfirmAll\.addEventListener\("click", confirmAll\)/);
+
+  const records = {
+    "667": { parts: {
+      first: { decision: "replace", replacement_value: "Angela" },
+      surname_part_1: { decision: "replace", replacement_value: "Ginger" },
+      surname_part_2: { decision: "replace", replacement_value: "Wine" }
+    } },
+    "668": { parts: { first: { decision: "replace", replacement_value: "Untouched" } } }
+  };
+  const selected = { id: "667" };
+  const definitions = [
+    { key: "first", label: "First name", available: true },
+    { key: "surname_part_1", label: "Surname part 1", available: true },
+    { key: "surname_part_2", label: "Surname part 2", available: true }
+  ];
+  const makeConfirmAll = new Function(
+    "state", "ensureRecord", "nowIso", "partDefinitions", "partReview",
+    "saveCuration", "renderCharacter", "updateProgress", "renderRoster", "showToast",
+    `${handler}; return confirmAll;`
+  );
+  const confirmAll = makeConfirmAll(
+    { selected, curation: { reviewer: "Team" } },
+    id => records[id],
+    () => "2026-08-29T00:00:00.000Z",
+    () => definitions,
+    (id, key) => records[id].parts[key],
+    () => {}, () => {}, () => {}, () => {}, () => {}
+  );
+  confirmAll();
+  assert.deepEqual(
+    Object.fromEntries(Object.entries(records["667"].parts).map(([key, part]) => [key, [part.decision, part.replacement_value]])),
+    {
+      first: ["approve", "Angela"],
+      surname_part_1: ["approve", "Ginger"],
+      surname_part_2: ["approve", "Wine"]
+    }
+  );
+  assert.equal(records["668"].parts.first.decision, "replace");
+});
+
 test("review packet prioritizes rare routes and requires visible literal trait evidence", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(source, /RARE TRAITS FIRST/);

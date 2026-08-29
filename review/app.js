@@ -1594,6 +1594,10 @@ function renderCharacterCuration(character) {
     .map(part => partBadge(part, partReview(character.id, part.key).decision))
     .join("");
   els.approveRemainingButton.disabled = status.decided === status.total;
+  const allApproved = status.total > 0 && status.decided === status.total && status.rejected === 0;
+  els.confirmAllButton.disabled = allApproved;
+  els.mobileApprove.disabled = status.decided === status.total;
+  els.mobileConfirmAll.disabled = allApproved;
   els.replaceWholeButton.disabled = status.total === 0;
   els.clearCharacterButton.disabled = status.decided === 0 && !recordFor(character.id).note;
   els.reviewNote.value = recordFor(character.id).note || "";
@@ -2075,6 +2079,31 @@ function approveRemaining() {
   renderCharacter();
   updateProgress();
   renderRoster();
+}
+
+function confirmAll() {
+  if (!state.selected) return;
+  const record = ensureRecord(state.selected.id);
+  const timestamp = nowIso();
+  const activeParts = partDefinitions(state.selected).filter(part => part.available);
+  activeParts.forEach(part => {
+    const current = partReview(state.selected.id, part.key);
+    record.parts[part.key] = {
+      ...current,
+      decision: "approve",
+      scope: null,
+      updated_at: timestamp,
+      reviewer: state.curation.reviewer || current.reviewer || "",
+      deleted_at: null
+    };
+  });
+  record.updated_at = timestamp;
+  saveCuration();
+  renderCharacter();
+  updateProgress();
+  renderRoster();
+  const confirmed = activeParts.map(part => part.label.toLowerCase()).join(", ");
+  showToast(`Confirmed ${confirmed} for survivor #${state.selected.id}.`, "success");
 }
 
 function approveRemainingAndNext() {
@@ -5040,6 +5069,7 @@ function bindEvents() {
   els.nextButton.addEventListener("click", () => moveSelection(1));
   els.nextUndecidedButton.addEventListener("click", nextUndecided);
   els.approveRemainingButton.addEventListener("click", approveRemaining);
+  els.confirmAllButton.addEventListener("click", confirmAll);
   els.replaceWholeButton.addEventListener("click", replaceWholeName);
   els.clearCharacterButton.addEventListener("click", clearCharacter);
   els.exportButton.addEventListener("click", exportReviews);
@@ -5118,6 +5148,7 @@ function bindEvents() {
   els.manualFirstSave.addEventListener("click", saveManualFirstName);
   els.mobilePrevious.addEventListener("click", () => moveSelection(-1));
   els.mobileApprove.addEventListener("click", approveRemaining);
+  els.mobileConfirmAll.addEventListener("click", confirmAll);
   els.mobileNext.addEventListener("click", () => moveSelection(1));
   els.focusPreviousButton.addEventListener("click", () => moveSelection(-1));
   els.focusNextButton.addEventListener("click", () => moveSelection(1));

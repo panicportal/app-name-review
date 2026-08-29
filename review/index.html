@@ -165,6 +165,7 @@
         </div>
         <div class="quick-controls" role="group" aria-label="Character curation shortcuts">
           <button class="approve-all-button" id="approveRemainingButton">✓ Lock remaining parts</button>
+          <button class="confirm-all-button" id="confirmAllButton">✓✓ Confirm all</button>
           <button class="replace-all-button" id="replaceWholeButton">× Replace whole name</button>
           <button id="clearCharacterButton">Clear this character</button>
         </div>
@@ -738,9 +739,10 @@
   <nav class="mobile-review-nav" aria-label="Mobile review controls">
     <button id="mobilePrevious">←<span>Previous</span></button>
     <button id="mobileApprove">✓<span>Lock rest</span></button>
+    <button class="mobile-confirm-all" id="mobileConfirmAll">✓✓<span>Confirm all</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=23-1-search-repair"></script>
+  <script src="/review/app.js?v=23-2-confirm-all"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>
