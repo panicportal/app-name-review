@@ -191,7 +191,10 @@ test("ChatGPT handoff rejects shared snapshots and carries a wide rotating works
 test("name-bank research prompt audits Markdown first and produces parseable one-word banks", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(source, /function nameBankGenerationPrompt/);
-  assert.match(source, /Audit every matching attached or supplied MD bank before doing online research/);
+  assert.match(source, /NAME STUDIO MD AUDIT — ALREADY COMPLETED/);
+  assert.match(source, /do not search the file library again; begin online discovery/);
+  assert.match(source, /Never stop after saying that you searched files or name libraries/);
+  assert.match(source, /A response that lacks candidate rows is incomplete and must not be sent/);
   assert.match(source, /One word only; letters, apostrophe, or hyphen/);
   assert.match(source, /Do not pad to \$\{target\}/);
   assert.match(source, /\*\*Clothing:\*\* \$\{clothing\}/);

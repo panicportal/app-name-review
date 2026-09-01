@@ -4992,23 +4992,32 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
   });
   return [
     `# ?an!c CLOTHING FIRST-NAME BANK RESEARCH TASK`,
-    `Create or improve a persistent Western first-name Markdown bank for Name Studio. Do not modify the live app or curation state.`,
+    `Create or improve a persistent Western first-name Markdown bank for Name Studio. Return the usable bank in this response. Do not modify the live app or curation state.`,
+    `EXECUTION CONTRACT — COMPLETE THE DELIVERABLE NOW`,
+    `- This is a single-response bank-building task, not a request for a plan, progress report, background task, or promise of later work.`,
+    `- Do not reply with “I’ll…”, “I will…”, “I’m going to…”, a search summary, or a description of what you intend to do.`,
+    `- You may use web search and available files silently, but after any tool call you must continue and produce the completed Markdown bank in this same response. Never stop after saying that you searched files or name libraries.`,
+    `- The Name Studio audit embedded below is authoritative for which matching MD banks were found. Do not repeat a file-library search merely to confirm it.`,
+    `- If the audit says no matching bank exists, proceed immediately to online research. Do not ask the user to upload a bank that does not exist.`,
+    `- If an external page or optional file cannot be accessed, note that once in the final audit and continue with the evidence that is available. Missing optional evidence must not block all output.`,
+    `- Do not ask for confirmation before producing candidates.`,
+    `- Success means the response contains ranked, directly relevant, one-word candidates in the required Markdown tables—not merely an explanation of the research process.`,
     `Clothing: ${clothing}`,
     `Gender: ${gender}`,
     `Characters on this exact Clothing + Body-gender route: ${routedCharacters.length}`,
     `Capacity target: approximately ${target} strong unique one-word options`,
     `Currently assigned on this route: ${assigned.length}`,
-    `SOURCE ORDER — NON-NEGOTIABLE`,
-    `1. Audit every matching attached or supplied MD bank before doing online research. Preserve its exact valid entries, tier, and reference.`,
-    `2. Compare the audited bank against the current assigned-name list and live greenlit examples below.`,
-    `3. Only then research online to fill genuine thematic or capacity gaps.`,
+    `SOURCE POLICY`,
+    `1. Use the matching-bank audit and parsed entries already embedded below. Preserve every exact valid entry, tier, and reference.`,
+    `2. Compare those entries against the embedded current assigned-name list and live greenlit examples.`,
+    `3. Research online now to fill genuine thematic or capacity gaps. Use a small number of focused searches and stop searching once you have enough evidence to build the strongest defensible bank.`,
     `4. Online discoveries are PROPOSED until human approval. Do not silently treat search results as approved bank entries.`,
     `5. This task is Western-only. Never generate Japanese-looking names; Japanese names remain confined to the closed artist CSV.`,
-    `MATCHING MD BANKS FOUND BY NAME STUDIO`,
+    `NAME STUDIO MD AUDIT — ALREADY COMPLETED`,
     matchingBanks.length
       ? matchingBanks.map(bank => `- ${bank.filename} · ${bank.entries.length} parsed entries · v${bank.version || "unknown"}`).join("\n")
-      : `- None for this exact Clothing + Body-gender route. State this clearly before researching.`,
-    `EXISTING MD ENTRIES TO AUDIT`,
+      : `- None for this exact Clothing + Body-gender route. This is a completed audit result: do not search the file library again; begin online discovery.`,
+    `PARSED MATCHING MD ENTRIES`,
     existingEntries.length ? existingEntries.join("\n") : `None supplied.`,
     `CURRENT ASSIGNED FIRST NAMES — DO NOT CREATE DUPLICATE ASSIGNMENTS`,
     assigned.length ? assigned.join(", ") : `None`,
@@ -5033,8 +5042,12 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
     `- Deduplicate case-insensitively against the existing MD entries, assigned names, and within the new output.`,
     `- Rank by directness, recognizability, memorability, collectability, gender correctness, evidence strength, and uniqueness.`,
     `- Do not pad to ${target}. Report a shortfall instead of adding weak names.`,
+    `COMPLETION FALLBACK`,
+    `- Aim for the full capacity target. If response-length or evidence limits prevent a complete ${target}-name bank, output the largest finished high-quality batch you can now (never fewer than 40 researched proposals unless fewer than 40 defensible candidates truly exist).`,
+    `- If fewer than 40 defensible proposals exist, output every defensible proposal and explain the evidence-based shortfall in the final counts. Do not replace the bank with a plan.`,
+    `- If the full target will require another message, end only after the completed tables and include one final line: “Continuation needed: N additional researched candidates.”`,
     `REQUIRED MARKDOWN OUTPUT`,
-    `Use this exact parseable structure:`,
+    `Start the response directly with the following parseable structure. Do not put a preamble, progress update, or plan before it:`,
     `**Version:** YYYY-MM-DD`,
     `**Clothing:** ${clothing}`,
     `**Gender:** ${gender}`,
@@ -5042,7 +5055,7 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
     `| Name | Tier | Direct connection / reference | Category | Source URL | Status |`,
     `|---|---|---|---|---|---|`,
     `| Example | S | Direct evidence | Iconic Character | https://... | proposed |`,
-    `Then provide A-tier and B-tier tables using the same columns. End with counts for preserved MD entries, newly researched proposals, rejected duplicates, rejected weak candidates, and remaining capacity shortfall.`
+    `Then provide A-tier and B-tier tables using the same columns. End with counts for preserved MD entries, newly researched proposals, rejected duplicates, rejected weak candidates, and remaining capacity shortfall. A response that lacks candidate rows is incomplete and must not be sent.`
   ].join("\n\n");
 }
 
