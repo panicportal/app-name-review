@@ -4985,7 +4985,12 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
     existingEntries.push(`${entry.name} [${entry.tier || "Unranked"}] — ${entry.reference || "no stored reference"}`);
   }));
   const target = nameBankCapacityTarget(routedCharacters.length);
-  const versionDate = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const versionDate = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0")
+  ].join("-");
   const fileSlug = `${clothing}-${gender}`
     .toLowerCase()
     .normalize("NFKD")

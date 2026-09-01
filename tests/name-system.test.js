@@ -200,6 +200,7 @@ test("name-bank research prompt audits Markdown first and produces parseable one
   assert.match(source, /Do not use a rendered Markdown chat message as the primary deliverable/);
   assert.match(source, /reopen or read the saved file and verify that it is non-empty/);
   assert.match(source, /panic_\$\{fileSlug\}_name_bank_\$\{versionDate\}\.md/);
+  assert.doesNotMatch(source.slice(source.indexOf("function nameBankGenerationPrompt"), source.indexOf("async function copyNameBankGenerationPrompt")), /toISOString/);
   assert.match(source, /One word only; letters, apostrophe, or hyphen/);
   assert.match(source, /Do not pad to \$\{target\}/);
   assert.match(source, /\*\*Clothing:\*\* \$\{clothing\}/);
