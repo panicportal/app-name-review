@@ -1871,6 +1871,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .character-copy-toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .character-copy-toolbar button { min-height: 38px; padding: 0 10px; border: 1px solid #48655f; background: #102b31; color: #dce8e3; font: 900 8px/1 var(--utility); text-transform: uppercase; }
 .character-copy-toolbar button:hover { border-color: var(--amber); color: white; }
+.character-copy-toolbar .compact-packet-button { border-color: #73d7b5; background: #173c36; color: #dffff3; }
 .character-copy-toolbar .chatgpt-share-button { border-color: #73d7b5; background: #174d40; color: #f3fff9; }
 .character-copy-toolbar .ask-ai-button { border-color: var(--amber); background: var(--amber); color: var(--ink); }
 .character-copy-toolbar .bank-prompt-button { border-color: #d3a743; background: #302711; color: #ffe09a; }

@@ -136,7 +136,7 @@ test("structured surname rejects Body, Clothing, duplicate routes, and display d
 
 test("UI contains copy, ChatGPT handoff, repair, assistant, and bank controls", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
-  for (const id of ["copyTraitsButton", "copyImageButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
+  for (const id of ["copyTraitsButton", "copyImageButton", "copyCompactPacketButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
 });
@@ -186,6 +186,19 @@ test("ChatGPT handoff rejects shared snapshots and carries a wide rotating works
   assert.match(source, /uploaded Clothing \+ Body MD bank → curated Clothing bank → approved Iconic\/Fun bank/);
   assert.match(source, /LIVE TEAM STYLE REFERENCES — CURRENT SYNCED WEBSITE/);
   assert.match(source, /activeChatGptHandoffPacket\(\)/);
+});
+
+test("compact review packet uses stored banks with a strict low-token output", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(html, /id="copyCompactPacketButton"/);
+  assert.match(source, /function compactChatGptHandoffText/);
+  assert.match(source, /Maximum final response: 450 words/);
+  assert.match(source, /exactly 3 family tables with exactly 4 options each \(12 total\)/);
+  assert.match(source, /Do not browse the web, search files, inspect libraries/);
+  assert.match(source, /slice\(0, 10\)/);
+  assert.match(source, /slice\(0, 5\)/);
+  assert.match(source, /copyCompactPacketButton\.addEventListener\("click", copyCompactReviewPacket\)/);
 });
 
 test("name-bank research prompt audits Markdown first and produces parseable one-word banks", () => {

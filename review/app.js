@@ -4550,6 +4550,98 @@ async function buildAdvancedReviewPacket(character, rotationPass = nextReviewPac
   };
 }
 
+function compactFirstNameBankText(character, firstContext = {}) {
+  const firstDecision = partReview(character.id, "first").decision;
+  const current = effectivePartValue(character, "first");
+  if (firstDecision === "approve") {
+    return `FIRST NAME — GREENLIT\n${current} is protected. Do not list or discuss alternatives.`;
+  }
+  const candidates = (firstContext.candidates || []).slice(0, 10);
+  return [
+    `FIRST-NAME SHORTLIST — STORED BANK ONLY`,
+    `Current: ${current || "—"}`,
+    `Do not browse, research, or invent names. Rank only these ${candidates.length} stored options:`,
+    candidates.length
+      ? candidates.map(candidate => `${candidate.name} [${candidate.origin}]`).join(", ")
+      : `No stored alternatives were returned. Preserve the current first name and report the bank gap.`
+  ].join("\n");
+}
+
+function compactSurnameRootBanksText(rootBanks = []) {
+  const banks = [...rootBanks].sort((a, b) =>
+    Number(a.collectionCount || 0) - Number(b.collectionCount || 0) ||
+    String(a.source || "").localeCompare(String(b.source || ""))
+  );
+  if (!banks.length) {
+    return `COMPACT SURNAME ROOTS\nUse only literal or immediately recognizable light shortenings of the exact JSON traits.`;
+  }
+  return [
+    `COMPACT SURNAME ROOTS — STORED/LITERAL ONLY`,
+    `The smallest collection count is the rarest route. Do not browse or create unrelated synonym banks.`,
+    ...banks.map(bank =>
+      `${bank.source} (${bank.collectionCount}×): ${(bank.roots || []).slice(0, 5).map(root => `${root.value} [used ${root.usage}×]`).join(", ") || "literal wording only"}`
+    )
+  ].join("\n");
+}
+
+function compactSurnamePairPlanText(character, rotationPass) {
+  const plan = surnamePairPlan(character, rotationPass).slice(0, 3);
+  return [
+    `THREE COMPACT SURNAME FAMILIES — ROTATION ${rotationPass}`,
+    ...plan.map((item, index) =>
+      `${index + 1}. ${item.left} × ${item.right}${item.rareAnchor ? " — rarest-route anchor" : ""} — ${item.primaryAttack}`
+    )
+  ].join("\n");
+}
+
+function compactChatGptHandoffText(character, context = {}) {
+  const firstContext = context.firstContext || {};
+  const rootBanks = context.surnameRootBanks || [];
+  const rotationPass = Number(context.rotationPass || 1);
+  const firstOpen = partReview(character.id, "first").decision !== "approve";
+  const surnameOpen = ["surname_part_1", "surname_part_2"].some(key =>
+    partDefinitions(character).find(part => part.key === key)?.available &&
+    partReview(character.id, key).decision !== "approve"
+  );
+  return [
+    `# ?an!c COMPACT BANK-BASED NAME REVIEW`,
+    `Return the finished review immediately. This is a fast selection task using supplied data—not a research or bank-building task.`,
+    `SPEED / TOKEN RULES`,
+    `- Do not browse the web, search files, inspect libraries, call research tools, or produce progress updates.`,
+    `- Use only the portrait, exact live traits, protected decisions, stored first-name shortlist, and compact surname roots below.`,
+    `- Maximum final response: 450 words. Do not restate this packet, the master rules, or long explanations.`,
+    `- Never change GREENLIT parts. Body alone controls first-name gender. Do not invent Japanese names.`,
+    `- Every Western surname must be one visible word made from exactly two different eligible trait routes. At least one component must visibly preserve literal trait wording or an obvious light shortening.`,
+    `- Prefer the rarest eligible route, readable joins, root diversity, and compact collectible rhythm. Avoid abstract synonym pairs and mechanical padding.`,
+    `REQUIRED COMPACT OUTPUT`,
+    firstOpen
+      ? `1. FIRST NAME: rank at most 10 supplied bank names in one compact table. No online additions.`
+      : `1. FIRST NAME: one line confirming the GREENLIT first name is preserved. No alternatives.`,
+    surnameOpen
+      ? `2. SURNAMES: exactly 3 family tables with exactly 4 options each (12 total). Columns only: Surname | exact two routes | score.\n3. Rank the best 5 surnames in one line.\n4. Rank exactly 3 complete full names.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
+      : `2. SURNAME: preserve all GREENLIT surname components. Do not provide alternatives unless a component is marked open or RED X.`,
+    `Do not add citations, source essays, rejected-name lists, duplicate-search narratives, or more options than requested.`,
+    `Portrait: ${window.location.origin}/pfps_webp/${character.id}.webp`,
+    compactFirstNameBankText(character, firstContext),
+    compactSurnameRootBanksText(rootBanks),
+    surnameOpen ? compactSurnamePairPlanText(character, rotationPass) : "SURNAME FAMILY GENERATION NOT NEEDED",
+    reviewPacketText(character)
+  ].join("\n\n");
+}
+
+async function buildCompactReviewPacket(character, rotationPass = nextReviewPacketRotation(character.id)) {
+  const [firstContext, surnameRootBanks] = await Promise.all([
+    fetchHandoffFirstNameCandidates(character, rotationPass),
+    fetchHandoffSurnameRootBanks(character, rotationPass)
+  ]);
+  return {
+    packet: compactChatGptHandoffText(character, { firstContext, surnameRootBanks, rotationPass }),
+    firstContext,
+    surnameRootBanks,
+    rotationPass
+  };
+}
+
 function activeChatGptHandoffPacket(character = state.selected) {
   return state.chatGptHandoff.characterId === String(character?.id) && state.chatGptHandoff.packet
     ? state.chatGptHandoff.packet
@@ -5122,6 +5214,25 @@ async function copyAdvancedReviewPacket() {
   }
 }
 
+async function copyCompactReviewPacket() {
+  const character = state.selected;
+  const originalLabel = els.copyCompactPacketButton.textContent;
+  els.copyCompactPacketButton.disabled = true;
+  els.copyCompactPacketButton.textContent = "Building compact packet…";
+  try {
+    const compact = await buildCompactReviewPacket(character);
+    await copyText(
+      compact.packet,
+      `Copied compact rotation ${compact.rotationPass}: at most 10 first names and 12 requested surnames, with no research.`
+    );
+  } catch (error) {
+    showToast(`Could not build compact review: ${error.message}`, "error");
+  } finally {
+    els.copyCompactPacketButton.disabled = false;
+    els.copyCompactPacketButton.textContent = originalLabel;
+  }
+}
+
 function bindEvents() {
   els.voiceModeButton.addEventListener("click", () => setVoiceDock(els.voiceDock.hidden));
   els.voiceCloseButton.addEventListener("click", () => setVoiceDock(false));
@@ -5341,6 +5452,7 @@ function bindEvents() {
   els.characterName.addEventListener("click", openFullNameEditor);
   els.repairSurnameButton.addEventListener("click", openFullNameEditor);
   els.copyTraitsButton.addEventListener("click", () => copyText(exactTraitsText(state.selected), `Copied all exact traits for #${state.selected.id}.`));
+  els.copyCompactPacketButton.addEventListener("click", copyCompactReviewPacket);
   els.copyPacketButton.addEventListener("click", copyAdvancedReviewPacket);
   els.copyNameBankPromptButton.addEventListener("click", copyNameBankGenerationPrompt);
   els.copyImageButton.addEventListener("click", () => copyCharacterImage().catch(error => showToast(error.message, "error")));
