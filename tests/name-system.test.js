@@ -195,8 +195,13 @@ test("compact review packet uses stored banks with a strict low-token output", (
   assert.match(source, /function compactChatGptHandoffText/);
   assert.match(source, /Maximum final response: 450 words/);
   assert.match(source, /exactly 3 family tables with exactly 4 options each \(12 total\)/);
-  assert.match(source, /Do not browse the web, search files, inspect libraries/);
-  assert.match(source, /slice\(0, 10\)/);
+  assert.match(source, /FIRST-NAME FILE EXCEPTION/);
+  assert.match(source, /Every offered first name must be copied exactly from a row in that matching MD file/);
+  assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
+  assert.match(source, /MD BANK UNAVAILABLE/);
+  assert.match(source, /MD BANK USED: <exact filename>/);
+  assert.match(source, /candidate\.origin === "Uploaded MD bank"/);
+  assert.match(source, /slice\(0, 18\)/);
   assert.match(source, /slice\(0, 5\)/);
   assert.match(source, /copyCompactPacketButton\.addEventListener\("click", copyCompactReviewPacket\)/);
 });
