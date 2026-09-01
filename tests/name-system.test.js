@@ -195,6 +195,11 @@ test("name-bank research prompt audits Markdown first and produces parseable one
   assert.match(source, /do not search the file library again; begin online discovery/);
   assert.match(source, /Never stop after saying that you searched files or name libraries/);
   assert.match(source, /A response that lacks candidate rows is incomplete and must not be sent/);
+  assert.match(source, /DOWNLOADABLE FILE — REQUIRED DELIVERABLE/);
+  assert.match(source, /Create a real UTF-8 Markdown file named exactly/);
+  assert.match(source, /Do not use a rendered Markdown chat message as the primary deliverable/);
+  assert.match(source, /reopen or read the saved file and verify that it is non-empty/);
+  assert.match(source, /panic_\$\{fileSlug\}_name_bank_\$\{versionDate\}\.md/);
   assert.match(source, /One word only; letters, apostrophe, or hyphen/);
   assert.match(source, /Do not pad to \$\{target\}/);
   assert.match(source, /\*\*Clothing:\*\* \$\{clothing\}/);

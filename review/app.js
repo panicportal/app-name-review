@@ -4985,6 +4985,13 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
     existingEntries.push(`${entry.name} [${entry.tier || "Unranked"}] — ${entry.reference || "no stored reference"}`);
   }));
   const target = nameBankCapacityTarget(routedCharacters.length);
+  const versionDate = new Date().toISOString().slice(0, 10);
+  const fileSlug = `${clothing}-${gender}`
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+  const outputFilename = `panic_${fileSlug}_name_bank_${versionDate}.md`;
   const referenceTraits = [...new Set([clothing, "Aware frog", "Brownie cowboy", "Blood crowned saint"])];
   const references = referenceTraits.map(trait => {
     const examples = liveLockedExamplesForClothing(trait, 14);
@@ -5002,6 +5009,14 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
     `- If an external page or optional file cannot be accessed, note that once in the final audit and continue with the evidence that is available. Missing optional evidence must not block all output.`,
     `- Do not ask for confirmation before producing candidates.`,
     `- Success means the response contains ranked, directly relevant, one-word candidates in the required Markdown tables—not merely an explanation of the research process.`,
+    `DOWNLOADABLE FILE — REQUIRED DELIVERABLE`,
+    `- Create a real UTF-8 Markdown file named exactly: ${outputFilename}`,
+    `- Use the available file-creation, data-analysis, or code tool to write the complete bank into that file. Saving it in the tool's output directory is acceptable.`,
+    `- Do not use a rendered Markdown chat message as the primary deliverable. The user needs an actual .md file that can be downloaded and uploaded to Name Studio.`,
+    `- Before responding, reopen or read the saved file and verify that it is non-empty, contains the exact Clothing and Gender metadata, and contains the S-tier, A-tier, and B-tier tables.`,
+    `- Attach the completed ${outputFilename} file to the final response with a working download control or link.`,
+    `- Keep the final chat message short: provide the attached filename, proposal count, preserved-entry count, and shortfall count. Do not duplicate the full bank inline when the attachment succeeds.`,
+    `- If file creation is genuinely unavailable after attempting it, state “FILE CREATION UNAVAILABLE” clearly and provide the complete Markdown in one fenced block as an emergency fallback. Never silently return only rendered tables.`,
     `Clothing: ${clothing}`,
     `Gender: ${gender}`,
     `Characters on this exact Clothing + Body-gender route: ${routedCharacters.length}`,
@@ -5048,7 +5063,7 @@ function nameBankGenerationPrompt(character, matchingBanks = []) {
     `- If the full target will require another message, end only after the completed tables and include one final line: “Continuation needed: N additional researched candidates.”`,
     `REQUIRED MARKDOWN OUTPUT`,
     `Start the response directly with the following parseable structure. Do not put a preamble, progress update, or plan before it:`,
-    `**Version:** YYYY-MM-DD`,
+    `**Version:** ${versionDate}`,
     `**Clothing:** ${clothing}`,
     `**Gender:** ${gender}`,
     `## S-tier`,
@@ -5073,7 +5088,7 @@ async function copyNameBankGenerationPrompt() {
     );
     await copyText(
       nameBankGenerationPrompt(character, matching),
-      `Copied a ${character.clothing} · ${character.gender_from_body} name-bank research prompt.`
+      `Copied a ${character.clothing} · ${character.gender_from_body} downloadable MD bank prompt.`
     );
   } catch (error) {
     showToast(`Could not prepare bank prompt: ${error.message}`, "error");
