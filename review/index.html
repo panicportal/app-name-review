@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v23.1 literal-trait workshop / closed Japanese bank</small></span>
+        <span><strong>NAME STUDIO</strong><small>v23.2 explicit Japanese origin / custom-safe</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -484,6 +484,28 @@
         <label class="full-name-edit-field"><span>First name</span><input id="fullNameEditFirstInput" maxlength="24" autocomplete="off" spellcheck="false"></label>
         <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false"></label>
       </div>
+      <section class="name-origin-controls" aria-label="Name bank origins">
+        <label>
+          <span>First-name bank</span>
+          <select id="fullNameEditFirstOrigin">
+            <option value="auto">Auto-detect exact bank match</option>
+            <option value="western">Western bank / custom Western</option>
+            <option value="japanese_bank">Japanese · exact artist bank</option>
+            <option value="japanese_custom">Japanese · artist-created custom</option>
+          </select>
+          <small id="fullNameEditFirstOriginHelp">Exact Japanese entries are detected automatically. Choose artist-created custom only when the artist confirms the origin.</small>
+        </label>
+        <label>
+          <span>Surname bank and structure</span>
+          <select id="fullNameEditSurnameOrigin">
+            <option value="auto">Auto-detect exact bank match</option>
+            <option value="western">Western · two trait components</option>
+            <option value="japanese_bank">Japanese · exact artist bank (one word)</option>
+            <option value="japanese_custom">Japanese · artist-created custom (one word)</option>
+          </select>
+          <small id="fullNameEditSurnameOriginHelp">A custom Japanese surname stays atomic and does not require two Western trait fragments.</small>
+        </label>
+      </section>
       <section class="surname-seam" aria-label="Two surname sources">
         <div class="surname-seam-head"><div><span>Hidden semantic seam</span><b>Two traits · one surname</b></div><button type="button" id="fullNameEditFlip">Swap order</button></div>
         <div class="surname-source-grid">

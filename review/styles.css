@@ -1893,6 +1893,12 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .surname-detect-status.error { border-left: 5px solid #d65b64; background: #f8e5e7; color: #8f3039; }
 .full-name-edit-grid .full-name-edit-field { margin-top: 16px; }
 .full-name-edit-grid input[readonly] { background: #e8eee9; color: #36524b; }
+.name-origin-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.name-origin-controls label { display: grid; gap: 6px; padding: 11px; border: 1px solid #9ead9f; background: #f7f4e8; }
+.name-origin-controls span { color: #5d6e68; font: 900 8px/1 var(--utility); text-transform: uppercase; }
+.name-origin-controls select { width: 100%; min-height: 44px; padding: 8px; border: 1px solid #8ea19b; background: #fffdf5; color: var(--ink); font: 13px/1.2 var(--body); }
+.name-origin-controls small { color: #60716d; font-size: 9px; line-height: 1.4; }
+.name-origin-controls label.artist-custom-origin { border-left: 5px solid var(--amber); background: #fff4d9; }
 .surname-seam { margin-top: 13px; padding: 14px; border: 1px solid #8ea19b; border-top: 5px solid var(--amber); background: #edf1e8; }
 .surname-seam-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .surname-seam-head div { display: grid; gap: 3px; }
@@ -1990,7 +1996,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 @media (max-width: 760px) {
   .character-copy-toolbar { display: grid; grid-template-columns: 1fr 1fr; }
   .surname-repair-banner { align-items: stretch; flex-direction: column; }
-  .full-name-paste-row, .full-name-edit-grid, .surname-source-grid { grid-template-columns: 1fr; }
+  .full-name-paste-row, .full-name-edit-grid, .name-origin-controls, .surname-source-grid { grid-template-columns: 1fr; }
   .full-name-edit-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
   .chatgpt-handoff-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
   .chatgpt-handoff-shell { max-height: 100dvh; }

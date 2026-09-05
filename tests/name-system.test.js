@@ -136,7 +136,7 @@ test("structured surname rejects Body, Clothing, duplicate routes, and display d
 
 test("UI contains copy, ChatGPT handoff, repair, assistant, and bank controls", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
-  for (const id of ["copyTraitsButton", "copyImageButton", "copyCompactPacketButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
+  for (const id of ["copyTraitsButton", "copyImageButton", "copyCompactPacketButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditFirstOrigin", "fullNameEditSurnameOrigin", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
 });
@@ -325,6 +325,12 @@ test("manual entry detects Japanese first and surname banks before saving", () =
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
   assert.match(source, /replacement_language: detectedFirstOrigin/);
   assert.match(source, /replacement_language: "japanese"/);
+  assert.match(source, /Artist-entered custom Japanese first name · explicit origin/);
+  assert.match(source, /Artist-entered custom Japanese surname · explicit origin/);
+  assert.match(source, /replacement_origin_kind: japaneseCustom \? "artist_custom" : "authoritative_bank"/);
+  assert.match(source, /custom Japanese surname\. It is stored as one atomic surname/);
+  assert.match(source, /Name Studio will not guess from spelling/);
+  assert.match(source, /Surname part 2 is greenlit\. Unlock it before converting/);
   assert.match(endpoint, /stateDecisionSignature\(next\) !== beforeSignature/);
   assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
 });
