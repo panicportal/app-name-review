@@ -339,12 +339,18 @@ test("origin audit never reverses an explicit artist-custom Japanese origin", ()
   );
 });
 
-test("manual entry detects Japanese first and surname banks before saving", () => {
+test("manual origin selection supports exact and custom Japanese names without resetting", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
+  assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
+  assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
+  assert.match(html, /app\.js\?v=25-0-explicit-name-origin/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
+  assert.match(source, /if \(mode === "japanese"\)/);
+  assert.match(source, /mode: match \? "japanese_bank" : "japanese_custom"/);
   assert.match(source, /replacement_language: detectedFirstOrigin/);
   assert.match(source, /replacement_language: "japanese"/);
   assert.match(source, /Artist-entered custom Japanese first name · explicit origin/);
@@ -353,6 +359,10 @@ test("manual entry detects Japanese first and surname banks before saving", () =
   assert.match(source, /custom Japanese surname\. It is stored as one atomic surname/);
   assert.match(source, /Name Studio will not guess from spelling/);
   assert.match(source, /Surname part 2 is greenlit\. Unlock it before converting/);
+  assert.match(source, /if \(els\.fullNameEditSurnameOrigin\.value === "auto"\)/);
+  assert.doesNotMatch(source, /fullNameEditSurnameOrigin\.value !== "japanese_custom"/);
+  assert.match(source, /decision: parsed\.surname !== currentSurname \? \(current2\.decision \|\| "replace"\) : current2\.decision/);
+  assert.match(source, /if \(state\.cloudAuthenticated\) await pushCloudState\(\)/);
   assert.match(endpoint, /stateDecisionSignature\(next\) !== beforeSignature/);
   assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
 });

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=23-1-search-repair">
+  <link rel="stylesheet" href="/review/styles.css?v=25-0-explicit-name-origin">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v23.3 inline compact banks / custom-safe</small></span>
+        <span><strong>NAME STUDIO</strong><small>v25 explicit Western / Japanese paste mode</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -477,35 +477,38 @@
       </header>
       <div class="full-name-paste-row">
         <label><span>Fast copy-paste · first name + final surname</span><input id="fullNamePasteInput" maxlength="76" autocomplete="off" spellcheck="false"></label>
-        <button type="button" id="fullNameDetectButton">Detect 2 surname parts</button>
-      </div>
-      <div class="surname-detect-status" id="fullNameDetectStatus">Paste the complete two-word name from ChatGPT. Name Studio will recover the two surname words and exact traits.</div>
-      <div class="full-name-edit-grid">
-        <label class="full-name-edit-field"><span>First name</span><input id="fullNameEditFirstInput" maxlength="24" autocomplete="off" spellcheck="false"></label>
-        <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false"></label>
+        <button type="button" id="fullNameDetectButton">Apply selected format</button>
       </div>
       <section class="name-origin-controls" aria-label="Name bank origins">
+        <header>
+          <span>Required before saving</span>
+          <strong>Choose how this pasted name should be stored</strong>
+        </header>
         <label>
           <span>First-name bank</span>
           <select id="fullNameEditFirstOrigin">
-            <option value="auto">Auto-detect exact bank match</option>
-            <option value="western">Western bank / custom Western</option>
-            <option value="japanese_bank">Japanese · exact artist bank</option>
-            <option value="japanese_custom">Japanese · artist-created custom</option>
+            <option value="auto">Auto-detect; ask me when uncertain</option>
+            <option value="western">Western — manual confirmation</option>
+            <option value="japanese">Japanese — exact bank or artist custom</option>
           </select>
-          <small id="fullNameEditFirstOriginHelp">Exact Japanese entries are detected automatically. Choose artist-created custom only when the artist confirms the origin.</small>
+          <small id="fullNameEditFirstOriginHelp">Manual selection wins. Japanese exact-bank matches retain their bank route; unmatched artist names are stored as explicit Japanese custom names.</small>
         </label>
         <label>
           <span>Surname bank and structure</span>
           <select id="fullNameEditSurnameOrigin">
-            <option value="auto">Auto-detect exact bank match</option>
-            <option value="western">Western · two trait components</option>
-            <option value="japanese_bank">Japanese · exact artist bank (one word)</option>
-            <option value="japanese_custom">Japanese · artist-created custom (one word)</option>
+            <option value="auto">Auto-detect; ask me when uncertain</option>
+            <option value="western">Western — 2 trait components</option>
+            <option value="japanese">Japanese — 1 atomic surname</option>
           </select>
-          <small id="fullNameEditSurnameOriginHelp">A custom Japanese surname stays atomic and does not require two Western trait fragments.</small>
+          <small id="fullNameEditSurnameOriginHelp">Choose Japanese for names such as Gekkou. It stays one word and never asks for Western trait fragments.</small>
         </label>
+        <p><b>Western surname:</b> one visible word built from two selected trait components. <b>Japanese surname:</b> one atomic word, whether it is in the artist CSV or newly created by the artist.</p>
       </section>
+      <div class="surname-detect-status" id="fullNameDetectStatus">Paste the complete two-word name, choose Western or Japanese above, then apply the selected format.</div>
+      <div class="full-name-edit-grid">
+        <label class="full-name-edit-field"><span>First name</span><input id="fullNameEditFirstInput" maxlength="24" autocomplete="off" spellcheck="false"></label>
+        <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false"></label>
+      </div>
       <section class="surname-seam" aria-label="Two surname sources">
         <div class="surname-seam-head"><div><span>Hidden semantic seam</span><b>Two traits · one surname</b></div><button type="button" id="fullNameEditFlip">Swap order</button></div>
         <div class="surname-source-grid">
@@ -765,7 +768,7 @@
     <button class="mobile-confirm-all" id="mobileConfirmAll">✓✓<span>Confirm all</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=24-0-bank-origin"></script>
+  <script src="/review/app.js?v=25-0-explicit-name-origin"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>
