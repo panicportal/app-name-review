@@ -5692,6 +5692,9 @@ function bindEvents() {
       els.fullNameDetectStatus.classList.add("success");
     } else if (els.fullNameEditSurnameOrigin.value === "auto") {
       requestSurnameDetection({ quiet: true });
+    } else {
+      els.fullNameDetectStatus.textContent = "Western selected: confirm two distinct trait sources and their component words. Your typed surname is preserved.";
+      els.fullNameDetectStatus.classList.remove("error", "success");
     }
   });
   els.fullNameEditFlip.addEventListener("click", () => {
