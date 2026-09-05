@@ -317,6 +317,26 @@ test("origin audit corrects provenance only for unambiguous replacement-bank mis
   assert.equal(state.curation.records["41"].parts.first.decision, "approve");
 });
 
+test("origin audit never reverses an explicit artist-custom Japanese origin", () => {
+  const state = {
+    curation: { records: {
+      "182": { parts: { first: {
+        decision: "approve",
+        replacement_value: "Yui",
+        replacement_language: "japanese",
+        replacement_origin_kind: "artist_custom",
+      } } },
+    } },
+  };
+  const audit = auditOriginMismatches(state);
+  assert.equal(audit.corrections.length, 0);
+  assert.equal(audit.ambiguous.length, 0);
+  assert.deepEqual(
+    audit.confirmedCustom.map((row) => [row.character_id, row.value, row.evidence]),
+    [["182", "Yui", "explicit_artist_custom_origin"]]
+  );
+});
+
 test("manual entry detects Japanese first and surname banks before saving", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");

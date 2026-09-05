@@ -69,6 +69,7 @@ module.exports = async function handler(req, res) {
         dry_run: true,
         revision: Number(state.revision || 0),
         confirmed: audit.corrections.length,
+        protected_artist_custom: audit.confirmedCustom.length,
         ambiguous: audit.ambiguous.length,
         unknown: audit.unknown.length,
         corrections: audit.corrections,

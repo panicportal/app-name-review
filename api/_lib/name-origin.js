@@ -146,6 +146,7 @@ function auditOriginMismatches(state) {
   const corrections = [];
   const ambiguous = [];
   const unknown = [];
+  const confirmedCustom = [];
   for (const character of review.characters) {
     const id = String(character.id);
     const record = state.curation?.records?.[id];
@@ -154,7 +155,7 @@ function auditOriginMismatches(state) {
     if (first) {
       const result = detectFirstOrigin(character, first.replacement_value);
       collectAuditResult({
-        corrections, ambiguous, unknown, result, id, key: "first", part: first,
+        corrections, ambiguous, unknown, confirmedCustom, result, id, key: "first", part: first,
         fallback: character.first_name_language || "western",
       });
     }
@@ -167,15 +168,15 @@ function auditOriginMismatches(state) {
         part.replacement_trait_source
       );
       collectAuditResult({
-        corrections, ambiguous, unknown, result, id, key, part,
+        corrections, ambiguous, unknown, confirmedCustom, result, id, key, part,
         fallback: character.surname_language || "western",
       });
     }
   }
-  return { corrections, ambiguous, unknown };
+  return { corrections, ambiguous, unknown, confirmedCustom };
 }
 
-function collectAuditResult({ corrections, ambiguous, unknown, result, id, key, part, fallback }) {
+function collectAuditResult({ corrections, ambiguous, unknown, confirmedCustom, result, id, key, part, fallback }) {
   const currentOrigin = part.replacement_language || fallback;
   const row = {
     character_id: id,
@@ -186,6 +187,14 @@ function collectAuditResult({ corrections, ambiguous, unknown, result, id, key, 
     exact_source_route: result.best_match?.route || part.replacement_trait_source || "",
     evidence: result.evidence,
   };
+  if (part.replacement_origin_kind === "artist_custom") {
+    confirmedCustom.push({
+      ...row,
+      detected_origin: currentOrigin,
+      evidence: "explicit_artist_custom_origin",
+    });
+    return;
+  }
   if (["japanese", "western"].includes(result.origin) && result.origin !== currentOrigin) {
     corrections.push(row);
   } else if (result.origin === "ambiguous") {
