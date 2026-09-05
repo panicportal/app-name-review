@@ -1,0 +1,6 @@
+audits/**
+.env*
+.git/**
+node_modules/**
+tests/**
+scripts/**
