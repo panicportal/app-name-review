@@ -345,7 +345,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=25-0-explicit-name-origin/);
+  assert.match(html, /app\.js\?v=26-0-studio-reliability/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
@@ -357,7 +357,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   assert.match(source, /Artist-entered custom Japanese surname · explicit origin/);
   assert.match(source, /replacement_origin_kind: japaneseCustom \? "artist_custom" : "authoritative_bank"/);
   assert.match(source, /custom Japanese surname\. It is stored as one atomic surname/);
-  assert.match(source, /Name Studio will not guess from spelling/);
+  assert.match(source, /could not be classified automatically/);
   assert.match(source, /Surname part 2 is greenlit\. Unlock it before converting/);
   assert.match(source, /if \(els\.fullNameEditSurnameOrigin\.value === "auto"\)/);
   assert.doesNotMatch(source, /fullNameEditSurnameOrigin\.value !== "japanese_custom"/);
@@ -381,7 +381,7 @@ test("automatic repair endpoint uses revision-checked atomic storage", () => {
   const store = fs.readFileSync(path.join(__dirname, "..", "api", "_lib", "store.js"), "utf8");
   assert.match(endpoint, /mode !== "apply_confirmed"/);
   assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
-  assert.match(endpoint, /visible_surname_would_change/);
+  assert.match(fs.readFileSync(path.join(__dirname, "..", "api", "_lib", "repair-application.js"), "utf8"), /visible_surname_would_change/);
   assert.match(store, /async function compareAndSwapState/);
   assert.match(store, /decoded\.revision/);
 });

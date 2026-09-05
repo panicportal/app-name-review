@@ -187,7 +187,7 @@ function collectAuditResult({ corrections, ambiguous, unknown, confirmedCustom, 
     exact_source_route: result.best_match?.route || part.replacement_trait_source || "",
     evidence: result.evidence,
   };
-  if (part.replacement_origin_kind === "artist_custom") {
+  if (part.replacement_origin_kind === "artist_custom" || part.replacement_origin_confirmed_by_user === true) {
     confirmedCustom.push({
       ...row,
       detected_origin: currentOrigin,

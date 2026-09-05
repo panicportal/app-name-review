@@ -122,7 +122,7 @@ function sourceCandidates(character, state) {
     for (const key of ["surname_part_1", "surname_part_2"]) {
       const part = record?.parts?.[key];
       const source = part?.replacement_trait_source;
-      if (!bySource.has(source) || part?.disabled) continue;
+      if (!bySource.has(source) || part?.disabled || part?.deleted_at || part?.replacement_language !== "western") continue;
       const text = cleanComponent(part.replacement_value);
       if (!text || text.length > 16) continue;
       bySource.get(source).push({ text, source_raw: source, rank: 20, evidence: "stored_team_fragment" });
@@ -194,6 +194,7 @@ function exactSplits(target, character, state) {
 
 function safeAutomaticRepair(proposals = []) {
   const top = proposals[0];
+  if (!top) return { safe: false, proposal: null, reason: "no_supported_two_trait_split" };
   if (!top || Number(top.confidence_score || 0) < 85) {
     return { safe: false, proposal: top || null, reason: "confidence_below_85" };
   }
@@ -258,7 +259,7 @@ function repairCandidates(character, record, state, requestedSurname = "") {
 }
 
 function shouldOfferRepair(character, record, state) {
-  if (!record || !isGreenlit(record)) return false;
+  if (!record || record.deleted_at) return false;
   const part1 = record.parts?.surname_part_1;
   const part2 = record.parts?.surname_part_2;
   const explicitLanguages = [part1, part2]
@@ -267,9 +268,10 @@ function shouldOfferRepair(character, record, state) {
   const western = explicitLanguages.includes("western") ||
     (!explicitLanguages.includes("japanese") && character.surname_language === "western");
   if (!western) return false;
+  if (hasValidStructuredSurname(record) && !record.normalized_name.needs_surname_component_repair) return false;
   const collapsed = Boolean(
     part1?.replacement_value &&
-    (!part2 || part2.disabled || part2.deleted_at || !part2.replacement_value)
+    (part2?.disabled || part2?.deleted_at || !(part2?.replacement_value || character.surname_component_2 || character.surname_detail?.component_2))
   );
   if (collapsed) return true;
   // Detect the v20 failure where a complete compound was saved as one of two

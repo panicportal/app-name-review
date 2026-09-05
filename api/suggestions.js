@@ -128,8 +128,9 @@ function liveSurnameBank(state, traitSource) {
       const source = saved.replacement_trait_source || original.source;
       if (source !== traitSource) continue;
       const value = saved.replacement_value || original.value;
-      const isWestern = saved.replacement_language === "western" ||
-        /manual team edit|western/i.test(saved.replacement_source || "");
+      const isWestern = saved.replacement_language
+        ? saved.replacement_language === "western"
+        : /manual team edit|western/i.test(saved.replacement_source || "");
       if (saved.replacement_value && isWestern) {
         add(custom, value, {
           language: "western",
@@ -210,8 +211,10 @@ function inspiredSurnameCandidates(traitSource, catalogCandidates, liveCandidate
 }
 
 function surnameCandidatesFor(state, traitSource, language) {
+  const westernEligible = require("./_lib/name-model").ELIGIBLE_SURNAME_TRAITS.has(String(traitSource).split(":")[0]);
   const bank = catalog.surname[traitSource] || {};
   if (language === "japanese") return bank.japanese || [];
+  if (!westernEligible) return language === "western" ? [] : bank.japanese || [];
   const reviewed = (bank.western || []).map((candidate) => ({
     ...candidate,
     surname_bank_section: candidate.surname_bank_section || "Reviewed trait bank",

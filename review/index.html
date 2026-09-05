@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=25-0-explicit-name-origin">
+  <link rel="stylesheet" href="/review/styles.css?v=26-0-studio-reliability">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v25 explicit Western / Japanese paste mode</small></span>
+        <span><strong>NAME STUDIO</strong><small>v26 · explicit origins &amp; source review</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -55,6 +55,7 @@
           <input id="reviewerName" autocomplete="name" placeholder="Add your name">
         </label>
         <div class="save-state"><i></i><span id="saveState">Preparing cloud sync…</span></div>
+        <div class="source-review-tools"><button id="reviewSourceIssues" type="button">Review surname sources</button><button id="exportSourceAudit" type="button">Download source audit</button></div>
         <div class="mobile-data-actions">
           <button id="mobileImportButton">Import decisions</button>
           <button id="mobileExportButton">Export backup</button>
@@ -154,7 +155,7 @@
           <button class="ask-ai-button feature-paused" id="askAiButton" type="button">Ask AI</button>
         </div>
         <div class="surname-repair-banner" id="surnameRepairBanner" hidden>
-          <div><b>Compound sources need repair</b><span>The visible name is preserved, but an older full-name edit stored both surname ideas in one slot.</span></div>
+          <div><b>Surname sources need review</b><span>This Western surname has no confirmed pair of distinct trait sources. Review the existing word or choose Japanese if it is an atomic Japanese surname. Your saved name and decisions are preserved.</span></div>
           <button id="repairSurnameButton" type="button">Fix surname sources</button>
         </div>
         <div class="character-curation-status">
@@ -518,7 +519,8 @@
         </div>
         <div class="surname-seam-preview"><span id="fullNameEditFirst">—</span><strong id="fullNameEditSurname">—</strong><small id="fullNameEditSeamLabel">Select two traits</small></div>
       </section>
-      <p class="full-name-edit-status" id="fullNameEditStatus"></p>
+      <div class="full-name-final-preview"><small>Your edited name</small><strong id="fullNameLivePreview" aria-live="polite"></strong></div>
+      <p class="full-name-edit-status" id="fullNameEditStatus" role="status"></p>
       <div class="full-name-edit-actions">
         <button type="button" id="fullNameEditCancel">Cancel</button>
         <button type="submit" class="full-name-edit-save" id="fullNameEditSave">Save edited name</button>
@@ -768,7 +770,7 @@
     <button class="mobile-confirm-all" id="mobileConfirmAll">✓✓<span>Confirm all</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=25-0-explicit-name-origin"></script>
+  <script src="/review/app.js?v=26-0-studio-reliability"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>
