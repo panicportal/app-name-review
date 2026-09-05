@@ -195,11 +195,13 @@ test("compact review packet uses stored banks with a strict low-token output", (
   assert.match(source, /function compactChatGptHandoffText/);
   assert.match(source, /Maximum final response: 450 words/);
   assert.match(source, /exactly 3 family tables with exactly 4 options each \(12 total\)/);
-  assert.match(source, /FIRST-NAME FILE EXCEPTION/);
-  assert.match(source, /Every offered first name must be copied exactly from a row in that matching MD file/);
+  assert.match(source, /INLINE FIRST-NAME BANK RULE/);
+  assert.match(source, /Every offered first name must be copied exactly from an EXACT INLINE ROW/);
   assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
-  assert.match(source, /MD BANK UNAVAILABLE/);
-  assert.match(source, /MD BANK USED: <exact filename>/);
+  assert.match(source, /Never answer “MD BANK UNAVAILABLE” when VERIFIED AND EMBEDDED BY NAME STUDIO appears below/);
+  assert.match(source, /INLINE MD BANK USED: <exact filename>/);
+  assert.match(source, /Upload the \$\{character\.clothing\} · \$\{character\.gender_from_body\} MD bank here once/);
+  assert.match(source, /await openNameBanks\(\)/);
   assert.match(source, /candidate\.origin === "Uploaded MD bank"/);
   assert.match(source, /slice\(0, 18\)/);
   assert.match(source, /slice\(0, 5\)/);

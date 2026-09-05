@@ -4680,16 +4680,16 @@ function compactFirstNameBankText(character, firstContext = {}) {
     .slice(0, 18);
   const matchingFiles = firstContext.matchingFiles || [];
   return [
-    `FIRST-NAME AUTHORITY — EXACT MD BANK ONLY`,
+    `FIRST-NAME AUTHORITY — INLINE NAME STUDIO MD SNAPSHOT ONLY`,
     `Current: ${current || "—"}`,
     `Required metadata: Clothing:${character.clothing} + Gender:${character.gender_from_body}`,
     `Expected attached filename pattern: ${expectedFilePattern}`,
     matchingFiles.length
-      ? `Name Studio already parsed: ${matchingFiles.join(", ")}. The exact rotating MD rows below are authoritative.`
-      : `Name Studio has not parsed a matching MD upload. Open exactly one matching Markdown bank already attached in this ChatGPT project/conversation and verify its **Clothing:** and **Gender:** metadata before selecting names.`,
+      ? `VERIFIED AND EMBEDDED BY NAME STUDIO: ${matchingFiles.join(", ")}. Do not search ChatGPT Project files or attachments; the exact rotating rows below are the authoritative bank snapshot for this review.`
+      : `FIRST-NAME BANK MISSING FROM NAME STUDIO. This packet must not be used until the matching Markdown bank is uploaded to Name Studio.`,
     candidates.length
-      ? candidates.map(candidate => `${candidate.name} [${candidate.source}]`).join(", ")
-      : `No exact MD rows are embedded. Do not use the app's curated bank, Iconic/Fun bank, ordinary-name bank, memory, or invented names as substitutes. If the matching attached MD cannot be opened and verified, preserve ${current || "the current first name"} and report “MD BANK UNAVAILABLE”.`
+      ? `EXACT INLINE ROWS:\n${candidates.map(candidate => `- ${candidate.name} [${candidate.source}]`).join("\n")}`
+      : `The matching Name Studio bank contains no currently unused exact rows in this rotation. Preserve ${current || "the current first name"}; do not substitute from memory or another source.`
   ].join("\n");
 }
 
@@ -4733,10 +4733,10 @@ function compactChatGptHandoffText(character, context = {}) {
     `# ?an!c COMPACT BANK-BASED NAME REVIEW`,
     `Return the finished review immediately. This is a fast selection task using supplied data—not a research or bank-building task.`,
     `SPEED / TOKEN RULES`,
-    `- Do not browse the web, research new names, search unrelated files, inspect general libraries, or produce progress updates.`,
-    `- FIRST-NAME FILE EXCEPTION: when the first name is open, read exactly one attached MD bank whose Clothing and Gender metadata match this character. This required bank lookup is not optional and is the only allowed file search.`,
-    `- Every offered first name must be copied exactly from a row in that matching MD file. Curated, Iconic/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden unless the exact same spelling is visibly present in the verified MD bank.`,
-    `- If the matching MD bank cannot be accessed or verified, offer zero first-name replacements and keep the current first name. Never fill the gap from another source.`,
+    `- Do not browse the web, research new names, search files or attachments, inspect general libraries, or produce progress updates.`,
+    `- INLINE FIRST-NAME BANK RULE: Name Studio has already opened, parsed, route-matched, and embedded the relevant Markdown rows below. Use that inline snapshot directly. Do not try to reopen the same file from ChatGPT Project storage.`,
+    `- Every offered first name must be copied exactly from an EXACT INLINE ROW below. Curated, Iconic/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden unless the exact spelling is present in that inline list. Earlier chat answers may be context, but they are not bank authority unless the same spelling appears inline now.`,
+    `- Never answer “MD BANK UNAVAILABLE” when VERIFIED AND EMBEDDED BY NAME STUDIO appears below. The inline rows are the verified bank evidence for this turn.`,
     `- Use only the portrait, exact live traits, protected decisions, stored first-name shortlist, and compact surname roots below.`,
     `- Maximum final response: 450 words. Do not restate this packet, the master rules, or long explanations.`,
     `- Never change GREENLIT parts. Body alone controls first-name gender. Do not invent Japanese names.`,
@@ -4744,7 +4744,7 @@ function compactChatGptHandoffText(character, context = {}) {
     `- Prefer the rarest eligible route, readable joins, root diversity, and compact collectible rhythm. Avoid abstract synonym pairs and mechanical padding.`,
     `REQUIRED COMPACT OUTPUT`,
     firstOpen
-      ? `1. FIRST NAME: begin with “MD BANK USED: <exact filename>”. Rank exactly 10 exact rows from that verified MD bank in one compact table (or every remaining row if fewer than 10). Columns: Name | MD tier | fit. No other sources.`
+      ? `1. FIRST NAME: begin with “INLINE MD BANK USED: <exact filename>”. Rank exactly 10 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 10). Columns: Name | MD tier | fit. Do not perform a file lookup and use no other sources.`
       : `1. FIRST NAME: one line confirming the GREENLIT first name is preserved. No alternatives.`,
     surnameOpen
       ? `2. SURNAMES: exactly 3 family tables with exactly 4 options each (12 total). Columns only: Surname | exact two routes | score.\n3. Rank the best 5 surnames in one line.\n4. Rank exactly 3 complete full names.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
@@ -5351,11 +5351,25 @@ async function copyCompactReviewPacket() {
   try {
     const compact = await buildCompactReviewPacket(character);
     const mdRows = compact.firstContext.candidates.filter(candidate => candidate.origin === "Uploaded MD bank").length;
+    const firstOpen = partReview(character.id, "first").decision !== "approve";
+    const matchingBankAvailable = (compact.firstContext.matchingFiles || []).length > 0;
+    if (firstOpen && (!matchingBankAvailable || mdRows === 0)) {
+      els.nameBankClothing.value = character.clothing;
+      els.nameBankGender.value = character.gender_from_body;
+      await openNameBanks();
+      showToast(
+        matchingBankAvailable
+          ? `The ${character.clothing} · ${character.gender_from_body} bank has no unused rows to embed. Review or replace that bank first.`
+          : `Upload the ${character.clothing} · ${character.gender_from_body} MD bank here once. Compact reviews will then embed it and will not depend on ChatGPT attachment search.`,
+        "error"
+      );
+      return;
+    }
     await copyText(
       compact.packet,
       mdRows
-        ? `Copied compact rotation ${compact.rotationPass}: ${mdRows} exact MD rows embedded and 12 surnames requested.`
-        : `Copied compact rotation ${compact.rotationPass}: matching attached MD bank required; fallback first names are blocked.`
+        ? `Copied compact rotation ${compact.rotationPass}: ${mdRows} verified MD rows embedded directly and 12 surnames requested.`
+        : `Copied compact rotation ${compact.rotationPass}: first name is protected; no MD lookup is needed.`
     );
   } catch (error) {
     showToast(`Could not build compact review: ${error.message}`, "error");
