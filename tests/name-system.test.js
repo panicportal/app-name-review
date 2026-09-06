@@ -198,9 +198,11 @@ test("compact review packet uses 30 bank names and diverse surname roots without
   assert.match(source, /INLINE FIRST-NAME BANK RULE/);
   assert.match(source, /Every offered first name must be copied exactly from an EXACT INLINE ROW/);
   assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
-  assert.match(source, /Never answer “MD BANK UNAVAILABLE” when VERIFIED AND EMBEDDED BY NAME STUDIO appears below/);
-  assert.match(source, /INLINE MD BANK USED: <exact filename>/);
-  assert.match(source, /NO MATCHING UPLOADED MD BANK IS EMBEDDED FOR THIS ROUTE/);
+  assert.match(source, /Never answer “MD BANK UNAVAILABLE” when any EXACT INLINE ROWS appear below/);
+  assert.match(source, /INLINE BANK USED: <exact source shown in the rows>/);
+  assert.match(source, /VERIFIED LOCAL BANK FALLBACK EMBEDDED BY NAME STUDIO/);
+  assert.match(source, /const candidates = \(mdCandidates\.length \? mdCandidates : allCandidates\)\.slice\(0, 30\)/);
+  assert.match(source, /uploaded MD, curated Clothing, or approved Iconic\/Fun/);
   assert.match(source, /Preserve \$\{effectivePartValue\(character, "first"\)/);
   const compactCopyStart = source.indexOf("async function copyCompactReviewPacket");
   const compactCopyEnd = source.indexOf("function bindEvents", compactCopyStart);
@@ -358,7 +360,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-1-one-click-compact/);
+  assert.match(html, /app\.js\?v=29-2-compact-bank-fallback/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

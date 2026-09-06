@@ -4754,21 +4754,24 @@ function compactFirstNameBankText(character, firstContext = {}) {
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_+|_+$/g, "");
   const expectedFilePattern = `panic_${fileSlug}_name_bank_*.md`;
-  const candidates = (firstContext.candidates || [])
-    .filter(candidate => candidate.origin === "Uploaded MD bank")
-    .slice(0, 30);
+  const allCandidates = firstContext.candidates || [];
+  const mdCandidates = allCandidates.filter(candidate => candidate.origin === "Uploaded MD bank");
+  const candidates = (mdCandidates.length ? mdCandidates : allCandidates).slice(0, 30);
   const matchingFiles = firstContext.matchingFiles || [];
+  const embeddedOrigins = [...new Set(candidates.map(candidate => candidate.origin).filter(Boolean))];
   return [
-    `FIRST-NAME AUTHORITY — INLINE NAME STUDIO MD SNAPSHOT ONLY`,
+    `FIRST-NAME AUTHORITY — INLINE NAME STUDIO BANK SNAPSHOT`,
     `Current: ${current || "—"}`,
     `Required metadata: Clothing:${character.clothing} + Gender:${character.gender_from_body}`,
     `Expected attached filename pattern: ${expectedFilePattern}`,
-    matchingFiles.length
+    mdCandidates.length
       ? `VERIFIED AND EMBEDDED BY NAME STUDIO: ${matchingFiles.join(", ")}. Do not search ChatGPT Project files or attachments; the exact rotating rows below are the authoritative bank snapshot for this review.`
-      : `NO MATCHING UPLOADED MD BANK IS EMBEDDED FOR THIS ROUTE. Preserve the current first name and continue the surname review; do not invent or substitute first names.`,
+      : candidates.length
+        ? `VERIFIED LOCAL BANK FALLBACK EMBEDDED BY NAME STUDIO: ${embeddedOrigins.join(" + ")}. No matching uploaded MD rows were available, so use these exact persistent Clothing/Iconic bank rows without browsing or searching Project files.`
+        : `NO VERIFIED INLINE BANK ROWS ARE AVAILABLE FOR THIS ROUTE. Preserve the current first name and continue the surname review; do not invent or substitute first names.`,
     candidates.length
       ? `EXACT INLINE ROWS — ROTATED SET ${Number(firstContext.rotationPass || 1)}:\n${candidates.map(candidate => `- ${candidate.name} [${candidate.source}]${candidate.connection ? ` — ${candidate.connection}` : ""}`).join("\n")}`
-      : `The matching Name Studio bank contains no currently unused exact rows in this rotation. Preserve ${current || "the current first name"}; do not substitute from memory or another source.`
+      : `No currently unused verified Name Studio bank rows were returned. Preserve ${current || "the current first name"}; do not substitute from memory or another source.`
   ].join("\n");
 }
 
@@ -4804,8 +4807,8 @@ function compactChatGptHandoffText(character, context = {}) {
   const rootBanks = context.surnameRootBanks || [];
   const rotationPass = Number(context.rotationPass || 1);
   const firstOpen = partReview(character.id, "first").decision !== "approve";
-  const verifiedFirstRows = (firstContext.candidates || []).filter(candidate => candidate.origin === "Uploaded MD bank");
-  const firstBankReady = (firstContext.matchingFiles || []).length > 0 && verifiedFirstRows.length > 0;
+  const inlineFirstRows = firstContext.candidates || [];
+  const firstBankReady = inlineFirstRows.length > 0;
   const surnameOpen = ["surname_part_1", "surname_part_2"].some(key =>
     partDefinitions(character).find(part => part.key === key)?.available &&
     partReview(character.id, key).decision !== "approve"
@@ -4815,9 +4818,9 @@ function compactChatGptHandoffText(character, context = {}) {
     `Return the finished review immediately. This is a fast selection task using supplied data—not a research or bank-building task.`,
     `SPEED / TOKEN RULES`,
     `- Do not browse the web, research new names, search files or attachments, inspect general libraries, or produce progress updates.`,
-    `- INLINE FIRST-NAME BANK RULE: Name Studio has already opened, parsed, route-matched, and embedded the relevant Markdown rows below. Use that inline snapshot directly. Do not try to reopen the same file from ChatGPT Project storage.`,
+    `- INLINE FIRST-NAME BANK RULE: Name Studio has already opened, route-matched, and embedded up to 30 verified rows below. Uploaded Markdown rows have first priority; when unavailable, the app embeds its persistent curated Clothing and approved Iconic/Fun bank rows. Use the inline snapshot directly and do not search ChatGPT Project storage.`,
     `- Every offered first name must be copied exactly from an EXACT INLINE ROW below. Curated, Iconic/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden unless the exact spelling is present in that inline list. Earlier chat answers may be context, but they are not bank authority unless the same spelling appears inline now.`,
-    `- Never answer “MD BANK UNAVAILABLE” when VERIFIED AND EMBEDDED BY NAME STUDIO appears below. The inline rows are the verified bank evidence for this turn.`,
+    `- Never answer “MD BANK UNAVAILABLE” when any EXACT INLINE ROWS appear below. Those rows are already verified bank evidence for this turn, regardless of whether their source is uploaded MD, curated Clothing, or approved Iconic/Fun.`,
     `- Use only the portrait, exact live traits, protected decisions, stored first-name shortlist, and compact surname roots below.`,
     `- Maximum final response: 900 words. Use compact tables and no prose essays. Do not restate this packet or the master rules.`,
     `- Never change GREENLIT parts. Body alone controls first-name gender. Do not invent Japanese names.`,
@@ -4828,9 +4831,9 @@ function compactChatGptHandoffText(character, context = {}) {
     `- ROOT ROTATION: across the surname workshop, no component root may appear more than 3 times. Within one family, use at least 3 different roots from EACH route, and use no root more than twice. Never create six variations by holding one word fixed and changing only its partner. Test both component orders where readable. Silently replace any option that violates these limits before answering.`,
     `REQUIRED COMPACT OUTPUT`,
     firstOpen && firstBankReady
-      ? `1. FIRST NAMES: begin with “INLINE MD BANK USED: <exact filename>”. Rank exactly 30 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 30). Columns: Name | portrait/trait fit | score. Base fit on the attached PNG plus exact traits, not bank order. Do not perform a file lookup and use no other sources.`
+      ? `1. FIRST NAMES: begin with “INLINE BANK USED: <exact source shown in the rows>”. Rank exactly 30 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 30). Columns: Name | portrait/trait fit | score. Base fit on the attached PNG plus exact traits, not bank order. Do not perform a file lookup and use no other sources.`
       : firstOpen
-        ? `1. FIRST NAME: no verified uploaded MD rows are embedded for this route. Preserve ${effectivePartValue(character, "first") || "the current first name"}; provide no first-name alternatives and continue directly to surnames.`
+        ? `1. FIRST NAME: no verified inline bank rows were returned for this route. Preserve ${effectivePartValue(character, "first") || "the current first name"}; provide no first-name alternatives and continue directly to surnames.`
       : `1. FIRST NAME: one line confirming the GREENLIT first name is preserved. No alternatives.`,
     surnameOpen
       ? `2. SURNAMES: exactly 5 family tables with exactly 6 options each (30 total). Every table must obey the root-rotation limits above. Columns only: Surname | exact two routes | score.\n3. Rank the best 10 surnames in one line.\n4. Rank exactly 5 complete full names, considering portrait fit and full-name rhythm together.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
