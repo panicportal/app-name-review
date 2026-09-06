@@ -4650,9 +4650,10 @@ async function fetchHandoffFirstNameCandidates(character, rotationPass) {
     connection: entry.reference || `Team-researched ${character.clothing} name`,
     origin: "Uploaded MD bank"
   }))).filter(candidate => !used.has(String(candidate.name || "").toLowerCase()));
-  const rotatedMd = rotatePacketOptions(mdCandidates, rotationPass, 17);
-  const rotatedNormal = rotatePacketOptions(bySource.normal || [], rotationPass, 11);
-  const rotatedIconic = rotatePacketOptions(bySource.iconic || [], rotationPass, 7);
+  const characterRotation = rotationPass + (Number.parseInt(String(character.id), 10) || 0);
+  const rotatedMd = rotatePacketOptions(mdCandidates, characterRotation, 31);
+  const rotatedNormal = rotatePacketOptions(bySource.normal || [], characterRotation, 11);
+  const rotatedIconic = rotatePacketOptions(bySource.iconic || [], characterRotation, 7);
   const pool = language === "western"
     ? [...rotatedMd.slice(0, 30), ...rotatedNormal.slice(0, 22), ...rotatedIconic.slice(0, 18)]
     : [...rotatedNormal.slice(0, 48)];
@@ -4672,7 +4673,8 @@ async function fetchHandoffFirstNameCandidates(character, rotationPass) {
     candidates,
     sourceCounts,
     matchingFiles: matchingBanks.map(bank => `${bank.filename} (${bank.entries.length} names)`),
-    onlineResearchNeeded: language === "western" && candidates.length < 24
+    onlineResearchNeeded: language === "western" && candidates.length < 24,
+    rotationPass
   };
 }
 
@@ -4754,7 +4756,7 @@ function compactFirstNameBankText(character, firstContext = {}) {
   const expectedFilePattern = `panic_${fileSlug}_name_bank_*.md`;
   const candidates = (firstContext.candidates || [])
     .filter(candidate => candidate.origin === "Uploaded MD bank")
-    .slice(0, 18);
+    .slice(0, 30);
   const matchingFiles = firstContext.matchingFiles || [];
   return [
     `FIRST-NAME AUTHORITY — INLINE NAME STUDIO MD SNAPSHOT ONLY`,
@@ -4765,7 +4767,7 @@ function compactFirstNameBankText(character, firstContext = {}) {
       ? `VERIFIED AND EMBEDDED BY NAME STUDIO: ${matchingFiles.join(", ")}. Do not search ChatGPT Project files or attachments; the exact rotating rows below are the authoritative bank snapshot for this review.`
       : `FIRST-NAME BANK MISSING FROM NAME STUDIO. This packet must not be used until the matching Markdown bank is uploaded to Name Studio.`,
     candidates.length
-      ? `EXACT INLINE ROWS:\n${candidates.map(candidate => `- ${candidate.name} [${candidate.source}]`).join("\n")}`
+      ? `EXACT INLINE ROWS — ROTATED SET ${Number(firstContext.rotationPass || 1)}:\n${candidates.map(candidate => `- ${candidate.name} [${candidate.source}]${candidate.connection ? ` — ${candidate.connection}` : ""}`).join("\n")}`
       : `The matching Name Studio bank contains no currently unused exact rows in this rotation. Preserve ${current || "the current first name"}; do not substitute from memory or another source.`
   ].join("\n");
 }
@@ -4782,17 +4784,17 @@ function compactSurnameRootBanksText(rootBanks = []) {
     `COMPACT SURNAME ROOTS — STORED/LITERAL ONLY`,
     `The smallest collection count is the rarest route. Do not browse or create unrelated synonym banks.`,
     ...banks.map(bank =>
-      `${bank.source} (${bank.collectionCount}×): ${(bank.roots || []).slice(0, 5).map(root => `${root.value} [used ${root.usage}×]`).join(", ") || "literal wording only"}`
+      `${bank.source} (${bank.collectionCount}×): ${(bank.roots || []).slice(0, 8).map(root => `${root.value} [used ${root.usage}×]`).join(", ") || "literal wording only"}`
     )
   ].join("\n");
 }
 
 function compactSurnamePairPlanText(character, rotationPass) {
-  const plan = surnamePairPlan(character, rotationPass).slice(0, 3);
+  const plan = surnamePairPlan(character, rotationPass).slice(0, 5);
   return [
-    `THREE COMPACT SURNAME FAMILIES — ROTATION ${rotationPass}`,
+    `FIVE DIVERSE SURNAME FAMILIES — ROTATION ${rotationPass}`,
     ...plan.map((item, index) =>
-      `${index + 1}. ${item.left} × ${item.right}${item.rareAnchor ? " — rarest-route anchor" : ""} — ${item.primaryAttack}`
+      `${index + 1}. ${item.left} × ${item.right}${item.rareAnchor ? " — rarest-route anchor" : ""} — primary attack: ${item.primaryAttack}; alternate attack: ${item.secondaryAttack}`
     )
   ].join("\n");
 }
@@ -4815,16 +4817,19 @@ function compactChatGptHandoffText(character, context = {}) {
     `- Every offered first name must be copied exactly from an EXACT INLINE ROW below. Curated, Iconic/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden unless the exact spelling is present in that inline list. Earlier chat answers may be context, but they are not bank authority unless the same spelling appears inline now.`,
     `- Never answer “MD BANK UNAVAILABLE” when VERIFIED AND EMBEDDED BY NAME STUDIO appears below. The inline rows are the verified bank evidence for this turn.`,
     `- Use only the portrait, exact live traits, protected decisions, stored first-name shortlist, and compact surname roots below.`,
-    `- Maximum final response: 450 words. Do not restate this packet, the master rules, or long explanations.`,
+    `- Maximum final response: 900 words. Use compact tables and no prose essays. Do not restate this packet or the master rules.`,
     `- Never change GREENLIT parts. Body alone controls first-name gender. Do not invent Japanese names.`,
     `- Every Western surname must be one visible word made from exactly two different eligible trait routes. At least one component must visibly preserve literal trait wording or an obvious light shortening.`,
     `- Prefer the rarest eligible route, readable joins, root diversity, and compact collectible rhythm. Avoid abstract synonym pairs and mechanical padding.`,
+    `- PORTRAIT-FIRST FIT: inspect the attached PNG before ranking. Score first names against the character's visible palette/Body skin treatment, face and expression, hair, silhouette, clothing role, props, and overall personality. Treat these only as fictional design cues; do not infer real-world ethnicity or nationality from appearance.`,
+    `- FIRST-NAME ROTATION: evaluate every embedded row, not merely the first rows or names used in earlier chat replies. Rotation ${rotationPass} supplies a different verified slice. When two names fit equally, prefer the less recently repeated direction.`,
+    `- ROOT ROTATION: across the surname workshop, no component root may appear more than 3 times. Within one family, use at least 3 different roots from EACH route, and use no root more than twice. Never create six variations by holding one word fixed and changing only its partner. Test both component orders where readable. Silently replace any option that violates these limits before answering.`,
     `REQUIRED COMPACT OUTPUT`,
     firstOpen
-      ? `1. FIRST NAME: begin with “INLINE MD BANK USED: <exact filename>”. Rank exactly 10 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 10). Columns: Name | MD tier | fit. Do not perform a file lookup and use no other sources.`
+      ? `1. FIRST NAMES: begin with “INLINE MD BANK USED: <exact filename>”. Rank exactly 30 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 30). Columns: Name | portrait/trait fit | score. Base fit on the attached PNG plus exact traits, not bank order. Do not perform a file lookup and use no other sources.`
       : `1. FIRST NAME: one line confirming the GREENLIT first name is preserved. No alternatives.`,
     surnameOpen
-      ? `2. SURNAMES: exactly 3 family tables with exactly 4 options each (12 total). Columns only: Surname | exact two routes | score.\n3. Rank the best 5 surnames in one line.\n4. Rank exactly 3 complete full names.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
+      ? `2. SURNAMES: exactly 5 family tables with exactly 6 options each (30 total). Every table must obey the root-rotation limits above. Columns only: Surname | exact two routes | score.\n3. Rank the best 10 surnames in one line.\n4. Rank exactly 5 complete full names, considering portrait fit and full-name rhythm together.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
       : `2. SURNAME: preserve all GREENLIT surname components. Do not provide alternatives unless a component is marked open or RED X.`,
     `Do not add citations, source essays, rejected-name lists, duplicate-search narratives, or more options than requested.`,
     `Portrait: ${window.location.origin}/pfps_webp/${character.id}.webp`,
@@ -5445,7 +5450,7 @@ async function copyCompactReviewPacket() {
     await copyText(
       compact.packet,
       mdRows
-        ? `Copied compact rotation ${compact.rotationPass}: ${mdRows} verified MD rows embedded directly and 12 surnames requested.`
+        ? `Copied compact rotation ${compact.rotationPass}: ${mdRows} verified MD rows embedded directly and 30 diverse surnames requested.`
         : `Copied compact rotation ${compact.rotationPass}: first name is protected; no MD lookup is needed.`
     );
   } catch (error) {

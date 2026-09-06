@@ -188,13 +188,13 @@ test("ChatGPT handoff rejects shared snapshots and carries a wide rotating works
   assert.match(source, /activeChatGptHandoffPacket\(\)/);
 });
 
-test("compact review packet uses stored banks with a strict low-token output", () => {
+test("compact review packet uses 30 bank names and diverse surname roots without browsing", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(html, /id="copyCompactPacketButton"/);
   assert.match(source, /function compactChatGptHandoffText/);
-  assert.match(source, /Maximum final response: 450 words/);
-  assert.match(source, /exactly 3 family tables with exactly 4 options each \(12 total\)/);
+  assert.match(source, /Maximum final response: 900 words/);
+  assert.match(source, /exactly 5 family tables with exactly 6 options each \(30 total\)/);
   assert.match(source, /INLINE FIRST-NAME BANK RULE/);
   assert.match(source, /Every offered first name must be copied exactly from an EXACT INLINE ROW/);
   assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
@@ -203,8 +203,15 @@ test("compact review packet uses stored banks with a strict low-token output", (
   assert.match(source, /Upload the \$\{character\.clothing\} · \$\{character\.gender_from_body\} MD bank here once/);
   assert.match(source, /await openNameBanks\(\)/);
   assert.match(source, /candidate\.origin === "Uploaded MD bank"/);
-  assert.match(source, /slice\(0, 18\)/);
-  assert.match(source, /slice\(0, 5\)/);
+  assert.match(source, /slice\(0, 30\)/);
+  assert.match(source, /slice\(0, 8\)/);
+  assert.match(source, /PORTRAIT-FIRST FIT/);
+  assert.match(source, /no component root may appear more than 3 times/);
+  assert.match(source, /at least 3 different roots from EACH route/);
+  assert.match(source, /Never create six variations by holding one word fixed/);
+  assert.match(source, /FIRST-NAME ROTATION/);
+  assert.match(source, /const characterRotation = rotationPass \+ \(Number\.parseInt\(String\(character\.id\), 10\) \|\| 0\)/);
+  assert.match(source, /alternate attack: \$\{item\.secondaryAttack\}/);
   assert.match(source, /copyCompactPacketButton\.addEventListener\("click", copyCompactReviewPacket\)/);
 });
 
@@ -345,7 +352,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=28-0-clickable-bank-assignment/);
+  assert.match(html, /app\.js\?v=29-0-compact-review-variety/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
