@@ -47,10 +47,10 @@ test('unknown explicit Japanese remains atomic and does not call Western repair'
   assert.match(ctx.els.fullNameDetectStatus.textContent,/artist-confirmed custom Japanese/);
 });
 test('Gekkou validation needs no Western components',()=>{
-  const ctx=detectionContext();ctx.els.fullNameEditFirstInput=element('Clark');
+  const ctx=detectionContext();ctx.els.fullNameEditFirstInput=element('Clark');ctx.els.fullNameEditSurnameInput.value='gekkou';
   ctx.els.fullNameEditJapaneseSource=element('Hair:Moon candy');
   ctx.els.fullNameEditForm.dataset.surnameLanguage='japanese';
-  ctx.normalizeManualFirstName=x=>x;ctx.cleanSurnameComponent=x=>x;
+  ctx.normalizeManualFirstName=x=>x;ctx.cleanSurnameComponent=x=>x;ctx.cleanAtomicSurname=x=>x.charAt(0).toUpperCase()+x.slice(1);
   vm.runInContext(functionText('fullNameEditorValue'),ctx);
   const parsed=ctx.fullNameEditorValue();assert.equal(parsed.surname,'Gekkou');assert.equal(parsed.japanese,true);assert.equal(parsed.components.length,0);
 });

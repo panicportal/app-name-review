@@ -1042,8 +1042,8 @@ function fullNameEditorValue() {
   const japanese = els.fullNameEditForm.dataset.surnameLanguage === "japanese";
   if (!first) return { error: "First name must use 2–20 safe English letters, apostrophe, or hyphen." };
   if (japanese) {
-    const surname = String(els.fullNameEditSurnameInput.value || "").trim();
-    if (!/^[A-Za-z]{2,32}$/.test(surname)) return { error: "Japanese surname romanization must be one word using 2–32 English letters." };
+    const surname = cleanAtomicSurname(els.fullNameEditSurnameInput.value);
+    if (!surname) return { error: "Japanese surname romanization must be one word using 2–32 English letters." };
     return { first, surname, japanese, order: "12", components: [], japanese_source: els.fullNameEditJapaneseSource.value || "" };
   }
   const hasAnyStructuredInput = Boolean(component1 || component2 || source1 || source2);
@@ -1104,7 +1104,9 @@ function updateFullNameEditPreview() {
         : "");
   els.fullNameEditFirstInput.classList.toggle("invalid", /first name/i.test(error));
   els.fullNameEditSurnameInput.classList.toggle("invalid", Boolean(error) && !/first name/i.test(error));
-  if (els.fullNameLivePreview) els.fullNameLivePreview.textContent = `${els.fullNameEditFirstInput.value.trim()} ${els.fullNameEditSurnameInput.value.trim()}`.trim();
+  if (els.fullNameLivePreview) els.fullNameLivePreview.textContent = parsed.error
+    ? `${els.fullNameEditFirstInput.value.trim()} ${els.fullNameEditSurnameInput.value.trim()}`.trim()
+    : `${parsed.first} ${parsed.surname}`.trim();
   els.fullNameEditFirst.textContent = parsed.first || "—";
   els.fullNameEditSurname.textContent = parsed.surname || "—";
   els.fullNameEditSeamLabel.textContent = parsed.japanese
