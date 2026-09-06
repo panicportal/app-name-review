@@ -1134,10 +1134,10 @@ function updateFullNameEditPreview() {
   return error ? null : parsed;
 }
 
-function openFullNameEditor(options = {}) {
+function openFullNameEditor(editorOptions = {}) {
   if (!state.selected) return;
-  const focusOrigin = options?.focusOrigin === "first" || options?.focusOrigin === "surname"
-    ? options.focusOrigin
+  const focusOrigin = editorOptions?.focusOrigin === "first" || editorOptions?.focusOrigin === "surname"
+    ? editorOptions.focusOrigin
     : null;
   const character = state.selected;
   const normalized = normalizedSurnameFor(character);
