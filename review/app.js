@@ -1134,8 +1134,11 @@ function updateFullNameEditPreview() {
   return error ? null : parsed;
 }
 
-function openFullNameEditor() {
+function openFullNameEditor(options = {}) {
   if (!state.selected) return;
+  const focusOrigin = options?.focusOrigin === "first" || options?.focusOrigin === "surname"
+    ? options.focusOrigin
+    : null;
   const character = state.selected;
   const normalized = normalizedSurnameFor(character);
   const japanese = effectiveSurnameLanguage(character) === "japanese";
@@ -1168,6 +1171,9 @@ function openFullNameEditor() {
   els.fullNameEditConfirmLockedSurname.checked = false;
   els.fullNameEditLockedSurnamePanel.hidden = true;
   els.fullNameEditSurnameInput.readOnly = false;
+  [els.fullNameEditFirstOrigin, els.fullNameEditSurnameOrigin].forEach(select => {
+    select.closest("label")?.classList.remove("bank-origin-focus");
+  });
   const autoRepair = state.surnameRepairIndex?.[String(character.id)];
   els.fullNameDetectStatus.classList.remove("error", "success");
   els.fullNameDetectStatus.textContent = autoRepair
@@ -1183,8 +1189,17 @@ function openFullNameEditor() {
     requestSurnameDetection({ quiet: true, onlyIfRepair: true });
   }
   requestAnimationFrame(() => {
-    els.fullNamePasteInput.focus();
-    els.fullNamePasteInput.setSelectionRange(0, els.fullNamePasteInput.value.length);
+    const originSelect = focusOrigin === "first"
+      ? els.fullNameEditFirstOrigin
+      : focusOrigin === "surname" ? els.fullNameEditSurnameOrigin : null;
+    if (originSelect) {
+      originSelect.closest("label")?.classList.add("bank-origin-focus");
+      originSelect.scrollIntoView({ block: "center" });
+      originSelect.focus({ preventScroll: true });
+    } else {
+      els.fullNamePasteInput.focus();
+      els.fullNamePasteInput.setSelectionRange(0, els.fullNamePasteInput.value.length);
+    }
   });
 }
 
@@ -1977,6 +1992,16 @@ function renderCharacter() {
         c.first_name_language === "japanese" ? "Artist Japanese CSV" :
         languageLabel(c.first_name_language);
   els.surnameLanguage.textContent = languageLabel(effectiveSurnameLanguage(c));
+  els.firstLanguage.setAttribute(
+    "aria-label",
+    `Change first-name bank assignment. Current bank: ${els.firstLanguage.textContent}`
+  );
+  els.surnameLanguage.setAttribute(
+    "aria-label",
+    `Change surname bank assignment. Current bank: ${els.surnameLanguage.textContent}`
+  );
+  els.firstLanguage.title = "Change first-name bank without changing the name";
+  els.surnameLanguage.title = "Change surname bank and structure without changing the name";
   els.firstRationale.textContent =
     liveFirstReview.replacement_rationale || c.first_rationale;
   els.surnameRationale.textContent = liveSurnameRationale(c);
@@ -5664,8 +5689,10 @@ function bindEvents() {
   els.surnameFlipButton.addEventListener("click", () => toggleSurnameOrder());
   els.surnameRestoreButton.addEventListener("click", restoreTwoPartSurname);
   els.focusFlipButton.addEventListener("click", () => toggleSurnameOrder());
-  els.characterName.addEventListener("click", openFullNameEditor);
-  els.repairSurnameButton.addEventListener("click", openFullNameEditor);
+  els.characterName.addEventListener("click", () => openFullNameEditor());
+  els.repairSurnameButton.addEventListener("click", () => openFullNameEditor());
+  els.firstLanguage.addEventListener("click", () => openFullNameEditor({ focusOrigin: "first" }));
+  els.surnameLanguage.addEventListener("click", () => openFullNameEditor({ focusOrigin: "surname" }));
   els.copyTraitsButton.addEventListener("click", () => copyText(exactTraitsText(state.selected), `Copied all exact traits for #${state.selected.id}.`));
   els.copyCompactPacketButton.addEventListener("click", copyCompactReviewPacket);
   els.copyPacketButton.addEventListener("click", copyAdvancedReviewPacket);
@@ -5718,10 +5745,12 @@ function bindEvents() {
   els.fullNameEditJapaneseSource.addEventListener("change", updateFullNameEditPreview);
   els.fullNameEditConfirmLockedSurname.addEventListener("change", updateFullNameEditPreview);
   els.fullNameEditFirstOrigin.addEventListener("change", () => {
+    els.fullNameEditFirstOrigin.closest("label")?.classList.remove("bank-origin-focus");
     setFirstEditorOriginMode(els.fullNameEditFirstOrigin.value);
     updateFullNameEditPreview();
   });
   els.fullNameEditSurnameOrigin.addEventListener("change", () => {
+    els.fullNameEditSurnameOrigin.closest("label")?.classList.remove("bank-origin-focus");
     state.surnameDetectionRequest = (state.surnameDetectionRequest || 0) + 1;
     setSurnameEditorOriginMode(els.fullNameEditSurnameOrigin.value);
     if (els.fullNameEditSurnameOrigin.value === "japanese") {

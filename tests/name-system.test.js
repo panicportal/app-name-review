@@ -345,7 +345,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=27-1-japanese-manual-save/);
+  assert.match(html, /app\.js\?v=28-0-clickable-bank-assignment/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
@@ -367,6 +367,18 @@ test("manual origin selection supports exact and custom Japanese names without r
   assert.match(source, /if \(state\.cloudAuthenticated\) await pushCloudState\(\)/);
   assert.match(endpoint, /stateDecisionSignature\(next\) !== beforeSignature/);
   assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
+});
+
+test("name evidence bank markers open the matching editable bank selector", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(html, /class="bank-assignment-button" id="firstLanguage"/);
+  assert.match(html, /class="bank-assignment-button" id="surnameLanguage"/);
+  assert.match(source, /firstLanguage\.addEventListener\("click", \(\) => openFullNameEditor\(\{ focusOrigin: "first" \}\)\)/);
+  assert.match(source, /surnameLanguage\.addEventListener\("click", \(\) => openFullNameEditor\(\{ focusOrigin: "surname" \}\)\)/);
+  assert.match(source, /originSelect\.scrollIntoView\(\{ block: "center" \}\)/);
+  assert.match(source, /originSelect\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(source, /Current bank: \$\{els\.firstLanguage\.textContent\}/);
 });
 
 test("review packet prioritizes rare routes and requires visible literal trait evidence", () => {

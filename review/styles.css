@@ -759,8 +759,36 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .first-card { border-top: 5px solid var(--blue); }
 .surname-card { border-top: 5px solid var(--amber); }
-.evidence-label { display: flex; justify-content: space-between; color: #62716f; font: 10px/1 var(--utility); text-transform: uppercase; }
-.evidence-label b { color: var(--ink); }
+.evidence-label { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; color: #62716f; font: 10px/1 var(--utility); text-transform: uppercase; }
+.bank-assignment-button {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  min-width: 148px;
+  min-height: 48px;
+  margin: -10px -10px 0 0;
+  padding: 9px 12px;
+  border: 1px solid #9eb0aa;
+  background: #fffdf5;
+  color: var(--ink);
+  text-align: right;
+  text-transform: uppercase;
+  font: 700 10px/1.2 var(--utility);
+  cursor: pointer;
+}
+.bank-assignment-button::after {
+  content: "Change bank  →";
+  color: #2f806c;
+  font-size: 8px;
+  letter-spacing: .06em;
+}
+.bank-assignment-button:hover { border-color: #2f806c; background: #e5f4ed; }
+.bank-assignment-button:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.name-origin-controls label.bank-origin-focus {
+  border-color: #2f806c;
+  box-shadow: 0 0 0 4px rgba(74, 194, 157, .22);
+  background: #e5f4ed;
+}
 .evidence-card h3 {
   margin: 18px 0 10px;
   overflow-wrap: anywhere;
@@ -1920,6 +1948,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .source-review-tools { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .source-review-tools button { flex: 1 1 130px; min-height: 44px; border: 1px solid var(--line); background: var(--panel); color: var(--paper); font: 12px/1.3 var(--body); padding: 9px; }
 @media (max-width: 760px) {
+  .bank-assignment-button { min-width: 154px; min-height: 52px; margin-top: -8px; font-size: 11px; }
   .name-origin-controls select, .full-name-edit-form input, .full-name-edit-form select { font-size: 16px; }
   .name-origin-controls label { min-width: 0; }
   .surname-repair-banner { flex-wrap: wrap; gap: 12px; }
