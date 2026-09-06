@@ -193,13 +193,15 @@ test("compact review packet uses 30 bank names and diverse surname roots without
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(html, /id="copyCompactPacketButton"/);
   assert.match(source, /function compactChatGptHandoffText/);
-  assert.match(source, /Maximum final response: 900 words/);
-  assert.match(source, /exactly 5 family tables with exactly 6 options each \(30 total\)/);
+  assert.match(source, /Maximum final response: 1,300 words/);
+  assert.match(source, /exactly 8 family tables with exactly 6 options each \(48 total\)/);
   assert.match(source, /INLINE FIRST-NAME BANK RULE/);
   assert.match(source, /Every offered first name must be copied exactly from an EXACT INLINE ROW/);
   assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
   assert.match(source, /Never answer “MD BANK UNAVAILABLE” when any EXACT INLINE ROWS appear below/);
-  assert.match(source, /INLINE BANK USED: <exact source shown in the rows>/);
+  assert.match(source, /FIRST-NAME MD FILE: \$\{uploadedFirstFiles\.join\(", "\)\}/);
+  assert.match(source, /Copy the filename exactly so the artist can verify which file was used/);
+  assert.match(source, /Never claim an MD filename when Name Studio did not embed one/);
   assert.match(source, /VERIFIED LOCAL BANK FALLBACK EMBEDDED BY NAME STUDIO/);
   assert.match(source, /const candidates = \(mdCandidates\.length \? mdCandidates : allCandidates\)\.slice\(0, 30\)/);
   assert.match(source, /uploaded MD, curated Clothing, or approved Iconic\/Fun/);
@@ -220,6 +222,8 @@ test("compact review packet uses 30 bank names and diverse surname roots without
   assert.match(source, /FIRST-NAME ROTATION/);
   assert.match(source, /const characterRotation = rotationPass \+ \(Number\.parseInt\(String\(character\.id\), 10\) \|\| 0\)/);
   assert.match(source, /alternate attack: \$\{item\.secondaryAttack\}/);
+  assert.match(source, /EIGHT DIVERSE SURNAME FAMILIES/);
+  assert.match(source, /Use eight different trait-route pairings/);
   assert.match(source, /copyCompactPacketButton\.addEventListener\("click", copyCompactReviewPacket\)/);
 });
 
@@ -360,7 +364,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-2-compact-bank-fallback/);
+  assert.match(html, /app\.js\?v=29-3-source-proof-eight-families/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
