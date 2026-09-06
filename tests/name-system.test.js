@@ -200,8 +200,14 @@ test("compact review packet uses 30 bank names and diverse surname roots without
   assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
   assert.match(source, /Never answer “MD BANK UNAVAILABLE” when VERIFIED AND EMBEDDED BY NAME STUDIO appears below/);
   assert.match(source, /INLINE MD BANK USED: <exact filename>/);
-  assert.match(source, /Upload the \$\{character\.clothing\} · \$\{character\.gender_from_body\} MD bank here once/);
-  assert.match(source, /await openNameBanks\(\)/);
+  assert.match(source, /NO MATCHING UPLOADED MD BANK IS EMBEDDED FOR THIS ROUTE/);
+  assert.match(source, /Preserve \$\{effectivePartValue\(character, "first"\)/);
+  const compactCopyStart = source.indexOf("async function copyCompactReviewPacket");
+  const compactCopyEnd = source.indexOf("function bindEvents", compactCopyStart);
+  const compactCopyHandler = source.slice(compactCopyStart, compactCopyEnd);
+  assert.doesNotMatch(compactCopyHandler, /openNameBanks\(/);
+  assert.doesNotMatch(compactCopyHandler, /return;\s*\}/);
+  assert.match(compactCopyHandler, /await copyText\(/);
   assert.match(source, /candidate\.origin === "Uploaded MD bank"/);
   assert.match(source, /slice\(0, 30\)/);
   assert.match(source, /slice\(0, 8\)/);
@@ -352,7 +358,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-0-compact-review-variety/);
+  assert.match(html, /app\.js\?v=29-1-one-click-compact/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

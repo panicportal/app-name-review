@@ -4765,7 +4765,7 @@ function compactFirstNameBankText(character, firstContext = {}) {
     `Expected attached filename pattern: ${expectedFilePattern}`,
     matchingFiles.length
       ? `VERIFIED AND EMBEDDED BY NAME STUDIO: ${matchingFiles.join(", ")}. Do not search ChatGPT Project files or attachments; the exact rotating rows below are the authoritative bank snapshot for this review.`
-      : `FIRST-NAME BANK MISSING FROM NAME STUDIO. This packet must not be used until the matching Markdown bank is uploaded to Name Studio.`,
+      : `NO MATCHING UPLOADED MD BANK IS EMBEDDED FOR THIS ROUTE. Preserve the current first name and continue the surname review; do not invent or substitute first names.`,
     candidates.length
       ? `EXACT INLINE ROWS — ROTATED SET ${Number(firstContext.rotationPass || 1)}:\n${candidates.map(candidate => `- ${candidate.name} [${candidate.source}]${candidate.connection ? ` — ${candidate.connection}` : ""}`).join("\n")}`
       : `The matching Name Studio bank contains no currently unused exact rows in this rotation. Preserve ${current || "the current first name"}; do not substitute from memory or another source.`
@@ -4804,6 +4804,8 @@ function compactChatGptHandoffText(character, context = {}) {
   const rootBanks = context.surnameRootBanks || [];
   const rotationPass = Number(context.rotationPass || 1);
   const firstOpen = partReview(character.id, "first").decision !== "approve";
+  const verifiedFirstRows = (firstContext.candidates || []).filter(candidate => candidate.origin === "Uploaded MD bank");
+  const firstBankReady = (firstContext.matchingFiles || []).length > 0 && verifiedFirstRows.length > 0;
   const surnameOpen = ["surname_part_1", "surname_part_2"].some(key =>
     partDefinitions(character).find(part => part.key === key)?.available &&
     partReview(character.id, key).decision !== "approve"
@@ -4825,8 +4827,10 @@ function compactChatGptHandoffText(character, context = {}) {
     `- FIRST-NAME ROTATION: evaluate every embedded row, not merely the first rows or names used in earlier chat replies. Rotation ${rotationPass} supplies a different verified slice. When two names fit equally, prefer the less recently repeated direction.`,
     `- ROOT ROTATION: across the surname workshop, no component root may appear more than 3 times. Within one family, use at least 3 different roots from EACH route, and use no root more than twice. Never create six variations by holding one word fixed and changing only its partner. Test both component orders where readable. Silently replace any option that violates these limits before answering.`,
     `REQUIRED COMPACT OUTPUT`,
-    firstOpen
+    firstOpen && firstBankReady
       ? `1. FIRST NAMES: begin with “INLINE MD BANK USED: <exact filename>”. Rank exactly 30 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 30). Columns: Name | portrait/trait fit | score. Base fit on the attached PNG plus exact traits, not bank order. Do not perform a file lookup and use no other sources.`
+      : firstOpen
+        ? `1. FIRST NAME: no verified uploaded MD rows are embedded for this route. Preserve ${effectivePartValue(character, "first") || "the current first name"}; provide no first-name alternatives and continue directly to surnames.`
       : `1. FIRST NAME: one line confirming the GREENLIT first name is preserved. No alternatives.`,
     surnameOpen
       ? `2. SURNAMES: exactly 5 family tables with exactly 6 options each (30 total). Every table must obey the root-rotation limits above. Columns only: Surname | exact two routes | score.\n3. Rank the best 10 surnames in one line.\n4. Rank exactly 5 complete full names, considering portrait fit and full-name rhythm together.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
@@ -5433,25 +5437,11 @@ async function copyCompactReviewPacket() {
   try {
     const compact = await buildCompactReviewPacket(character);
     const mdRows = compact.firstContext.candidates.filter(candidate => candidate.origin === "Uploaded MD bank").length;
-    const firstOpen = partReview(character.id, "first").decision !== "approve";
-    const matchingBankAvailable = (compact.firstContext.matchingFiles || []).length > 0;
-    if (firstOpen && (!matchingBankAvailable || mdRows === 0)) {
-      els.nameBankClothing.value = character.clothing;
-      els.nameBankGender.value = character.gender_from_body;
-      await openNameBanks();
-      showToast(
-        matchingBankAvailable
-          ? `The ${character.clothing} · ${character.gender_from_body} bank has no unused rows to embed. Review or replace that bank first.`
-          : `Upload the ${character.clothing} · ${character.gender_from_body} MD bank here once. Compact reviews will then embed it and will not depend on ChatGPT attachment search.`,
-        "error"
-      );
-      return;
-    }
     await copyText(
       compact.packet,
       mdRows
         ? `Copied compact rotation ${compact.rotationPass}: ${mdRows} verified MD rows embedded directly and 30 diverse surnames requested.`
-        : `Copied compact rotation ${compact.rotationPass}: first name is protected; no MD lookup is needed.`
+        : `Copied compact rotation ${compact.rotationPass}: current first name preserved and surname review included.`
     );
   } catch (error) {
     showToast(`Could not build compact review: ${error.message}`, "error");
