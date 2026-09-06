@@ -51,6 +51,9 @@ function seedCuration() {
       naming_assistant_history: Array.isArray(item.naming_assistant_history)
         ? item.naming_assistant_history.slice(-20)
         : [],
+      manual_name_edit_history: Array.isArray(item.manual_name_edit_history)
+        ? item.manual_name_edit_history.slice(-20)
+        : [],
       updated_at: item.updated_at || seed.exported_at || null,
       parts,
     };
@@ -147,6 +150,10 @@ function mergeRecord(stored = {}, incoming = {}) {
       timestamp(incoming.updated_at) >= timestamp(stored.updated_at)
         ? (incoming.naming_assistant_history || stored.naming_assistant_history || []).slice(-20)
         : (stored.naming_assistant_history || []).slice(-20),
+    manual_name_edit_history:
+      timestamp(incoming.updated_at) >= timestamp(stored.updated_at)
+        ? (incoming.manual_name_edit_history || stored.manual_name_edit_history || []).slice(-20)
+        : (stored.manual_name_edit_history || []).slice(-20),
     parts: { ...(stored.parts || {}) },
   };
   for (const [key, part] of Object.entries(incoming.parts || {})) {

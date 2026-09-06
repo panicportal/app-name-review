@@ -1905,6 +1905,18 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .name-origin-controls > p { grid-column: 1 / -1; margin: 0; padding: 9px 10px; background: #102b31; color: #e8f2ee; font-size: 12px; line-height: 1.5; }
 .full-name-final-preview { display: grid; gap: 8px; padding: 16px; margin-top: 14px; background: var(--deep); color: var(--paper); border-left: 5px solid var(--mint); }
 .full-name-final-preview strong { font: 900 clamp(24px, 4vw, 36px)/1.15 var(--display); overflow-wrap: anywhere; }
+.japanese-surname-source { display: none; grid-template-columns: minmax(0, 1fr) minmax(220px, .8fr); align-items: end; gap: 12px; margin-top: 13px; padding: 14px; border: 1px solid #80a99b; border-left: 6px solid var(--mint); background: #e2f3eb; }
+.single-surname-mode .japanese-surname-source { display: grid; }
+.japanese-surname-source div, .japanese-surname-source label { display: grid; gap: 6px; }
+.japanese-surname-source strong { font: 900 18px/1.05 var(--display); }
+.japanese-surname-source small { color: #46675d; font-size: 11px; line-height: 1.45; }
+.japanese-surname-source label span { color: #49645b; font: 800 8px/1 var(--utility); text-transform: uppercase; }
+.japanese-surname-source select { width: 100%; min-height: 44px; padding: 8px; border: 1px solid #779c90; background: #fffdf5; color: var(--ink); font: 13px/1.2 var(--body); }
+.locked-surname-override { margin-top: 12px; padding: 13px; border: 2px solid #c75c66; border-left-width: 7px; background: #f8e5e7; color: #6e2d34; }
+.locked-surname-override strong { font: 900 17px/1.1 var(--display); }
+.locked-surname-override p { margin: 6px 0 10px; font-size: 11px; line-height: 1.45; }
+.locked-surname-override label { display: flex; align-items: flex-start; gap: 9px; padding: 10px; border: 1px solid #cf8e94; background: #fff8f5; color: #5b282e; font-weight: 800; }
+.locked-surname-override input { flex: 0 0 auto; width: 20px; height: 20px; margin: 0; accent-color: #9f343f; }
 .source-review-tools { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .source-review-tools button { flex: 1 1 130px; min-height: 44px; border: 1px solid var(--line); background: var(--panel); color: var(--paper); font: 12px/1.3 var(--body); padding: 9px; }
 @media (max-width: 760px) {
@@ -2010,7 +2022,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 @media (max-width: 760px) {
   .character-copy-toolbar { display: grid; grid-template-columns: 1fr 1fr; }
   .surname-repair-banner { align-items: stretch; flex-direction: column; }
-  .full-name-paste-row, .full-name-edit-grid, .name-origin-controls, .surname-source-grid { grid-template-columns: 1fr; }
+  .full-name-paste-row, .full-name-edit-grid, .name-origin-controls, .surname-source-grid, .japanese-surname-source { grid-template-columns: 1fr; }
   .full-name-edit-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
   .chatgpt-handoff-dialog { width: 100%; max-width: none; height: 100dvh; max-height: 100dvh; margin: 0; }
   .chatgpt-handoff-shell { max-height: 100dvh; }

@@ -136,6 +136,7 @@ function recordFor(id) {
     normalized_name: null,
     normalized_name_updated_at: null,
     naming_assistant_history: [],
+    manual_name_edit_history: [],
     parts: {}
   };
 }
@@ -162,6 +163,7 @@ function ensureRecord(id) {
       normalized_name: null,
       normalized_name_updated_at: null,
       naming_assistant_history: [],
+      manual_name_edit_history: [],
       parts: {}
     };
   }
@@ -311,6 +313,10 @@ function mergeCurationStates(local, remote) {
         timestamp(incoming.updated_at) >= timestamp(current.updated_at)
           ? (incoming.naming_assistant_history || current.naming_assistant_history || []).slice(-20)
           : (current.naming_assistant_history || []).slice(-20),
+      manual_name_edit_history:
+        timestamp(incoming.updated_at) >= timestamp(current.updated_at)
+          ? (incoming.manual_name_edit_history || current.manual_name_edit_history || []).slice(-20)
+          : (current.manual_name_edit_history || []).slice(-20),
       parts: { ...(current.parts || {}) }
     };
     Object.entries(incoming.parts || {}).forEach(([key, part]) => {
@@ -1038,7 +1044,7 @@ function fullNameEditorValue() {
   if (japanese) {
     const surname = String(els.fullNameEditSurnameInput.value || "").trim();
     if (!/^[A-Za-z]{2,32}$/.test(surname)) return { error: "Japanese surname romanization must be one word using 2–32 English letters." };
-    return { first, surname, japanese, order: "12", components: [] };
+    return { first, surname, japanese, order: "12", components: [], japanese_source: els.fullNameEditJapaneseSource.value || "" };
   }
   const hasAnyStructuredInput = Boolean(component1 || component2 || source1 || source2);
   if (needsSurnameComponentRepair(state.selected) && !hasAnyStructuredInput) {
@@ -1079,6 +1085,10 @@ function updateFullNameEditPreview() {
   const record = recordFor(state.selected.id);
   const firstLocked = partReview(state.selected.id, "first").decision === "approve";
   const surnameLocked = ["surname_part_1", "surname_part_2"].some(key => partReview(state.selected.id, key).decision === "approve");
+  const surnameChanged = Boolean(parsed.surname && parsed.surname.toLowerCase() !== currentSurname.toLowerCase());
+  const lockedSurnameChange = surnameLocked && surnameChanged;
+  const lockedSurnameConfirmed = Boolean(els.fullNameEditConfirmLockedSurname.checked);
+  els.fullNameEditLockedSurnamePanel.hidden = !lockedSurnameChange;
   const originChanged =
     els.fullNameEditFirstOrigin.value !== els.fullNameEditForm.dataset.originalFirstOrigin ||
     els.fullNameEditSurnameOrigin.value !== els.fullNameEditForm.dataset.originalSurnameOrigin;
@@ -1087,8 +1097,8 @@ function updateFullNameEditPreview() {
       ? `First name “${parsed.first}” is already used by another character.`
       : firstLocked && parsed.first !== currentFirst
         ? "The first name is greenlit. Unlock it before changing it."
-        : surnameLocked && parsed.surname !== currentSurname
-          ? "A surname component is greenlit. Unlock it before changing the structured surname."
+        : lockedSurnameChange && !lockedSurnameConfirmed
+          ? "This surname is greenlit. Confirm the replacement below to save the new surname."
       : fullNameAlreadyUsed(parsed.first, parsed.surname)
         ? "That complete full name is already used by another character."
         : "");
@@ -1103,7 +1113,7 @@ function updateFullNameEditPreview() {
       ? `${parsed.components[parsed.order === "21" ? 1 : 0].source_raw} + ${parsed.components[parsed.order === "21" ? 0 : 1].source_raw}`
       : "Two source traits required";
   els.fullNameEditStatus.textContent = error || (parsed.japanese
-    ? "Japanese surname: one word. Save keeps this spelling and records the selected bank."
+    ? `Japanese surname: one word.${parsed.japanese_source ? ` Connected to ${parsed.japanese_source}.` : " Stored as artist-created without a trait connection."} Save keeps this spelling and the selected bank.`
     : originChanged && parsed.surname === currentSurname && parsed.first === currentFirst
       ? "Only the bank classification will change; your name and decisions stay the same."
       :
@@ -1133,6 +1143,7 @@ function openFullNameEditor() {
   const options = `<option value="">Choose exact trait…</option>` + sources.map(source => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`).join("");
   els.fullNameEditSource1.innerHTML = options;
   els.fullNameEditSource2.innerHTML = options;
+  els.fullNameEditJapaneseSource.innerHTML = `<option value="">Artist-created · no trait connection</option>` + sources.map(source => `<option value="${escapeHtml(source)}">${escapeHtml(source)}</option>`).join("");
   els.fullNameEditFirstInput.value = effectivePartValue(character, "first");
   els.fullNameEditSurnameInput.value = effectiveSurname(character);
   els.fullNamePasteInput.value = effectiveDisplayName(character);
@@ -1150,6 +1161,10 @@ function openFullNameEditor() {
   els.fullNameEditComponent2.value = components.find(component => Number(component.order) === 2)?.text || "";
   els.fullNameEditSource1.value = components.find(component => Number(component.order) === 1)?.source_raw || "";
   els.fullNameEditSource2.value = components.find(component => Number(component.order) === 2)?.source_raw || "";
+  const storedJapaneseRoute = partReview(character.id, "surname_part_1").replacement_trait_source || "";
+  els.fullNameEditJapaneseSource.value = sources.includes(storedJapaneseRoute) ? storedJapaneseRoute : "";
+  els.fullNameEditConfirmLockedSurname.checked = false;
+  els.fullNameEditLockedSurnamePanel.hidden = true;
   els.fullNameEditSurnameInput.readOnly = false;
   const autoRepair = state.surnameRepairIndex?.[String(character.id)];
   els.fullNameDetectStatus.classList.remove("error", "success");
@@ -1223,9 +1238,10 @@ async function saveFullNameEdit(event) {
     parsed.japanese &&
     surnameChanged &&
     !partReview(character.id, "surname_part_2").disabled &&
-    partReview(character.id, "surname_part_2").decision === "approve"
+    partReview(character.id, "surname_part_2").decision === "approve" &&
+    !els.fullNameEditConfirmLockedSurname.checked
   ) {
-    return failOrigin("Surname part 2 is greenlit. Unlock it before converting the surname to one atomic Japanese surname.");
+    return failOrigin("This surname is greenlit. Confirm the replacement in the editor before converting it to one atomic Japanese surname.");
   }
   const timestamp = nowIso();
   const record = ensureRecord(character.id);
@@ -1277,14 +1293,19 @@ async function saveFullNameEdit(event) {
   if (parsed.surname !== currentSurname || surnameOriginChanged || (needsSurnameComponentRepair(character) && !parsed.preserve_unresolved_surname)) {
     const current1 = partReview(character.id, "surname_part_1");
     const current2 = partReview(character.id, "surname_part_2");
+    const replacingLockedSurname = surnameChanged &&
+      [current1, current2].some(part => part.decision === "approve") &&
+      els.fullNameEditConfirmLockedSurname.checked;
     if (parsed.japanese) {
       const japaneseMatch = resolvedSurname.match;
       const japaneseCustom = resolvedSurname.mode === "japanese_custom";
-      const japaneseRoute = japaneseCustom
+      const selectedJapaneseRoute = parsed.japanese_source || "";
+      const japaneseRoute = selectedJapaneseRoute || (japaneseCustom
         ? "Artist custom Japanese surname · explicit owner confirmation"
-        : japaneseMatch?.route || current1.replacement_trait_source || character.surname_source_1 || "Japanese surname bank";
-      record.parts.surname_part_1 = { ...current1, decision: parsed.surname !== currentSurname ? (current1.decision || "replace") : current1.decision, scope: parsed.surname !== currentSurname ? (current1.scope || "this_character") : current1.scope, disabled: false, replacement_value: parsed.surname, replacement_source: japaneseCustom ? "Artist-entered custom Japanese surname · explicit origin" : "Japanese names surnames.csv · exact authoritative bank match", replacement_trait_source: japaneseRoute, replacement_language: "japanese", replacement_origin_kind: japaneseCustom ? "artist_custom" : "authoritative_bank", replacement_rationale: japaneseCustom ? `Artist explicitly classified “${parsed.surname}” as a custom Japanese surname. It is stored as one atomic surname and is not represented as an exact closed-CSV match.` : `Exact artist Japanese surname entry for ${japaneseRoute}. Detected automatically during the full-name edit for Surv!vor #${character.id}.`, replacement_scores: null, updated_at: timestamp, reviewer: state.curation.reviewer || current1.reviewer || "", deleted_at: null };
-      record.parts.surname_part_2 = { ...current2, decision: parsed.surname !== currentSurname ? (current2.decision || "replace") : current2.decision, scope: parsed.surname !== currentSurname ? (current2.scope || "this_character") : current2.scope, disabled: true, updated_at: timestamp, reviewer: state.curation.reviewer || current2.reviewer || "", deleted_at: null };
+        : japaneseMatch?.route || current1.replacement_trait_source || character.surname_source_1 || "Japanese surname bank");
+      const routeNote = selectedJapaneseRoute ? ` Artist connected it to ${selectedJapaneseRoute}.` : "";
+      record.parts.surname_part_1 = { ...current1, decision: replacingLockedSurname ? "approve" : parsed.surname !== currentSurname ? (current1.decision || "replace") : current1.decision, scope: parsed.surname !== currentSurname ? (current1.scope || "this_character") : current1.scope, disabled: false, replacement_value: parsed.surname, replacement_source: japaneseCustom ? "Artist-entered custom Japanese surname · explicit origin" : "Japanese names surnames.csv · exact authoritative bank match", replacement_trait_source: japaneseRoute, replacement_language: "japanese", replacement_origin_confirmed_by_user: selectedSurnameMode !== "auto", replacement_origin_kind: japaneseCustom ? "artist_custom" : "authoritative_bank", replacement_rationale: japaneseCustom ? `Artist explicitly classified “${parsed.surname}” as a custom Japanese surname. It is stored as one atomic surname and is not represented as an exact closed-CSV match.${routeNote}` : `Exact artist Japanese surname entry for ${japaneseRoute}. Detected automatically during the full-name edit for Surv!vor #${character.id}.`, replacement_scores: null, updated_at: timestamp, reviewer: state.curation.reviewer || current1.reviewer || "", deleted_at: null };
+      record.parts.surname_part_2 = { ...current2, decision: replacingLockedSurname ? null : current2.decision, scope: replacingLockedSurname ? null : current2.scope, disabled: true, updated_at: timestamp, reviewer: state.curation.reviewer || current2.reviewer || "", deleted_at: null };
     } else {
       const repairingApprovedCompound = (needsSurnameComponentRepair(character) ||
         els.fullNameEditForm.dataset.repairingCollapsed === "true") &&
@@ -1294,7 +1315,7 @@ async function saveFullNameEdit(event) {
         const current = index === 0 ? current1 : current2;
         record.parts[key] = {
           ...current,
-          decision: parsed.surname === currentSurname ? current.decision : (current.decision || "replace"),
+          decision: replacingLockedSurname ? "approve" : parsed.surname === currentSurname ? current.decision : (current.decision || "replace"),
           scope: parsed.surname === currentSurname ? current.scope : (current.scope || "this_character"),
           disabled: false,
           replacement_value: component.text,
@@ -1326,6 +1347,17 @@ async function saveFullNameEdit(event) {
       needs_surname_component_repair: false
     };
     record.normalized_name_updated_at = timestamp;
+    if (replacingLockedSurname) {
+      record.manual_name_edit_history = [...(record.manual_name_edit_history || []), {
+        changed_at: timestamp,
+        reviewer: state.curation.reviewer || "",
+        action: "replace_confirmed_surname",
+        previous_surname: currentSurname,
+        resulting_surname: parsed.surname,
+        resulting_language: parsed.japanese ? "japanese" : "western",
+        selected_trait_source: parsed.japanese_source || null
+      }];
+    }
     delete state.surnameRepairIndex[String(character.id)];
   }
   if (parsed.first !== currentFirst && record.normalized_name) {
@@ -5675,10 +5707,14 @@ function bindEvents() {
     }
     const first = normalizeManualFirstName(els.fullNameEditFirstInput.value);
     if (first) els.fullNamePasteInput.value = `${first} ${els.fullNameEditSurnameInput.value.trim()}`;
-    beginPastedFullNameDetection();
+    state.surnameDetectionRequest = (state.surnameDetectionRequest || 0) + 1;
+    clearTimeout(state.surnameDetectTimer);
+    updateFullNameEditPreview();
   });
   [els.fullNameEditComponent1, els.fullNameEditComponent2].forEach(input => input.addEventListener("input", syncSurnameFromComponents));
   [els.fullNameEditSource1, els.fullNameEditSource2].forEach(select => select.addEventListener("change", updateFullNameEditPreview));
+  els.fullNameEditJapaneseSource.addEventListener("change", updateFullNameEditPreview);
+  els.fullNameEditConfirmLockedSurname.addEventListener("change", updateFullNameEditPreview);
   els.fullNameEditFirstOrigin.addEventListener("change", () => {
     setFirstEditorOriginMode(els.fullNameEditFirstOrigin.value);
     updateFullNameEditPreview();

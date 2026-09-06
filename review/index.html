@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=26-1-studio-reliability">
+  <link rel="stylesheet" href="/review/styles.css?v=27-0-japanese-manual-save">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v26 · explicit origins &amp; source review</small></span>
+        <span><strong>NAME STUDIO</strong><small>v27 · manual Japanese surname save</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -510,6 +510,13 @@
         <label class="full-name-edit-field"><span>First name</span><input id="fullNameEditFirstInput" maxlength="24" autocomplete="off" spellcheck="false"></label>
         <label class="full-name-edit-field"><span>Collector-visible surname</span><input id="fullNameEditSurnameInput" maxlength="48" autocomplete="off" spellcheck="false"></label>
       </div>
+      <section class="japanese-surname-source" aria-label="Japanese surname connection">
+        <div>
+          <strong>Japanese surname connection</strong>
+          <small>Optional. Choose the exact character trait that inspired this surname, or leave it as an artist-created Japanese name.</small>
+        </div>
+        <label><span>Connected trait</span><select id="fullNameEditJapaneseSource"></select></label>
+      </section>
       <section class="surname-seam" aria-label="Two surname sources">
         <div class="surname-seam-head"><div><span>Hidden semantic seam</span><b>Two traits · one surname</b></div><button type="button" id="fullNameEditFlip">Swap order</button></div>
         <div class="surname-source-grid">
@@ -520,6 +527,11 @@
         <div class="surname-seam-preview"><span id="fullNameEditFirst">—</span><strong id="fullNameEditSurname">—</strong><small id="fullNameEditSeamLabel">Select two traits</small></div>
       </section>
       <div class="full-name-final-preview"><small>Your edited name</small><strong id="fullNameLivePreview" aria-live="polite"></strong></div>
+      <section class="locked-surname-override" id="fullNameEditLockedSurnamePanel" hidden>
+        <strong>This surname is already confirmed</strong>
+        <p>Changing it requires one deliberate confirmation. The new surname will remain greenlit for this character.</p>
+        <label><input type="checkbox" id="fullNameEditConfirmLockedSurname"><span>Replace the confirmed surname with the edited surname</span></label>
+      </section>
       <p class="full-name-edit-status" id="fullNameEditStatus" role="status"></p>
       <div class="full-name-edit-actions">
         <button type="button" id="fullNameEditCancel">Cancel</button>
@@ -770,7 +782,7 @@
     <button class="mobile-confirm-all" id="mobileConfirmAll">✓✓<span>Confirm all</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=26-1-studio-reliability"></script>
+  <script src="/review/app.js?v=27-0-japanese-manual-save"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>

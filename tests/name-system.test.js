@@ -136,7 +136,7 @@ test("structured surname rejects Body, Clothing, duplicate routes, and display d
 
 test("UI contains copy, ChatGPT handoff, repair, assistant, and bank controls", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
-  for (const id of ["copyTraitsButton", "copyImageButton", "copyCompactPacketButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditFirstOrigin", "fullNameEditSurnameOrigin", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
+  for (const id of ["copyTraitsButton", "copyImageButton", "copyCompactPacketButton", "copyPacketButton", "copyNameBankPromptButton", "chatgptShareButton", "chatgptHandoffDialog", "chatgptNativeShare", "chatgptOpenSavedChat", "chatgptPacketPreview", "askAiButton", "surnameRepairBanner", "fullNamePasteInput", "fullNameDetectButton", "fullNameEditFirstOrigin", "fullNameEditSurnameOrigin", "fullNameEditJapaneseSource", "fullNameEditLockedSurnamePanel", "fullNameEditConfirmLockedSurname", "fullNameEditSource1", "fullNameEditSource2", "namingAssistantDialog", "nameBankFile"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
 });
@@ -345,7 +345,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=26-1-studio-reliability/);
+  assert.match(html, /app\.js\?v=27-0-japanese-manual-save/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
@@ -358,10 +358,12 @@ test("manual origin selection supports exact and custom Japanese names without r
   assert.match(source, /replacement_origin_kind: japaneseCustom \? "artist_custom" : "authoritative_bank"/);
   assert.match(source, /custom Japanese surname\. It is stored as one atomic surname/);
   assert.match(source, /could not be classified automatically/);
-  assert.match(source, /Surname part 2 is greenlit\. Unlock it before converting/);
+  assert.match(source, /Confirm the replacement in the editor before converting/);
+  assert.match(source, /action: "replace_confirmed_surname"/);
+  assert.match(source, /selected_trait_source: parsed\.japanese_source \|\| null/);
   assert.match(source, /if \(els\.fullNameEditSurnameOrigin\.value === "auto"\)/);
   assert.doesNotMatch(source, /fullNameEditSurnameOrigin\.value !== "japanese_custom"/);
-  assert.match(source, /decision: parsed\.surname !== currentSurname \? \(current2\.decision \|\| "replace"\) : current2\.decision/);
+  assert.match(source, /decision: replacingLockedSurname \? null : current2\.decision/);
   assert.match(source, /if \(state\.cloudAuthenticated\) await pushCloudState\(\)/);
   assert.match(endpoint, /stateDecisionSignature\(next\) !== beforeSignature/);
   assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);

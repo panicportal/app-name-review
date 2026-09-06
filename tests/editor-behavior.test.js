@@ -48,6 +48,7 @@ test('unknown explicit Japanese remains atomic and does not call Western repair'
 });
 test('Gekkou validation needs no Western components',()=>{
   const ctx=detectionContext();ctx.els.fullNameEditFirstInput=element('Clark');
+  ctx.els.fullNameEditJapaneseSource=element('Hair:Moon candy');
   ctx.els.fullNameEditForm.dataset.surnameLanguage='japanese';
   ctx.normalizeManualFirstName=x=>x;ctx.cleanSurnameComponent=x=>x;
   vm.runInContext(functionText('fullNameEditorValue'),ctx);
@@ -75,16 +76,16 @@ test('ungreenlit collapsed names are included but atomic Japanese is excluded',(
 
 test('custom Japanese save survives cloud merge, JSON export, and reload',async()=>{
   const {mergeCuration}=require('../api/_lib/state');
-  for(const originOnly of [false,true]) {
+  for(const {originOnly,locked} of [{originOnly:false,locked:false},{originOnly:true,locked:true},{originOnly:false,locked:true}]) {
     const surname=originOnly?'Gekkou':'Cloudsmile';
     const first={decision:'approve',replacement_value:'Clark',replacement_language:'western',updated_at:'2026-09-01T00:00:00Z'};
-    const record={parts:{first:structuredClone(first),surname_part_1:{decision:originOnly?'approve':'replace',replacement_value:surname,replacement_language:'western'},surname_part_2:{decision:originOnly?'approve':'replace',disabled:true}}};
+    const record={parts:{first:structuredClone(first),surname_part_1:{decision:locked?'approve':'replace',replacement_value:surname,replacement_language:'western'},surname_part_2:{decision:locked?'approve':'replace',disabled:true}}};
     const state={selected:{id:'1',first:'Clark',clothing:'Common villager',gender_from_body:'Male'},curation:{schema_version:'panic-name-curation/v2',records:{'1':record}},cloudAuthenticated:true,cloudDirty:false,surnameRepairIndex:{}};
-    const els={fullNameEditFirstInput:element('Clark'),fullNameEditSurnameInput:element('Gekkou'),fullNameEditFirstOrigin:element('western'),fullNameEditSurnameOrigin:element('japanese'),fullNameEditForm:element(),fullNameEditStatus:element(),fullNameEditSource1:element(),fullNameEditDialog:{close(){}}};
+    const els={fullNameEditFirstInput:element('Clark'),fullNameEditSurnameInput:element('Gekkou'),fullNameEditFirstOrigin:element('western'),fullNameEditSurnameOrigin:element('japanese'),fullNameEditJapaneseSource:element('Hair:Moon candy'),fullNameEditConfirmLockedSurname:{checked:locked},fullNameEditForm:element(),fullNameEditStatus:element(),fullNameEditSource1:element(),fullNameEditDialog:{close(){}}};
     els.fullNameEditForm.dataset={originalFirstOrigin:'western',originalSurnameOrigin:'western'};
     let synced;
     const ctx=vm.createContext({state,els,normalizeManualFirstName:x=>x,effectivePartValue:()=> 'Clark',effectiveSurname:()=>surname,detectManualNameOrigin:async()=>null,originMatch:()=>null,
-      setFirstEditorOriginMode(){},setSurnameEditorOriginMode(){},updateFullNameEditPreview:()=>({first:'Clark',surname:'Gekkou',japanese:true,order:'12',components:[]}),
+      setFirstEditorOriginMode(){},setSurnameEditorOriginMode(){},updateFullNameEditPreview:()=>({first:'Clark',surname:'Gekkou',japanese:true,japanese_source:'Hair:Moon candy',order:'12',components:[]}),
       partReview:(_,k)=>record.parts[k]||{},nowIso:()=> '2026-09-05T00:00:00Z',ensureRecord:()=>record,SURNAME_FORMAT_VERSION:3,
       saveCuration(){state.cloudDirty=true},async pushCloudState(){synced=mergeCuration({schema_version:'panic-name-curation/v2',records:{}},state.curation);state.cloudDirty=false},
       renderCharacter(){},updateProgress(){},renderRoster(){},effectiveDisplayName:()=> 'Clark Gekkou',showToast(){}});
@@ -96,8 +97,10 @@ test('custom Japanese save survives cloud merge, JSON export, and reload',async(
     assert.equal(saved.parts.surname_part_1.replacement_origin_kind,'artist_custom');
     assert.equal(saved.parts.surname_part_1.replacement_value,'Gekkou');
     assert.equal(saved.parts.surname_part_2.disabled,true);
-    assert.equal(saved.parts.surname_part_1.decision,originOnly?'approve':'replace');
-    assert.equal(saved.parts.surname_part_2.decision,originOnly?'approve':'replace');
+    assert.equal(saved.parts.surname_part_1.decision,locked?'approve':'replace');
+    assert.equal(saved.parts.surname_part_2.decision,locked&&!originOnly?null:locked?'approve':'replace');
+    assert.equal(saved.parts.surname_part_1.replacement_trait_source,'Hair:Moon candy');
+    if(locked&&!originOnly) assert.equal(saved.manual_name_edit_history.at(-1).action,'replace_confirmed_surname');
   }
 });
 
