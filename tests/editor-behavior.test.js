@@ -11,6 +11,22 @@ function functionText(name) {
   return next < 0 ? remaining : remaining.slice(0,next+1);
 }
 function element(value='') { return {value,textContent:'',dataset:{},classList:{add(){},remove(){},toggle(){}},closest(){return null}}; }
+
+test('compact surname pair selection balances route load before prompt generation',()=>{
+  const ctx=vm.createContext({rotatePacketOptions:items=>items});
+  vm.runInContext(functionText('selectBalancedSurnamePairs'),ctx);
+  const traits=['Back:Fuzzy swirl','Front:Lantern','Hair:Rough','Eyes:Happy','Mouth:Smile','Background:Blue','Eyebrows:Relax']
+    .map((source,index)=>({source,collectionCount:index+1}));
+  const pairs=[];
+  for(let left=0;left<traits.length;left++) for(let right=left+1;right<traits.length;right++) pairs.push([traits[left],traits[right]]);
+  const selected=ctx.selectBalancedSurnamePairs(pairs,traits,1,8);
+  const loads=new Map();
+  selected.forEach(pair=>pair.forEach(trait=>loads.set(trait.source,(loads.get(trait.source)||0)+1)));
+  assert.equal(selected.length,8);
+  assert.equal(new Set(selected.map(pair=>pair.map(trait=>trait.source).sort().join('|'))).size,8);
+  assert.ok(Math.max(...loads.values())<=3);
+  assert.equal(loads.get('Back:Fuzzy swirl'),3);
+});
 function detectionContext() {
   const state={selected:{id:'1'},cloudAuthenticated:true};
   const els={fullNameEditSurnameOrigin:element('western'),fullNameEditSurnameInput:element('Gekkou'),fullNameEditForm:element(),fullNameEditDialog:{open:true},fullNameDetectStatus:element()};

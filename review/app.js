@@ -4503,6 +4503,50 @@ function handoffSurnameRootBanksText(rootBanks = []) {
   ].join("\n");
 }
 
+function selectBalancedSurnamePairs(pairs, traits, rotationPass, targetCount = 8) {
+  const desiredCount = Math.min(targetCount, pairs.length);
+  if (!desiredCount) return [];
+  const rarestSource = traits[0]?.source || "";
+  const routeLoads = new Map(traits.map(trait => [trait.source, 0]));
+  const rotatedPairs = rotatePacketOptions(pairs, rotationPass, 7);
+  const rotationRank = new Map(rotatedPairs.map((pair, index) => [
+    pair.map(trait => trait.source).sort().join("|"),
+    index
+  ]));
+  const selected = [];
+  const selectedKeys = new Set();
+  let routeFamilyCap = Math.max(3, Math.ceil((desiredCount * 2) / Math.max(1, traits.length)));
+
+  while (selected.length < desiredCount) {
+    const candidates = rotatedPairs.filter(pair => {
+      const key = pair.map(trait => trait.source).sort().join("|");
+      return !selectedKeys.has(key) && pair.every(trait => (routeLoads.get(trait.source) || 0) < routeFamilyCap);
+    });
+    if (!candidates.length) {
+      routeFamilyCap += 1;
+      continue;
+    }
+    candidates.sort((a, b) => {
+      const score = pair => {
+        const nextLoads = pair.map(trait => (routeLoads.get(trait.source) || 0) + 1);
+        const rareAnchorNeeded = (routeLoads.get(rarestSource) || 0) < Math.min(3, routeFamilyCap);
+        const rareAnchorBonus = rareAnchorNeeded && pair.some(trait => trait.source === rarestSource) ? -100000000 : 0;
+        const loadBalance = Math.max(...nextLoads) * 1000000 + nextLoads.reduce((sum, value) => sum + value, 0) * 10000;
+        const rarity = pair[0].collectionCount * 2 + pair[1].collectionCount;
+        const key = pair.map(trait => trait.source).sort().join("|");
+        return rareAnchorBonus + loadBalance + rarity + (rotationRank.get(key) || 0);
+      };
+      return score(a) - score(b);
+    });
+    const winner = candidates[0];
+    const winnerKey = winner.map(trait => trait.source).sort().join("|");
+    selected.push(winner);
+    selectedKeys.add(winnerKey);
+    winner.forEach(trait => routeLoads.set(trait.source, (routeLoads.get(trait.source) || 0) + 1));
+  }
+  return selected;
+}
+
 function surnamePairPlan(character, rotationPass) {
   const traits = eligibleSurnameTraits(character).map(trait => {
     const source = `${trait.type}:${trait.value}`;
@@ -4520,14 +4564,7 @@ function surnamePairPlan(character, rotationPass) {
     (b[0].collectionCount * 2 + b[1].collectionCount)
   );
   const rarestSource = traits[0]?.source || "";
-  const anchorPairs = pairs.filter(pair => pair.some(trait => trait.source === rarestSource));
-  const otherPairs = pairs.filter(pair => !pair.some(trait => trait.source === rarestSource));
-  const rotated = [
-    ...rotatePacketOptions(anchorPairs, rotationPass, 1).slice(0, 3),
-    ...rotatePacketOptions(otherPairs, rotationPass, 5),
-  ].filter((pair, index, values) =>
-    values.findIndex(candidate => candidate.map(trait => trait.source).sort().join("|") === pair.map(trait => trait.source).sort().join("|")) === index
-  ).slice(0, 8);
+  const rotated = selectBalancedSurnamePairs(pairs, traits, rotationPass, 8);
   const attacks = rotatePacketOptions([
     "literal trait-name roots",
     "short action or function roots",
@@ -4792,10 +4829,38 @@ function compactSurnameRootBanksText(rootBanks = []) {
   ].join("\n");
 }
 
-function compactSurnamePairPlanText(character, rotationPass) {
+function compactSurnamePlanDetails(character, rotationPass, rootBanks = []) {
   const plan = surnamePairPlan(character, rotationPass).slice(0, 8);
+  const routeLoads = new Map();
+  plan.forEach(item => {
+    routeLoads.set(item.left, (routeLoads.get(item.left) || 0) + 1);
+    routeLoads.set(item.right, (routeLoads.get(item.right) || 0) + 1);
+  });
+  const rootCounts = new Map(rootBanks.map(bank => [bank.source, Math.min(8, (bank.roots || []).length)]));
+  let rootReuseCap = 3;
+  routeLoads.forEach((familyCount, source) => {
+    const rootCount = rootCounts.get(source) || 0;
+    if (rootCount) rootReuseCap = Math.max(rootReuseCap, Math.ceil((familyCount * 6) / rootCount));
+  });
+  return {
+    plan,
+    routeLoads,
+    rootReuseCap,
+    maxRouteLoad: Math.max(0, ...routeLoads.values())
+  };
+}
+
+function compactSurnamePairPlanText(character, rotationPass, rootBanks = [], details = null) {
+  const planDetails = details || compactSurnamePlanDetails(character, rotationPass, rootBanks);
+  const { plan, routeLoads, rootReuseCap, maxRouteLoad } = planDetails;
+  const loadSummary = [...routeLoads.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([source, count]) => `${source} ${count} ${count === 1 ? "family" : "families"}`)
+    .join("; ");
   return [
-    `EIGHT DIVERSE SURNAME FAMILIES — ROTATION ${rotationPass}`,
+    `${plan.length === 8 ? "EIGHT" : plan.length} BALANCED SURNAME FAMILIES — ROTATION ${rotationPass}`,
+    `ROUTE-LOAD CHECK — PASSED: ${loadSummary}. Maximum route load: ${maxRouteLoad}. Root reuse cap: ${rootReuseCap}.`,
+    `This pairing schedule is already capacity-checked. Use these exact pairings; do not replace them or stop with a route-capacity objection.`,
     ...plan.map((item, index) =>
       `${index + 1}. ${item.left} × ${item.right}${item.rareAnchor ? " — rarest-route anchor" : ""} — primary attack: ${item.primaryAttack}; alternate attack: ${item.secondaryAttack}`
     )
@@ -4819,6 +4884,9 @@ function compactChatGptHandoffText(character, context = {}) {
     partDefinitions(character).find(part => part.key === key)?.available &&
     partReview(character.id, key).decision !== "approve"
   );
+  const surnamePlanDetails = compactSurnamePlanDetails(character, rotationPass, rootBanks);
+  const surnameFamilyCount = surnamePlanDetails.plan.length;
+  const surnameOptionCount = surnameFamilyCount * 6;
   return [
     `# ?an!c COMPACT BANK-BASED NAME REVIEW`,
     `Return the finished review immediately. This is a fast selection task using supplied data—not a research or bank-building task.`,
@@ -4834,7 +4902,7 @@ function compactChatGptHandoffText(character, context = {}) {
     `- Prefer the rarest eligible route, readable joins, root diversity, and compact collectible rhythm. Avoid abstract synonym pairs and mechanical padding.`,
     `- PORTRAIT-FIRST FIT: inspect the attached PNG before ranking. Score first names against the character's visible palette/Body skin treatment, face and expression, hair, silhouette, clothing role, props, and overall personality. Treat these only as fictional design cues; do not infer real-world ethnicity or nationality from appearance.`,
     `- FIRST-NAME ROTATION: evaluate every embedded row, not merely the first rows or names used in earlier chat replies. Rotation ${rotationPass} supplies a different verified slice. When two names fit equally, prefer the less recently repeated direction.`,
-    `- ROOT ROTATION: across the surname workshop, no component root may appear more than 3 times. Within one family, use at least 3 different roots from EACH route, and use no root more than twice. Never create six variations by holding one word fixed and changing only its partner. Test both component orders where readable. Silently replace any option that violates these limits before answering.`,
+    `- ROOT ROTATION: the capacity-checked schedule below is binding. Across the surname workshop, no component root may appear more than ${surnamePlanDetails.rootReuseCap} times. Within one family, use at least 3 different roots from EACH route, and use no root more than twice. Never create six variations by holding one word fixed and changing only its partner. Test both component orders where readable. Silently replace any option that violates these limits before answering.`,
     `REQUIRED COMPACT OUTPUT`,
     firstOpen && firstBankReady
       ? `1. FIRST NAMES: ${firstSourceProof} Then rank exactly 30 names copied from the EXACT INLINE ROWS in one compact table (or every embedded row if fewer than 30). Columns: Name | portrait/trait fit | score. Base fit on the attached PNG plus exact traits, not bank order. Do not perform a file lookup and use no other sources.`
@@ -4842,13 +4910,13 @@ function compactChatGptHandoffText(character, context = {}) {
         ? `1. FIRST NAME: no verified inline bank rows were returned for this route. Preserve ${effectivePartValue(character, "first") || "the current first name"}; provide no first-name alternatives and continue directly to surnames.`
       : `1. FIRST NAME: one line confirming the GREENLIT first name is preserved. No alternatives.`,
     surnameOpen
-      ? `2. SURNAMES: exactly 8 family tables with exactly 6 options each (48 total). Use eight different trait-route pairings; do not repeat a pairing under another title. Every table must obey the root-rotation limits above. Columns only: Surname | exact two routes | score.\n3. Rank the best 10 surnames in one line.\n4. Rank exactly 5 complete full names, considering portrait fit and full-name rhythm together.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
+      ? `2. SURNAMES: exactly ${surnameFamilyCount} family tables with exactly 6 options each (${surnameOptionCount} total). Use every capacity-checked trait-route pairing listed below exactly once; do not repeat a pairing under another title. Every table must obey the root-rotation limits above. Columns only: Surname | exact two routes | score. Do not pause to ask permission or report a route-capacity conflict; the schedule and root cap were computed together.\n3. Rank the best 10 surnames in one line.\n4. Rank exactly 5 complete full names, considering portrait fit and full-name rhythm together.\n5. End with one Best / lock candidate and “duplicate requires final Name Studio validation”.`
       : `2. SURNAME: preserve all GREENLIT surname components. Do not provide alternatives unless a component is marked open or RED X.`,
     `Do not add citations, source essays, rejected-name lists, duplicate-search narratives, or more options than requested.`,
     `Portrait: ${window.location.origin}/pfps_webp/${character.id}.webp`,
     compactFirstNameBankText(character, firstContext),
     compactSurnameRootBanksText(rootBanks),
-    surnameOpen ? compactSurnamePairPlanText(character, rotationPass) : "SURNAME FAMILY GENERATION NOT NEEDED",
+    surnameOpen ? compactSurnamePairPlanText(character, rotationPass, rootBanks, surnamePlanDetails) : "SURNAME FAMILY GENERATION NOT NEEDED",
     reviewPacketText(character)
   ].join("\n\n");
 }

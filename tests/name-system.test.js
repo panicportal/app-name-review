@@ -194,7 +194,7 @@ test("compact review packet uses 30 bank names and diverse surname roots without
   assert.match(html, /id="copyCompactPacketButton"/);
   assert.match(source, /function compactChatGptHandoffText/);
   assert.match(source, /Maximum final response: 1,300 words/);
-  assert.match(source, /exactly 8 family tables with exactly 6 options each \(48 total\)/);
+  assert.match(source, /exactly \$\{surnameFamilyCount\} family tables with exactly 6 options each \(\$\{surnameOptionCount\} total\)/);
   assert.match(source, /INLINE FIRST-NAME BANK RULE/);
   assert.match(source, /Every offered first name must be copied exactly from an EXACT INLINE ROW/);
   assert.match(source, /Curated, Iconic\/Fun, ordinary-name, memory-based, and invented fallbacks are forbidden/);
@@ -216,14 +216,15 @@ test("compact review packet uses 30 bank names and diverse surname roots without
   assert.match(source, /slice\(0, 30\)/);
   assert.match(source, /slice\(0, 8\)/);
   assert.match(source, /PORTRAIT-FIRST FIT/);
-  assert.match(source, /no component root may appear more than 3 times/);
+  assert.match(source, /no component root may appear more than \$\{surnamePlanDetails\.rootReuseCap\} times/);
   assert.match(source, /at least 3 different roots from EACH route/);
   assert.match(source, /Never create six variations by holding one word fixed/);
   assert.match(source, /FIRST-NAME ROTATION/);
   assert.match(source, /const characterRotation = rotationPass \+ \(Number\.parseInt\(String\(character\.id\), 10\) \|\| 0\)/);
   assert.match(source, /alternate attack: \$\{item\.secondaryAttack\}/);
-  assert.match(source, /EIGHT DIVERSE SURNAME FAMILIES/);
-  assert.match(source, /Use eight different trait-route pairings/);
+  assert.match(source, /BALANCED SURNAME FAMILIES/);
+  assert.match(source, /ROUTE-LOAD CHECK — PASSED/);
+  assert.match(source, /Use every capacity-checked trait-route pairing listed below exactly once/);
   assert.match(source, /copyCompactPacketButton\.addEventListener\("click", copyCompactReviewPacket\)/);
 });
 
@@ -364,7 +365,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-3-source-proof-eight-families/);
+  assert.match(html, /app\.js\?v=29-4-balanced-surname-capacity/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
