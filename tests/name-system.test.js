@@ -317,7 +317,7 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=29-5-first-name-shortcuts/);
+  assert.match(html, /app\.js\?v=29-6-reliable-full-name-save/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
 });
@@ -376,7 +376,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-5-first-name-shortcuts/);
+  assert.match(html, /app\.js\?v=29-6-reliable-full-name-save/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
@@ -395,7 +395,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   assert.match(source, /if \(els\.fullNameEditSurnameOrigin\.value === "auto"\)/);
   assert.doesNotMatch(source, /fullNameEditSurnameOrigin\.value !== "japanese_custom"/);
   assert.match(source, /decision: replacingLockedSurname \? null : current2\.decision/);
-  assert.match(source, /if \(state\.cloudAuthenticated\) await pushCloudState\(\)/);
+  assert.match(source, /if \(state\.cloudAuthenticated\) void pushCloudState\(\)/);
   assert.match(endpoint, /stateDecisionSignature\(next\) !== beforeSignature/);
   assert.match(endpoint, /compareAndSwapState\(expectedRevision, next\)/);
 });

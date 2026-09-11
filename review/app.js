@@ -68,6 +68,7 @@ const state = {
   surnameRepairIndex: {},
   surnameRepairSummary: { detected: 0, unresolved: 0 },
   surnameDetectTimer: null,
+  fullNameSaveInProgress: false,
   focusSwipeStart: null,
   voice: {
     recognition: null,
@@ -532,6 +533,16 @@ function replacementLanguage(review, fallback = "western") {
   return fallback;
 }
 
+async function fetchWithTimeout(input, init = {}, timeoutMs = 6000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function detectManualNameOrigin(part, value, source = "") {
   if (!state.cloudAuthenticated || !state.selected || !String(value || "").trim()) return null;
   const query = new URLSearchParams({
@@ -541,7 +552,7 @@ async function detectManualNameOrigin(part, value, source = "") {
   });
   if (source) query.set("source", source);
   try {
-    const response = await fetch(`/api/name-origin?${query.toString()}`, { cache: "no-store" });
+    const response = await fetchWithTimeout(`/api/name-origin?${query.toString()}`, { cache: "no-store" });
     if (!response.ok) return null;
     return await response.json();
   } catch (_) {
@@ -1128,7 +1139,7 @@ function updateFullNameEditPreview() {
         : "Ready to save as one atomic structured name update."
   );
   els.fullNameEditStatus.classList.toggle("error", Boolean(error));
-  els.fullNameEditSave.disabled = Boolean(error) ||
+  els.fullNameEditSave.disabled = state.fullNameSaveInProgress || Boolean(error) ||
     (parsed.first === currentFirst && parsed.surname === currentSurname &&
       (!needsSurnameComponentRepair(state.selected) || parsed.preserve_unresolved_surname) && !originChanged);
   return error ? null : parsed;
@@ -1205,6 +1216,15 @@ function openFullNameEditor(editorOptions = {}) {
 
 async function saveFullNameEdit(event) {
   event.preventDefault();
+  if (!state.selected || state.fullNameSaveInProgress) return;
+  state.fullNameSaveInProgress = true;
+  els.fullNameEditSave.disabled = true;
+  els.fullNameEditSave.setAttribute("aria-busy", "true");
+  els.fullNameEditSave.textContent = "Saving…";
+  els.fullNameEditStatus.textContent = "Checking and saving this name…";
+  els.fullNameEditStatus.classList.remove("error");
+  let failureMessage = "";
+  try {
   const character = state.selected;
   const characterId = String(character.id);
   const rawFirst = normalizeManualFirstName(els.fullNameEditFirstInput.value);
@@ -1218,8 +1238,12 @@ async function saveFullNameEdit(event) {
   const firstOriginChanged = selectedFirstMode !== els.fullNameEditForm.dataset.originalFirstOrigin;
   const surnameOriginChanged = selectedSurnameMode !== els.fullNameEditForm.dataset.originalSurnameOrigin;
   const [firstOrigin, surnameOrigin] = await Promise.all([
-    firstChanged || firstOriginChanged ? detectManualNameOrigin("first", rawFirst) : Promise.resolve(null),
-    surnameChanged || surnameOriginChanged ? detectManualNameOrigin("surname_atomic", rawSurname) : Promise.resolve(null),
+    (firstChanged || firstOriginChanged) && selectedFirstMode !== "western"
+      ? detectManualNameOrigin("first", rawFirst)
+      : Promise.resolve(null),
+    (surnameChanged || surnameOriginChanged) && selectedSurnameMode !== "western"
+      ? detectManualNameOrigin("surname_atomic", rawSurname)
+      : Promise.resolve(null),
   ]);
   if (String(state.selected?.id) !== characterId) return;
   const failOrigin = message => {
@@ -1264,7 +1288,10 @@ async function saveFullNameEdit(event) {
   const record = ensureRecord(character.id);
   if (parsed.first !== currentFirst || firstOriginChanged) {
     if (parsed.first !== currentFirst && state.cloudAuthenticated) {
-      const response = await fetch(`/api/first-name-availability?value=${encodeURIComponent(parsed.first)}&except_id=${encodeURIComponent(character.id)}`);
+      if (manualFirstNameUsage(parsed.first)) {
+        return failOrigin(`First name “${parsed.first}” is already used by another character.`);
+      }
+      const response = await fetchWithTimeout(`/api/first-name-availability?value=${encodeURIComponent(parsed.first)}&except_id=${encodeURIComponent(character.id)}`, { cache: "no-store" });
       const availability = await response.json();
       if (!response.ok || !availability.available) {
         els.fullNameEditStatus.textContent = availability.error || `First name “${parsed.first}” is already used.`;
@@ -1383,17 +1410,36 @@ async function saveFullNameEdit(event) {
   }
   record.updated_at = timestamp;
   saveCuration();
-  if (state.cloudAuthenticated) await pushCloudState();
   renderCharacter();
   updateProgress();
   renderRoster();
   els.fullNameEditDialog.close();
+  if (state.cloudAuthenticated) void pushCloudState();
   showToast(
-    state.cloudAuthenticated && !state.cloudDirty
-      ? `Saved and synced ${effectiveDisplayName(character)}.`
-      : `Saved ${effectiveDisplayName(character)} on this device; cloud sync will retry automatically.`,
-    state.cloudAuthenticated && !state.cloudDirty ? "success" : "warning"
+    state.cloudAuthenticated
+      ? `Saved ${effectiveDisplayName(character)}. Syncing in the background.`
+      : `Saved ${effectiveDisplayName(character)} on this device.`,
+    "success"
   );
+  } catch (error) {
+    failureMessage = error?.name === "AbortError"
+      ? "The verification request timed out. Your previous name is unchanged—check the connection and tap Save again."
+      : `Could not save this name: ${error?.message || "unexpected error"}. Your previous name is unchanged.`;
+    els.fullNameEditStatus.textContent = failureMessage;
+    els.fullNameEditStatus.classList.add("error");
+  } finally {
+    state.fullNameSaveInProgress = false;
+    els.fullNameEditSave.removeAttribute("aria-busy");
+    els.fullNameEditSave.textContent = "Save edited name";
+    if (els.fullNameEditDialog.open) {
+      const preservedMessage = failureMessage || (els.fullNameEditStatus.classList.contains("error") ? els.fullNameEditStatus.textContent : "");
+      updateFullNameEditPreview();
+      if (preservedMessage) {
+        els.fullNameEditStatus.textContent = preservedMessage;
+        els.fullNameEditStatus.classList.add("error");
+      }
+    }
+  }
 }
 
 function liveSurnameRationale(character) {

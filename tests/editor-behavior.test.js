@@ -10,7 +10,7 @@ function functionText(name) {
   const next = remaining.slice(1).search(/\n(?:async )?function /);
   return next < 0 ? remaining : remaining.slice(0,next+1);
 }
-function element(value='') { return {value,textContent:'',dataset:{},classList:{add(){},remove(){},toggle(){}},closest(){return null}}; }
+function element(value='') { return {value,textContent:'',dataset:{},classList:{add(){},remove(){},toggle(){},contains(){return false}},setAttribute(){},removeAttribute(){},closest(){return null}}; }
 
 test('compact surname pair selection balances route load before prompt generation',()=>{
   const ctx=vm.createContext({rotatePacketOptions:items=>items});
@@ -96,8 +96,8 @@ test('custom Japanese save survives cloud merge, JSON export, and reload',async(
     const surname=originOnly?'Gekkou':'Cloudsmile';
     const first={decision:'approve',replacement_value:'Clark',replacement_language:'western',updated_at:'2026-09-01T00:00:00Z'};
     const record={parts:{first:structuredClone(first),surname_part_1:{decision:locked?'approve':'replace',replacement_value:surname,replacement_language:'western'},surname_part_2:{decision:locked?'approve':'replace',disabled:true}}};
-    const state={selected:{id:'1',first:'Clark',clothing:'Common villager',gender_from_body:'Male'},curation:{schema_version:'panic-name-curation/v2',records:{'1':record}},cloudAuthenticated:true,cloudDirty:false,surnameRepairIndex:{}};
-    const els={fullNameEditFirstInput:element('Clark'),fullNameEditSurnameInput:element('Gekkou'),fullNameEditFirstOrigin:element('western'),fullNameEditSurnameOrigin:element('japanese'),fullNameEditJapaneseSource:element('Hair:Moon candy'),fullNameEditConfirmLockedSurname:{checked:locked},fullNameEditForm:element(),fullNameEditStatus:element(),fullNameEditSource1:element(),fullNameEditDialog:{close(){}}};
+    const state={selected:{id:'1',first:'Clark',clothing:'Common villager',gender_from_body:'Male'},curation:{schema_version:'panic-name-curation/v2',records:{'1':record}},cloudAuthenticated:true,cloudDirty:false,surnameRepairIndex:{},fullNameSaveInProgress:false};
+    const els={fullNameEditFirstInput:element('Clark'),fullNameEditSurnameInput:element('Gekkou'),fullNameEditFirstOrigin:element('western'),fullNameEditSurnameOrigin:element('japanese'),fullNameEditJapaneseSource:element('Hair:Moon candy'),fullNameEditConfirmLockedSurname:{checked:locked},fullNameEditForm:element(),fullNameEditStatus:element(),fullNameEditSource1:element(),fullNameEditSave:element(),fullNameEditDialog:{open:true,close(){this.open=false}}};
     els.fullNameEditForm.dataset={originalFirstOrigin:'western',originalSurnameOrigin:'western'};
     let synced;
     const ctx=vm.createContext({state,els,normalizeManualFirstName:x=>x,effectivePartValue:()=> 'Clark',effectiveSurname:()=>surname,detectManualNameOrigin:async()=>null,originMatch:()=>null,
@@ -118,6 +118,17 @@ test('custom Japanese save survives cloud merge, JSON export, and reload',async(
     assert.equal(saved.parts.surname_part_1.replacement_trait_source,'Hair:Moon candy');
     if(locked&&!originOnly) assert.equal(saved.manual_name_edit_history.at(-1).action,'replace_confirmed_surname');
   }
+});
+
+test('full-name save does not wait for cloud sync and skips Western origin lookup',()=>{
+  const handler=functionText('saveFullNameEdit');
+  assert.match(handler,/selectedFirstMode !== "western"/);
+  assert.match(handler,/selectedSurnameMode !== "western"/);
+  assert.match(handler,/void pushCloudState\(\)/);
+  assert.doesNotMatch(handler,/await pushCloudState\(\)/);
+  assert.match(handler,/fullNameSaveInProgress/);
+  assert.match(handler,/Saving…/);
+  assert.match(handler,/AbortError/);
 });
 
 test('concurrent cloud save retries merge against latest revision',async()=>{

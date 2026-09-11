@@ -1456,6 +1456,7 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
 .full-name-edit-actions { position: sticky; bottom: 0; z-index: 4; display: flex; justify-content: flex-end; gap: 8px; margin: 14px -18px -18px; padding: 12px 18px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid #aab7b2; background: rgba(239, 242, 234, .97); box-shadow: 0 -8px 18px rgba(8, 27, 33, .08); }
 .full-name-edit-actions button { min-height: 44px; padding: 0 16px; }
 .full-name-edit-actions .full-name-edit-save { border-color: #2f7c68; background: #2f7c68; color: white; }
+.full-name-edit-actions .full-name-edit-save[aria-busy="true"] { background: #1d5b4b; }
 .full-name-edit-actions .full-name-edit-save:disabled { opacity: .45; cursor: default; }
 .suggestion-dialog.voice-nonmodal {
   position: fixed;
