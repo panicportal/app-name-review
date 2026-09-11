@@ -648,6 +648,37 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   letter-spacing: .08em;
   text-transform: uppercase;
 }
+.first-name-fast-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 13px;
+}
+.first-name-fast-actions button {
+  min-height: 42px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  background: #10272d;
+  color: var(--paper);
+  font: 900 9px/1 var(--utility);
+  letter-spacing: .02em;
+}
+.first-name-fast-actions .lock-first-name {
+  border-color: #53b99c;
+  background: #17483c;
+  color: #eafff7;
+}
+.first-name-fast-actions .replace-first-name {
+  border-color: #a84f58;
+  color: #ff9ca6;
+}
+.first-name-fast-actions button:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+.first-name-fast-actions button:disabled {
+  cursor: default;
+  opacity: .38;
+}
 .character-curation-status {
   display: flex;
   align-items: center;
@@ -2088,6 +2119,8 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
   .portrait-stage, .evidence-panel { padding: 24px 18px; }
   .portrait-stage { padding-top: 18px; }
   .portrait-frame { width: min(100%, 330px); }
+  .first-name-fast-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .first-name-fast-actions button { min-height: 48px; padding: 0 8px; }
   .name-evidence { grid-template-columns: 1fr; gap: 8px; }
   .name-join { height: 20px; }
   .evidence-card p { min-height: 0; }

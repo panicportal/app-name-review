@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>?an!c Name Studio</title>
-  <link rel="stylesheet" href="/review/styles.css?v=29-4-balanced-surname-capacity">
+  <link rel="stylesheet" href="/review/styles.css?v=29-5-first-name-shortcuts">
 </head>
 <body>
   <div class="boot" id="boot">Loading 3,333 survivors…</div>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <a class="brand" href="#1" aria-label="Name review home">
         <span class="brand-mark">?</span>
-        <span><strong>NAME STUDIO</strong><small>v29.4 · balanced compact reviews</small></span>
+        <span><strong>NAME STUDIO</strong><small>v29.5 · first-name shortcuts</small></span>
       </a>
       <div class="collection-stats" id="collectionStats"></div>
       <div class="top-actions">
@@ -144,6 +144,10 @@
           <p id="clothingEyebrow"></p>
           <button class="character-name-button" id="characterName" type="button" aria-label="Edit this full character name"></button>
           <small class="character-name-edit-hint">Tap the full name to edit it</small>
+          <div class="first-name-fast-actions" id="firstNameFastActions" role="group" aria-label="First name decision shortcuts">
+            <button class="lock-first-name" id="quickLockFirstButton" type="button" data-part="first" data-decision="approve" aria-label="Lock this first name">✓ Lock first name</button>
+            <button class="replace-first-name" id="quickReplaceFirstButton" type="button" data-part="first" data-decision="replace" aria-label="Replace this first name">× Replace first name</button>
+          </div>
         </div>
         <div class="character-copy-toolbar" aria-label="Copy and naming tools">
           <button id="copyTraitsButton" type="button">Copy traits</button>
@@ -782,7 +786,7 @@
     <button class="mobile-confirm-all" id="mobileConfirmAll">✓✓<span>Confirm all</span></button>
     <button id="mobileNext">→<span>Next</span></button>
   </nav>
-  <script src="/review/app.js?v=29-4-balanced-surname-capacity"></script>
+  <script src="/review/app.js?v=29-5-first-name-shortcuts"></script>
   <script src="/review/iconic.js?v=20-0-structured-ai"></script>
 </body>
 </html>

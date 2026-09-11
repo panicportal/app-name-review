@@ -311,6 +311,17 @@ test("confirm all force-approves every active part without discarding pasted val
   assert.equal(records["668"].parts.first.decision, "replace");
 });
 
+test("portrait shortcuts decide only the first name through the shared decision path", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
+  assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
+  assert.match(html, /aria-label="First name decision shortcuts"/);
+  assert.match(html, /app\.js\?v=29-5-first-name-shortcuts/);
+  assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
+  assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
+});
+
 test("bank-origin detector uses exact eligible routes instead of name appearance", () => {
   const kotoha = detectFirstOrigin(characters.get("41"), "Kotoha");
   assert.equal(kotoha.origin, "japanese");
@@ -365,7 +376,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-4-balanced-surname-capacity/);
+  assert.match(html, /app\.js\?v=29-5-first-name-shortcuts/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

@@ -1840,6 +1840,13 @@ function renderReplacementBriefs(character) {
 
 function renderCharacterCuration(character) {
   const status = curationStatus(character);
+  const firstAvailable = partDefinitions(character).some(part => part.key === "first" && part.available);
+  const firstDecision = partReview(character.id, "first").decision;
+  els.firstNameFastActions.hidden = !firstAvailable;
+  els.quickLockFirstButton.disabled = !firstAvailable || firstDecision === "approve";
+  els.quickReplaceFirstButton.disabled = !firstAvailable || firstDecision === "replace";
+  els.quickLockFirstButton.setAttribute("aria-pressed", String(firstDecision === "approve"));
+  els.quickReplaceFirstButton.setAttribute("aria-pressed", String(firstDecision === "replace"));
   els.characterDecisionSummary.textContent =
     `${status.decided} of ${status.total} parts decided`;
   els.characterCurationState.textContent = status.label;
