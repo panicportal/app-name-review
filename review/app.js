@@ -1221,7 +1221,7 @@ async function saveFullNameEdit(event) {
   els.fullNameEditSave.disabled = true;
   els.fullNameEditSave.setAttribute("aria-busy", "true");
   els.fullNameEditSave.textContent = "Saving…";
-  els.fullNameEditStatus.textContent = "Checking and saving this name…";
+  els.fullNameEditStatus.textContent = "Saving this name…";
   els.fullNameEditStatus.classList.remove("error");
   let failureMessage = "";
   try {
@@ -1287,17 +1287,8 @@ async function saveFullNameEdit(event) {
   const timestamp = nowIso();
   const record = ensureRecord(character.id);
   if (parsed.first !== currentFirst || firstOriginChanged) {
-    if (parsed.first !== currentFirst && state.cloudAuthenticated) {
-      if (manualFirstNameUsage(parsed.first)) {
-        return failOrigin(`First name “${parsed.first}” is already used by another character.`);
-      }
-      const response = await fetchWithTimeout(`/api/first-name-availability?value=${encodeURIComponent(parsed.first)}&except_id=${encodeURIComponent(character.id)}`, { cache: "no-store" });
-      const availability = await response.json();
-      if (!response.ok || !availability.available) {
-        els.fullNameEditStatus.textContent = availability.error || `First name “${parsed.first}” is already used.`;
-        els.fullNameEditStatus.classList.add("error");
-        return;
-      }
+    if (parsed.first !== currentFirst && manualFirstNameUsage(parsed.first)) {
+      return failOrigin(`First name “${parsed.first}” is already used by another character.`);
     }
     const current = partReview(character.id, "first");
     const detectedFirstOrigin = resolvedFirst.mode.startsWith("japanese") ? "japanese" : "western";
@@ -1422,9 +1413,7 @@ async function saveFullNameEdit(event) {
     "success"
   );
   } catch (error) {
-    failureMessage = error?.name === "AbortError"
-      ? "The verification request timed out. Your previous name is unchanged—check the connection and tap Save again."
-      : `Could not save this name: ${error?.message || "unexpected error"}. Your previous name is unchanged.`;
+    failureMessage = `Could not save this name: ${error?.message || "unexpected error"}. Your previous name is unchanged.`;
     els.fullNameEditStatus.textContent = failureMessage;
     els.fullNameEditStatus.classList.add("error");
   } finally {

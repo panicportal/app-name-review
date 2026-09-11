@@ -120,15 +120,37 @@ test('custom Japanese save survives cloud merge, JSON export, and reload',async(
   }
 });
 
-test('full-name save does not wait for cloud sync and skips Western origin lookup',()=>{
+test('full-name save does not wait for cloud sync or first-name availability network checks',()=>{
   const handler=functionText('saveFullNameEdit');
   assert.match(handler,/selectedFirstMode !== "western"/);
   assert.match(handler,/selectedSurnameMode !== "western"/);
+  assert.match(handler,/manualFirstNameUsage\(parsed\.first\)/);
+  assert.doesNotMatch(handler,/first-name-availability/);
   assert.match(handler,/void pushCloudState\(\)/);
   assert.doesNotMatch(handler,/await pushCloudState\(\)/);
   assert.match(handler,/fullNameSaveInProgress/);
   assert.match(handler,/Saving…/);
-  assert.match(handler,/AbortError/);
+});
+
+test('changed Western first name saves with no network verification request',async()=>{
+  const record={parts:{first:{decision:null,replacement_value:null,replacement_language:'western'}}};
+  const state={selected:{id:'2102',first:'Oldname',clothing:'Dark swim trunks',gender_from_body:'Male'},curation:{reviewer:'QA',records:{'2102':record}},cloudAuthenticated:true,cloudDirty:false,surnameRepairIndex:{},fullNameSaveInProgress:false};
+  const els={fullNameEditFirstInput:element('Lundquist'),fullNameEditSurnameInput:element('Crustquiet'),fullNameEditFirstOrigin:element('western'),fullNameEditSurnameOrigin:element('western'),fullNameEditForm:element(),fullNameEditStatus:element(),fullNameEditSource1:element(),fullNameEditSave:element(),fullNameEditConfirmLockedSurname:{checked:false},fullNameEditDialog:{open:true,close(){this.open=false}}};
+  els.fullNameEditForm.dataset={originalFirstOrigin:'western',originalSurnameOrigin:'western'};
+  let originLookups=0;let cloudPushes=0;
+  const ctx=vm.createContext({state,els,normalizeManualFirstName:x=>x,effectivePartValue:()=> 'Oldname',effectiveSurname:()=> 'Crustquiet',
+    detectManualNameOrigin:async()=>{originLookups++;return null},originMatch:()=>null,setFirstEditorOriginMode(){},setSurnameEditorOriginMode(){},
+    updateFullNameEditPreview:()=>({first:'Lundquist',surname:'Crustquiet',japanese:false,order:'12',join_style:'lower_second',components:[]}),
+    manualFirstNameUsage:()=>0,partReview:(_,key)=>record.parts[key]||{},nowIso:()=> '2026-09-11T19:19:00Z',ensureRecord:()=>record,
+    needsSurnameComponentRepair:()=>false,SURNAME_FORMAT_VERSION:3,saveCuration(){state.cloudDirty=true},pushCloudState(){cloudPushes++;return new Promise(()=>{})},
+    renderCharacter(){},updateProgress(){},renderRoster(){},effectiveDisplayName:()=> 'Lundquist Crustquiet',showToast(){}});
+  vm.runInContext(functionText('saveFullNameEdit'),ctx);
+  await ctx.saveFullNameEdit({preventDefault(){}});
+  assert.equal(record.parts.first.replacement_value,'Lundquist');
+  assert.equal(record.parts.first.decision,'replace');
+  assert.equal(originLookups,0);
+  assert.equal(cloudPushes,1);
+  assert.equal(els.fullNameEditDialog.open,false);
 });
 
 test('concurrent cloud save retries merge against latest revision',async()=>{
