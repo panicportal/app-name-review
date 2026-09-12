@@ -1,19 +1,28 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const review = require("../review_data.json");
+const { getNameBanks } = require("../api/_lib/name-banks");
 const { compareAndSwapState, readState } = require("../api/_lib/store");
 
 function effectiveFirst(state, character) {
   return state.curation?.records?.[String(character.id)]?.parts?.first?.replacement_value || character.first;
 }
 
-function validatePlan(state, plan) {
+function validatePlan(state, plan, bankState) {
   if (!state?.curation?.records) throw new Error("Live curation state is unavailable.");
   if (plan.workflow_stage !== "first_names_stage_2") throw new Error("Unsupported workflow stage.");
   if (!plan.clothing || !Array.isArray(plan.replacements) || !plan.replacements.length) throw new Error("The plan is incomplete.");
   const byId = new Map(review.characters.map(character => [String(character.id), character]));
   const targetIds = new Set();
   const replacementNames = new Set();
+  const sourceBank = plan.bank_file
+    ? (bankState?.banks || []).find(bank =>
+        bank.filename === plan.bank_file &&
+        bank.clothing === plan.clothing &&
+        bank.gender === plan.gender)
+    : null;
+  if (plan.bank_file && !sourceBank) throw new Error(`The exact source bank ${plan.bank_file} is not loaded for ${plan.clothing} · ${plan.gender}.`);
+  const bankNames = sourceBank ? new Set((sourceBank.entries || []).map(entry => entry.name)) : null;
   const used = new Map();
   for (const character of review.characters) {
     const value = effectiveFirst(state, character).trim().toLowerCase();
@@ -35,6 +44,7 @@ function validatePlan(state, plan) {
     const first = state.curation.records[id]?.parts?.first;
     if (first?.decision !== "replace") throw new Error(`#${id} is no longer red-marked for first-name replacement.`);
     if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(item.replacement)) throw new Error(`Invalid first name ${item.replacement}.`);
+    if (bankNames && !bankNames.has(item.replacement)) throw new Error(`${item.replacement} is not an exact row in ${plan.bank_file}.`);
     const conflicts = (used.get(replacementKey) || []).filter(otherId => otherId !== id);
     if (conflicts.length) throw new Error(`${item.replacement} is already used by #${conflicts.join(", #")}.`);
     if (!item.reference || !item.fit) throw new Error(`#${id} needs both a reference and fit explanation.`);
@@ -47,8 +57,8 @@ async function main() {
   const apply = process.argv.includes("--apply");
   if (!fs.existsSync(planPath)) throw new Error("Pass a Stage 2 plan JSON path.");
   const plan = JSON.parse(fs.readFileSync(planPath, "utf8"));
-  const state = await readState();
-  const { byId } = validatePlan(state, plan);
+  const [state, bankState] = await Promise.all([readState(), getNameBanks()]);
+  const { byId } = validatePlan(state, plan, bankState);
   console.log(`Validated ${plan.replacements.length} ${plan.clothing} replacements against live revision ${state.revision}.`);
   if (!apply) {
     console.log("Dry run only. Re-run with --apply after reviewing the plan.");
@@ -73,7 +83,7 @@ async function main() {
       note: "",
       disabled: false,
       replacement_value: item.replacement,
-      replacement_source: `First names Stage 2 · ${plan.clothing} · sourced cowboy reference`,
+      replacement_source: `First names Stage 2 · ${plan.clothing} · ${plan.bank_file || "curated reference bank"}`,
       replacement_trait_source: `Clothing:${plan.clothing} + Body:${character.gender_from_body}`,
       replacement_language: "western",
       replacement_origin_kind: "stage2_reference",
@@ -83,6 +93,8 @@ async function main() {
       workflow_stage: plan.workflow_stage,
       workflow_stage_clothing: plan.clothing,
       workflow_reference: item.reference,
+      workflow_reference_url: item.reference_url || "",
+      workflow_source_file: plan.bank_file || "",
       updated_at: timestamp,
       reviewer: plan.reviewer,
       deleted_at: null
@@ -97,7 +109,9 @@ async function main() {
       action: "stage2_first_name_replacement",
       previous_first_name: item.expected_first,
       resulting_first_name: item.replacement,
-      reference: item.reference
+      reference: item.reference,
+      source_file: plan.bank_file || "",
+      reference_url: item.reference_url || ""
     }].slice(-20);
     record.updated_at = timestamp;
   }

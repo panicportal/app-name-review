@@ -1,0 +1,19 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Brownie cowboy",
+  "gender": "Male",
+  "bank_file": "panic_brownie_cowboy_male_name_bank_2026-08-17.md",
+  "reviewer": "Codex Stage 2",
+  "created_at": "2026-09-12T08:30:00.000Z",
+  "replacements": [
+    {
+      "id": "3152",
+      "expected_first": "Sunset",
+      "replacement": "Star",
+      "reference": "Old West lawman and Deadwood figure Sol Star",
+      "reference_url": "https://www.deadwood.com/history/famous-deadwood/sol-star/",
+      "fit": "The waning crescent moon, dark hat, and violet night palette make Star a direct celestial whole-portrait fit while the exact bank route preserves a real Old West reference.",
+      "score": 9.9
+    }
+  ]
+}
