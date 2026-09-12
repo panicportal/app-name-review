@@ -6,6 +6,7 @@ const { parseMarkdownNameBank } = require("../api/_lib/name-bank-parser");
 const { composeSurname, validateStructuredSurname } = require("../api/_lib/name-model");
 const { repairCandidates, safeAutomaticRepair, shouldOfferRepair } = require("../api/_lib/surname-repair");
 const { auditOriginMismatches, characters, detectFirstOrigin, detectSurnameOrigin } = require("../api/_lib/name-origin");
+const { compactCloudState } = require("../api/_lib/store");
 
 const character = {
   traits: [
@@ -16,6 +17,44 @@ const character = {
     { type: "Mouth", value: "Mad" },
   ],
 };
+
+test("cloud-state compaction removes only redundant defaults", () => {
+  const original = {
+    revision: 10,
+    curation: {
+      schema_version: "panic-name-curation/v2",
+      reviewer: "spiral",
+      records: {
+        "7": {
+          note: "",
+          note_updated_at: "2026-09-13T00:00:00.000Z",
+          manual_name_edit_history: [],
+          parts: {
+            first: {
+              decision: null,
+              scope: null,
+              disabled: false,
+              replacement_value: "Mafalda",
+              replacement_source: "exact-bank.md",
+              replacement_rationale: "Preserve this rationale.",
+              deleted_at: null,
+            },
+          },
+        },
+      },
+    },
+    history: [{ action: "Keep audit history" }],
+  };
+  const compacted = compactCloudState(original);
+  assert.equal(compacted.curation.records["7"].note, undefined);
+  assert.equal(compacted.curation.records["7"].manual_name_edit_history, undefined);
+  assert.equal(compacted.curation.records["7"].parts.first.decision, undefined);
+  assert.equal(compacted.curation.records["7"].parts.first.disabled, undefined);
+  assert.equal(compacted.curation.records["7"].parts.first.replacement_value, "Mafalda");
+  assert.equal(compacted.curation.records["7"].parts.first.replacement_rationale, "Preserve this rationale.");
+  assert.deepEqual(compacted.history, original.history);
+  assert.equal(original.curation.records["7"].parts.first.decision, null);
+});
 
 test("bundled cowboy Markdown bank parses 278 unique one-word names", () => {
   const markdown = fs.readFileSync(path.join(__dirname, "..", "name_banks", "panic_brownie_cowboy_male_name_bank_2026-08-17.md"), "utf8");
@@ -416,6 +455,16 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
     ["spicy-devil-female-2026-09-12.json", "panic_spicy_devil_female_stage2_2026-09-12.md", 4],
     ["starry-night-clown-male-2026-09-12.json", "panic_starry_night_clown_male_stage2_2026-09-12.md", 53],
     ["vintage-sweatshirt-female-2026-09-12.json", "panic_vintage_sweatshirt_female_stage2_2026-09-12.md", 47],
+    ["polished-suit-followup-3-2026-09-13.json", "panic_polished_suit_male_stage2_followup_3_2026-09-13.md", 1],
+    ["ham-sandwich-clown-followup-4-2026-09-13.json", "panic_ham_sandwich_clown_female_stage2_followup_4_2026-09-13.md", 1],
+    ["simple-swimsuit-followup-2-2026-09-13.json", "panic_simple_swimsuit_female_stage2_followup_2_2026-09-13.md", 43],
+    ["vintage-sweatshirt-followup-2-2026-09-13.json", "panic_vintage_sweatshirt_female_stage2_followup_2_2026-09-13.md", 11],
+    ["observer-angel-followup-5-2026-09-13.json", "panic_observer_angel_female_stage2_followup_5_2026-09-13.md", 2],
+    ["rogue-pirate-captain-followup-3-2026-09-13.json", "panic_rogue_pirate_captain_female_stage2_followup_3_2026-09-13.md", 6],
+    ["starry-night-clown-followup-2-2026-09-13.json", "panic_starry_night_clown_male_stage2_followup_2_2026-09-13.md", 13],
+    ["restless-ape-followup-3-2026-09-13.json", "panic_restless_ape_male_stage2_followup_3_2026-09-13.md", 13],
+    ["shiba-dog-followup-2-2026-09-13.json", "panic_shiba_dog_male_stage2_followup_2_2026-09-13.md", 6],
+    ["spicy-devil-followup-2-2026-09-13.json", "panic_spicy_devil_female_stage2_followup_2_2026-09-13.md", 2],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));

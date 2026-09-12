@@ -54,6 +54,16 @@ function bundledBanks() {
     { filename: "panic_spicy_devil_female_stage2_2026-09-12.md", clothing: "Spicy devil", gender: "Female", version: "2026-09-12" },
     { filename: "panic_starry_night_clown_male_stage2_2026-09-12.md", clothing: "Starry night clown", gender: "Male", version: "2026-09-12" },
     { filename: "panic_vintage_sweatshirt_female_stage2_2026-09-12.md", clothing: "Vintage sweatshirt", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_polished_suit_male_stage2_followup_3_2026-09-13.md", clothing: "Polished suit", gender: "Male", version: "2026-09-13" },
+    { filename: "panic_ham_sandwich_clown_female_stage2_followup_4_2026-09-13.md", clothing: "Ham sandwich clown", gender: "Female", version: "2026-09-13" },
+    { filename: "panic_simple_swimsuit_female_stage2_followup_2_2026-09-13.md", clothing: "Simple swimsuit", gender: "Female", version: "2026-09-13" },
+    { filename: "panic_vintage_sweatshirt_female_stage2_followup_2_2026-09-13.md", clothing: "Vintage sweatshirt", gender: "Female", version: "2026-09-13" },
+    { filename: "panic_observer_angel_female_stage2_followup_5_2026-09-13.md", clothing: "Observer angel", gender: "Female", version: "2026-09-13" },
+    { filename: "panic_rogue_pirate_captain_female_stage2_followup_3_2026-09-13.md", clothing: "Rogue pirate captain", gender: "Female", version: "2026-09-13" },
+    { filename: "panic_starry_night_clown_male_stage2_followup_2_2026-09-13.md", clothing: "Starry night clown", gender: "Male", version: "2026-09-13" },
+    { filename: "panic_restless_ape_male_stage2_followup_3_2026-09-13.md", clothing: "Restless ape", gender: "Male", version: "2026-09-13" },
+    { filename: "panic_shiba_dog_male_stage2_followup_2_2026-09-13.md", clothing: "Shiba dog", gender: "Male", version: "2026-09-13" },
+    { filename: "panic_spicy_devil_female_stage2_followup_2_2026-09-13.md", clothing: "Spicy devil", gender: "Female", version: "2026-09-13" },
   ];
   return definitions.flatMap(definition => {
     const file = path.join(process.cwd(), "name_banks", definition.filename);

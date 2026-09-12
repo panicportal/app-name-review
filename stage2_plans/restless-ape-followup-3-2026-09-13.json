@@ -1,0 +1,146 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Restless ape",
+  "gender": "Male",
+  "bank_file": "panic_restless_ape_male_stage2_followup_3_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Restless ape · red follow-up",
+  "created_at": "2026-09-12T22:20:15.886Z",
+  "replacements": [
+    {
+      "id": "1044",
+      "expected_first": "Gargantua",
+      "replacement": "Snowflake",
+      "reference": "Snowflake, the famous albino gorilla",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Relax, Eyes:Round, Mouth:Proud supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1251",
+      "expected_first": "Lucius",
+      "replacement": "Ivan",
+      "reference": "Ivan from The One and Only Ivan",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Absentminded, Eyes:Green stretched, Mouth:Expressionless supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1543",
+      "expected_first": "Willie",
+      "replacement": "Oliver",
+      "reference": "Oliver, the famous chimpanzee",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Happy, Mouth:Grimace supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1547",
+      "expected_first": "Ozzie",
+      "replacement": "Cheeta",
+      "reference": "Cheeta from Tarzan screen stories",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Passion Scarlet, Eyebrows:Cool, Eyes:Sour, Mouth:Laughing supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2071",
+      "expected_first": "Noa",
+      "replacement": "Maurice",
+      "reference": "Maurice from Planet of the Apes",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Passion Scarlet, Eyebrows:Angry, Eyes:Glare, Mouth:Scream supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2234",
+      "expected_first": "Donkey",
+      "replacement": "Winston",
+      "reference": "Winston from Overwatch",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Passion Scarlet, Eyebrows:Absentminded, Eyes:Winking, Mouth:Mustache happy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2364",
+      "expected_first": "Funky",
+      "replacement": "Lanky",
+      "reference": "Lanky Kong from Donkey Kong",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Passion Scarlet, Eyebrows:Absentminded, Eyes:Sour, Mouth:Laughing supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2547",
+      "expected_first": "Pogo",
+      "replacement": "Diddy",
+      "reference": "Diddy Kong from Donkey Kong",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Romantic Purple, Eyebrows:Angry, Eyes:Hanging sanpaku, Mouth:Mustache happy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2709",
+      "expected_first": "Darwin",
+      "replacement": "Ursus",
+      "reference": "General Ursus from Planet of the Apes",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Passion Scarlet, Eyebrows:Relax, Eyes:Hanging sanpaku, Mouth:Expressionless supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2922",
+      "expected_first": "Gleek",
+      "replacement": "Urko",
+      "reference": "General Urko from Planet of the Apes",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Lovely Pink, Eyebrows:Angry, Eyes:Tight, Mouth:Laughing supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3094",
+      "expected_first": "KingLouie",
+      "replacement": "Joe",
+      "reference": "Mighty Joe Young",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Hungry Red, Eyebrows:Relax, Eyes:3D glasses, Mouth:Big smile supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3125",
+      "expected_first": "DonkeyKong",
+      "replacement": "Abu",
+      "reference": "Abu from Aladdin",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Cool, Eyes:Green stretched, Mouth:Grimace supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3285",
+      "expected_first": "MightyKong",
+      "replacement": "Mojo",
+      "reference": "Mojo Jojo from The Powerpuff Girls",
+      "reference_url": "https://www.britannica.com/animal/ape",
+      "fit": "Background:Romantic Purple, Eyebrows:Relax, Eyes:Happy, Mouth:Expressionless supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

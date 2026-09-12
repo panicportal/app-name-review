@@ -1,0 +1,446 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Simple swimsuit",
+  "gender": "Female",
+  "bank_file": "panic_simple_swimsuit_female_stage2_followup_2_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Simple swimsuit · red follow-up",
+  "created_at": "2026-09-12T22:20:15.882Z",
+  "replacements": [
+    {
+      "id": "81",
+      "expected_first": "Douglass",
+      "replacement": "Cornelia",
+      "reference": "Cornelia Ender",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Angry, Eyes:Brown tilt, Hair:Moon candy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "128",
+      "expected_first": "Walsh",
+      "replacement": "Satomi",
+      "reference": "Satomi Suzuki",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Cool, Eyes:Happy, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "186",
+      "expected_first": "Manuel",
+      "replacement": "Otylia",
+      "reference": "Otylia Jedrzejczak",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Scared, Eyes:Closed, Hair:Brandy wild braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "227",
+      "expected_first": "Torres",
+      "replacement": "Joanne",
+      "reference": "Joanne Jackson",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyebrows:Relax, Eyes:Flat up, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "288",
+      "expected_first": "Thompson",
+      "replacement": "Allison",
+      "reference": "Allison Schmitt",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Droopy, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "295",
+      "expected_first": "Evans",
+      "replacement": "Kathleen",
+      "reference": "Kathleen Baker",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Smize, Eyes:Winking, Hair:Moon candy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "344",
+      "expected_first": "Babashoff",
+      "replacement": "Abbey",
+      "reference": "Abbey Weitzeil",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyebrows:Scared, Eyes:Sour, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "432",
+      "expected_first": "VanDyken",
+      "replacement": "Kelsi",
+      "reference": "Kelsi Dahlia",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Googly, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "478",
+      "expected_first": "Beard",
+      "replacement": "Mallory",
+      "reference": "Mallory Comerford",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Smize, Eyes:Happy, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "574",
+      "expected_first": "Bennett",
+      "replacement": "Olivia",
+      "reference": "Olivia Smoliga",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Flat up, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "645",
+      "expected_first": "Sanders",
+      "replacement": "Erin",
+      "reference": "Erin Popovich",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyebrows:Scared, Eyes:Hanging sanpaku, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "649",
+      "expected_first": "Hogshead",
+      "replacement": "Bethany",
+      "reference": "Bethany Firth",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Sour, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "695",
+      "expected_first": "Gould",
+      "replacement": "Camelia",
+      "reference": "Camelia Potec",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Scared, Eyes:Tearful, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "706",
+      "expected_first": "ONeill",
+      "replacement": "Pernille",
+      "reference": "Pernille Blume",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Up, Hair:Ginger dreads bun supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "714",
+      "expected_first": "Jones",
+      "replacement": "Rikke",
+      "reference": "Rikke Moller Pedersen",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Cool, Eyes:Grey stare, Hair:Emerald innocent braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "744",
+      "expected_first": "Campbell",
+      "replacement": "Jeanette",
+      "reference": "Jeanette Ottesen",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Brown tilt, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "753",
+      "expected_first": "Bronte",
+      "replacement": "Louise",
+      "reference": "Louise Hansson",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Closed, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "824",
+      "expected_first": "Seebohm",
+      "replacement": "Eneli",
+      "reference": "Eneli Jefimova",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Scared, Eyes:Googly, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "871",
+      "expected_first": "Thomas",
+      "replacement": "Farida",
+      "reference": "Farida Osman",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Round, Hair:Tar shower supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "912",
+      "expected_first": "Schlanger",
+      "replacement": "Marrit",
+      "reference": "Marrit Steenbergen",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyebrows:Relax, Eyes:Tight, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "976",
+      "expected_first": "Kromowidjojo",
+      "replacement": "Tes",
+      "reference": "Tes Schouten",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Absentminded, Eyes:Blue doll, Hair:Brandy wild braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1023",
+      "expected_first": "DeBruijn",
+      "replacement": "Lakeisha",
+      "reference": "Lakeisha Patterson",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyebrows:Absentminded, Eyes:Green stretched, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1256",
+      "expected_first": "Adlington",
+      "replacement": "Chantalle",
+      "reference": "Chantalle Zijderveld",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Flat up, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1264",
+      "expected_first": "Jazz",
+      "replacement": "Liesette",
+      "reference": "Liesette Bruinsma",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Relax, Eyes:Round, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1470",
+      "expected_first": "Jianjiahe",
+      "replacement": "Lauren",
+      "reference": "Lauren Steadman",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Absentminded, Eyes:Happy, Hair:Tar shower supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1541",
+      "expected_first": "Risztov",
+      "replacement": "Kaylene",
+      "reference": "Kaylene Corbett",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyebrows:Cool, Eyes:Hanging sanpaku, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1708",
+      "expected_first": "Schneider",
+      "replacement": "Yusra",
+      "reference": "Yusra Mardini",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Absentminded, Eyes:Happy, Hair:Moon candy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1735",
+      "expected_first": "Ender",
+      "replacement": "Annette",
+      "reference": "Annette Kellerman",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyebrows:Smize, Eyes:Sour, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1789",
+      "expected_first": "Ulrike",
+      "replacement": "Aileen",
+      "reference": "Aileen Riggin",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Relax, Eyes:Grey stare, Hair:Tar shower supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1963",
+      "expected_first": "Rouwendaal",
+      "replacement": "Albina",
+      "reference": "Albina Osipowich",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyebrows:Relax, Eyes:Flat up, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2049",
+      "expected_first": "Ilchenko",
+      "replacement": "Hendrika",
+      "reference": "Rie Mastenbroek",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Absentminded, Eyes:Brown tilt, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2165",
+      "expected_first": "Belmonte",
+      "replacement": "Puck",
+      "reference": "Puck Oversloot",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Scared, Eyes:Flat up, Hair:Moon candy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2172",
+      "expected_first": "Oleksiak",
+      "replacement": "Ildiko",
+      "reference": "Ildiko Ujlaki-Rejto",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Absentminded, Eyes:Up, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2268",
+      "expected_first": "MacNeil",
+      "replacement": "Kaneto",
+      "reference": "Rie Kaneto",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Angry, Eyes:Glare, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2574",
+      "expected_first": "Heyns",
+      "replacement": "Suzuki",
+      "reference": "Satomi Suzuki",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyebrows:Scared, Eyes:Happy, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2704",
+      "expected_first": "Rivard",
+      "replacement": "Klochkova",
+      "reference": "Yana Klochkova",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Scared, Eyes:Droopy, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2729",
+      "expected_first": "Perales",
+      "replacement": "Schmitt",
+      "reference": "Allison Schmitt",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyebrows:Angry, Eyes:Blue doll, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2842",
+      "expected_first": "DuToit",
+      "replacement": "Baker",
+      "reference": "Kathleen Baker",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyebrows:Relax, Eyes:Hanging sanpaku, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2928",
+      "expected_first": "Norelius",
+      "replacement": "Smoliga",
+      "reference": "Olivia Smoliga",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Round, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2947",
+      "expected_first": "Holm",
+      "replacement": "Twichell",
+      "reference": "Ashley Twichell",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Smize, Eyes:Closed, Hair:Moon candy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2999",
+      "expected_first": "Andersen",
+      "replacement": "Bruni",
+      "reference": "Rachele Bruni",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyebrows:Scared, Eyes:Hanging sanpaku, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3017",
+      "expected_first": "Crapp",
+      "replacement": "Long",
+      "reference": "Jessica Long",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Relax, Eyes:Round, Hair:Brandy wild braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3134",
+      "expected_first": "Muffat",
+      "replacement": "Zorn",
+      "reference": "Trischa Zorn",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Googly, Hair:Ginger dreads bun supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    }
+  ]
+}

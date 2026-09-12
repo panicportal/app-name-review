@@ -1,0 +1,76 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Rogue pirate captain",
+  "gender": "Female",
+  "bank_file": "panic_rogue_pirate_captain_female_stage2_followup_3_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Rogue pirate captain · red follow-up",
+  "created_at": "2026-09-12T22:20:15.884Z",
+  "replacements": [
+    {
+      "id": "126",
+      "expected_first": "Ching",
+      "replacement": "Beidou",
+      "reference": "Beidou from Genshin Impact",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Relax, Eyes:Blue doll, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1258",
+      "expected_first": "Farrell",
+      "replacement": "Max",
+      "reference": "Max from Black Sails",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Scared, Eyes:Googly, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1591",
+      "expected_first": "Burn",
+      "replacement": "Isabel",
+      "reference": "Isabel from Pirates of the Caribbean",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "Background:Silent Violet, Eyebrows:Scared, Eyes:Green stretched, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1814",
+      "expected_first": "Providence",
+      "replacement": "Bonney",
+      "reference": "Jewelry Bonney from One Piece",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "Background:Passion Scarlet, Eyebrows:Smize, Eyes:Happy, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1822",
+      "expected_first": "Nico",
+      "replacement": "Morgan",
+      "reference": "Morgan Adams from Cutthroat Island",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "Background:Hungry Red, Eyebrows:Cool, Eyes:Tearful, Hair:Moon candy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2990",
+      "expected_first": "Lai",
+      "replacement": "Carina",
+      "reference": "Carina Smyth from Pirates of the Caribbean",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Relax, Eyes:Droopy, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    }
+  ]
+}

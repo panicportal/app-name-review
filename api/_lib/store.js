@@ -1,5 +1,36 @@
 const STORE_KEY = "panic:name-review:v12:state";
 
+function redundantStoredValue(value) {
+  return value === undefined || value === null || value === "" || value === false ||
+    (Array.isArray(value) && value.length === 0) ||
+    (value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0);
+}
+
+function compactObject(value) {
+  return Object.fromEntries(
+    Object.entries(value || {}).filter(([, item]) => !redundantStoredValue(item))
+  );
+}
+
+function compactCloudState(state) {
+  if (!state?.curation?.records) return state;
+  const records = {};
+  for (const [id, record] of Object.entries(state.curation.records)) {
+    const parts = {};
+    for (const [key, part] of Object.entries(record?.parts || {})) {
+      parts[key] = compactObject(part);
+    }
+    records[id] = { ...compactObject({ ...record, parts: undefined }), parts };
+  }
+  return {
+    ...state,
+    curation: {
+      ...state.curation,
+      records
+    }
+  };
+}
+
 function redisConfig() {
   return {
     url:
@@ -48,7 +79,7 @@ async function readState() {
 }
 
 async function writeState(state) {
-  await command(["SET", STORE_KEY, JSON.stringify(state)]);
+  await command(["SET", STORE_KEY, JSON.stringify(compactCloudState(state))]);
   return state;
 }
 
@@ -67,7 +98,7 @@ async function compareAndSwapState(expectedRevision, state) {
     "1",
     STORE_KEY,
     String(Number(expectedRevision || 0)),
-    JSON.stringify(state),
+    JSON.stringify(compactCloudState(state)),
   ]));
   return result === 1;
 }
@@ -84,6 +115,7 @@ async function writeJson(key, value) {
 
 module.exports = {
   compareAndSwapState,
+  compactCloudState,
   command,
   readJson,
   readState,

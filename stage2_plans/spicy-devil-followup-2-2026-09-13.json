@@ -1,0 +1,36 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Spicy devil",
+  "gender": "Female",
+  "bank_file": "panic_spicy_devil_female_stage2_followup_2_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Spicy devil · red follow-up",
+  "created_at": "2026-09-12T22:20:15.888Z",
+  "replacements": [
+    {
+      "id": "276",
+      "expected_first": "Mazikeen",
+      "replacement": "Eris",
+      "reference": "Eris, the chaos goddess and screen villain",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Scared, Eyes:Tearful, Hair:Emerald innocent braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2319",
+      "expected_first": "Maleficent",
+      "replacement": "Cruella",
+      "reference": "Cruella from Disney film",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyebrows:Absentminded, Eyes:Sour, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

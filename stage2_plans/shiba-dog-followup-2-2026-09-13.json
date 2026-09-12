@@ -1,0 +1,76 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Shiba dog",
+  "gender": "Male",
+  "bank_file": "panic_shiba_dog_male_stage2_followup_2_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Shiba dog · red follow-up",
+  "created_at": "2026-09-12T22:20:15.887Z",
+  "replacements": [
+    {
+      "id": "1522",
+      "expected_first": "Shadow",
+      "replacement": "Bolt",
+      "reference": "Bolt from Bolt",
+      "reference_url": "https://www.akc.org/expert-advice/lifestyle/best-dog-names-movies/",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Relax, Eyes:Droopy, Mouth:Silly supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1996",
+      "expected_first": "Einstein",
+      "replacement": "Balto",
+      "reference": "Balto from Balto",
+      "reference_url": "https://www.akc.org/expert-advice/lifestyle/best-dog-names-movies/",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Brown tilt, Mouth:Mustache happy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2206",
+      "expected_first": "Asta",
+      "replacement": "Beethoven",
+      "reference": "Beethoven from Beethoven",
+      "reference_url": "https://www.akc.org/expert-advice/lifestyle/best-dog-names-movies/",
+      "fit": "Background:Silent Violet, Eyebrows:Relax, Eyes:Sour, Mouth:Beard sad supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2423",
+      "expected_first": "Uggie",
+      "replacement": "Hooch",
+      "reference": "Hooch from Turner and Hooch",
+      "reference_url": "https://www.akc.org/expert-advice/lifestyle/best-dog-names-movies/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Relax, Eyes:Flat up, Mouth:Big smile supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2543",
+      "expected_first": "Nana",
+      "replacement": "Marley",
+      "reference": "Marley from Marley and Me",
+      "reference_url": "https://www.akc.org/expert-advice/lifestyle/best-dog-names-movies/",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Absentminded, Eyes:Closed, Mouth:Smile supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2735",
+      "expected_first": "Tock",
+      "replacement": "Krypto",
+      "reference": "Krypto from Superman stories",
+      "reference_url": "https://www.akc.org/expert-advice/lifestyle/best-dog-names-movies/",
+      "fit": "Background:Passion Scarlet, Eyebrows:Relax, Eyes:Round, Mouth:Smile supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

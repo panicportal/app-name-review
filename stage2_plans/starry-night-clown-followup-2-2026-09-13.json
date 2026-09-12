@@ -1,0 +1,146 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Starry night clown",
+  "gender": "Male",
+  "bank_file": "panic_starry_night_clown_male_stage2_followup_2_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Starry night clown · red follow-up",
+  "created_at": "2026-09-12T22:20:15.885Z",
+  "replacements": [
+    {
+      "id": "263",
+      "expected_first": "Art",
+      "replacement": "Chucko",
+      "reference": "Chucko the Birthday Clown from television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyebrows:Smize, Eyes:Googly, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "437",
+      "expected_first": "Clarabell",
+      "replacement": "Bonkers",
+      "reference": "Bonkers the Clown from television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Cool, Eyes:Hanging sanpaku, Hair:Biscotti rough supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "567",
+      "expected_first": "Stitches",
+      "replacement": "Rollo",
+      "reference": "Rollo the Clown from television comedy",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Smize, Eyes:Blue doll, Hair:Banana flattop supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "571",
+      "expected_first": "Killjoy",
+      "replacement": "Ronald",
+      "reference": "Ronald McDonald, the long-running television clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyebrows:Relax, Eyes:Up, Hair:Biscotti rough supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "666",
+      "expected_first": "Spaulding",
+      "replacement": "Bobo",
+      "reference": "Bobo, a classic compact clown stage name",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyebrows:Angry, Eyes:Glare, Hair:Biscotti rough supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "784",
+      "expected_first": "Violator",
+      "replacement": "Grimaldi",
+      "reference": "Joseph Grimaldi, origin of the Joey clown tradition",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyebrows:Absentminded, Eyes:Tight, Hair:Tar shower supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "908",
+      "expected_first": "Shakes",
+      "replacement": "Jacobs",
+      "reference": "Lou Jacobs, the famous Ringling clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyebrows:Relax, Eyes:Round, Hair:Biscotti rough supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2490",
+      "expected_first": "Slava",
+      "replacement": "Cairoli",
+      "reference": "Charlie Cairoli, the famous British television clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyebrows:Absentminded, Eyes:Droopy, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2597",
+      "expected_first": "Joey",
+      "replacement": "Nock",
+      "reference": "Bello Nock, the television circus clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Relax, Eyes:Up, Hair:Soot sleek curl supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2649",
+      "expected_first": "Otto",
+      "replacement": "Polunin",
+      "reference": "Slava Polunin, creator of Snowshow",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyebrows:Cool, Eyes:Round, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2688",
+      "expected_first": "Weary",
+      "replacement": "Adler",
+      "reference": "Felix Adler, the famous Ringling clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Scared, Eyes:Hanging sanpaku, Hair:Soot sleek curl supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3160",
+      "expected_first": "Dimitri",
+      "replacement": "Griebling",
+      "reference": "Otto Griebling, the famous American circus clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyebrows:Scared, Eyes:Grey stare, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3178",
+      "expected_first": "Avner",
+      "replacement": "Lubin",
+      "reference": "Barry Lubin, creator of the Grandma clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Relax, Eyes:Hanging sanpaku, Hair:Biscotti rough supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

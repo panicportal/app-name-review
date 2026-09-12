@@ -1,0 +1,36 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Observer angel",
+  "gender": "Female",
+  "bank_file": "panic_observer_angel_female_stage2_followup_5_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Observer angel · red follow-up",
+  "created_at": "2026-09-12T22:20:15.883Z",
+  "replacements": [
+    {
+      "id": "1205",
+      "expected_first": "Serendipity",
+      "replacement": "Lumina",
+      "reference": "Lumina, a light-centered fantasy name",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyebrows:Scared, Eyes:Droopy, Hair:Brandy wild braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3258",
+      "expected_first": "Zerachiel",
+      "replacement": "Arcadia",
+      "reference": "Arcadia, an otherworldly peaceful name",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyebrows:Angry, Eyes:Winking, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    }
+  ]
+}

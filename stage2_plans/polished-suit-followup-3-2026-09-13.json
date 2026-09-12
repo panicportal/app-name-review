@@ -1,0 +1,26 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Polished suit",
+  "gender": "Male",
+  "bank_file": "panic_polished_suit_male_stage2_followup_3_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Polished suit · red follow-up",
+  "created_at": "2026-09-12T22:20:15.879Z",
+  "replacements": [
+    {
+      "id": "3253",
+      "expected_first": "Soros",
+      "replacement": "Carnegie",
+      "reference": "Andrew Carnegie, the historic industrialist and philanthropist",
+      "reference_url": "https://www.britannica.com/biography/Andrew-Carnegie",
+      "fit": "Background:Passion Scarlet, Eyebrows:Angry, Eyes:Round, Hair:Turmeric fluffy supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    }
+  ]
+}

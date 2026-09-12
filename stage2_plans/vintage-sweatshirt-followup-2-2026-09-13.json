@@ -1,0 +1,126 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice with a new option following the greenlit clothing direction.",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Vintage sweatshirt",
+  "gender": "Female",
+  "bank_file": "panic_vintage_sweatshirt_female_stage2_followup_2_2026-09-13.md",
+  "reviewer": "Codex Stage 2 · Vintage sweatshirt · red follow-up",
+  "created_at": "2026-09-12T22:20:15.883Z",
+  "replacements": [
+    {
+      "id": "136",
+      "expected_first": "Scully",
+      "replacement": "Domino",
+      "reference": "Domino from Deadpool 2",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyebrows:Cool, Eyes:Hanging sanpaku, Hair:Jet loose supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "435",
+      "expected_first": "Sansa",
+      "replacement": "Ramona",
+      "reference": "Ramona Flowers from Scott Pilgrim",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyebrows:Relax, Eyes:Round, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "452",
+      "expected_first": "Daenerys",
+      "replacement": "Enid",
+      "reference": "Enid Sinclair from Wednesday",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyebrows:Cool, Eyes:Hanging sanpaku, Hair:Ginger dreads bun supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "514",
+      "expected_first": "Cersei",
+      "replacement": "Sloane",
+      "reference": "Sloane Peterson from Ferris Bueller's Day Off",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyebrows:Scared, Eyes:Winking, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "524",
+      "expected_first": "Villanelle",
+      "replacement": "Akasha",
+      "reference": "Akasha from Queen of the Damned",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyebrows:Angry, Eyes:Green stretched, Hair:Snow natural supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "541",
+      "expected_first": "Eleven",
+      "replacement": "Elektra",
+      "reference": "Elektra from Marvel film and television",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyebrows:Cool, Eyes:Grey stare, Hair:Emerald innocent braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "648",
+      "expected_first": "Jules",
+      "replacement": "Illyria",
+      "reference": "Illyria from Angel",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Cool, Eyes:Hanging sanpaku, Hair:Tan loose wave supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "826",
+      "expected_first": "Katniss",
+      "replacement": "Leeloo",
+      "reference": "Leeloo from The Fifth Element",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyebrows:Relax, Eyes:Green stretched, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "969",
+      "expected_first": "Nikita",
+      "replacement": "Sorsha",
+      "reference": "Sorsha from Willow",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyebrows:Relax, Eyes:Sour, Hair:Octopus hot frizz supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1544",
+      "expected_first": "Storm",
+      "replacement": "Pris",
+      "reference": "Pris from Blade Runner",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyebrows:Smize, Eyes:Hanging sanpaku, Hair:Brandy wild braids supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1613",
+      "expected_first": "Rogue",
+      "replacement": "Rachael",
+      "reference": "Rachael from Blade Runner",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyebrows:Absentminded, Eyes:Tight, Hair:Ginger dreads bun supplies the individual portrait fit; the replacement follows the names the team greenlit for this clothing group and stays concise and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}
