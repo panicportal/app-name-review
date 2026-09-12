@@ -1,0 +1,25 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Brownie cowboy",
+  "reviewer": "Codex Stage 2",
+  "created_at": "2026-09-12",
+  "replacements": [
+    { "id": "1961", "expected_first": "Brandbrook", "replacement": "Deets", "reference": "Joshua Deets from Lonesome Dove", "fit": "The calm, grounded portrait benefits from Deets' restrained and dependable frontier character.", "score": 9.6 },
+    { "id": "2294", "expected_first": "Ivorson", "replacement": "Bret", "reference": "Bret Maverick from Maverick", "fit": "The sleek hair, closed eyes, and easy grin read like a polished Western gambler.", "score": 9.7 },
+    { "id": "2401", "expected_first": "Deadwood", "replacement": "Dude", "reference": "Dude from Rio Bravo", "fit": "The 3D glasses and oversized lollipop give this portrait the offbeat charm needed for Dude.", "score": 9.7 },
+    { "id": "2448", "expected_first": "Isham", "replacement": "Seth", "reference": "Deadwood lawman Seth Bullock", "fit": "The mustache and steady expression give the portrait a firm lawman presence.", "score": 9.6 },
+    { "id": "2464", "expected_first": "Jericho", "replacement": "Shane", "reference": "the title gunfighter from Shane", "fit": "The clean silhouette and focused eyes suit a quiet, iconic lone-gunfighter name.", "score": 9.8 },
+    { "id": "2501", "expected_first": "Ignacio", "replacement": "Augustus", "reference": "Augustus 'Gus' McCrae from Lonesome Dove", "fit": "The beer mug, rough hair, and weary beard make the warm but rugged reference especially apt.", "score": 9.8 },
+    { "id": "2607", "expected_first": "Nathanael", "replacement": "Quigley", "reference": "Matthew Quigley from Quigley Down Under", "fit": "The long beard and alert glare give this portrait the rangy marksman energy of Quigley.", "score": 9.7 },
+    { "id": "2826", "expected_first": "Woodrow", "replacement": "Bodie", "reference": "Cheyenne Bodie from the Western series Cheyenne", "fit": "Bodie is brisk and athletic beside the soccer-ball portrait while remaining unmistakably Western.", "score": 9.5 },
+    { "id": "2834", "expected_first": "Boothe", "replacement": "Bart", "reference": "Bart Maverick from Maverick", "fit": "The arched brows and huge hamburger create the wry, playful character needed for Bart.", "score": 9.6 },
+    { "id": "2838", "expected_first": "Herdsman", "replacement": "Gabby", "reference": "Western actor and comic sidekick George 'Gabby' Hayes", "fit": "The laughing face, wild flattop, and giant hamburger strongly support a comic-sidekick name.", "score": 9.8 },
+    { "id": "2899", "expected_first": "Rustico", "replacement": "Newt", "reference": "Newt Dobbs from Lonesome Dove", "fit": "The youthful face and bittersweet happy-eyes/sad-beard contrast suit Newt's earnest frontier feel.", "score": 9.6 },
+    { "id": "3036", "expected_first": "Bootjack", "replacement": "Buster", "reference": "champion cutting-horse cowboy Buster Welch", "fit": "The basketball, tears, and high-energy pose give Buster a lively collectible rhythm.", "score": 9.6 },
+    { "id": "3079", "expected_first": "Chapparal", "replacement": "Carson", "reference": "frontiersman Kit Carson", "fit": "The rough blond hair and oversized frontier brush support a classic trailblazer reference.", "score": 9.6 },
+    { "id": "3126", "expected_first": "Rustlebrook", "replacement": "Rocky", "reference": "Western film star Allan 'Rocky' Lane", "fit": "Rocky gives the baseball-bat portrait a compact action-star name without losing the Western source.", "score": 9.7 },
+    { "id": "3152", "expected_first": "Farley", "replacement": "Sunset", "reference": "Western film star Sunset Carson", "fit": "The crescent-moon hair and violet sky make Sunset an unusually exact visual and Western match.", "score": 9.9 },
+    { "id": "3220", "expected_first": "Dusty", "replacement": "Cheyenne", "reference": "Cheyenne Bodie from the Western series Cheyenne", "fit": "The huge sun, windswept orange hair, and confident stance deserve a bold marquee Western name.", "score": 9.7 },
+    { "id": "3289", "expected_first": "Rooney", "replacement": "Red", "reference": "cowboy poet and entertainer Red Steagall", "fit": "The vivid red hair makes Red immediate and portrait-readable, while the real cowboy reference keeps it grounded.", "score": 9.8 }
+  ]
+}

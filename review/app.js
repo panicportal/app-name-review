@@ -120,6 +120,9 @@ function blankPart() {
     replacement_language: "",
     replacement_rationale: "",
     replacement_scores: null,
+    workflow_stage: "",
+    workflow_stage_clothing: "",
+    workflow_reference: "",
     disabled: false,
     deleted_at: null
   };
@@ -1320,6 +1323,9 @@ async function saveFullNameEdit(event) {
           ? `Exact artist Japanese first-name entry for ${detectedFirstRoute} and Body:${character.gender_from_body}. Detected automatically during the full-name edit.`
           : `Direct team edit of the full-name field for Surv!vor #${character.id}.`,
       replacement_scores: null,
+      workflow_stage: parsed.first !== currentFirst ? "" : current.workflow_stage || "",
+      workflow_stage_clothing: parsed.first !== currentFirst ? "" : current.workflow_stage_clothing || "",
+      workflow_reference: parsed.first !== currentFirst ? "" : current.workflow_reference || "",
       updated_at: timestamp,
       reviewer: state.curation.reviewer || current.reviewer || "",
       deleted_at: null
@@ -1637,6 +1643,9 @@ function matchesStatus(character, status) {
     });
   }
   if (status === "complete-rejected") return curation.key === "complete-rejected";
+  if (status === "first-stage-2") {
+    return partReview(character.id, "first").workflow_stage === "first_names_stage_2";
+  }
   if (status === "proposal") return character.surname_changed_from_v8;
   if (status === "first-online") {
     return (
@@ -2488,6 +2497,9 @@ function exportRecord(character) {
       replacement_origin_confirmed_by_user: review.replacement_origin_confirmed_by_user === true,
       replacement_rationale: review.replacement_rationale || "",
       replacement_scores: review.replacement_scores || null,
+      workflow_stage: review.workflow_stage || "",
+      workflow_stage_clothing: review.workflow_stage_clothing || "",
+      workflow_reference: review.workflow_reference || "",
       disabled: Boolean(review.disabled),
       reviewer: review.reviewer || "",
       updated_at: review.updated_at
@@ -2688,6 +2700,9 @@ function mergeImportedPayload(payload) {
         replacement_origin_confirmed_by_user: incoming.replacement_origin_confirmed_by_user === true,
         replacement_rationale: incoming.replacement_rationale || "",
         replacement_scores: incoming.replacement_scores || null,
+        workflow_stage: incoming.workflow_stage || "",
+        workflow_stage_clothing: incoming.workflow_stage_clothing || "",
+        workflow_reference: incoming.workflow_reference || "",
         disabled: Boolean(incoming.disabled),
         reviewer: incoming.reviewer || payload.reviewer || "",
         updated_at: incoming.updated_at || payload.exported_at || nowIso()
@@ -2757,6 +2772,9 @@ async function loadPackagedProgress() {
           replacement_language: incoming.replacement_language || "",
           replacement_rationale: incoming.replacement_rationale || "",
           replacement_scores: incoming.replacement_scores || null,
+          workflow_stage: incoming.workflow_stage || "",
+          workflow_stage_clothing: incoming.workflow_stage_clothing || "",
+          workflow_reference: incoming.workflow_reference || "",
           reviewer: incoming.reviewer || payload.reviewer || "",
           updated_at: incoming.updated_at || payload.exported_at || nowIso()
         };
@@ -5272,7 +5290,7 @@ async function applyAssistantName(firstName, surnameCandidate, source = "AI stru
   const timestamp = nowIso();
   if (first !== currentFirst) {
     const current = partReview(character.id, "first");
-    record.parts.first = { ...current, decision: "replace", scope: "this_character", disabled: false, replacement_value: first, replacement_source: source, replacement_trait_source: `Clothing:${character.clothing}`, replacement_language: "western", replacement_rationale: "Selected from the structured in-app naming workshop and revalidated for collection-wide uniqueness at apply time.", updated_at: timestamp, reviewer: state.curation.reviewer || current.reviewer || "", deleted_at: null };
+    record.parts.first = { ...current, decision: "replace", scope: "this_character", disabled: false, replacement_value: first, replacement_source: source, replacement_trait_source: `Clothing:${character.clothing}`, replacement_language: "western", replacement_rationale: "Selected from the structured in-app naming workshop and revalidated for collection-wide uniqueness at apply time.", workflow_stage: "", workflow_stage_clothing: "", workflow_reference: "", updated_at: timestamp, reviewer: state.curation.reviewer || current.reviewer || "", deleted_at: null };
   }
   components.forEach((component, index) => {
     const key = index ? "surname_part_2" : "surname_part_1";

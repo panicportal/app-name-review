@@ -317,9 +317,28 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=29-7-local-first-name-check/);
+  assert.match(html, /app\.js\?v=30-0-first-name-stage-2/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
+});
+
+test("Stage 2 first-name replacements are filterable, auditable, and sourced from the cowboy bank", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", "brownie-cowboy-2026-09-12.json"), "utf8"));
+  const bank = fs.readFileSync(path.join(__dirname, "..", "name_banks", "panic_brownie_cowboy_male_name_bank_2026-08-17.md"), "utf8");
+  assert.match(html, /value="first-stage-2">First names stage 2/);
+  assert.match(source, /workflow_stage === "first_names_stage_2"/);
+  assert.match(source, /workflow_reference: review\.workflow_reference/);
+  assert.equal(plan.clothing, "Brownie cowboy");
+  assert.equal(plan.replacements.length, 17);
+  assert.equal(new Set(plan.replacements.map(item => item.id)).size, 17);
+  assert.equal(new Set(plan.replacements.map(item => item.replacement.toLowerCase())).size, 17);
+  for (const item of plan.replacements) {
+    assert.match(bank, new RegExp(`\\| \\*\\*${item.replacement}\\*\\* \\|`));
+    assert.ok(item.reference.length > 8);
+    assert.ok(item.fit.length > 20);
+  }
 });
 
 test("bank-origin detector uses exact eligible routes instead of name appearance", () => {
@@ -376,7 +395,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=29-7-local-first-name-check/);
+  assert.match(html, /app\.js\?v=30-0-first-name-stage-2/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);
