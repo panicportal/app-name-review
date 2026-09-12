@@ -15,11 +15,17 @@ function element(value='') { return {value,textContent:'',dataset:{},classList:{
 test('cloud recovery detects a locally newer Stage 2 decision after reload',()=>{
   const ctx=vm.createContext({});
   vm.runInContext(functionText('timestamp'),ctx);
+  vm.runInContext(functionText('recordHasNewerLocalEdits'),ctx);
   vm.runInContext(functionText('curationHasNewerLocalEdits'),ctx);
-  const remote={updated_at:'2026-09-12T20:00:00.000Z',records:{'263':{updated_at:'2026-09-12T20:00:00.000Z',parts:{first:{decision:null,updated_at:'2026-09-12T20:00:00.000Z'}}}}};
-  const local={updated_at:'2026-09-13T00:55:00.000Z',records:{'263':{updated_at:'2026-09-13T00:55:00.000Z',parts:{first:{decision:'replace',updated_at:'2026-09-13T00:55:00.000Z'}}}}};
+  vm.runInContext(functionText('cloudCurationDelta'),ctx);
+  ctx.SCHEMA_VERSION='panic-name-curation/v2';
+  const remote={updated_at:'2026-09-12T20:00:00.000Z',records:{'263':{updated_at:'2026-09-12T20:00:00.000Z',parts:{first:{decision:null,updated_at:'2026-09-12T20:00:00.000Z'}}},'500':{updated_at:'2026-09-12T19:00:00.000Z',parts:{first:{decision:'approve',updated_at:'2026-09-12T19:00:00.000Z'}}}}};
+  const local={schema_version:'panic-name-curation/v2',reviewer:'spiral',updated_at:'2026-09-13T00:55:00.000Z',records:{'263':{updated_at:'2026-09-13T00:55:00.000Z',parts:{first:{decision:'replace',updated_at:'2026-09-13T00:55:00.000Z'}}},'500':{updated_at:'2026-09-12T19:00:00.000Z',parts:{first:{decision:'approve',updated_at:'2026-09-12T19:00:00.000Z'}}}}};
   assert.equal(ctx.curationHasNewerLocalEdits(local,remote),true);
   assert.equal(ctx.curationHasNewerLocalEdits(remote,local),false);
+  const delta=ctx.cloudCurationDelta(local,remote);
+  assert.deepEqual(Object.keys(delta.records),['263']);
+  assert.equal(delta.records['263'].parts.first.decision,'replace');
 });
 
 test('compact surname pair selection balances route load before prompt generation',()=>{

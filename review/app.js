@@ -51,6 +51,7 @@ const state = {
   cloudAuthenticated: false,
   cloudMode: "connecting",
   cloudRevision: 0,
+  cloudBaseline: null,
   cloudDirty: false,
   cloudSaveVersion: 0,
   cloudHistory: [],
@@ -342,31 +343,47 @@ function mergeCurationStates(local, remote) {
   return merged;
 }
 
+function recordHasNewerLocalEdits(localRecord = {}, remoteRecord = {}) {
+  const recordDates = [
+    "updated_at",
+    "deleted_at",
+    "note_updated_at",
+    "surname_order_updated_at",
+    "surname_join_style_updated_at",
+    "normalized_name_updated_at"
+  ];
+  if (recordDates.some(key => timestamp(localRecord?.[key]) > timestamp(remoteRecord?.[key]))) {
+    return true;
+  }
+  return Object.entries(localRecord?.parts || {}).some(([key, localPart]) => {
+    const remotePart = remoteRecord?.parts?.[key] || {};
+    return timestamp(localPart?.updated_at || localPart?.deleted_at) >
+      timestamp(remotePart?.updated_at || remotePart?.deleted_at);
+  });
+}
+
 function curationHasNewerLocalEdits(local, remote) {
   if (!local?.records || !remote?.records) return false;
   if (timestamp(local.updated_at) > timestamp(remote.updated_at)) return true;
-  for (const [id, localRecord] of Object.entries(local.records)) {
-    const remoteRecord = remote.records[id] || {};
-    const recordDates = [
-      "updated_at",
-      "deleted_at",
-      "note_updated_at",
-      "surname_order_updated_at",
-      "surname_join_style_updated_at",
-      "normalized_name_updated_at"
-    ];
-    if (recordDates.some(key => timestamp(localRecord?.[key]) > timestamp(remoteRecord?.[key]))) {
-      return true;
-    }
-    for (const [key, localPart] of Object.entries(localRecord?.parts || {})) {
-      const remotePart = remoteRecord?.parts?.[key] || {};
-      if (timestamp(localPart?.updated_at || localPart?.deleted_at) >
-          timestamp(remotePart?.updated_at || remotePart?.deleted_at)) {
-        return true;
-      }
+  return Object.entries(local.records).some(([id, localRecord]) =>
+    recordHasNewerLocalEdits(localRecord, remote.records[id] || {})
+  );
+}
+
+function cloudCurationDelta(local, remote) {
+  if (!remote?.records) return local;
+  const records = {};
+  for (const [id, localRecord] of Object.entries(local?.records || {})) {
+    if (recordHasNewerLocalEdits(localRecord, remote.records[id] || {})) {
+      records[id] = localRecord;
     }
   }
-  return false;
+  return {
+    schema_version: SCHEMA_VERSION,
+    reviewer: local?.reviewer || "",
+    updated_at: local?.updated_at || null,
+    records
+  };
 }
 
 function requestCloudSignIn(message = "Your team session expired. Sign in again to upload the decisions saved on this device.") {
@@ -391,6 +408,7 @@ async function pullCloudState({ quiet = false } = {}) {
     const payload = await response.json();
     state.cloudRevision = Number(payload.revision || 0);
     state.cloudHistory = payload.history || [];
+    state.cloudBaseline = payload.curation;
     const hasSyncedBefore = Boolean(localStorage.getItem(CLOUD_SYNC_MARKER_KEY));
     const beforeCuration = state.curation;
     const before = JSON.stringify(beforeCuration);
@@ -440,6 +458,7 @@ async function pushCloudState() {
 async function performCloudPush() {
   if (!state.cloudAuthenticated || !state.cloudDirty) return;
   const saveVersion = state.cloudSaveVersion;
+  const outgoingCuration = cloudCurationDelta(state.curation, state.cloudBaseline);
   setCloudStatus("saving", "Saving");
   try {
     const response = await fetch("/api/state", {
@@ -447,7 +466,7 @@ async function performCloudPush() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         revision: state.cloudRevision,
-        curation: state.curation
+        curation: outgoingCuration
       })
     });
     if (response.status === 401) {
@@ -458,6 +477,7 @@ async function performCloudPush() {
     const payload = await response.json();
     state.cloudRevision = Number(payload.revision || 0);
     state.cloudHistory = payload.history || [];
+    state.cloudBaseline = payload.curation;
     state.curation = mergeCurationStates(state.curation, payload.curation);
     if (state.cloudSaveVersion === saveVersion) state.cloudDirty = false;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.curation));
@@ -476,12 +496,13 @@ async function performCloudPush() {
 function flushCloudState() {
   if (!state.cloudAuthenticated || !state.cloudDirty) return;
   clearTimeout(state.cloudTimer);
+  const outgoingCuration = cloudCurationDelta(state.curation, state.cloudBaseline);
   fetch("/api/state", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       revision: state.cloudRevision,
-      curation: state.curation
+      curation: outgoingCuration
     }),
     keepalive: true
   }).catch(() => {
