@@ -1,0 +1,93 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Dark swim trunks",
+  "gender": "Male",
+  "bank_file": "panic_dark_swim_trunks_male_stage2_followup_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Dark swim trunks",
+  "created_at": "2026-09-12T14:03:35.848Z",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the remaining Stage 2 first names rejected by the user with a fresh, unused reference.",
+  "replacements": [
+    {
+      "id": "700",
+      "expected_first": "Hwang",
+      "replacement": "Tancock",
+      "reference": "Mark Tancock",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Googly, Banana flattop gives the portrait its clearest visual identity; Tancock is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "794",
+      "expected_first": "Ho",
+      "replacement": "Moorhouse",
+      "reference": "Adrian Moorhouse",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Hanging sanpaku, Moss short mullet, Cigarette gives the portrait its clearest visual identity; Moorhouse is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "899",
+      "expected_first": "Hafnaoui",
+      "replacement": "Mankoc",
+      "reference": "Peter Mankoc",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Happy, Moss short mullet, Skateboard gives the portrait its clearest visual identity; Mankoc is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "1527",
+      "expected_first": "Xu",
+      "replacement": "Cavic",
+      "reference": "Milorad Cavic",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Hanging sanpaku, Octopus hot frizz, Baguette gives the portrait its clearest visual identity; Cavic is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "1534",
+      "expected_first": "Ning",
+      "replacement": "Townsend",
+      "reference": "Darian Townsend",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Up, Octopus hot frizz, Hamburger gives the portrait its clearest visual identity; Townsend is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "1538",
+      "expected_first": "Zhang",
+      "replacement": "Sullivan",
+      "reference": "Eamon Sullivan",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Grey stare, Soot sleek curl, Sun gives the portrait its clearest visual identity; Sullivan is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "1555",
+      "expected_first": "Yang",
+      "replacement": "Meeuw",
+      "reference": "Helge Meeuw",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Happy, Soot sleek curl, Baseball gives the portrait its clearest visual identity; Meeuw is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "1937",
+      "expected_first": "Gross",
+      "replacement": "Wouda",
+      "reference": "Marcel Wouda",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Closed, Octopus hot frizz, Overgrown wasteland gives the portrait its clearest visual identity; Wouda is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "2410",
+      "expected_first": "Wildeboer",
+      "replacement": "Godsoe",
+      "reference": "Eugene Godsoe",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "Tight, Banana flattop, Red wine gives the portrait its clearest visual identity; Godsoe is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    }
+  ]
+}

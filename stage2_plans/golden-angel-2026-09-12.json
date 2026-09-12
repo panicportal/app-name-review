@@ -1,0 +1,37 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Golden angel",
+  "gender": "Male",
+  "bank_file": "panic_golden_angel_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Golden angel",
+  "created_at": "2026-09-12T14:03:35.846Z",
+  "replacements": [
+    {
+      "id": "267",
+      "expected_first": "Zadkiel",
+      "replacement": "Metatron",
+      "reference": "Metatron, the commanding angelic figure of Jewish mystical tradition",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "Hanging sanpaku, Ginger dreads bun, Ramen gives the portrait its clearest visual identity; Metatron is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "770",
+      "expected_first": "Jophiel",
+      "replacement": "Remiel",
+      "reference": "Remiel, a male archangel named in angelic tradition",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "Googly, Turmeric fluffy, Melt into heart sunrise gives the portrait its clearest visual identity; Remiel is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "860",
+      "expected_first": "Raziel",
+      "replacement": "Raguel",
+      "reference": "Raguel, a male archangel associated with justice and harmony",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "Round, Turmeric fluffy, ?an!c coin gives the portrait its clearest visual identity; Raguel is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    }
+  ]
+}

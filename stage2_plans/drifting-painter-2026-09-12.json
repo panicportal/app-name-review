@@ -1,0 +1,613 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Drifting painter",
+  "gender": "Male",
+  "bank_file": "panic_drifting_painter_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Drifting painter",
+  "created_at": "2026-09-12T14:03:35.844Z",
+  "replacements": [
+    {
+      "id": "430",
+      "expected_first": "Seurat",
+      "replacement": "DaVinci",
+      "reference": "Leonardo da Vinci",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Closed, Biscotti rough, Salami pizza gives the portrait its clearest visual identity; DaVinci keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "989",
+      "expected_first": "Wash",
+      "replacement": "VanGogh",
+      "reference": "Vincent van Gogh",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Droopy, Tar shower, Lollipop gives the portrait its clearest visual identity; VanGogh keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1005",
+      "expected_first": "Xylo",
+      "replacement": "Dali",
+      "reference": "Salvador Dali",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Soot sleek curl, Basketball gives the portrait its clearest visual identity; Dali keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1010",
+      "expected_first": "Muhib",
+      "replacement": "Kandinsky",
+      "reference": "Wassily Kandinsky",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Googly, Turmeric fluffy, Berry cake gives the portrait its clearest visual identity; Kandinsky keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1177",
+      "expected_first": "Peter",
+      "replacement": "Pollock",
+      "reference": "Jackson Pollock",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Soot sleek curl, Basketball gives the portrait its clearest visual identity; Pollock keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1195",
+      "expected_first": "Precious",
+      "replacement": "Rothko",
+      "reference": "Mark Rothko",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Turmeric fluffy, Soft serve ice cream gives the portrait its clearest visual identity; Rothko keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1224",
+      "expected_first": "Koldo",
+      "replacement": "Magritte",
+      "reference": "Rene Magritte",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Lollipop gives the portrait its clearest visual identity; Magritte keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1315",
+      "expected_first": "Linear",
+      "replacement": "ElGreco",
+      "reference": "El Greco",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Tar shower, Tuna sushi gives the portrait its clearest visual identity; ElGreco keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1331",
+      "expected_first": "Konstantin",
+      "replacement": "Rubens",
+      "reference": "Peter Paul Rubens",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Googly, Soot sleek curl, Soft serve ice cream gives the portrait its clearest visual identity; Rubens keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1393",
+      "expected_first": "Valdemar",
+      "replacement": "Titian",
+      "reference": "Titian",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Biscotti rough, Glass of beer gives the portrait its clearest visual identity; Titian keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1401",
+      "expected_first": "Hadrian",
+      "replacement": "Giotto",
+      "reference": "Giotto",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Googly, Biscotti rough, Lollipop gives the portrait its clearest visual identity; Giotto keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1421",
+      "expected_first": "Roald",
+      "replacement": "Bosch",
+      "reference": "Hieronymus Bosch",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Turmeric fluffy, Fuzzy swirl gives the portrait its clearest visual identity; Bosch keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1492",
+      "expected_first": "Quentin",
+      "replacement": "Bruegel",
+      "reference": "Pieter Bruegel the Elder",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Skateboard gives the portrait its clearest visual identity; Bruegel keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1521",
+      "expected_first": "Tint",
+      "replacement": "Manet",
+      "reference": "Edouard Manet",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Hamburger gives the portrait its clearest visual identity; Manet keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1535",
+      "expected_first": "Fenimore",
+      "replacement": "Pissarro",
+      "reference": "Camille Pissarro",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Flat up, Turmeric fluffy, Skateboard gives the portrait its clearest visual identity; Pissarro keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1549",
+      "expected_first": "Silvano",
+      "replacement": "Sisley",
+      "reference": "Alfred Sisley",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Blue doll, Banana flattop, Baguette gives the portrait its clearest visual identity; Sisley keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1571",
+      "expected_first": "Lanre",
+      "replacement": "Courbet",
+      "reference": "Gustave Courbet",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Overgrown wasteland gives the portrait its clearest visual identity; Courbet keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1583",
+      "expected_first": "Mikel",
+      "replacement": "Millet",
+      "reference": "Jean-Francois Millet",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Brown tilt, Tar shower, Yellow brush gives the portrait its clearest visual identity; Millet keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1622",
+      "expected_first": "Atticus",
+      "replacement": "Daumier",
+      "reference": "Honore Daumier",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Glare, Soot sleek curl, Soft serve ice cream gives the portrait its clearest visual identity; Daumier keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1659",
+      "expected_first": "Fergus",
+      "replacement": "Corot",
+      "reference": "Jean-Baptiste-Camille Corot",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Green stretched, Octopus hot frizz, Swamp swirl gives the portrait its clearest visual identity; Corot keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1676",
+      "expected_first": "Nomad",
+      "replacement": "Ingres",
+      "reference": "Jean-Auguste-Dominique Ingres",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Biscotti rough, Tuna sushi gives the portrait its clearest visual identity; Ingres keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1681",
+      "expected_first": "Bingen",
+      "replacement": "Gericault",
+      "reference": "Theodore Gericault",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Soot sleek curl gives the portrait its clearest visual identity; Gericault keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1721",
+      "expected_first": "Wystan",
+      "replacement": "Gainsborough",
+      "reference": "Thomas Gainsborough",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Blue doll, Biscotti rough, Skateboard gives the portrait its clearest visual identity; Gainsborough keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1734",
+      "expected_first": "Jorah",
+      "replacement": "Constable",
+      "reference": "John Constable",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Biscotti rough, Skateboard gives the portrait its clearest visual identity; Constable keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1740",
+      "expected_first": "Laurent",
+      "replacement": "Whistler",
+      "reference": "James McNeill Whistler",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Closed, Soot sleek curl gives the portrait its clearest visual identity; Whistler keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1757",
+      "expected_first": "Vignette",
+      "replacement": "Sargent",
+      "reference": "John Singer Sargent",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Closed, Biscotti rough, Soccer ball gives the portrait its clearest visual identity; Sargent keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1844",
+      "expected_first": "Gesso",
+      "replacement": "Eakins",
+      "reference": "Thomas Eakins",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Soft serve ice cream gives the portrait its clearest visual identity; Eakins keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "1848",
+      "expected_first": "Hue",
+      "replacement": "Hopper",
+      "reference": "Edward Hopper",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Soot sleek curl, You & me sunset gives the portrait its clearest visual identity; Hopper keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2011",
+      "expected_first": "Gorka",
+      "replacement": "Wyeth",
+      "reference": "Andrew Wyeth",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Glare, Octopus hot frizz, Baseball gives the portrait its clearest visual identity; Wyeth keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2020",
+      "expected_first": "Aitzol",
+      "replacement": "Rockwell",
+      "reference": "Norman Rockwell",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Hamburger gives the portrait its clearest visual identity; Rockwell keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2052",
+      "expected_first": "Haizea",
+      "replacement": "Johns",
+      "reference": "Jasper Johns",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Closed, Tar shower, Skateboard gives the portrait its clearest visual identity; Johns keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2108",
+      "expected_first": "Ulrich",
+      "replacement": "Koons",
+      "reference": "Jeff Koons",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Soot sleek curl gives the portrait its clearest visual identity; Koons keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2164",
+      "expected_first": "Wendell",
+      "replacement": "Haring",
+      "reference": "Keith Haring",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Sour, Biscotti rough, Baguette gives the portrait its clearest visual identity; Haring keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2169",
+      "expected_first": "Eldon",
+      "replacement": "Banksy",
+      "reference": "Banksy",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Banana flattop, White flat brush gives the portrait its clearest visual identity; Banksy keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2215",
+      "expected_first": "Torsten",
+      "replacement": "Murakami",
+      "reference": "Takashi Murakami",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Soot sleek curl, Soccer ball gives the portrait its clearest visual identity; Murakami keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2272",
+      "expected_first": "Ulric",
+      "replacement": "Twombly",
+      "reference": "Cy Twombly",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Closed, Biscotti rough, Sun gives the portrait its clearest visual identity; Twombly keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2275",
+      "expected_first": "Ekhi",
+      "replacement": "Newman",
+      "reference": "Barnett Newman",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Biscotti rough, Hamburger gives the portrait its clearest visual identity; Newman keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2316",
+      "expected_first": "Sylvain",
+      "replacement": "Still",
+      "reference": "Clyfford Still",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Biscotti rough, Soccer ball gives the portrait its clearest visual identity; Still keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2366",
+      "expected_first": "Roan",
+      "replacement": "Motherwell",
+      "reference": "Robert Motherwell",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Sour, Biscotti rough, Hamburger gives the portrait its clearest visual identity; Motherwell keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2399",
+      "expected_first": "Egon",
+      "replacement": "Diebenkorn",
+      "reference": "Richard Diebenkorn",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Biscotti rough, Glass of beer gives the portrait its clearest visual identity; Diebenkorn keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2477",
+      "expected_first": "Muse",
+      "replacement": "DeKooning",
+      "reference": "Willem de Kooning",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Moss short mullet, White flat brush gives the portrait its clearest visual identity; DeKooning keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2523",
+      "expected_first": "Yaw",
+      "replacement": "Bonnard",
+      "reference": "Pierre Bonnard",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Grey stare, Biscotti rough, Soft serve ice cream gives the portrait its clearest visual identity; Bonnard keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2599",
+      "expected_first": "Alonso",
+      "replacement": "Vuillard",
+      "reference": "Edouard Vuillard",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Biscotti rough, Glass of beer gives the portrait its clearest visual identity; Vuillard keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2651",
+      "expected_first": "Xabier",
+      "replacement": "Derain",
+      "reference": "Andre Derain",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Brown tilt, Tar shower gives the portrait its clearest visual identity; Derain keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2672",
+      "expected_first": "Rover",
+      "replacement": "Vlaminck",
+      "reference": "Maurice de Vlaminck",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Flat up, Soot sleek curl, Soft serve ice cream gives the portrait its clearest visual identity; Vlaminck keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2716",
+      "expected_first": "Godfrey",
+      "replacement": "Rouault",
+      "reference": "Georges Rouault",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Turmeric fluffy gives the portrait its clearest visual identity; Rouault keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2739",
+      "expected_first": "Wasiu",
+      "replacement": "Modigliani",
+      "reference": "Amedeo Modigliani",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Green stretched, Biscotti rough, Sun gives the portrait its clearest visual identity; Modigliani keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2766",
+      "expected_first": "Sesan",
+      "replacement": "Soutine",
+      "reference": "Chaim Soutine",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Closed, Octopus hot frizz, Sun gives the portrait its clearest visual identity; Soutine keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2774",
+      "expected_first": "Zorion",
+      "replacement": "Utrillo",
+      "reference": "Maurice Utrillo",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Sour, Turmeric fluffy gives the portrait its clearest visual identity; Utrillo keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2805",
+      "expected_first": "Holt",
+      "replacement": "Balthus",
+      "reference": "Balthus",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Green stretched, Octopus hot frizz, Sun gives the portrait its clearest visual identity; Balthus keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2831",
+      "expected_first": "Nonso",
+      "replacement": "Leger",
+      "reference": "Fernand Leger",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Green stretched, Soot sleek curl, Soft serve ice cream gives the portrait its clearest visual identity; Leger keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2854",
+      "expected_first": "Falcone",
+      "replacement": "Picabia",
+      "reference": "Francis Picabia",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Tearful, Soot sleek curl, Waning crescent moon gives the portrait its clearest visual identity; Picabia keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2882",
+      "expected_first": "Bittor",
+      "replacement": "Duchamp",
+      "reference": "Marcel Duchamp",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Soot sleek curl, Berry cake gives the portrait its clearest visual identity; Duchamp keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2900",
+      "expected_first": "Verlaine",
+      "replacement": "Braque",
+      "reference": "Georges Braque",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Happy, Octopus hot frizz, Skateboard gives the portrait its clearest visual identity; Braque keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2921",
+      "expected_first": "Ashwin",
+      "replacement": "Gris",
+      "reference": "Juan Gris",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Hanging sanpaku, Biscotti rough, Waning crescent moon gives the portrait its clearest visual identity; Gris keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2958",
+      "expected_first": "Jokin",
+      "replacement": "Tanguy",
+      "reference": "Yves Tanguy",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Round, Turmeric fluffy, Lollipop gives the portrait its clearest visual identity; Tanguy keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "2971",
+      "expected_first": "Kelechi",
+      "replacement": "Ernst",
+      "reference": "Max Ernst",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Tight, Biscotti rough, Basketball gives the portrait its clearest visual identity; Ernst keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3028",
+      "expected_first": "Sepia",
+      "replacement": "Masson",
+      "reference": "Andre Masson",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Blue doll, Biscotti rough, Soft serve ice cream gives the portrait its clearest visual identity; Masson keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3035",
+      "expected_first": "Bohemian",
+      "replacement": "Schiele",
+      "reference": "Egon Schiele",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Googly, Turmeric fluffy, Cigarette gives the portrait its clearest visual identity; Schiele keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3059",
+      "expected_first": "Isambard",
+      "replacement": "Kokoschka",
+      "reference": "Oskar Kokoschka",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Googly, Banana flattop, Messy room gives the portrait its clearest visual identity; Kokoschka keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3100",
+      "expected_first": "Peio",
+      "replacement": "Kirchner",
+      "reference": "Ernst Ludwig Kirchner",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Blue doll, Biscotti rough, Soccer ball gives the portrait its clearest visual identity; Kirchner keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3119",
+      "expected_first": "Vagabond",
+      "replacement": "Nolde",
+      "reference": "Emil Nolde",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Flat up, Biscotti rough, Baguette gives the portrait its clearest visual identity; Nolde keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3122",
+      "expected_first": "Unai",
+      "replacement": "Macke",
+      "reference": "August Macke",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Soccer ball gives the portrait its clearest visual identity; Macke keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3168",
+      "expected_first": "Guillaume",
+      "replacement": "Jawlensky",
+      "reference": "Alexej von Jawlensky",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Up, Soot sleek curl, Soccer ball gives the portrait its clearest visual identity; Jawlensky keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3171",
+      "expected_first": "Pastel",
+      "replacement": "Feininger",
+      "reference": "Lyonel Feininger",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Blue doll, Soot sleek curl, Soccer ball gives the portrait its clearest visual identity; Feininger keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3206",
+      "expected_first": "Corben",
+      "replacement": "Grosz",
+      "reference": "George Grosz",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Tight, Octopus hot frizz, Baguette gives the portrait its clearest visual identity; Grosz keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    },
+    {
+      "id": "3271",
+      "expected_first": "Bexley",
+      "replacement": "Beckmann",
+      "reference": "Max Beckmann",
+      "reference_url": "https://www.moma.org/collection/",
+      "fit": "Googly, Biscotti rough gives the portrait its clearest visual identity; Beckmann keeps the greenlit painter direction literal by using a real, recognizable male painter name.",
+      "score": 9.6
+    }
+  ]
+}

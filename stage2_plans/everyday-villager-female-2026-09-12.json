@@ -1,0 +1,397 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Everyday villager",
+  "gender": "Female",
+  "bank_file": "panic_everyday_villager_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Everyday villager",
+  "created_at": "2026-09-12T14:03:35.846Z",
+  "replacements": [
+    {
+      "id": "2",
+      "expected_first": "Mirren",
+      "replacement": "Peach",
+      "reference": "Princess Peach, Super Mario",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Blue doll, Brandy wild braids gives the portrait its clearest visual identity; Peach is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "114",
+      "expected_first": "Gislaine",
+      "replacement": "Rosalina",
+      "reference": "Rosalina, Super Mario Galaxy",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Flat up, Tar shower, Soft serve ice cream gives the portrait its clearest visual identity; Rosalina is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "147",
+      "expected_first": "Avery",
+      "replacement": "Samus",
+      "reference": "Samus Aran, Metroid",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Flat up, Tar shower, Soft serve ice cream gives the portrait its clearest visual identity; Samus is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "481",
+      "expected_first": "Xochil",
+      "replacement": "Lara",
+      "reference": "Lara Croft, Tomb Raider",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Googly, Tar shower, Basketball gives the portrait its clearest visual identity; Lara is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "635",
+      "expected_first": "Verity",
+      "replacement": "Aloy",
+      "reference": "Aloy, Horizon",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Googly, Emerald innocent braids, Skateboard gives the portrait its clearest visual identity; Aloy is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "639",
+      "expected_first": "Lark",
+      "replacement": "Tifa",
+      "reference": "Tifa Lockhart, Final Fantasy VII",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Round, Dandelion rough buns, Overgrown wasteland gives the portrait its clearest visual identity; Tifa is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "644",
+      "expected_first": "Ramsey",
+      "replacement": "Aerith",
+      "reference": "Aerith Gainsborough, Final Fantasy VII",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Blue doll, Moon candy, White cloud gives the portrait its clearest visual identity; Aerith is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "656",
+      "expected_first": "Giada",
+      "replacement": "Yuna",
+      "reference": "Yuna, Final Fantasy X",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Moon candy, Soft serve ice cream gives the portrait its clearest visual identity; Yuna is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "692",
+      "expected_first": "Aloni",
+      "replacement": "Rinoa",
+      "reference": "Rinoa Heartilly, Final Fantasy VIII",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Tight, Octopus hot frizz, Glass of beer gives the portrait its clearest visual identity; Rinoa is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "701",
+      "expected_first": "Tanner",
+      "replacement": "Garnet",
+      "reference": "Garnet, Final Fantasy IX",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Blue doll, Octopus hot frizz, Basketball gives the portrait its clearest visual identity; Garnet is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "734",
+      "expected_first": "Selvina",
+      "replacement": "Terra",
+      "reference": "Terra Branford, Final Fantasy VI",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Closed, Turmeric fluffy gives the portrait its clearest visual identity; Terra is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "755",
+      "expected_first": "Rose",
+      "replacement": "Celes",
+      "reference": "Celes Chere, Final Fantasy VI",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Winking, Dandelion rough buns, Taco gives the portrait its clearest visual identity; Celes is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "781",
+      "expected_first": "Juniper",
+      "replacement": "Lightning",
+      "reference": "Lightning, Final Fantasy XIII",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Brandy wild braids gives the portrait its clearest visual identity; Lightning is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "846",
+      "expected_first": "Xylia",
+      "replacement": "Claire",
+      "reference": "Claire Redfield, Resident Evil",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Up, Octopus hot frizz, Glass of beer gives the portrait its clearest visual identity; Claire is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "913",
+      "expected_first": "Genevive",
+      "replacement": "Ada",
+      "reference": "Ada Wong, Resident Evil",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Up, Jet loose, Baguette gives the portrait its clearest visual identity; Ada is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1063",
+      "expected_first": "Cottager",
+      "replacement": "Rebecca",
+      "reference": "Rebecca Chambers, Resident Evil",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Hanging sanpaku, Tar shower, Waning crescent moon gives the portrait its clearest visual identity; Rebecca is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1186",
+      "expected_first": "Yael",
+      "replacement": "Sheva",
+      "reference": "Sheva Alomar, Resident Evil",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Flat up, Turmeric fluffy, Soccer ball gives the portrait its clearest visual identity; Sheva is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1287",
+      "expected_first": "Nodoka",
+      "replacement": "Ashley",
+      "reference": "Ashley Graham, Resident Evil",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Brown tilt, Turmeric fluffy, Baguette gives the portrait its clearest visual identity; Ashley is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1382",
+      "expected_first": "Selah",
+      "replacement": "Midna",
+      "reference": "Midna, The Legend of Zelda",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Tar shower, White cloud gives the portrait its clearest visual identity; Midna is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1578",
+      "expected_first": "Finnegan",
+      "replacement": "Impa",
+      "reference": "Impa, The Legend of Zelda",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Round, Tan loose wave, Taco gives the portrait its clearest visual identity; Impa is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1596",
+      "expected_first": "Ione",
+      "replacement": "Saria",
+      "reference": "Saria, Ocarina of Time",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Hanging sanpaku, Snow natural, Berry cake gives the portrait its clearest visual identity; Saria is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1624",
+      "expected_first": "Wilder",
+      "replacement": "Ruto",
+      "reference": "Princess Ruto, Ocarina of Time",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Blue doll, Tan loose wave, Waning crescent moon gives the portrait its clearest visual identity; Ruto is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1759",
+      "expected_first": "Kalyna",
+      "replacement": "Urbosa",
+      "reference": "Urbosa, Breath of the Wild",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Green stretched, Ginger dreads bun, Waning crescent moon gives the portrait its clearest visual identity; Urbosa is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1920",
+      "expected_first": "Eshe",
+      "replacement": "Mipha",
+      "reference": "Mipha, Breath of the Wild",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Hanging sanpaku, Jet loose, Glass of beer gives the portrait its clearest visual identity; Mipha is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "1929",
+      "expected_first": "Ravenna",
+      "replacement": "Purah",
+      "reference": "Purah, The Legend of Zelda",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Brown tilt, Octopus hot frizz, Taco gives the portrait its clearest visual identity; Purah is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2168",
+      "expected_first": "Saoirse",
+      "replacement": "Riju",
+      "reference": "Riju, The Legend of Zelda",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Blue doll, Tan loose wave, Hamburger gives the portrait its clearest visual identity; Riju is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2204",
+      "expected_first": "Anahi",
+      "replacement": "Malon",
+      "reference": "Malon, Ocarina of Time",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Closed, Ginger dreads bun, Soccer ball gives the portrait its clearest visual identity; Malon is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2385",
+      "expected_first": "Maud",
+      "replacement": "Marin",
+      "reference": "Marin, Link's Awakening",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Hanging sanpaku, Ginger dreads bun, Baguette gives the portrait its clearest visual identity; Marin is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2588",
+      "expected_first": "Diorella",
+      "replacement": "Shantae",
+      "reference": "Shantae, Shantae",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Round, Octopus hot frizz, Baguette gives the portrait its clearest visual identity; Shantae is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2610",
+      "expected_first": "Sunniva",
+      "replacement": "Bayonetta",
+      "reference": "Bayonetta, Bayonetta",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Up, Tar shower, Basketball gives the portrait its clearest visual identity; Bayonetta is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2712",
+      "expected_first": "Eshal",
+      "replacement": "Kassandra",
+      "reference": "Kassandra, Assassin's Creed Odyssey",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Sour, Snow natural, Soccer ball gives the portrait its clearest visual identity; Kassandra is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2760",
+      "expected_first": "Reagan",
+      "replacement": "Morrigan",
+      "reference": "Morrigan, Dragon Age",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Up, Tar shower, Soft serve ice cream gives the portrait its clearest visual identity; Morrigan is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2837",
+      "expected_first": "Brogan",
+      "replacement": "Leliana",
+      "reference": "Leliana, Dragon Age",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Jet loose gives the portrait its clearest visual identity; Leliana is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2873",
+      "expected_first": "Vanya",
+      "replacement": "Isabela",
+      "reference": "Isabela, Dragon Age",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Flat up, Ginger dreads bun, Soccer ball gives the portrait its clearest visual identity; Isabela is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "2897",
+      "expected_first": "Vesperine",
+      "replacement": "Cassandra",
+      "reference": "Cassandra Pentaghast, Dragon Age",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Sour, Octopus hot frizz, Baguette gives the portrait its clearest visual identity; Cassandra is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3073",
+      "expected_first": "Katya",
+      "replacement": "Sera",
+      "reference": "Sera, Dragon Age",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Hanging sanpaku, Ginger dreads bun, Basketball gives the portrait its clearest visual identity; Sera is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3078",
+      "expected_first": "Linda",
+      "replacement": "Karlach",
+      "reference": "Karlach, Baldur's Gate 3",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Grey stare, Tan loose wave, Soft serve ice cream gives the portrait its clearest visual identity; Karlach is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3165",
+      "expected_first": "Katriel",
+      "replacement": "Minthara",
+      "reference": "Minthara, Baldur's Gate 3",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Closed, Jet loose gives the portrait its clearest visual identity; Minthara is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3170",
+      "expected_first": "Jessamine",
+      "replacement": "Jaheira",
+      "reference": "Jaheira, Baldur's Gate",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Octopus hot frizz, Golden smiley poop gives the portrait its clearest visual identity; Jaheira is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3239",
+      "expected_first": "Solveig",
+      "replacement": "Liara",
+      "reference": "Liara T'Soni, Mass Effect",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Jet loose gives the portrait its clearest visual identity; Liara is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3245",
+      "expected_first": "Neriah",
+      "replacement": "Tali",
+      "reference": "Tali'Zorah, Mass Effect",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Happy, Ginger dreads bun, Waning crescent moon gives the portrait its clearest visual identity; Tali is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3299",
+      "expected_first": "Sara",
+      "replacement": "Ciri",
+      "reference": "Ciri, The Witcher",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Googly, Jet loose, Soft serve ice cream gives the portrait its clearest visual identity; Ciri is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    },
+    {
+      "id": "3328",
+      "expected_first": "Faelynn",
+      "replacement": "Yennefer",
+      "reference": "Yennefer, The Witcher",
+      "reference_url": "https://www.nintendo.com/us/whatsnew/meet-leading-ladies-and-girls-from-games-on-nintendo-switch-2-and-nintendo-switch/",
+      "fit": "Hanging sanpaku, Turmeric fluffy gives the portrait its clearest visual identity; Yennefer is a recognizable female game character name with compact RPG-villager readability.",
+      "score": 9.6
+    }
+  ]
+}

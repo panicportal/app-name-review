@@ -346,6 +346,10 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
   const cases = [
     ["builder-bull-remaining-2026-09-12.json", "panic_builder_bull_male_stage2_name_bank_2026-09-12.md", 43],
     ["common-villager-2026-09-12.json", "panic_common_villager_male_rpg_name_bank_2026-09-12.md", 39],
+    ["drifting-painter-2026-09-12.json", "panic_drifting_painter_male_stage2_2026-09-12.md", 67],
+    ["everyday-villager-female-2026-09-12.json", "panic_everyday_villager_female_stage2_2026-09-12.md", 43],
+    ["golden-angel-2026-09-12.json", "panic_golden_angel_male_stage2_2026-09-12.md", 3],
+    ["drifting-painter-reference-correction-2026-09-12.json", "panic_drifting_painter_male_stage2_2026-09-12.md", 2],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -365,8 +369,10 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
     ["builder-bull-followup-2026-09-12.json", "panic_builder_bull_male_stage2_followup_2026-09-12.md", 2],
     ["dark-swim-trunks-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md", 117],
     ["dark-swim-trunks-male-correction-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md", 36],
+    ["dark-swim-trunks-followup-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_followup_2026-09-12.md", 9],
     ["defiant-pirate-captain-2026-09-12.json", "panic_defiant_pirate_captain_male_stage2_2026-09-12.md", 1],
     ["divine-saint-2026-09-12.json", "panic_divine_saint_male_stage2_2026-09-12.md", 6],
+    ["divine-saint-followup-2026-09-12.json", "panic_divine_saint_male_stage2_followup_2026-09-12.md", 2],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));

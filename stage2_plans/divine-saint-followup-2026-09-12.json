@@ -1,0 +1,30 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Divine saint",
+  "gender": "Male",
+  "bank_file": "panic_divine_saint_male_stage2_followup_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Divine saint",
+  "created_at": "2026-09-12T14:03:35.849Z",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the remaining Stage 2 first names rejected by the user with a fresh, unused reference.",
+  "replacements": [
+    {
+      "id": "1191",
+      "expected_first": "Moses",
+      "replacement": "Pio",
+      "reference": "Saint Padre Pio",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "Winking, Ruby sweep, Golden smiley poop gives the portrait its clearest visual identity; Pio is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    },
+    {
+      "id": "2393",
+      "expected_first": "Kolbe",
+      "replacement": "Blaise",
+      "reference": "Saint Blaise",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "Grey stare, Turmeric fluffy, Soccer ball gives the portrait its clearest visual identity; Blaise is a concise male angelic reference that suits the Golden angel clothing.",
+      "score": 9.6
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Tighten the painter set to unambiguously established male painters.",
+  "clothing": "Drifting painter",
+  "gender": "Male",
+  "bank_file": "panic_drifting_painter_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Drifting painter reference correction",
+  "created_at": "2026-09-12T14:08:00.000Z",
+  "replacements": [
+    {
+      "id": "2108",
+      "expected_first": "Koons",
+      "replacement": "Hals",
+      "reference": "Frans Hals, Dutch Golden Age portrait painter",
+      "reference_url": "https://www.nga.gov/collection/artist-info.1349.html",
+      "fit": "The Round eyes and Soot sleek curl create a compact old-master portrait silhouette; Hals is short, collectible, and unmistakably tied to a major male painter.",
+      "score": 9.7
+    },
+    {
+      "id": "2169",
+      "expected_first": "Banksy",
+      "replacement": "Hiroshige",
+      "reference": "Utagawa Hiroshige, Japanese painter and ukiyo-e master",
+      "reference_url": "https://www.metmuseum.org/toah/hd/hiro/hd_hiro.htm",
+      "fit": "The White flat brush, clean Round eyes, and vivid red field make a classical image-maker reference feel stronger; Hiroshige is distinctive, collectible, and unambiguously a male painter.",
+      "score": 9.7
+    }
+  ]
+}
