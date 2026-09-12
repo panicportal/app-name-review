@@ -1,0 +1,57 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 name with a stronger in-scope reference.",
+  "clothing": "Kawaii kimono",
+  "gender": "Female",
+  "bank_file": "panic_kawaii_kimono_female_western_stage2_followup_3_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Kawaii kimono · wave 6",
+  "created_at": "2026-09-12T17:13:35.391Z",
+  "replacements": [
+    {
+      "id": "3066",
+      "expected_first": "Maiko",
+      "replacement": "Hazel",
+      "reference": "Hazel, a warm familiar Western name chosen for the soft moon-candy palette",
+      "reference_url": "https://www.ssa.gov/oact/babynames/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3114",
+      "expected_first": "Mineko",
+      "replacement": "Dorothy",
+      "reference": "Dorothy Gale, the iconic Western screen heroine associated with wonder and sunshine",
+      "reference_url": "https://www.britannica.com/topic/The-Wizard-of-Oz-film-1939",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3157",
+      "expected_first": "Sayaka",
+      "replacement": "Marilyn",
+      "reference": "Marilyn Monroe, an instantly recognizable Western screen icon",
+      "reference_url": "https://www.britannica.com/biography/Marilyn-Monroe",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3173",
+      "expected_first": "Nezuko",
+      "replacement": "Vivien",
+      "reference": "Vivien Leigh, the celebrated Western film actress with a poised dramatic image",
+      "reference_url": "https://www.britannica.com/biography/Vivien-Leigh",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3240",
+      "expected_first": "Kaguya",
+      "replacement": "Audrey",
+      "reference": "Audrey Hepburn, the globally recognizable Western style and film icon",
+      "reference_url": "https://www.britannica.com/biography/Audrey-Hepburn",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

@@ -43,6 +43,16 @@ test("Stage 2 prepared first names remain included in reviewed progress", () => 
   assert.match(source, /first\.workflow_stage === "first_names_stage_2"/);
   assert.match(source, /const reviewedParts = decidedParts \+ stage2ReadyParts/);
   assert.match(source, /Stage 2 ready/);
+  assert.match(source, /stage2ConfirmedParts/);
+  assert.match(source, /els\.statusFilter\.value === "first-stage-2"/);
+  assert.match(source, /Stage 2 confirmed/);
+});
+
+test("unmarked Stage 2 replacement is limited to the two explicitly authorized clothing traits", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "scripts", "apply_stage2_first_names.js"), "utf8");
+  assert.match(source, /plan\.include_unmarked_first_names/);
+  assert.match(source, /\["Restless ape", "Rogue pirate captain"\]/);
+  assert.match(source, /already greenlit and cannot be replaced/);
 });
 
 test("lower-second compound renders one collector-visible surname", () => {
@@ -337,7 +347,7 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=31-0-mobile-portraits-progress/);
+  assert.match(html, /app\.js\?v=32-0-stage2-confirmed-progress/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
 });
@@ -379,6 +389,9 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
     ["love-disciple-male-2026-09-12.json", "panic_love_disciple_male_stage2_2026-09-12.md", 15],
     ["mysterious-disciple-female-2026-09-12.json", "panic_mysterious_disciple_female_stage2_2026-09-12.md", 13],
     ["observer-angel-female-2026-09-12.json", "panic_observer_angel_female_stage2_2026-09-12.md", 77],
+    ["polished-suit-male-2026-09-12.json", "panic_polished_suit_male_stage2_2026-09-12.md", 54],
+    ["restless-ape-male-2026-09-12.json", "panic_restless_ape_male_stage2_2026-09-12.md", 52],
+    ["rogue-pirate-captain-female-2026-09-12.json", "panic_rogue_pirate_captain_female_stage2_2026-09-12.md", 35],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -408,6 +421,9 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
     ["ham-sandwich-clown-followup-2-2026-09-12.json", "panic_ham_sandwich_clown_female_stage2_followup_2_2026-09-12.md", 2],
     ["grasping-devil-followup-2-2026-09-12.json", "panic_grasping_devil_male_stage2_followup_2_2026-09-12.md", 5],
     ["kawaii-kimono-followup-2-2026-09-12.json", "panic_kawaii_kimono_female_stage2_followup_2_2026-09-12.md", 5],
+    ["ham-sandwich-clown-followup-3-2026-09-12.json", "panic_ham_sandwich_clown_female_stage2_followup_3_2026-09-12.md", 1],
+    ["kawaii-kimono-western-followup-3-2026-09-12.json", "panic_kawaii_kimono_female_western_stage2_followup_3_2026-09-12.md", 5],
+    ["observer-angel-angelic-followup-3-2026-09-12.json", "panic_observer_angel_female_angelic_stage2_followup_3_2026-09-12.md", 11],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -436,6 +452,13 @@ test("an explicit Stage 2 bank correction can replace decided names without open
   assert.match(source, /first\?\.workflow_stage !== "first_names_stage_2"/);
   assert.match(source, /if \(!plan\.correction_reason\)/);
   assert.match(source, /replacementKey === current\.trim\(\)\.toLowerCase\(\)/);
+});
+
+test("Stage 2 can initialize untouched records for explicitly authorized unmarked batches", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "scripts", "apply_stage2_first_names.js"), "utf8");
+  assert.match(source, /function ensureRecord\(state, id\)/);
+  assert.match(source, /const record = ensureRecord\(next, id\)/);
+  assert.match(source, /const previous = record\.parts\.first \|\| \{\}/);
 });
 
 test("bank-origin detector uses exact eligible routes instead of name appearance", () => {
@@ -492,7 +515,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=31-0-mobile-portraits-progress/);
+  assert.match(html, /app\.js\?v=32-0-stage2-confirmed-progress/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

@@ -39,6 +39,12 @@ function bundledBanks() {
     { filename: "panic_love_disciple_male_stage2_2026-09-12.md", clothing: "Love disciple", gender: "Male", version: "2026-09-12" },
     { filename: "panic_mysterious_disciple_female_stage2_2026-09-12.md", clothing: "Mysterious disciple", gender: "Female", version: "2026-09-12" },
     { filename: "panic_observer_angel_female_stage2_2026-09-12.md", clothing: "Observer angel", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_ham_sandwich_clown_female_stage2_followup_3_2026-09-12.md", clothing: "Ham sandwich clown", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_kawaii_kimono_female_western_stage2_followup_3_2026-09-12.md", clothing: "Kawaii kimono", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_observer_angel_female_angelic_stage2_followup_3_2026-09-12.md", clothing: "Observer angel", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_polished_suit_male_stage2_2026-09-12.md", clothing: "Polished suit", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_restless_ape_male_stage2_2026-09-12.md", clothing: "Restless ape", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_rogue_pirate_captain_female_stage2_2026-09-12.md", clothing: "Rogue pirate captain", gender: "Female", version: "2026-09-12" },
   ];
   return definitions.flatMap(definition => {
     const file = path.join(process.cwd(), "name_banks", definition.filename);

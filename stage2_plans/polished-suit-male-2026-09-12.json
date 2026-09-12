@@ -1,0 +1,496 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Polished suit",
+  "gender": "Male",
+  "bank_file": "panic_polished_suit_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Polished suit · wave 6",
+  "created_at": "2026-09-12T17:13:35.396Z",
+  "replacements": [
+    {
+      "id": "106",
+      "expected_first": "Radcliffe",
+      "replacement": "Disney",
+      "reference": "Walt Disney, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "140",
+      "expected_first": "Tremaine",
+      "replacement": "Armani",
+      "reference": "Giorgio Armani, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "156",
+      "expected_first": "Ffowc",
+      "replacement": "Iger",
+      "reference": "Bob Iger, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "167",
+      "expected_first": "Whitmore",
+      "replacement": "Ford",
+      "reference": "Henry Ford, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "306",
+      "expected_first": "Frithgar",
+      "replacement": "Shelby",
+      "reference": "Thomas Shelby from Peaky Blinders, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "371",
+      "expected_first": "Quennell",
+      "replacement": "Musk",
+      "reference": "Elon Musk, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "731",
+      "expected_first": "Ithamar",
+      "replacement": "Buffett",
+      "reference": "Warren Buffett, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "809",
+      "expected_first": "Montgomery",
+      "replacement": "Cuban",
+      "reference": "Mark Cuban, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "836",
+      "expected_first": "Trevelyan",
+      "replacement": "Walton",
+      "reference": "Sam Walton, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "881",
+      "expected_first": "Ferdinand",
+      "replacement": "Rockefeller",
+      "reference": "John D. Rockefeller, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "971",
+      "expected_first": "Keisuke",
+      "replacement": "Akio",
+      "reference": "Akio Toyoda, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1160",
+      "expected_first": "Penda",
+      "replacement": "Branson",
+      "reference": "Richard Branson, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1290",
+      "expected_first": "Godwyn",
+      "replacement": "Stark",
+      "reference": "Tony Stark from Marvel, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1299",
+      "expected_first": "Urbano",
+      "replacement": "Kroc",
+      "reference": "Ray Kroc, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1307",
+      "expected_first": "Farrow",
+      "replacement": "Cook",
+      "reference": "Tim Cook, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1390",
+      "expected_first": "Underwood",
+      "replacement": "Jobs",
+      "reference": "Steve Jobs, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1404",
+      "expected_first": "Kentigern",
+      "replacement": "Prada",
+      "reference": "Miuccia Prada, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1450",
+      "expected_first": "Radbourne",
+      "replacement": "Knight",
+      "reference": "Phil Knight, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1575",
+      "expected_first": "Lonsdale",
+      "replacement": "Ambani",
+      "reference": "Mukesh Ambani, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1584",
+      "expected_first": "Ivanhoe",
+      "replacement": "Bloomberg",
+      "reference": "Michael Bloomberg, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1597",
+      "expected_first": "Beaumont",
+      "replacement": "Gates",
+      "reference": "Bill Gates, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1601",
+      "expected_first": "Northrop",
+      "replacement": "Schultz",
+      "reference": "Howard Schultz, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1607",
+      "expected_first": "Fairfax",
+      "replacement": "Ferrari",
+      "reference": "Enzo Ferrari, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1656",
+      "expected_first": "Leofwin",
+      "replacement": "Benioff",
+      "reference": "Marc Benioff, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1743",
+      "expected_first": "Peregrine",
+      "replacement": "Bezos",
+      "reference": "Jeff Bezos, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1782",
+      "expected_first": "Frithric",
+      "replacement": "Carnegie",
+      "reference": "Andrew Carnegie, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1798",
+      "expected_first": "Caradog",
+      "replacement": "Vanderbilt",
+      "reference": "Cornelius Vanderbilt, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1807",
+      "expected_first": "Zaccheus",
+      "replacement": "Gucci",
+      "reference": "Guccio Gucci, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1869",
+      "expected_first": "Glyndwr",
+      "replacement": "Versace",
+      "reference": "Gianni Versace, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1878",
+      "expected_first": "Uziel",
+      "replacement": "Porsche",
+      "reference": "Ferdinand Porsche, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1922",
+      "expected_first": "Sedgwick",
+      "replacement": "Huang",
+      "reference": "Jensen Huang, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1962",
+      "expected_first": "Draper",
+      "replacement": "Zuckerberg",
+      "reference": "Mark Zuckerberg, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2033",
+      "expected_first": "Corwin",
+      "replacement": "Nadella",
+      "reference": "Satya Nadella, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2293",
+      "expected_first": "Forsythe",
+      "replacement": "Pichai",
+      "reference": "Sundar Pichai, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2360",
+      "expected_first": "Chauncey",
+      "replacement": "Altman",
+      "reference": "Sam Altman, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2381",
+      "expected_first": "Sherwin",
+      "replacement": "Dimon",
+      "reference": "Jamie Dimon, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2468",
+      "expected_first": "Pemberton",
+      "replacement": "Toyoda",
+      "reference": "the Toyoda family behind Toyota, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2483",
+      "expected_first": "Underhill",
+      "replacement": "Kiichiro",
+      "reference": "Kiichiro Toyoda, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2504",
+      "expected_first": "Gerhardt",
+      "replacement": "Masayoshi",
+      "reference": "Masayoshi Son, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2606",
+      "expected_first": "Vandyke",
+      "replacement": "Tata",
+      "reference": "Ratan Tata, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2631",
+      "expected_first": "Vachel",
+      "replacement": "Arnault",
+      "reference": "Bernard Arnault, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2681",
+      "expected_first": "Waldemar",
+      "replacement": "Pinault",
+      "reference": "Francois Pinault, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2740",
+      "expected_first": "Faust",
+      "replacement": "Murdoch",
+      "reference": "Rupert Murdoch, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2779",
+      "expected_first": "Hawthorne",
+      "replacement": "Hearst",
+      "reference": "William Randolph Hearst, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2797",
+      "expected_first": "Whitfield",
+      "replacement": "Hughes",
+      "reference": "Howard Hughes, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2817",
+      "expected_first": "Ainsley",
+      "replacement": "Getty",
+      "reference": "J. Paul Getty, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2911",
+      "expected_first": "Beornwulf",
+      "replacement": "Gekko",
+      "reference": "Gordon Gekko from Wall Street, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2976",
+      "expected_first": "Whitlock",
+      "replacement": "Bateman",
+      "reference": "Patrick Bateman from American Psycho, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2982",
+      "expected_first": "Ealdred",
+      "replacement": "Kendall",
+      "reference": "Logan and Kendall Roy from Succession, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3040",
+      "expected_first": "Thackeray",
+      "replacement": "Scrooge",
+      "reference": "Ebenezer Scrooge, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3068",
+      "expected_first": "Devereux",
+      "replacement": "McDuck",
+      "reference": "Scrooge McDuck, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3189",
+      "expected_first": "Thelonious",
+      "replacement": "Thiel",
+      "reference": "Peter Thiel, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3248",
+      "expected_first": "Uther",
+      "replacement": "Ballmer",
+      "reference": "Steve Ballmer, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3253",
+      "expected_first": "Quimby",
+      "replacement": "Soros",
+      "reference": "George Soros, a famous real or screen business figure",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

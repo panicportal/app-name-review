@@ -1,0 +1,326 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "include_unmarked_first_names": true,
+  "clothing": "Rogue pirate captain",
+  "gender": "Female",
+  "bank_file": "panic_rogue_pirate_captain_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Rogue pirate captain · wave 6",
+  "created_at": "2026-09-12T17:13:35.398Z",
+  "replacements": [
+    {
+      "id": "126",
+      "expected_first": "Scarlett",
+      "replacement": "ChingShih",
+      "reference": "ChingShih, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "357",
+      "expected_first": "Earleen",
+      "replacement": "GraceOMalley",
+      "reference": "GraceOMalley, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "370",
+      "expected_first": "Frigate",
+      "replacement": "MaryRead",
+      "reference": "MaryRead, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "851",
+      "expected_first": "Bonny",
+      "replacement": "JeanneClisson",
+      "reference": "JeanneClisson, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "995",
+      "expected_first": "Grace",
+      "replacement": "Sayyida",
+      "reference": "Sayyida, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1018",
+      "expected_first": "Vela",
+      "replacement": "Hurra",
+      "reference": "Hurra, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1029",
+      "expected_first": "Bonita",
+      "replacement": "Alwilda",
+      "reference": "Alwilda, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1048",
+      "expected_first": "Freebooter",
+      "replacement": "Rusla",
+      "reference": "Rusla, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1247",
+      "expected_first": "Dagger",
+      "replacement": "RachelWall",
+      "reference": "RachelWall, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1258",
+      "expected_first": "Earline",
+      "replacement": "SadieFarrell",
+      "reference": "SadieFarrell, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1318",
+      "expected_first": "Olivia",
+      "replacement": "Ingela",
+      "reference": "Ingela, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1356",
+      "expected_first": "Mary",
+      "replacement": "Jacquotte",
+      "reference": "Jacquotte, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1375",
+      "expected_first": "Maude",
+      "replacement": "Delahaye",
+      "reference": "Delahaye, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1462",
+      "expected_first": "Anne",
+      "replacement": "AnneDieu",
+      "reference": "AnneDieu, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1465",
+      "expected_first": "Grania",
+      "replacement": "CharlotteBadger",
+      "reference": "CharlotteBadger, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1591",
+      "expected_first": "Windrunner",
+      "replacement": "FloraBurn",
+      "reference": "FloraBurn, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1716",
+      "expected_first": "Doubloon",
+      "replacement": "MariaCobham",
+      "reference": "MariaCobham, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1786",
+      "expected_first": "Voyager",
+      "replacement": "MargaretJordan",
+      "reference": "MargaretJordan, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1814",
+      "expected_first": "Corsette",
+      "replacement": "AnneProvidence",
+      "reference": "AnneProvidence, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1822",
+      "expected_first": "Starboard",
+      "replacement": "ElizabethSwann",
+      "reference": "ElizabethSwann, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1881",
+      "expected_first": "Piraya",
+      "replacement": "Swann",
+      "reference": "Swann, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1894",
+      "expected_first": "Marisol",
+      "replacement": "Alvida",
+      "reference": "Alvida, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1903",
+      "expected_first": "Seasalt",
+      "replacement": "Revy",
+      "reference": "Revy, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1926",
+      "expected_first": "Rachel",
+      "replacement": "Nami",
+      "reference": "Nami, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2058",
+      "expected_first": "Gweneth",
+      "replacement": "NicoRobin",
+      "reference": "NicoRobin, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2139",
+      "expected_first": "Marauda",
+      "replacement": "BoaHancock",
+      "reference": "BoaHancock, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2161",
+      "expected_first": "Gwenyth",
+      "replacement": "MissFortune",
+      "reference": "MissFortune, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2184",
+      "expected_first": "Galleon",
+      "replacement": "ElaineMarley",
+      "reference": "ElaineMarley, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2313",
+      "expected_first": "Tidecaller",
+      "replacement": "Beidou",
+      "reference": "Beidou, a widely recognizable female pirate character",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2813",
+      "expected_first": "Bootystrap",
+      "replacement": "Teuta",
+      "reference": "Teuta, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2931",
+      "expected_first": "Buccaneera",
+      "replacement": "CharlotteDeBerry",
+      "reference": "CharlotteDeBerry, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2990",
+      "expected_first": "Windward",
+      "replacement": "JohannaHard",
+      "reference": "JohannaHard, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3004",
+      "expected_first": "Leeward",
+      "replacement": "Awilda",
+      "reference": "Awilda, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3123",
+      "expected_first": "Mermaid",
+      "replacement": "Hetha",
+      "reference": "Hetha, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3306",
+      "expected_first": "Merida",
+      "replacement": "Wisna",
+      "reference": "Wisna, a documented or legendary female pirate, corsair, or sea leader",
+      "reference_url": "https://www.rmg.co.uk/stories/maritime-history/were-there-female-pirates",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

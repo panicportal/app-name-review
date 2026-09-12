@@ -8,9 +8,27 @@ function effectiveFirst(state, character) {
   return state.curation?.records?.[String(character.id)]?.parts?.first?.replacement_value || character.first;
 }
 
+function ensureRecord(state, id) {
+  if (!state.curation.records[id] || state.curation.records[id].deleted_at) {
+    state.curation.records[id] = {
+      note: "", note_updated_at: null, updated_at: null,
+      surname_order: "12", surname_order_updated_at: null,
+      surname_join_style: "lower_second", surname_format_version: 4,
+      surname_join_style_updated_at: null, normalized_name: null,
+      normalized_name_updated_at: null, naming_assistant_history: [],
+      manual_name_edit_history: [], parts: {}
+    };
+  }
+  state.curation.records[id].parts ||= {};
+  return state.curation.records[id];
+}
+
 function validatePlan(state, plan, bankState) {
   if (!state?.curation?.records) throw new Error("Live curation state is unavailable.");
   if (plan.workflow_stage !== "first_names_stage_2") throw new Error("Unsupported workflow stage.");
+  if (plan.include_unmarked_first_names && !["Restless ape", "Rogue pirate captain"].includes(plan.clothing)) {
+    throw new Error("Unmarked Stage 2 replacement is restricted to the explicitly authorized clothing traits.");
+  }
   if (!plan.clothing || !Array.isArray(plan.replacements) || !plan.replacements.length) throw new Error("The plan is incomplete.");
   const byId = new Map(review.characters.map(character => [String(character.id), character]));
   const targetIds = new Set();
@@ -48,6 +66,8 @@ function validatePlan(state, plan, bankState) {
         throw new Error(`#${id} is not an existing Stage 2 assignment and cannot use the correction path.`);
       }
       if (!plan.correction_reason) throw new Error("A Stage 2 correction plan requires a correction reason.");
+    } else if (plan.include_unmarked_first_names) {
+      if (["approve", "lock"].includes(first?.decision)) throw new Error(`#${id} is already greenlit and cannot be replaced by this batch.`);
     } else if (first?.decision !== "replace") {
       throw new Error(`#${id} is no longer red-marked for first-name replacement.`);
     }
@@ -82,8 +102,8 @@ async function main() {
   for (const item of plan.replacements) {
     const id = String(item.id);
     const character = byId.get(id);
-    const record = next.curation.records[id];
-    const previous = record.parts.first;
+    const record = ensureRecord(next, id);
+    const previous = record.parts.first || {};
     record.parts.first = {
       ...previous,
       decision: null,

@@ -1,0 +1,111 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 name with a stronger in-scope reference.",
+  "clothing": "Observer angel",
+  "gender": "Female",
+  "bank_file": "panic_observer_angel_female_angelic_stage2_followup_3_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Observer angel · wave 6",
+  "created_at": "2026-09-12T17:13:35.395Z",
+  "replacements": [
+    {
+      "id": "916",
+      "expected_first": "Naomi",
+      "replacement": "Zadkiel",
+      "reference": "Zadkiel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1151",
+      "expected_first": "Rose",
+      "replacement": "Phanuel",
+      "reference": "Phanuel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1205",
+      "expected_first": "Bethany",
+      "replacement": "Anael",
+      "reference": "Anael, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1229",
+      "expected_first": "Ruth",
+      "replacement": "Jeremiel",
+      "reference": "Jeremiel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1821",
+      "expected_first": "Abigail",
+      "replacement": "Sachiel",
+      "reference": "Sachiel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1851",
+      "expected_first": "Amity",
+      "replacement": "Zuriel",
+      "reference": "Zuriel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2510",
+      "expected_first": "Esther",
+      "replacement": "Raphaelle",
+      "reference": "Raphaelle, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2625",
+      "expected_first": "Judith",
+      "replacement": "Urielle",
+      "reference": "Urielle, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2953",
+      "expected_first": "Temperance",
+      "replacement": "Shamsiel",
+      "reference": "Shamsiel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3258",
+      "expected_first": "Psyche",
+      "replacement": "Zerachiel",
+      "reference": "Zerachiel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3275",
+      "expected_first": "Sarah",
+      "replacement": "Ambriel",
+      "reference": "Ambriel, an attested angel name rather than an ordinary biblical personal name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

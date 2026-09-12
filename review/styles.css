@@ -444,6 +444,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .curation-counts b { color: var(--paper); }
 .curation-counts .locked b { color: var(--mint); }
 .curation-counts .stage2-ready b { color: var(--amber); }
+.curation-counts .stage2-confirmed b { color: var(--mint); }
 .curation-counts .rejected b { color: var(--rose); }
 .reviewer-field {
   display: grid;

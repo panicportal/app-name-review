@@ -1817,6 +1817,8 @@ function updateProgress() {
   let totalParts = 0;
   let decidedParts = 0;
   let stage2ReadyParts = 0;
+  let stage2TotalParts = 0;
+  let stage2ConfirmedParts = 0;
   let lockedParts = 0;
   let rejectedParts = 0;
   let completeCharacters = 0;
@@ -1826,6 +1828,10 @@ function updateProgress() {
     totalParts += status.total;
     decidedParts += status.decided;
     const first = partReview(character.id, "first");
+    if (first.workflow_stage === "first_names_stage_2") {
+      stage2TotalParts++;
+      if (["approve", "lock"].includes(first.decision)) stage2ConfirmedParts++;
+    }
     if (
       character.first &&
       first.workflow_stage === "first_names_stage_2" &&
@@ -1839,11 +1845,15 @@ function updateProgress() {
     if (status.key.startsWith("partial")) partialCharacters++;
   });
   const reviewedParts = decidedParts + stage2ReadyParts;
-  const percent = totalParts ? Math.round((reviewedParts / totalParts) * 100) : 0;
+  const overallPercent = totalParts ? Math.round((reviewedParts / totalParts) * 100) : 0;
+  const stage2Percent = stage2TotalParts ? Math.round((stage2ConfirmedParts / stage2TotalParts) * 100) : 0;
+  const showingStage2 = els.statusFilter.value === "first-stage-2";
+  const percent = showingStage2 ? stage2Percent : overallPercent;
   els.curationPercent.textContent = `${percent}%`;
   els.curationBar.style.width = `${percent}%`;
   els.curationCounts.innerHTML = `
-    <span><b>${reviewedParts.toLocaleString()}</b> / ${totalParts.toLocaleString()} reviewed</span>
+    <span><b>${showingStage2 ? stage2ConfirmedParts.toLocaleString() : reviewedParts.toLocaleString()}</b> / ${(showingStage2 ? stage2TotalParts : totalParts).toLocaleString()} ${showingStage2 ? "Stage 2 confirmed" : "reviewed"}</span>
+    <span class="stage2-confirmed"><b>${stage2Percent}%</b> Stage 2 confirmed</span>
     <span class="locked"><b>${lockedParts.toLocaleString()}</b> locked</span>
     <span class="stage2-ready"><b>${stage2ReadyParts.toLocaleString()}</b> Stage 2 ready</span>
     <span class="rejected"><b>${rejectedParts.toLocaleString()}</b> red X</span>

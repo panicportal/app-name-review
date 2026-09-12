@@ -1,0 +1,479 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "include_unmarked_first_names": true,
+  "clothing": "Restless ape",
+  "gender": "Male",
+  "bank_file": "panic_restless_ape_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Restless ape · wave 6",
+  "created_at": "2026-09-12T17:13:35.397Z",
+  "replacements": [
+    {
+      "id": "201",
+      "expected_first": "Arbor",
+      "replacement": "Kanzi",
+      "reference": "Kanzi, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "380",
+      "expected_first": "Bounder",
+      "replacement": "Nim",
+      "reference": "Nim, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "504",
+      "expected_first": "Rumble",
+      "replacement": "Ham",
+      "reference": "Ham, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "583",
+      "expected_first": "Jitter",
+      "replacement": "Enos",
+      "reference": "Enos, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "728",
+      "expected_first": "Sylvan",
+      "replacement": "Chantek",
+      "reference": "Chantek, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "803",
+      "expected_first": "Junglebeat",
+      "replacement": "Ndume",
+      "reference": "Ndume, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "845",
+      "expected_first": "Vine",
+      "replacement": "Snowflake",
+      "reference": "Snowflake, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "879",
+      "expected_first": "Scramble",
+      "replacement": "Jambo",
+      "reference": "Jambo, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "917",
+      "expected_first": "Tempo",
+      "replacement": "Harambe",
+      "reference": "Harambe, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1044",
+      "expected_first": "Roamer",
+      "replacement": "Ivan",
+      "reference": "Ivan, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1072",
+      "expected_first": "Trek",
+      "replacement": "Bokito",
+      "reference": "Bokito, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1085",
+      "expected_first": "Rampage",
+      "replacement": "Shabani",
+      "reference": "Shabani, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1112",
+      "expected_first": "Scamper",
+      "replacement": "Titus",
+      "reference": "Titus, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1135",
+      "expected_first": "Summit",
+      "replacement": "Cantsbee",
+      "reference": "Cantsbee, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1148",
+      "expected_first": "Clamber",
+      "replacement": "Oliver",
+      "reference": "Oliver, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1157",
+      "expected_first": "Grove",
+      "replacement": "Cheeta",
+      "reference": "Cheeta, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1235",
+      "expected_first": "Wildstep",
+      "replacement": "Jiggs",
+      "reference": "Jiggs, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1251",
+      "expected_first": "Groundbeat",
+      "replacement": "DavidGreybeard",
+      "reference": "DavidGreybeard, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1303",
+      "expected_first": "Leafdash",
+      "replacement": "Goliath",
+      "reference": "Goliath, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1351",
+      "expected_first": "Twitch",
+      "replacement": "Figan",
+      "reference": "Figan, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1419",
+      "expected_first": "Rhythm",
+      "replacement": "Frodo",
+      "reference": "Frodo, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1543",
+      "expected_first": "Spry",
+      "replacement": "Freud",
+      "reference": "Freud, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1547",
+      "expected_first": "Knuckler",
+      "replacement": "Goblin",
+      "reference": "Goblin, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1631",
+      "expected_first": "Bongo",
+      "replacement": "Humphrey",
+      "reference": "Humphrey, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1646",
+      "expected_first": "Nimbus",
+      "replacement": "Sampson",
+      "reference": "Sampson, a well-known real male ape or chimpanzee",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1654",
+      "expected_first": "Venture",
+      "replacement": "Caesar",
+      "reference": "Caesar, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1673",
+      "expected_first": "Brancher",
+      "replacement": "Maurice",
+      "reference": "Maurice, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1690",
+      "expected_first": "Vireo",
+      "replacement": "Luca",
+      "reference": "Luca, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1784",
+      "expected_first": "Cypress",
+      "replacement": "BlueEyes",
+      "reference": "BlueEyes, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1898",
+      "expected_first": "Canopydash",
+      "replacement": "Koba",
+      "reference": "Koba, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1947",
+      "expected_first": "Canopy",
+      "replacement": "Aldo",
+      "reference": "Aldo, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1959",
+      "expected_first": "Barrel",
+      "replacement": "Magilla",
+      "reference": "Magilla, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2071",
+      "expected_first": "Cranky",
+      "replacement": "MojoJojo",
+      "reference": "MojoJojo, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2113",
+      "expected_first": "Aspen",
+      "replacement": "Rafiki",
+      "reference": "Rafiki, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2180",
+      "expected_first": "Beacon",
+      "replacement": "Kerchak",
+      "reference": "Kerchak, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2234",
+      "expected_first": "Swing",
+      "replacement": "Abu",
+      "reference": "Abu, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2364",
+      "expected_first": "Trooper",
+      "replacement": "Winston",
+      "reference": "Winston, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2383",
+      "expected_first": "Jungle",
+      "replacement": "Primal",
+      "reference": "Primal, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2436",
+      "expected_first": "Wayfarer",
+      "replacement": "Lanky",
+      "reference": "Lanky, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2498",
+      "expected_first": "Leafwind",
+      "replacement": "Chunky",
+      "reference": "Chunky, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2547",
+      "expected_first": "Vinevault",
+      "replacement": "Diddy",
+      "reference": "Diddy, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2566",
+      "expected_first": "Donkey",
+      "replacement": "Zaius",
+      "reference": "Zaius, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2665",
+      "expected_first": "Tumble",
+      "replacement": "Thade",
+      "reference": "Thade, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2674",
+      "expected_first": "Silverback",
+      "replacement": "Attar",
+      "reference": "Attar, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2709",
+      "expected_first": "Banana",
+      "replacement": "Ursus",
+      "reference": "Ursus, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2853",
+      "expected_first": "Highgrove",
+      "replacement": "Urko",
+      "reference": "Urko, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2922",
+      "expected_first": "Trailblazer",
+      "replacement": "Joe",
+      "reference": "Joe, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3039",
+      "expected_first": "Primate",
+      "replacement": "MightyJoe",
+      "reference": "MightyJoe, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3055",
+      "expected_first": "Treetop",
+      "replacement": "CuriousGeorge",
+      "reference": "CuriousGeorge, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3094",
+      "expected_first": "Branchlight",
+      "replacement": "KingLouie",
+      "reference": "KingLouie, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3125",
+      "expected_first": "Shaker",
+      "replacement": "DonkeyKong",
+      "reference": "DonkeyKong, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3285",
+      "expected_first": "Funky",
+      "replacement": "MightyKong",
+      "reference": "MightyKong, a recognizable male ape or monkey character from film, television, games, or books",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "The  combination gives the portrait-specific fit; the reference is easy to recognize, concise, and collectible.",
+      "score": 9.5
+    }
+  ]
+}
