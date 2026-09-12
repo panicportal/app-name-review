@@ -1,0 +1,57 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 names with stronger recognizable references.",
+  "clothing": "Grasping devil",
+  "gender": "Male",
+  "bank_file": "panic_grasping_devil_male_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Grasping devil · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "3019",
+      "expected_first": "Vassago",
+      "replacement": "Beelzebub",
+      "reference": "Beelzebub, one of the most recognizable demonic names",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The Skateboard front, White cloud back, Tar shower hair makes a direct, instantly recognizable devilish identity a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3071",
+      "expected_first": "Marchosias",
+      "replacement": "Diavolo",
+      "reference": "Diavolo, the Italian word-name for devil and JoJo villain",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The Cigarette front, Overgrown wasteland back, Turmeric fluffy hair makes a direct, instantly recognizable devilish identity a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3083",
+      "expected_first": "Alloces",
+      "replacement": "Hades",
+      "reference": "Hades, ruler of the underworld in Greek mythology",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The Baseball front, Soot sleek curl hair, Blue doll eyes makes a direct, instantly recognizable devilish identity a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3127",
+      "expected_first": "Ronove",
+      "replacement": "Dante",
+      "reference": "Dante, author of the iconic Inferno",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The Skateboard front, Biscotti rough hair, Green stretched eyes makes a direct, instantly recognizable devilish identity a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3297",
+      "expected_first": "Trigon",
+      "replacement": "Hellboy",
+      "reference": "Hellboy, the recognizable horned demonic comic hero",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The You & me sunset back, Soot sleek curl hair, Blue doll eyes makes a direct, instantly recognizable devilish identity a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

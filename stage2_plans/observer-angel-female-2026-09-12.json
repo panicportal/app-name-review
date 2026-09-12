@@ -1,0 +1,703 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Observer angel",
+  "gender": "Female",
+  "bank_file": "panic_observer_angel_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Observer angel · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "55",
+      "expected_first": "Jegudiel",
+      "replacement": "Jophiel",
+      "reference": "Jophiel, a direct angelic or angel-derived name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Yellow brush front, Turmeric fluffy hair, Round eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "138",
+      "expected_first": "Uriela",
+      "replacement": "Nike",
+      "reference": "Nike, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Baseball front, Moon candy hair, Grey stare eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "242",
+      "expected_first": "Faithlyn",
+      "replacement": "Noor",
+      "reference": "Noor, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The White cloud back, Moon candy hair, Up eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "497",
+      "expected_first": "Selaphiel",
+      "replacement": "Moon",
+      "reference": "Moon, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Waning crescent moon back, Emerald innocent braids hair, Tearful eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "507",
+      "expected_first": "Joyous",
+      "replacement": "Gloria",
+      "reference": "Gloria, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Berry cake front, Tar shower hair, Flat up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "516",
+      "expected_first": "Raphaela",
+      "replacement": "Athena",
+      "reference": "Athena, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Baseball front, Jet loose hair, Green stretched eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "723",
+      "expected_first": "Beatific",
+      "replacement": "Soleil",
+      "reference": "Soleil, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Soccer ball front, Sun back, Brandy wild braids hair makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "730",
+      "expected_first": "Angharad",
+      "replacement": "Cassiopeia",
+      "reference": "Cassiopeia, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Soccer ball front, Waning crescent moon back, Moon candy hair makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "774",
+      "expected_first": "Zophiel",
+      "replacement": "Themis",
+      "reference": "Themis, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Basketball front, Tar shower hair, Droopy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "808",
+      "expected_first": "Jubilant",
+      "replacement": "Astra",
+      "reference": "Astra, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Baseball front, Fuzzy swirl back, Brandy wild braids hair makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "849",
+      "expected_first": "Barachiel",
+      "replacement": "Dawn",
+      "reference": "Dawn, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Octopus hot frizz hair, Up eyes, Smile mouth makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "916",
+      "expected_first": "Heledd",
+      "replacement": "Naomi",
+      "reference": "Naomi, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Tan loose wave hair, Googly eyes, Beaming mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1013",
+      "expected_first": "Immaculata",
+      "replacement": "Lux",
+      "reference": "Lux, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The You & me sunset back, Octopus hot frizz hair, Hanging sanpaku eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1020",
+      "expected_first": "Sanctified",
+      "replacement": "Seraphiel",
+      "reference": "Seraphiel, a direct angelic or angel-derived name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Messy room back, Tar shower hair, Tight eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1076",
+      "expected_first": "Chamuel",
+      "replacement": "Andromeda",
+      "reference": "Andromeda, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Swamp swirl back, Jet loose hair, Round eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1089",
+      "expected_first": "Unfailing",
+      "replacement": "Aurelia",
+      "reference": "Aurelia, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Waning crescent moon back, Turmeric fluffy hair, Droopy eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1132",
+      "expected_first": "Blessing",
+      "replacement": "Solara",
+      "reference": "Solara, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Ginger dreads bun hair, Sour eyes, Laughing mouth makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1151",
+      "expected_first": "Salvation",
+      "replacement": "Rose",
+      "reference": "Rose, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Glass of beer front, White cloud back, Octopus hot frizz hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1193",
+      "expected_first": "Gwenllian",
+      "replacement": "Pearl",
+      "reference": "Pearl, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Melt into heart sunrise back, Tan loose wave hair, Round eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1200",
+      "expected_first": "Cherub",
+      "replacement": "Eden",
+      "reference": "Eden, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Overgrown wasteland back, Moon candy hair, Tight eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1205",
+      "expected_first": "Righteous",
+      "replacement": "Bethany",
+      "reference": "Bethany, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Hamburger front, Brandy wild braids hair, Droopy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1229",
+      "expected_first": "Rapture",
+      "replacement": "Ruth",
+      "reference": "Ruth, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Hamburger front, Jet loose hair, Up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1265",
+      "expected_first": "Cherubina",
+      "replacement": "Eve",
+      "reference": "Eve, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The You & me sunset back, Moon candy hair, Closed eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1301",
+      "expected_first": "Teleri",
+      "replacement": "Dove",
+      "reference": "Dove, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Brandy wild braids hair, Droopy eyes, Surprise mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1313",
+      "expected_first": "Radiance",
+      "replacement": "Lyra",
+      "reference": "Lyra, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Waning crescent moon back, Jet loose hair, Brown tilt eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1353",
+      "expected_first": "Innocence",
+      "replacement": "Ivory",
+      "reference": "Ivory, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Jet loose hair, Round eyes, Surprise mouth makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1431",
+      "expected_first": "Adonai",
+      "replacement": "Nova",
+      "reference": "Nova, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Cigarette front, Fuzzy swirl back, Moon candy hair makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1478",
+      "expected_first": "Bliss",
+      "replacement": "Celestina",
+      "reference": "Celestina, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Sun back, Tar shower hair, Round eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1489",
+      "expected_first": "Onwy",
+      "replacement": "Danica",
+      "reference": "Danica, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Baseball front, Brandy wild braids hair, Sour eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1516",
+      "expected_first": "Cordial",
+      "replacement": "Crystal",
+      "reference": "Crystal, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Soft serve ice cream front, Tan loose wave hair, Grey stare eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1563",
+      "expected_first": "Bethan",
+      "replacement": "Rosa",
+      "reference": "Rosa, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Red wine front, Tar shower hair, Flat up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1706",
+      "expected_first": "Gwladys",
+      "replacement": "Lily",
+      "reference": "Lily, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Taco front, White cloud back, Ginger dreads bun hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1729",
+      "expected_first": "Kyrie",
+      "replacement": "Gabrielle",
+      "reference": "Gabrielle, a direct angelic or angel-derived name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Snow natural hair, Winking eyes, Surprise mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1745",
+      "expected_first": "Fidelity",
+      "replacement": "Verity",
+      "reference": "Verity, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Soft serve ice cream front, Brandy wild braids hair, Up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1821",
+      "expected_first": "Jubilee",
+      "replacement": "Abigail",
+      "reference": "Abigail, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Hamburger front, Waning crescent moon back, Brandy wild braids hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1835",
+      "expected_first": "Wisdom",
+      "replacement": "Clementia",
+      "reference": "Clementia, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Hamburger front, Swamp swirl back, Turmeric fluffy hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1851",
+      "expected_first": "Lightbringer",
+      "replacement": "Amity",
+      "reference": "Amity, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Salami pizza front, Octopus hot frizz hair, Closed eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1870",
+      "expected_first": "Branwen",
+      "replacement": "Elaine",
+      "reference": "Elaine, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Glass of beer front, Waning crescent moon back, Moon candy hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1896",
+      "expected_first": "Catrin",
+      "replacement": "Magdalene",
+      "reference": "Magdalene, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Ginger dreads bun hair, Blue doll eyes, Smile mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1899",
+      "expected_first": "Angeline",
+      "replacement": "Prudence",
+      "reference": "Prudence, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Waning crescent moon back, Ginger dreads bun hair, Googly eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2009",
+      "expected_first": "Empyrean",
+      "replacement": "Patience",
+      "reference": "Patience, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Basketball front, Brandy wild braids hair, Droopy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2042",
+      "expected_first": "Tranquil",
+      "replacement": "Serenity",
+      "reference": "Serenity, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The You & me sunset back, Emerald innocent braids hair, Grey stare eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2097",
+      "expected_first": "Mira",
+      "replacement": "Nura",
+      "reference": "Nura, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Glass of beer front, Brandy wild braids hair, Up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2154",
+      "expected_first": "Aeon",
+      "replacement": "Iris",
+      "reference": "Iris, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Ramen front, Octopus hot frizz hair, Happy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2193",
+      "expected_first": "Wenna",
+      "replacement": "Theia",
+      "reference": "Theia, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The You & me sunset back, Ginger dreads bun hair, Round eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2214",
+      "expected_first": "Lumen",
+      "replacement": "Heaven",
+      "reference": "Heaven, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Fire back, Jet loose hair, Sour eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2259",
+      "expected_first": "Joy",
+      "replacement": "Angelina",
+      "reference": "Angelina, a direct angelic or angel-derived name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Turmeric fluffy hair, Grey stare eyes, Smile mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2269",
+      "expected_first": "Charity",
+      "replacement": "Freya",
+      "reference": "Freya, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Hamburger front, Fuzzy swirl back, Tar shower hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2305",
+      "expected_first": "Kismet",
+      "replacement": "Adora",
+      "reference": "Adora, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Messy room back, Moon candy hair, Blue doll eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2321",
+      "expected_first": "Divinity",
+      "replacement": "Leah",
+      "reference": "Leah, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Hamburger front, Brandy wild braids hair, Sour eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2365",
+      "expected_first": "Anointed",
+      "replacement": "Lumi",
+      "reference": "Lumi, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The White cloud back, Tar shower hair, Blue doll eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2371",
+      "expected_first": "Angelita",
+      "replacement": "Aaliyah",
+      "reference": "Aaliyah, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Glass of beer front, Brandy wild braids hair, Up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2382",
+      "expected_first": "Luminous",
+      "replacement": "Azure",
+      "reference": "Azure, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Treasures back, Brandy wild braids hair, Happy eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2386",
+      "expected_first": "Clarissa",
+      "replacement": "Hera",
+      "reference": "Hera, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Baseball front, Octopus hot frizz hair, Glare eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2422",
+      "expected_first": "Modron",
+      "replacement": "Eos",
+      "reference": "Eos, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The White flat brush front, Sun back, Brandy wild braids hair makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2510",
+      "expected_first": "Quiet",
+      "replacement": "Esther",
+      "reference": "Esther, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Brandy wild braids hair, Googly eyes, Proud mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2524",
+      "expected_first": "Unity",
+      "replacement": "Venus",
+      "reference": "Venus, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Tar shower hair, Happy eyes, Grimace mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2528",
+      "expected_first": "Enid",
+      "replacement": "Dione",
+      "reference": "Dione, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Soft serve ice cream front, Messy room back, Brandy wild braids hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2539",
+      "expected_first": "Kindred",
+      "replacement": "Cherie",
+      "reference": "Cherie, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Lollipop front, Tan loose wave hair, Happy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2590",
+      "expected_first": "Tess",
+      "replacement": "Chiara",
+      "reference": "Chiara, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The White cloud back, Brandy wild braids hair, Grey stare eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2617",
+      "expected_first": "Elara",
+      "replacement": "Indigo",
+      "reference": "Indigo, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Glass of beer front, Brandy wild braids hair, Brown tilt eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2625",
+      "expected_first": "Reverie",
+      "replacement": "Judith",
+      "reference": "Judith, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Skateboard front, Jet loose hair, Droopy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2657",
+      "expected_first": "Dilys",
+      "replacement": "Lucinda",
+      "reference": "Lucinda, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Melt into heart sunrise back, Moon candy hair, Round eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2778",
+      "expected_first": "Yashira",
+      "replacement": "Ayana",
+      "reference": "Ayana, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Messy room back, Tan loose wave hair, Glare eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2784",
+      "expected_first": "Virtue",
+      "replacement": "Maia",
+      "reference": "Maia, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Basketball front, Emerald innocent braids hair, Hanging sanpaku eyes makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2868",
+      "expected_first": "Faelan",
+      "replacement": "Oriana",
+      "reference": "Oriana, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Ginger dreads bun hair, Green stretched eyes, Expressionless mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2953",
+      "expected_first": "Ceinwen",
+      "replacement": "Temperance",
+      "reference": "Temperance, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Brandy wild braids hair, Droopy eyes, Scream mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3062",
+      "expected_first": "Luminara",
+      "replacement": "Celina",
+      "reference": "Celina, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The White cloud back, Tan loose wave hair, Brown tilt eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3104",
+      "expected_first": "Fated",
+      "replacement": "Adriel",
+      "reference": "Adriel, a direct angelic or angel-derived name",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Basketball front, Brandy wild braids hair, Up eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3136",
+      "expected_first": "Meinir",
+      "replacement": "Divina",
+      "reference": "Divina, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Jet loose hair, Googly eyes, Proud mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3140",
+      "expected_first": "Peace",
+      "replacement": "Hannah",
+      "reference": "Hannah, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Taco front, Tar shower hair, Winking eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3144",
+      "expected_first": "Loyal",
+      "replacement": "Amaya",
+      "reference": "Amaya, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Soccer ball front, Sun back, Tar shower hair makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3217",
+      "expected_first": "Godsent",
+      "replacement": "Eliana",
+      "reference": "Eliana, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Swamp swirl back, Emerald innocent braids hair, Sour eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3224",
+      "expected_first": "Providence",
+      "replacement": "Samara",
+      "reference": "Samara, a familiar virtue, grace, beauty, or peaceful-heaven reference",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The Ginger dreads bun hair, Up eyes, Scream mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3258",
+      "expected_first": "Winged",
+      "replacement": "Psyche",
+      "reference": "Psyche, a widely recognized divine figure from classical mythology",
+      "reference_url": "https://www.britannica.com/topic/Greek-mythology",
+      "fit": "The Tan loose wave hair, Winking eyes, Downturned mouth makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3275",
+      "expected_first": "Hafwen",
+      "replacement": "Sarah",
+      "reference": "Sarah, a familiar biblical woman's name",
+      "reference_url": "https://www.britannica.com/topic/biblical-literature",
+      "fit": "The Baseball front, Jet loose hair, Happy eyes makes the portrait's halo, expression, skin palette, and strongest prop a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3330",
+      "expected_first": "Orison",
+      "replacement": "Estella",
+      "reference": "Estella, a familiar light, sky, star, or color reference",
+      "reference_url": "https://science.nasa.gov/universe/stars/",
+      "fit": "The Soccer ball front, Sun back, Jet loose hair makes the portrait's halo and color palette a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

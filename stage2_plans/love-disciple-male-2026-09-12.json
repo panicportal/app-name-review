@@ -1,0 +1,145 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Love disciple",
+  "gender": "Male",
+  "bank_file": "panic_love_disciple_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Love disciple · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "141",
+      "expected_first": "Norwich",
+      "replacement": "Cupid",
+      "reference": "Cupid, the instantly recognizable Roman god of love",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Turmeric fluffy hair, Neon yellow laser eyes, Expressionless mouth makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "547",
+      "expected_first": "Ascetic",
+      "replacement": "Amor",
+      "reference": "Amor, the Roman personification and word for love",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Red wine front, Octopus hot frizz hair, Happy eyes makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1158",
+      "expected_first": "Postulate",
+      "replacement": "Adonis",
+      "reference": "Adonis, the classical icon of male beauty",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Soccer ball front, Soot sleek curl hair, Glare eyes makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1396",
+      "expected_first": "Confessor",
+      "replacement": "Gabriel",
+      "reference": "Gabriel, the recognizable archangel",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Ginger dreads bun hair, Flat up eyes, Long beard surprise mouth makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1411",
+      "expected_first": "Hesychast",
+      "replacement": "Anteros",
+      "reference": "Anteros, Greek god of returned love",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Swamp swirl back, Octopus hot frizz hair, Tearful eyes makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1712",
+      "expected_first": "Falkner",
+      "replacement": "Tristan",
+      "reference": "Tristan, hero of Tristan and Iseult",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Tar shower hair, Googly eyes, Beard sad mouth makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1857",
+      "expected_first": "Sacristan",
+      "replacement": "Casanova",
+      "reference": "Casanova, the iconic historical lover",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Turmeric fluffy hair, Googly eyes, Big smile mouth makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1919",
+      "expected_first": "Ezra",
+      "replacement": "Angelo",
+      "reference": "Angelo, the familiar name meaning angel",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Skateboard front, Ruby sweep hair, Brown tilt eyes makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2354",
+      "expected_first": "Penitent",
+      "replacement": "Pothos",
+      "reference": "Pothos, Greek god of longing",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Waning crescent moon back, Biscotti rough hair, Happy eyes makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2980",
+      "expected_first": "Monk",
+      "replacement": "Orpheus",
+      "reference": "Orpheus, mythic lover who entered the underworld for Eurydice",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Soft serve ice cream front, Fuzzy swirl back, Biscotti rough hair makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3121",
+      "expected_first": "Ramil",
+      "replacement": "Himeros",
+      "reference": "Himeros, Greek god of desire",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Octopus hot frizz hair, Green stretched eyes, Smile mouth makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3250",
+      "expected_first": "Orlan",
+      "replacement": "Paris",
+      "reference": "Paris, the romantic Trojan prince",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Messy room back, Turmeric fluffy hair, Closed eyes makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3276",
+      "expected_first": "Uriah",
+      "replacement": "Lancelot",
+      "reference": "Lancelot, the knight famed for love of Guinevere",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Salami pizza front, Waning crescent moon back, Soot sleek curl hair makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3281",
+      "expected_first": "Hermit",
+      "replacement": "Hymenaios",
+      "reference": "Hymenaios, Greek god of weddings",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Soot sleek curl hair, Googly eyes, Smug mouth makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3303",
+      "expected_first": "Contemplative",
+      "replacement": "DonJuan",
+      "reference": "Don Juan, the archetypal legendary lover",
+      "reference_url": "https://www.theoi.com/Ouranios/Erotes.html",
+      "fit": "The Berry cake front, White cloud back, Ginger dreads bun hair makes the Cupid, angel, romance, and floral-hearted clothing direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

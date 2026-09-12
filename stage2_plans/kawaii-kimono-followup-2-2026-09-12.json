@@ -1,0 +1,57 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 names with stronger recognizable references.",
+  "clothing": "Kawaii kimono",
+  "gender": "Female",
+  "bank_file": "panic_kawaii_kimono_female_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Kawaii kimono · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "3066",
+      "expected_first": "Bjork",
+      "replacement": "Maiko",
+      "reference": "Maiko, the familiar Kyoto apprentice-geisha title",
+      "reference_url": "https://www.britannica.com/art/geisha",
+      "fit": "The Moon candy hair, Droopy eyes, Smile mouth makes a clearer and more recognizable kimono-linked heroine or cultural reference a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3114",
+      "expected_first": "Hatsumomo",
+      "replacement": "Mineko",
+      "reference": "Mineko Iwasaki, the famous former geisha",
+      "reference_url": "https://www.britannica.com/art/geisha",
+      "fit": "The Sun back, Snow natural hair, Googly eyes makes a clearer and more recognizable kimono-linked heroine or cultural reference a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3157",
+      "expected_first": "Ishii",
+      "replacement": "Sayaka",
+      "reference": "Sayaka, a familiar Japanese heroine name",
+      "reference_url": "https://www.britannica.com/art/geisha",
+      "fit": "The Berry cake front, Sun back, Jet loose hair makes a clearer and more recognizable kimono-linked heroine or cultural reference a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3173",
+      "expected_first": "Yuki",
+      "replacement": "Nezuko",
+      "reference": "Nezuko Kamado, the iconic kimono-wearing Demon Slayer heroine",
+      "reference_url": "https://www.britannica.com/art/geisha",
+      "fit": "The Swamp swirl back, Tan loose wave hair, Hanging sanpaku eyes makes a clearer and more recognizable kimono-linked heroine or cultural reference a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3240",
+      "expected_first": "Chiyo",
+      "replacement": "Kaguya",
+      "reference": "Princess Kaguya, the iconic heroine of Japanese folklore",
+      "reference_url": "https://www.britannica.com/art/geisha",
+      "fit": "The Soccer ball front, Sun back, Octopus hot frizz hair makes a clearer and more recognizable kimono-linked heroine or cultural reference a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

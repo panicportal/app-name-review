@@ -1,0 +1,21 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 names with stronger recognizable references.",
+  "clothing": "Golden angel",
+  "gender": "Male",
+  "bank_file": "panic_golden_angel_male_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Golden angel · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "860",
+      "expected_first": "Sandalphon",
+      "replacement": "Raziel",
+      "reference": "Raziel, the well-known angel of mysteries",
+      "reference_url": "https://www.britannica.com/topic/angel-religion",
+      "fit": "The ?an!c coin front, Sun back, Turmeric fluffy hair makes a bright but mysterious golden archangel a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

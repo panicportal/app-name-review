@@ -1,0 +1,30 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 names with stronger recognizable references.",
+  "clothing": "Ham sandwich clown",
+  "gender": "Female",
+  "bank_file": "panic_ham_sandwich_clown_female_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Ham sandwich clown · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "2630",
+      "expected_first": "Sky",
+      "replacement": "ChaUKao",
+      "reference": "Cha-U-Kao, the celebrated Moulin Rouge clown performer",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The Basketball front, Turmeric fluffy hair, Tight eyes makes a colorful historical clown performer a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3023",
+      "expected_first": "Mafalda",
+      "replacement": "RosieVolt",
+      "reference": "Rosie Volt, Daphne Clouzeau's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The Hamburger front, Waning crescent moon back, Brandy wild braids hair makes a lively modern female clown persona a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}

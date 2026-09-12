@@ -376,6 +376,9 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
     ["grasping-devil-male-2026-09-12.json", "panic_grasping_devil_male_stage2_2026-09-12.md", 32],
     ["ham-sandwich-clown-female-2026-09-12.json", "panic_ham_sandwich_clown_female_stage2_2026-09-12.md", 38],
     ["kawaii-kimono-female-2026-09-12.json", "panic_kawaii_kimono_female_stage2_2026-09-12.md", 13],
+    ["love-disciple-male-2026-09-12.json", "panic_love_disciple_male_stage2_2026-09-12.md", 15],
+    ["mysterious-disciple-female-2026-09-12.json", "panic_mysterious_disciple_female_stage2_2026-09-12.md", 13],
+    ["observer-angel-female-2026-09-12.json", "panic_observer_angel_female_stage2_2026-09-12.md", 77],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -401,6 +404,10 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
     ["divine-saint-followup-2026-09-12.json", "panic_divine_saint_male_stage2_followup_2026-09-12.md", 2],
     ["dark-swim-trunks-male-followup-2-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_followup_2_2026-09-12.md", 1],
     ["divine-saint-male-followup-2-2026-09-12.json", "panic_divine_saint_male_stage2_followup_2_2026-09-12.md", 1],
+    ["golden-angel-followup-2-2026-09-12.json", "panic_golden_angel_male_stage2_followup_2_2026-09-12.md", 1],
+    ["ham-sandwich-clown-followup-2-2026-09-12.json", "panic_ham_sandwich_clown_female_stage2_followup_2_2026-09-12.md", 2],
+    ["grasping-devil-followup-2-2026-09-12.json", "panic_grasping_devil_male_stage2_followup_2_2026-09-12.md", 5],
+    ["kawaii-kimono-followup-2-2026-09-12.json", "panic_kawaii_kimono_female_stage2_followup_2_2026-09-12.md", 5],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));

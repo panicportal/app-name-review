@@ -1,0 +1,127 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Mysterious disciple",
+  "gender": "Female",
+  "bank_file": "panic_mysterious_disciple_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Mysterious disciple · wave 5",
+  "created_at": "2026-09-12T20:30:00.000Z",
+  "replacements": [
+    {
+      "id": "425",
+      "expected_first": "Contemplata",
+      "replacement": "Zatanna",
+      "reference": "Zatanna, DC's iconic stage magician",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Lollipop front, Swamp swirl back, Jet loose hair makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "459",
+      "expected_first": "Devotion",
+      "replacement": "Morticia",
+      "reference": "Morticia Addams, the elegant gothic matriarch",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Octopus hot frizz hair, Round eyes, Mad mouth makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "838",
+      "expected_first": "Prophetess",
+      "replacement": "Circe",
+      "reference": "Circe, the famous enchantress of Greek myth",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Emerald innocent braids hair, Googly eyes, Smile mouth makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "863",
+      "expected_first": "Mercy",
+      "replacement": "Elvira",
+      "reference": "Elvira, the instantly recognizable Mistress of the Dark",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Melt into heart sunrise back, Jet loose hair, Tight eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "994",
+      "expected_first": "Acolyte",
+      "replacement": "Persephone",
+      "reference": "Persephone, queen of the underworld",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The White cloud back, Dandelion rough buns hair, Hanging sanpaku eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1116",
+      "expected_first": "Cloister",
+      "replacement": "Hecate",
+      "reference": "Hecate, goddess of magic and crossroads",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Sun back, Octopus hot frizz hair, Droopy eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1536",
+      "expected_first": "Novice",
+      "replacement": "Bellatrix",
+      "reference": "Bellatrix Lestrange, the dark Harry Potter witch",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Dandelion rough buns hair, Blue doll eyes, Smile mouth makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "1705",
+      "expected_first": "Genoveva",
+      "replacement": "Agatha",
+      "reference": "Agatha Harkness, the Marvel witch",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Lollipop front, Snow natural hair, Round eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2243",
+      "expected_first": "Postulant",
+      "replacement": "Medea",
+      "reference": "Medea, the powerful sorceress of Greek myth",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The You & me sunset back, Turmeric fluffy hair, Hanging sanpaku eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "2884",
+      "expected_first": "Solemnity",
+      "replacement": "Samantha",
+      "reference": "Samantha Stephens, the heroine of Bewitched",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Tuna sushi front, Turmeric fluffy hair, Up eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3024",
+      "expected_first": "Reverentia",
+      "replacement": "Hermione",
+      "reference": "Hermione Granger, the iconic Harry Potter witch",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Ginger dreads bun hair, Glare eyes, Laughing mouth makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3184",
+      "expected_first": "Beatitude",
+      "replacement": "Willow",
+      "reference": "Willow Rosenberg, the witch from Buffy the Vampire Slayer",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The Waning crescent moon back, Tan loose wave hair, Winking eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    },
+    {
+      "id": "3267",
+      "expected_first": "Psalmody",
+      "replacement": "Lenore",
+      "reference": "Lenore, Poe's enduring mysterious heroine-name",
+      "reference_url": "https://www.netflix.com/tudum/articles/witcher-bible-guide-continent-creatures",
+      "fit": "The You & me sunset back, Ginger dreads bun hair, Happy eyes makes the greenlit mystical, nocturnal, ritual, and fantasy-disciple direction a close portrait match; the name stays clear, recognizable, and collectible.",
+      "score": 9.5
+    }
+  ]
+}
