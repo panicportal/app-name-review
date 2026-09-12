@@ -4,3 +4,5 @@ audits/**
 node_modules/**
 tests/**
 scripts/**
+backups/**
+stage2_plans/**
