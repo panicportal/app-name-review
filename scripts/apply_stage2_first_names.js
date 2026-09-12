@@ -43,7 +43,14 @@ function validatePlan(state, plan, bankState) {
     if (current !== item.expected_first) throw new Error(`#${id} changed from expected ${item.expected_first} to ${current}; refresh the plan.`);
     if (replacementKey === current.trim().toLowerCase()) throw new Error(`#${id} must receive a different first name before its red mark can be cleared.`);
     const first = state.curation.records[id]?.parts?.first;
-    if (first?.decision !== "replace") throw new Error(`#${id} is no longer red-marked for first-name replacement.`);
+    if (plan.correct_existing_stage2) {
+      if (first?.workflow_stage !== "first_names_stage_2") {
+        throw new Error(`#${id} is not an existing Stage 2 assignment and cannot use the correction path.`);
+      }
+      if (!plan.correction_reason) throw new Error("A Stage 2 correction plan requires a correction reason.");
+    } else if (first?.decision !== "replace") {
+      throw new Error(`#${id} is no longer red-marked for first-name replacement.`);
+    }
     if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(item.replacement)) throw new Error(`Invalid first name ${item.replacement}.`);
     if (bankNames && !bankNames.has(item.replacement)) throw new Error(`${item.replacement} is not an exact row in ${plan.bank_file}.`);
     const conflicts = (used.get(replacementKey) || []).filter(otherId => otherId !== id);

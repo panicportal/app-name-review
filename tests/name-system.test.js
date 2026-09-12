@@ -364,6 +364,7 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
   const cases = [
     ["builder-bull-followup-2026-09-12.json", "panic_builder_bull_male_stage2_followup_2026-09-12.md", 2],
     ["dark-swim-trunks-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md", 117],
+    ["dark-swim-trunks-male-correction-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md", 36],
     ["defiant-pirate-captain-2026-09-12.json", "panic_defiant_pirate_captain_male_stage2_2026-09-12.md", 1],
     ["divine-saint-2026-09-12.json", "panic_divine_saint_male_stage2_2026-09-12.md", 6],
   ];
@@ -380,6 +381,20 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
     assert.ok(plan.replacements.every(item => bankNames.has(item.replacement)));
     assert.ok(plan.replacements.every(item => item.reference.length > 8 && item.fit.length > 40));
   }
+  const maleSwimmerBank = fs.readFileSync(
+    path.join(__dirname, "..", "name_banks", "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md"),
+    "utf8",
+  );
+  const removedFemaleReferences = ["McKeon", "Titmus", "Fraser", "Campbell", "Sjostrom", "Hosszu", "Pellegrini", "Seebohm", "Rice", "McIntosh", "Huske", "Walsh", "Douglass", "King", "Bacon", "Curzan", "Zhang", "Yang", "Evans", "Thompson", "Torres", "Beard", "Vollmer", "Soni", "Hardy", "Hoff", "Leverenz", "Dirado", "Egerszegi", "Otto", "Ender", "Cunha", "Zorn", "Hess", "Ederle", "Gould"];
+  assert.ok(removedFemaleReferences.every(name => !new RegExp(`^\\| ${name} \\|`, "m").test(maleSwimmerBank)));
+});
+
+test("an explicit Stage 2 bank correction can replace decided names without opening a no-op path", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "scripts", "apply_stage2_first_names.js"), "utf8");
+  assert.match(source, /if \(plan\.correct_existing_stage2\)/);
+  assert.match(source, /first\?\.workflow_stage !== "first_names_stage_2"/);
+  assert.match(source, /if \(!plan\.correction_reason\)/);
+  assert.match(source, /replacementKey === current\.trim\(\)\.toLowerCase\(\)/);
 });
 
 test("bank-origin detector uses exact eligible routes instead of name appearance", () => {

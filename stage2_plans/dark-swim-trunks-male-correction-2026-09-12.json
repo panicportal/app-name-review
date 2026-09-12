@@ -1,0 +1,336 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Remove female swimmer references from the male Dark swim trunks Stage 2 bank.",
+  "clothing": "Dark swim trunks",
+  "gender": "Male",
+  "bank_file": "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md",
+  "reviewer": "Codex Stage 2 male-bank correction",
+  "created_at": "2026-09-12T13:48:25.107Z",
+  "replacements": [
+    {
+      "id": "700",
+      "expected_first": "McKeon",
+      "replacement": "Hwang",
+      "reference": "Hwang Sun-woo, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Googly eyes, Banana flattop hair, and clean portrait styling detail give this portrait a distinct competitive silhouette; Hwang is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "742",
+      "expected_first": "Titmus",
+      "replacement": "Wang",
+      "reference": "Wang Shun, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Ginger dreads bun hair, and Fuzzy swirl detail give this portrait a distinct competitive silhouette; Wang is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "794",
+      "expected_first": "Fraser",
+      "replacement": "Ho",
+      "reference": "Chad Ho, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Moss short mullet hair, and Cigarette detail give this portrait a distinct competitive silhouette; Ho is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "833",
+      "expected_first": "Campbell",
+      "replacement": "Neethling",
+      "reference": "Ryk Neethling, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Glare eyes, Octopus hot frizz hair, and Berry cake detail give this portrait a distinct competitive silhouette; Neethling is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "866",
+      "expected_first": "Sjostrom",
+      "replacement": "Parkin",
+      "reference": "Terence Parkin, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Flat up eyes, Turmeric fluffy hair, and Overgrown wasteland detail give this portrait a distinct competitive silhouette; Parkin is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "899",
+      "expected_first": "Hosszu",
+      "replacement": "Hafnaoui",
+      "reference": "Ahmed Hafnaoui, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Happy eyes, Moss short mullet hair, and Skateboard detail give this portrait a distinct competitive silhouette; Hafnaoui is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "970",
+      "expected_first": "Pellegrini",
+      "replacement": "Detti",
+      "reference": "Gabriele Detti, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Blue doll eyes, Turmeric fluffy hair, and Baseball detail give this portrait a distinct competitive silhouette; Detti is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "979",
+      "expected_first": "Seebohm",
+      "replacement": "Wellbrock",
+      "reference": "Florian Wellbrock, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Dark shades eyes, Moss short mullet hair, and Yellow brush detail give this portrait a distinct competitive silhouette; Wellbrock is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1059",
+      "expected_first": "Rice",
+      "replacement": "Martens",
+      "reference": "Lukas Martens, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Droopy eyes, Turmeric fluffy hair, and clean portrait styling detail give this portrait a distinct competitive silhouette; Martens is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1071",
+      "expected_first": "McIntosh",
+      "replacement": "Biedermann",
+      "reference": "Paul Biedermann, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Round eyes, Tar shower hair, and Taco detail give this portrait a distinct competitive silhouette; Biedermann is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1163",
+      "expected_first": "Huske",
+      "replacement": "Agnel",
+      "reference": "Yannick Agnel, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The 3D glasses eyes, Octopus hot frizz hair, and Hamburger detail give this portrait a distinct competitive silhouette; Agnel is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1225",
+      "expected_first": "Walsh",
+      "replacement": "Bousquet",
+      "reference": "Frederick Bousquet, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Closed eyes, Turmeric fluffy hair, and Baguette detail give this portrait a distinct competitive silhouette; Bousquet is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1260",
+      "expected_first": "Douglass",
+      "replacement": "Leveaux",
+      "reference": "Amaury Leveaux, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Closed eyes, Biscotti rough hair, and Soccer ball detail give this portrait a distinct competitive silhouette; Leveaux is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1268",
+      "expected_first": "King",
+      "replacement": "Lacourt",
+      "reference": "Camille Lacourt, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Turmeric fluffy hair, and Baseball detail give this portrait a distinct competitive silhouette; Lacourt is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1309",
+      "expected_first": "Bacon",
+      "replacement": "Stravius",
+      "reference": "Jeremy Stravius, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Googly eyes, Ginger dreads bun hair, and Baseball detail give this portrait a distinct competitive silhouette; Stravius is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1324",
+      "expected_first": "Curzan",
+      "replacement": "Gilot",
+      "reference": "Fabien Gilot, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Blue doll eyes, Banana flattop hair, and Skateboard detail give this portrait a distinct competitive silhouette; Gilot is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1538",
+      "expected_first": "Zhang",
+      "replacement": "Rozsa",
+      "reference": "Norbert Rozsa, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Grey stare eyes, Soot sleek curl hair, and Sun detail give this portrait a distinct competitive silhouette; Rozsa is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1555",
+      "expected_first": "Yang",
+      "replacement": "Czene",
+      "reference": "Attila Czene, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Happy eyes, Soot sleek curl hair, and Baseball detail give this portrait a distinct competitive silhouette; Czene is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1618",
+      "expected_first": "Evans",
+      "replacement": "Darnyi",
+      "reference": "Tamas Darnyi, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Googly eyes, Tar shower hair, and Basketball detail give this portrait a distinct competitive silhouette; Darnyi is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1662",
+      "expected_first": "Thompson",
+      "replacement": "Szabo",
+      "reference": "Jozsef Szabo, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Blue doll eyes, Soot sleek curl hair, and Baseball detail give this portrait a distinct competitive silhouette; Szabo is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1683",
+      "expected_first": "Torres",
+      "replacement": "Pankratov",
+      "reference": "Denis Pankratov, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Tar shower hair, and Soft serve ice cream detail give this portrait a distinct competitive silhouette; Pankratov is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1688",
+      "expected_first": "Beard",
+      "replacement": "Sadovyi",
+      "reference": "Yevgeny Sadovyi, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Round eyes, Ginger dreads bun hair, and clean portrait styling detail give this portrait a distinct competitive silhouette; Sadovyi is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1693",
+      "expected_first": "Vollmer",
+      "replacement": "Polyansky",
+      "reference": "Igor Polyansky, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Turmeric fluffy hair, and Glass of beer detail give this portrait a distinct competitive silhouette; Polyansky is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1715",
+      "expected_first": "Soni",
+      "replacement": "Balandin",
+      "reference": "Dmitriy Balandin, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Tight eyes, Ruby sweep hair, and Ramen detail give this portrait a distinct competitive silhouette; Balandin is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1733",
+      "expected_first": "Hardy",
+      "replacement": "Morozov",
+      "reference": "Vladimir Morozov, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Brown tilt eyes, Tar shower hair, and clean portrait styling detail give this portrait a distinct competitive silhouette; Morozov is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1758",
+      "expected_first": "Hoff",
+      "replacement": "Volkov",
+      "reference": "Dmitry Volkov, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Round eyes, Soot sleek curl hair, and Sun detail give this portrait a distinct competitive silhouette; Volkov is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1773",
+      "expected_first": "Leverenz",
+      "replacement": "Tomita",
+      "reference": "Naoya Tomita, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Brown tilt eyes, Tar shower hair, and Glass of beer detail give this portrait a distinct competitive silhouette; Tomita is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1800",
+      "expected_first": "Dirado",
+      "replacement": "Koseki",
+      "reference": "Yasuhiro Koseki, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Tar shower hair, and Baguette detail give this portrait a distinct competitive silhouette; Koseki is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1803",
+      "expected_first": "Egerszegi",
+      "replacement": "Sakai",
+      "reference": "Masato Sakai, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Tearful eyes, Octopus hot frizz hair, and Messy room detail give this portrait a distinct competitive silhouette; Sakai is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1828",
+      "expected_first": "Otto",
+      "replacement": "Miyashita",
+      "reference": "Junichi Miyashita, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Up eyes, Tar shower hair, and Glass of beer detail give this portrait a distinct competitive silhouette; Miyashita is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "1850",
+      "expected_first": "Ender",
+      "replacement": "Yamaguchi",
+      "reference": "Akihiro Yamaguchi, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Brown tilt eyes, Biscotti rough hair, and Hamburger detail give this portrait a distinct competitive silhouette; Yamaguchi is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "2347",
+      "expected_first": "Cunha",
+      "replacement": "Wiffen",
+      "reference": "Daniel Wiffen, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Turmeric fluffy hair, and Glass of beer detail give this portrait a distinct competitive silhouette; Wiffen is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "2384",
+      "expected_first": "Zorn",
+      "replacement": "Dotto",
+      "reference": "Luca Dotto, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Tearful eyes, Banana flattop hair, and Glass of beer detail give this portrait a distinct competitive silhouette; Dotto is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "2395",
+      "expected_first": "Hess",
+      "replacement": "Magnussen",
+      "reference": "James Magnussen, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Tight eyes, Tar shower hair, and clean portrait styling detail give this portrait a distinct competitive silhouette; Magnussen is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "2410",
+      "expected_first": "Ederle",
+      "replacement": "Wildeboer",
+      "reference": "Aschwin Wildeboer, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Tight eyes, Banana flattop hair, and Red wine detail give this portrait a distinct competitive silhouette; Wildeboer is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    },
+    {
+      "id": "2427",
+      "expected_first": "Gould",
+      "replacement": "Wilkie",
+      "reference": "David Wilkie, internationally significant male competitive swimmer",
+      "reference_url": "https://www.worldaquatics.com/athletes",
+      "fit": "The Hanging sanpaku eyes, Soot sleek curl hair, and Messy room detail give this portrait a distinct competitive silhouette; Wilkie is a short, recognizable family name with strong swimmer identity.",
+      "score": 9.6
+    }
+  ]
+}
