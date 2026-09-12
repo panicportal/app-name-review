@@ -11,20 +11,26 @@ function idFor(clothing, gender, filename) {
 }
 
 function bundledBanks() {
-  const filename = "panic_brownie_cowboy_male_name_bank_2026-08-17.md";
-  const file = path.join(process.cwd(), "name_banks", filename);
-  if (!fs.existsSync(file)) return [];
-  const raw_markdown = fs.readFileSync(file, "utf8");
-  const parsed = parseMarkdownNameBank(raw_markdown, { clothing: "Brownie cowboy", gender: "Male", version: "2026-08-17" });
-  return [{
-    id: idFor(parsed.clothing, parsed.gender, filename),
-    filename,
-    ...parsed,
-    raw_markdown,
-    active: true,
-    source_kind: "bundled_artist_bank",
-    uploaded_at: "2026-08-17T00:00:00.000Z",
-  }];
+  const definitions = [
+    { filename: "panic_brownie_cowboy_male_name_bank_2026-08-17.md", clothing: "Brownie cowboy", gender: "Male", version: "2026-08-17" },
+    { filename: "panic_builder_bull_male_stage2_name_bank_2026-09-12.md", clothing: "Builder bull", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_common_villager_male_rpg_name_bank_2026-09-12.md", clothing: "Common villager", gender: "Male", version: "2026-09-12" },
+  ];
+  return definitions.flatMap(definition => {
+    const file = path.join(process.cwd(), "name_banks", definition.filename);
+    if (!fs.existsSync(file)) return [];
+    const raw_markdown = fs.readFileSync(file, "utf8");
+    const parsed = parseMarkdownNameBank(raw_markdown, definition);
+    return [{
+      id: idFor(parsed.clothing, parsed.gender, definition.filename),
+      filename: definition.filename,
+      ...parsed,
+      raw_markdown,
+      active: true,
+      source_kind: "bundled_artist_bank",
+      uploaded_at: `${definition.version}T00:00:00.000Z`,
+    }];
+  });
 }
 
 async function getNameBanks() {

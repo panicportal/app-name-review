@@ -1644,7 +1644,8 @@ function matchesStatus(character, status) {
   }
   if (status === "complete-rejected") return curation.key === "complete-rejected";
   if (status === "first-stage-2") {
-    return partReview(character.id, "first").workflow_stage === "first_names_stage_2";
+    const first = partReview(character.id, "first");
+    return first.workflow_stage === "first_names_stage_2" && !["approve", "lock"].includes(first.decision);
   }
   if (status === "proposal") return character.surname_changed_from_v8;
   if (status === "first-online") {

@@ -317,7 +317,7 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=30-0-first-name-stage-2/);
+  assert.match(html, /app\.js\?v=30-1-stage2-queue/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
 });
@@ -329,6 +329,7 @@ test("Stage 2 first-name replacements are filterable, auditable, and sourced fro
   const bank = fs.readFileSync(path.join(__dirname, "..", "name_banks", "panic_brownie_cowboy_male_name_bank_2026-08-17.md"), "utf8");
   assert.match(html, /value="first-stage-2">First names stage 2/);
   assert.match(source, /workflow_stage === "first_names_stage_2"/);
+  assert.match(source, /!\["approve", "lock"\]\.includes\(first\.decision\)/);
   assert.match(source, /workflow_reference: review\.workflow_reference/);
   assert.equal(plan.clothing, "Brownie cowboy");
   assert.equal(plan.replacements.length, 17);
@@ -338,6 +339,24 @@ test("Stage 2 first-name replacements are filterable, auditable, and sourced fro
     assert.match(bank, new RegExp(`\\| \\*\\*${item.replacement}\\*\\* \\|`));
     assert.ok(item.reference.length > 8);
     assert.ok(item.fit.length > 20);
+  }
+});
+
+test("Stage 2 bull and RPG-villager plans replace every target from exact bundled banks", () => {
+  const cases = [
+    ["builder-bull-remaining-2026-09-12.json", "panic_builder_bull_male_stage2_name_bank_2026-09-12.md", 43],
+    ["common-villager-2026-09-12.json", "panic_common_villager_male_rpg_name_bank_2026-09-12.md", 39],
+  ];
+  for (const [planFile, bankFile, expectedCount] of cases) {
+    const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
+    const markdown = fs.readFileSync(path.join(__dirname, "..", "name_banks", bankFile), "utf8");
+    const parsed = parseMarkdownNameBank(markdown, { clothing: plan.clothing, gender: plan.gender });
+    const bankNames = new Set(parsed.entries.map(entry => entry.name));
+    assert.equal(plan.replacements.length, expectedCount);
+    assert.equal(new Set(plan.replacements.map(item => item.id)).size, expectedCount);
+    assert.equal(new Set(plan.replacements.map(item => item.replacement.toLowerCase())).size, expectedCount);
+    assert.ok(plan.replacements.every(item => item.expected_first.toLowerCase() !== item.replacement.toLowerCase()));
+    assert.ok(plan.replacements.every(item => bankNames.has(item.replacement)));
   }
 });
 
@@ -395,7 +414,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=30-0-first-name-stage-2/);
+  assert.match(html, /app\.js\?v=30-1-stage2-queue/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

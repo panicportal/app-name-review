@@ -41,6 +41,7 @@ function validatePlan(state, plan, bankState) {
     if (character.clothing !== plan.clothing) throw new Error(`#${id} is ${character.clothing}, not ${plan.clothing}.`);
     const current = effectiveFirst(state, character);
     if (current !== item.expected_first) throw new Error(`#${id} changed from expected ${item.expected_first} to ${current}; refresh the plan.`);
+    if (replacementKey === current.trim().toLowerCase()) throw new Error(`#${id} must receive a different first name before its red mark can be cleared.`);
     const first = state.curation.records[id]?.parts?.first;
     if (first?.decision !== "replace") throw new Error(`#${id} is no longer red-marked for first-name replacement.`);
     if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(item.replacement)) throw new Error(`Invalid first name ${item.replacement}.`);
