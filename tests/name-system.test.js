@@ -399,6 +399,9 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
     ["observer-angel-screen-followup-4-2026-09-12.json", "panic_observer_angel_female_screen_stage2_followup_4_2026-09-12.md", 8],
     ["shiba-dog-male-2026-09-12.json", "panic_shiba_dog_male_stage2_2026-09-12.md", 13],
     ["simple-swimsuit-female-2026-09-12.json", "panic_simple_swimsuit_female_stage2_2026-09-12.md", 125],
+    ["spicy-devil-female-2026-09-12.json", "panic_spicy_devil_female_stage2_2026-09-12.md", 4],
+    ["starry-night-clown-male-2026-09-12.json", "panic_starry_night_clown_male_stage2_2026-09-12.md", 53],
+    ["vintage-sweatshirt-female-2026-09-12.json", "panic_vintage_sweatshirt_female_stage2_2026-09-12.md", 47],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -501,6 +504,25 @@ test("wave 7 uses historical business references and single pirate, dog, and swi
       assert.ok(plan.replacements.every(item => !/\s/.test(item.replacement)));
       assert.ok(plan.replacements.every(item => ["given_name", "family_name", "pet_or_character_name"].includes(item.reference_name_kind)));
     }
+  }
+});
+
+test("wave 8 keeps devil, clown, and sweatshirt replacements single, gender-routed, and collectible", () => {
+  const cases = [
+    ["spicy-devil-female-2026-09-12.json", "Spicy devil", "Female", 4],
+    ["starry-night-clown-male-2026-09-12.json", "Starry night clown", "Male", 53],
+    ["vintage-sweatshirt-female-2026-09-12.json", "Vintage sweatshirt", "Female", 47],
+  ];
+  const rejected = new Set(["fatso", "horny", "klownzilla", "jughead"]);
+  for (const [filename, clothing, gender, expectedCount] of cases) {
+    const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", filename), "utf8"));
+    assert.equal(plan.clothing, clothing);
+    assert.equal(plan.gender, gender);
+    assert.equal(plan.replacements.length, expectedCount);
+    assert.equal(plan.editorial_rules.single_reference_name, true);
+    assert.ok(plan.replacements.every(item => !/\s/.test(item.replacement)));
+    assert.ok(plan.replacements.every(item => item.reference_name_kind === "pet_or_character_name"));
+    assert.ok(plan.replacements.every(item => !rejected.has(item.replacement.toLowerCase())));
   }
 });
 

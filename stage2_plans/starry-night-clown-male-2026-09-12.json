@@ -1,0 +1,543 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "editorial_rules": {
+    "single_reference_name": true
+  },
+  "clothing": "Starry night clown",
+  "gender": "Male",
+  "bank_file": "panic_starry_night_clown_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Starry night clown · wave 8",
+  "created_at": "2026-09-12T20:30:42.086Z",
+  "replacements": [
+    {
+      "id": "36",
+      "expected_first": "Juggle",
+      "replacement": "Pennywise",
+      "reference": "Pennywise from It",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Happy, Hair:Biscotti rough, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "143",
+      "expected_first": "Rickey",
+      "replacement": "Krusty",
+      "reference": "Krusty the Clown from The Simpsons",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Outlook Sky Blue, Eyes:Closed, Hair:Banana flattop, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "226",
+      "expected_first": "Jangle",
+      "replacement": "Joker",
+      "reference": "the Joker from Batman film and television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Romantic Purple, Eyes:Droopy, Hair:Soot sleek curl, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "263",
+      "expected_first": "Chris",
+      "replacement": "Art",
+      "reference": "Art the Clown from Terrifier",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Googly, Hair:Octopus hot frizz, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "337",
+      "expected_first": "Bobo",
+      "replacement": "Twisty",
+      "reference": "Twisty the Clown from American Horror Story",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyes:Sour, Hair:Soot sleek curl, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "379",
+      "expected_first": "Antic",
+      "replacement": "Fizbo",
+      "reference": "Fizbo from Modern Family",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:Up, Hair:Cotton airy, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "423",
+      "expected_first": "Toot",
+      "replacement": "Binky",
+      "reference": "Binky the Clown from Garfield and Friends",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:Winking, Hair:Biscotti rough, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "437",
+      "expected_first": "Checkers",
+      "replacement": "Clarabell",
+      "reference": "Clarabell the Clown from Howdy Doody",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Outlook Sky Blue, Eyes:Hanging sanpaku, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "457",
+      "expected_first": "Fumble",
+      "replacement": "Homey",
+      "reference": "Homey D. Clown from In Living Color",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyes:Blue doll, Hair:Soot sleek curl, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "567",
+      "expected_first": "Christian",
+      "replacement": "Stitches",
+      "reference": "Stitches from the film Stitches",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Blue doll, Hair:Banana flattop, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "571",
+      "expected_first": "Ricky",
+      "replacement": "Killjoy",
+      "reference": "Killjoy from the Killjoy films",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:Up, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "666",
+      "expected_first": "Rattle",
+      "replacement": "Spaulding",
+      "reference": "Captain Spaulding from House of 1000 Corpses",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Glare, Hair:Biscotti rough, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "784",
+      "expected_first": "Shimmer",
+      "replacement": "Violator",
+      "reference": "the Violator clown form from Spawn",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Tight, Hair:Tar shower, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "908",
+      "expected_first": "Comet",
+      "replacement": "Shakes",
+      "reference": "Shakes the Clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyes:Round, Hair:Biscotti rough, Mouth:Long beard surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1113",
+      "expected_first": "Wobble",
+      "replacement": "Zeebo",
+      "reference": "Zeebo from Are You Afraid of the Dark",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Round, Hair:Moss short mullet, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1169",
+      "expected_first": "Orbit",
+      "replacement": "Wrinkles",
+      "reference": "Wrinkles the Clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Outlook Sky Blue, Eyes:Happy, Hair:Octopus hot frizz, Mouth:Big smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1394",
+      "expected_first": "Batty",
+      "replacement": "Frendo",
+      "reference": "Frendo from Clown in a Cornfield",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Droopy, Hair:Soot sleek curl, Mouth:Long beard surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1499",
+      "expected_first": "Zanni",
+      "replacement": "Frowny",
+      "reference": "Frowny the Clown from The Last Circus",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:Googly, Hair:Biscotti rough, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1570",
+      "expected_first": "Boldo",
+      "replacement": "Kent",
+      "reference": "Kent McCoy from Clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Flat up, Hair:Turmeric fluffy, Mouth:Mad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1663",
+      "expected_first": "Rodolfo",
+      "replacement": "Cheezo",
+      "reference": "Cheezo from Clownhouse",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:3D glasses, Hair:Ruby sweep, Mouth:Smug shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1670",
+      "expected_first": "Wacky",
+      "replacement": "Bippo",
+      "reference": "Bippo from Clownhouse",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Romantic Purple, Eyes:Happy, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1761",
+      "expected_first": "Popcorn",
+      "replacement": "Dippo",
+      "reference": "Dippo from Clownhouse",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyes:Grey stare, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1908",
+      "expected_first": "Turn",
+      "replacement": "Shorty",
+      "reference": "Shorty from Killer Klowns from Outer Space",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Hanging sanpaku, Hair:Soot sleek curl, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1981",
+      "expected_first": "Ronny",
+      "replacement": "Rudy",
+      "reference": "Rudy from Killer Klowns from Outer Space",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Happy, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2026",
+      "expected_first": "Twist",
+      "replacement": "Jumbo",
+      "reference": "Jumbo from Killer Klowns from Outer Space",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Glare, Hair:Turmeric fluffy, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2045",
+      "expected_first": "Wheeze",
+      "replacement": "Beppo",
+      "reference": "Beppo the clown character seen in film comedy",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Droopy, Hair:Tar shower, Mouth:Big smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2060",
+      "expected_first": "Rocket",
+      "replacement": "Pagliacci",
+      "reference": "Pagliacci, the tragic stage clown adapted repeatedly for screen",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Romantic Purple, Eyes:Brown tilt, Hair:Soot sleek curl, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2105",
+      "expected_first": "Confetti",
+      "replacement": "Pierrot",
+      "reference": "Pierrot, the classic clown repeatedly adapted for film and television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Biscotti rough, Mouth:Mad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2376",
+      "expected_first": "Richard",
+      "replacement": "Harlequin",
+      "reference": "Harlequin, the classic screen and stage clown archetype",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Tearful, Hair:Soot sleek curl, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2400",
+      "expected_first": "Dennis",
+      "replacement": "Puddles",
+      "reference": "Puddles Pity Party, the television singing clown persona",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Brown tilt, Hair:Turmeric fluffy, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2431",
+      "expected_first": "Rodney",
+      "replacement": "Grock",
+      "reference": "Grock, the internationally filmed Swiss clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Romantic Purple, Eyes:Sour, Hair:Octopus hot frizz, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2490",
+      "expected_first": "Nutty",
+      "replacement": "Slava",
+      "reference": "Slava Polunin's stage and screen clown persona",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Droopy, Hair:Octopus hot frizz, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2527",
+      "expected_first": "Buttons",
+      "replacement": "Bello",
+      "reference": "Bello Nock, the television circus clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Sour, Hair:Tar shower, Mouth:Smug shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2593",
+      "expected_first": "Taran",
+      "replacement": "Oleg",
+      "reference": "Oleg Popov, the televised Soviet clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Tight, Hair:Octopus hot frizz, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2597",
+      "expected_first": "Robin",
+      "replacement": "Joey",
+      "reference": "Joseph Grimaldi's Joey clown tradition",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Up, Hair:Soot sleek curl, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2612",
+      "expected_first": "Bumble",
+      "replacement": "Felix",
+      "reference": "Felix Adler, the famous Ringling clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Closed, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2649",
+      "expected_first": "Glimmer",
+      "replacement": "Otto",
+      "reference": "Otto Griebling, the famous American circus clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Hungry Red, Eyes:Round, Hair:Turmeric fluffy, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2688",
+      "expected_first": "Fizz",
+      "replacement": "Weary",
+      "reference": "Weary Willie, Emmett Kelly's famous clown character",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Hanging sanpaku, Hair:Soot sleek curl, Mouth:Long beard surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2693",
+      "expected_first": "Marbles",
+      "replacement": "Doink",
+      "reference": "Doink the Clown from televised wrestling",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Blue doll, Hair:Soot sleek curl, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2705",
+      "expected_first": "Galaxy",
+      "replacement": "Pipo",
+      "reference": "Pipo de Clown from Dutch television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Happy, Hair:Turmeric fluffy, Mouth:Mad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2793",
+      "expected_first": "Fizzy",
+      "replacement": "Bassie",
+      "reference": "Bassie from the Dutch television clown duo",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Brown tilt, Hair:Octopus hot frizz, Mouth:Scream shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2851",
+      "expected_first": "Fritter",
+      "replacement": "Adriaan",
+      "reference": "Adriaan from the Dutch television clown duo",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Round, Hair:Soot sleek curl, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2858",
+      "expected_first": "Banner",
+      "replacement": "Bumba",
+      "reference": "Bumba from children's television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Blue doll, Hair:Octopus hot frizz, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2942",
+      "expected_first": "Don",
+      "replacement": "Bim",
+      "reference": "Bim from the Soviet film and television clown duo Bim Bom",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Outlook Sky Blue, Eyes:Round, Hair:Tar shower, Mouth:Big smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3013",
+      "expected_first": "Capers",
+      "replacement": "Bom",
+      "reference": "Bom from the Soviet film and television clown duo Bim Bom",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:Grey stare, Hair:Octopus hot frizz, Mouth:Long beard surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3034",
+      "expected_first": "Streamer",
+      "replacement": "Marcelino",
+      "reference": "Marcelino, the Spanish television clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Hanging sanpaku, Hair:Biscotti rough, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3086",
+      "expected_first": "Aaron",
+      "replacement": "Rivel",
+      "reference": "Charlie Rivel, the internationally filmed clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Glare, Hair:Moss short mullet, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3160",
+      "expected_first": "Sparkle",
+      "replacement": "Dimitri",
+      "reference": "Dimitri, the Swiss clown featured on stage and television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Passion Scarlet, Eyes:Grey stare, Hair:Octopus hot frizz, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3178",
+      "expected_first": "Ricochet",
+      "replacement": "Avner",
+      "reference": "Avner the Eccentric, the screen clown in The Jewel of the Nile",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Hanging sanpaku, Hair:Biscotti rough, Mouth:Beard sad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3243",
+      "expected_first": "Domino",
+      "replacement": "Chipper",
+      "reference": "Chipper Lowell, the American television clown and comic",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Droopy, Hair:Turmeric fluffy, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3249",
+      "expected_first": "Honk",
+      "replacement": "Frosty",
+      "reference": "Frosty Little, the famous Ringling clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Silent Violet, Eyes:Blue doll, Hair:Biscotti rough, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3286",
+      "expected_first": "Baldo",
+      "replacement": "Bill",
+      "reference": "Bill Irwin, the acclaimed screen and stage clown",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Glare, Hair:Tar shower, Mouth:Mustache happy shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3294",
+      "expected_first": "Pop",
+      "replacement": "Doodles",
+      "reference": "Doodles the Clown from television",
+      "reference_url": "https://www.televisionacademy.com/files/assets/Downloads/clowns-infographic-2014.pdf",
+      "fit": "Background:Lovely Pink, Eyes:Tight, Hair:Banana flattop, Mouth:Expressionless shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

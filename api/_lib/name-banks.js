@@ -51,6 +51,9 @@ function bundledBanks() {
     { filename: "panic_observer_angel_female_screen_stage2_followup_4_2026-09-12.md", clothing: "Observer angel", gender: "Female", version: "2026-09-12" },
     { filename: "panic_shiba_dog_male_stage2_2026-09-12.md", clothing: "Shiba dog", gender: "Male", version: "2026-09-12" },
     { filename: "panic_simple_swimsuit_female_stage2_2026-09-12.md", clothing: "Simple swimsuit", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_spicy_devil_female_stage2_2026-09-12.md", clothing: "Spicy devil", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_starry_night_clown_male_stage2_2026-09-12.md", clothing: "Starry night clown", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_vintage_sweatshirt_female_stage2_2026-09-12.md", clothing: "Vintage sweatshirt", gender: "Female", version: "2026-09-12" },
   ];
   return definitions.flatMap(definition => {
     const file = path.join(process.cwd(), "name_banks", definition.filename);

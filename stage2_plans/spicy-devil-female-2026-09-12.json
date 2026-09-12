@@ -1,0 +1,53 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "editorial_rules": {
+    "single_reference_name": true
+  },
+  "clothing": "Spicy devil",
+  "gender": "Female",
+  "bank_file": "panic_spicy_devil_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Spicy devil · wave 8",
+  "created_at": "2026-09-12T20:30:42.084Z",
+  "replacements": [
+    {
+      "id": "276",
+      "expected_first": "Cherry",
+      "replacement": "Mazikeen",
+      "reference": "Mazikeen, the demon Maze from Lucifer",
+      "reference_url": "https://time.com/2801704/maleficent-villains-wicked-witch-catwoman/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Tearful, Hair:Emerald innocent braids, Mouth:Silly shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2014",
+      "expected_first": "Mora",
+      "replacement": "Azula",
+      "reference": "Azula, the firebending antagonist from Avatar: The Last Airbender",
+      "reference_url": "https://time.com/2801704/maleficent-villains-wicked-witch-catwoman/",
+      "fit": "Background:Hungry Red, Eyes:Grey stare, Hair:Snow natural, Mouth:Grimace shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2077",
+      "expected_first": "Ember",
+      "replacement": "Hela",
+      "reference": "Hela, the commanding underworld villain from Thor: Ragnarok",
+      "reference_url": "https://time.com/2801704/maleficent-villains-wicked-witch-catwoman/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Happy, Hair:Ginger dreads bun, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2319",
+      "expected_first": "Ravyn",
+      "replacement": "Maleficent",
+      "reference": "Maleficent, the iconic dark fairy screen villain",
+      "reference_url": "https://time.com/2801704/maleficent-villains-wicked-witch-catwoman/",
+      "fit": "Background:Romantic Purple, Eyes:Sour, Hair:Turmeric fluffy, Mouth:Expressionless shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

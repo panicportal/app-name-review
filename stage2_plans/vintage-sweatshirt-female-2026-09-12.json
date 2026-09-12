@@ -1,0 +1,483 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "editorial_rules": {
+    "single_reference_name": true
+  },
+  "clothing": "Vintage sweatshirt",
+  "gender": "Female",
+  "bank_file": "panic_vintage_sweatshirt_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Vintage sweatshirt · wave 8",
+  "created_at": "2026-09-12T20:30:42.087Z",
+  "replacements": [
+    {
+      "id": "37",
+      "expected_first": "Reese",
+      "replacement": "Ripley",
+      "reference": "Ellen Ripley from Alien",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Round, Hair:Snow natural, Mouth:Silly shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "59",
+      "expected_first": "Casey",
+      "replacement": "Furiosa",
+      "reference": "Imperator Furiosa from Mad Max",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Up, Hair:Tan loose wave, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "118",
+      "expected_first": "Ewatomi",
+      "replacement": "Selina",
+      "reference": "Selina Kyle from Batman",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Passion Scarlet, Eyes:Brown tilt, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "136",
+      "expected_first": "Zellie",
+      "replacement": "Scully",
+      "reference": "Dana Scully from The X-Files",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Hanging sanpaku, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "327",
+      "expected_first": "Emerson",
+      "replacement": "Leia",
+      "reference": "Leia Organa from Star Wars",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Round, Hair:Octopus hot frizz, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "368",
+      "expected_first": "Remi",
+      "replacement": "Arya",
+      "reference": "Arya Stark from Game of Thrones",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Glare, Hair:Turmeric fluffy, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "435",
+      "expected_first": "Ifeoma",
+      "replacement": "Sansa",
+      "reference": "Sansa Stark from Game of Thrones",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Round, Hair:Octopus hot frizz, Mouth:Smug shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "452",
+      "expected_first": "Georgie",
+      "replacement": "Daenerys",
+      "reference": "Daenerys Targaryen from Game of Thrones",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Hanging sanpaku, Hair:Ginger dreads bun, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "514",
+      "expected_first": "Jazzy",
+      "replacement": "Cersei",
+      "reference": "Cersei Lannister from Game of Thrones",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Winking, Hair:Snow natural, Mouth:Smug shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "524",
+      "expected_first": "Sam",
+      "replacement": "Villanelle",
+      "reference": "Villanelle from Killing Eve",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Green stretched, Hair:Snow natural, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "541",
+      "expected_first": "Teagan",
+      "replacement": "Eleven",
+      "reference": "Eleven from Stranger Things",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Grey stare, Hair:Emerald innocent braids, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "585",
+      "expected_first": "Ellery",
+      "replacement": "Maxine",
+      "reference": "Max Mayfield from Stranger Things",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Happy, Hair:Tan loose wave, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "600",
+      "expected_first": "Blake",
+      "replacement": "Maddy",
+      "reference": "Maddy Perez from Euphoria",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Up, Hair:Ginger dreads bun, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "638",
+      "expected_first": "Wyn",
+      "replacement": "Rue",
+      "reference": "Rue Bennett from Euphoria",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Round, Hair:Tar shower, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "648",
+      "expected_first": "Yolanthe",
+      "replacement": "Jules",
+      "reference": "Jules Vaughn from Euphoria",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Hanging sanpaku, Hair:Tan loose wave, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "689",
+      "expected_first": "Alex",
+      "replacement": "Cher",
+      "reference": "Cher Horowitz from Clueless",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Sour, Hair:Snow natural, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "709",
+      "expected_first": "Peju",
+      "replacement": "Dionne",
+      "reference": "Dionne Davenport from Clueless",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Sour, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "826",
+      "expected_first": "Vinnie",
+      "replacement": "Katniss",
+      "reference": "Katniss Everdeen from The Hunger Games",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Green stretched, Hair:Octopus hot frizz, Mouth:Expressionless shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "969",
+      "expected_first": "Drew",
+      "replacement": "Nikita",
+      "reference": "Nikita from La Femme Nikita",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Sour, Hair:Octopus hot frizz, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "985",
+      "expected_first": "Morgan",
+      "replacement": "Vi",
+      "reference": "Vi from Arcane",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Flat up, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1296",
+      "expected_first": "Bimpe",
+      "replacement": "Caitlyn",
+      "reference": "Caitlyn Kiramman from Arcane",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Sour, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1544",
+      "expected_first": "Greer",
+      "replacement": "Storm",
+      "reference": "Storm from X-Men",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Hanging sanpaku, Hair:Brandy wild braids, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1613",
+      "expected_first": "Adaora",
+      "replacement": "Rogue",
+      "reference": "Rogue from X-Men",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Tight, Hair:Ginger dreads bun, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1619",
+      "expected_first": "Nini",
+      "replacement": "Gamora",
+      "reference": "Gamora from Guardians of the Galaxy",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Grey stare, Hair:Snow natural, Mouth:Laughing shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1731",
+      "expected_first": "Murphy",
+      "replacement": "Nebula",
+      "reference": "Nebula from Guardians of the Galaxy",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Green stretched, Hair:Dandelion rough buns, Mouth:Smug shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1788",
+      "expected_first": "Max",
+      "replacement": "Yelena",
+      "reference": "Yelena Belova from Marvel",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Happy, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1812",
+      "expected_first": "Folake",
+      "replacement": "Shuri",
+      "reference": "Shuri from Black Panther",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Up, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1863",
+      "expected_first": "Simisola",
+      "replacement": "Okoye",
+      "reference": "Okoye from Black Panther",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Up, Hair:Snow natural, Mouth:Expressionless shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1917",
+      "expected_first": "Shiloh",
+      "replacement": "Nakia",
+      "reference": "Nakia from Black Panther",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Hanging sanpaku, Hair:Tan loose wave, Mouth:Big smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2079",
+      "expected_first": "Oyin",
+      "replacement": "Valkyrie",
+      "reference": "Valkyrie from Thor",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Passion Scarlet, Eyes:Flat up, Hair:Tar shower, Mouth:Scream shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2084",
+      "expected_first": "Ines",
+      "replacement": "Ahsoka",
+      "reference": "Ahsoka Tano from Star Wars",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Passion Scarlet, Eyes:Up, Hair:Jet loose, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2089",
+      "expected_first": "Jumoke",
+      "replacement": "Sabine",
+      "reference": "Sabine Wren from Star Wars",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Up, Hair:Snow natural, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2120",
+      "expected_first": "Uche",
+      "replacement": "Padme",
+      "reference": "Padme Amidala from Star Wars",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Happy, Hair:Ginger dreads bun, Mouth:Proud shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2237",
+      "expected_first": "Sawako",
+      "replacement": "Daria",
+      "reference": "Daria Morgendorffer",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Flat up, Hair:Moon candy, Mouth:Expressionless shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2262",
+      "expected_first": "Presley",
+      "replacement": "Lana",
+      "reference": "Lana Kane from Archer",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Brown tilt, Hair:Jet loose, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2486",
+      "expected_first": "Damia",
+      "replacement": "Shego",
+      "reference": "Shego from Kim Possible",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Passion Scarlet, Eyes:Flat up, Hair:Ginger dreads bun, Mouth:Grimace shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2806",
+      "expected_first": "Xan",
+      "replacement": "Velma",
+      "reference": "Velma Dinkley from Scooby-Doo",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Passion Scarlet, Eyes:Flat up, Hair:Tan loose wave, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2811",
+      "expected_first": "Cai",
+      "replacement": "Maeve",
+      "reference": "Maeve Wiley from Sex Education",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Tight, Hair:Brandy wild braids, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2859",
+      "expected_first": "Yemisi",
+      "replacement": "Misa",
+      "reference": "Misa Amane from Death Note",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Flat up, Hair:Moon candy, Mouth:Downturned shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2987",
+      "expected_first": "Tatum",
+      "replacement": "Mikasa",
+      "reference": "Mikasa Ackerman from Attack on Titan",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Tan loose wave, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2993",
+      "expected_first": "Patty",
+      "replacement": "Nobara",
+      "reference": "Nobara Kugisaki from Jujutsu Kaisen",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Romantic Purple, Eyes:Green stretched, Hair:Ginger dreads bun, Mouth:Mad shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3090",
+      "expected_first": "Ruthie",
+      "replacement": "Maki",
+      "reference": "Maki Zenin from Jujutsu Kaisen",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Hungry Red, Eyes:Closed, Hair:Brandy wild braids, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3191",
+      "expected_first": "Gwyn",
+      "replacement": "Rukia",
+      "reference": "Rukia Kuchiki from Bleach",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Hanging sanpaku, Hair:Jet loose, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3204",
+      "expected_first": "Damilola",
+      "replacement": "Yoruichi",
+      "reference": "Yoruichi Shihoin from Bleach",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Brown tilt, Hair:Jet loose, Mouth:Beaming shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3215",
+      "expected_first": "Kenia",
+      "replacement": "Mulan",
+      "reference": "Mulan from Disney film",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Lovely Pink, Eyes:Googly, Hair:Dandelion rough buns, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3263",
+      "expected_first": "Fola",
+      "replacement": "Merida",
+      "reference": "Merida from Brave",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Silent Violet, Eyes:Up, Hair:Tan loose wave, Mouth:Surprise shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "3278",
+      "expected_first": "Halima",
+      "replacement": "Kida",
+      "reference": "Kida from Atlantis",
+      "reference_url": "https://editorial.rottentomatoes.com/article/the-most-fearless-female-characters-on-tv/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Flat up, Hair:Jet loose, Mouth:Smile shapes the portrait fit; the name stays recognizable, punchy, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}
