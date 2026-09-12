@@ -1,0 +1,127 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Kawaii kimono",
+  "gender": "Female",
+  "bank_file": "panic_kawaii_kimono_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Kawaii kimono · wave 4",
+  "created_at": "2026-09-12T19:30:00.000Z",
+  "replacements": [
+    {
+      "id": "2253",
+      "expected_first": "Camellia",
+      "replacement": "Madonna",
+      "reference": "Madonna's iconic red-kimono Grammy performance",
+      "reference_url": "https://www.latimes.com/archives/la-xpm-1999-jun-20-tm-48407-story.html",
+      "fit": "The portrait's Soccer ball front, Sun back, Jet loose hair supports a bold red ceremonial look; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2503",
+      "expected_first": "Kotone",
+      "replacement": "Minogue",
+      "reference": "Kylie Minogue's red-kimono geisha visual",
+      "reference_url": "https://www.standard.co.uk/showbiz/memoirs-of-a-pop-princess-kylie-gets-the-geisha-look-as-she-gears-up-for-world-tour-6688067.html",
+      "fit": "The portrait's White cloud back, Octopus hot frizz hair, Droopy eyes supports a vivid pop-geisha silhouette; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2549",
+      "expected_first": "Dulcie",
+      "replacement": "Katy",
+      "reference": "Katy Perry's kimono-inspired American Music Awards performance",
+      "reference_url": "https://www.eonline.com/news/484980/katy-perry-s-stylist-explains-geisha-inspired-outfit-at-amas-we-love-japan",
+      "fit": "The portrait's Glass of beer front, Moon candy hair, Happy eyes supports bright theatrical color; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2750",
+      "expected_first": "Cherrybow",
+      "replacement": "MacLaine",
+      "reference": "Shirley MacLaine in My Geisha",
+      "reference_url": "https://www.imdb.com/title/tt0056267/",
+      "fit": "The portrait's Waning crescent moon back, Turmeric fluffy hair, Glare eyes supports an elegant classic-Hollywood kimono role; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2890",
+      "expected_first": "Sugarpetal",
+      "replacement": "Dell",
+      "reference": "Lucy Dell, Shirley MacLaine's character in My Geisha",
+      "reference_url": "https://www.imdb.com/title/tt0056267/",
+      "fit": "The portrait's White flat brush front, Waning crescent moon back, Jet loose hair supports a Western film heroine's kimono transformation; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3056",
+      "expected_first": "Marlo",
+      "replacement": "CioCio",
+      "reference": "Cio-Cio-San, heroine of Madama Butterfly",
+      "reference_url": "https://www.metopera.org/discover/synopses/madama-butterfly/",
+      "fit": "The portrait's Baguette front, Jet loose hair, Blue doll eyes supports a poised operatic kimono heroine; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3066",
+      "expected_first": "Carrie",
+      "replacement": "Bjork",
+      "reference": "Bjork's celebrated geisha-inspired visual era",
+      "reference_url": "https://www.gala.de/beauty-fashion/fashion/fashion--verstehen-sie-geisha--20124056.html",
+      "fit": "The portrait's Moon candy hair, Droopy eyes, Smile mouth supports an art-pop Japanese-fashion connection; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3080",
+      "expected_first": "Pinkribbon",
+      "replacement": "Mameha",
+      "reference": "Mameha from Memoirs of a Geisha",
+      "reference_url": "https://www.sonypictures.com/movies/memoirsofageisha",
+      "fit": "The portrait's White cloud back, Snow natural hair, Grey stare eyes supports a composed mentor-like geisha presence; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3114",
+      "expected_first": "Dewberry",
+      "replacement": "Hatsumomo",
+      "reference": "Hatsumomo from Memoirs of a Geisha",
+      "reference_url": "https://www.sonypictures.com/movies/memoirsofageisha",
+      "fit": "The portrait's Sun back, Snow natural hair, Googly eyes supports a glamorous, commanding geisha presence; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3157",
+      "expected_first": "Petals",
+      "replacement": "Ishii",
+      "reference": "O-Ren Ishii from Kill Bill",
+      "reference_url": "https://www.miramax.com/movie/kill-bill-volume-1/",
+      "fit": "The portrait's Berry cake front, Sun back, Jet loose hair supports a cool, dangerous kimono-clad film icon; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3173",
+      "expected_first": "Primrose",
+      "replacement": "Yuki",
+      "reference": "Yuki Kashima from Lady Snowblood",
+      "reference_url": "https://www.criterion.com/films/29146-lady-snowblood",
+      "fit": "The portrait's Swamp swirl back, Tan loose wave hair, Hanging sanpaku eyes supports a fierce kimono-clad cinema heroine; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3240",
+      "expected_first": "Rosybutton",
+      "replacement": "Chiyo",
+      "reference": "Chiyo from Memoirs of a Geisha",
+      "reference_url": "https://www.sonypictures.com/movies/memoirsofageisha",
+      "fit": "The portrait's Soccer ball front, Sun back, Octopus hot frizz hair supports a youthful bright geisha heroine; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3323",
+      "expected_first": "Taffy",
+      "replacement": "Katisha",
+      "reference": "Katisha from Gilbert and Sullivan's The Mikado",
+      "reference_url": "https://www.gsarchive.net/mikado/html/index.html",
+      "fit": "The portrait's Soft serve ice cream front, White cloud back, Moon candy hair supports a theatrical Western-operetta kimono character; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    }
+  ]
+}

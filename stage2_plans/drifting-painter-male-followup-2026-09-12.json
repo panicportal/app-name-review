@@ -1,0 +1,66 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the remaining user-rejected Stage 2 first names with stronger unused references.",
+  "clothing": "Drifting painter",
+  "gender": "Male",
+  "bank_file": "panic_drifting_painter_male_stage2_followup_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Drifting painter · wave 4",
+  "created_at": "2026-09-12T19:30:00.000Z",
+  "replacements": [
+    {
+      "id": "1721",
+      "expected_first": "Gainsborough",
+      "replacement": "Sorolla",
+      "reference": "Joaquin Sorolla, Spanish painter of luminous outdoor scenes",
+      "reference_url": "https://www.metmuseum.org/art/collection",
+      "fit": "The portrait's Skateboard front, Biscotti rough hair, Blue doll eyes supports luminous color and motion; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1734",
+      "expected_first": "Constable",
+      "replacement": "Repin",
+      "reference": "Ilya Repin, Russian realist painter",
+      "reference_url": "https://www.metmuseum.org/art/collection",
+      "fit": "The portrait's Skateboard front, Waning crescent moon back, Biscotti rough hair supports dramatic narrative realism; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2366",
+      "expected_first": "Motherwell",
+      "replacement": "Murillo",
+      "reference": "Bartolome Esteban Murillo, Spanish Baroque painter",
+      "reference_url": "https://www.metmuseum.org/art/collection",
+      "fit": "The portrait's Hamburger front, Biscotti rough hair, Sour eyes supports warm grounded genre painting; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2399",
+      "expected_first": "Diebenkorn",
+      "replacement": "Tamayo",
+      "reference": "Rufino Tamayo, Mexican painter",
+      "reference_url": "https://www.metmuseum.org/art/collection",
+      "fit": "The portrait's Glass of beer front, Sun back, Biscotti rough hair supports bold warm modern color; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2477",
+      "expected_first": "DeKooning",
+      "replacement": "Pippin",
+      "reference": "Horace Pippin, American painter",
+      "reference_url": "https://www.metmuseum.org/art/collection",
+      "fit": "The portrait's White flat brush front, Moss short mullet hair, Hanging sanpaku eyes supports direct brush-led storytelling; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2882",
+      "expected_first": "Duchamp",
+      "replacement": "Dobell",
+      "reference": "William Dobell, Australian portrait painter",
+      "reference_url": "https://www.metmuseum.org/art/collection",
+      "fit": "The portrait's Berry cake front, Soot sleek curl hair, Happy eyes supports a distinctive portrait-like face; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    }
+  ]
+}

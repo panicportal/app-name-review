@@ -370,6 +370,12 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
     ["everyday-villager-female-2026-09-12.json", "panic_everyday_villager_female_stage2_2026-09-12.md", 43],
     ["golden-angel-2026-09-12.json", "panic_golden_angel_male_stage2_2026-09-12.md", 3],
     ["drifting-painter-reference-correction-2026-09-12.json", "panic_drifting_painter_male_stage2_2026-09-12.md", 2],
+    ["everyday-villager-female-followup-2026-09-12.json", "panic_everyday_villager_female_stage2_followup_2026-09-12.md", 4],
+    ["golden-angel-male-followup-2026-09-12.json", "panic_golden_angel_male_stage2_followup_2026-09-12.md", 1],
+    ["drifting-painter-male-followup-2026-09-12.json", "panic_drifting_painter_male_stage2_followup_2026-09-12.md", 6],
+    ["grasping-devil-male-2026-09-12.json", "panic_grasping_devil_male_stage2_2026-09-12.md", 32],
+    ["ham-sandwich-clown-female-2026-09-12.json", "panic_ham_sandwich_clown_female_stage2_2026-09-12.md", 38],
+    ["kawaii-kimono-female-2026-09-12.json", "panic_kawaii_kimono_female_stage2_2026-09-12.md", 13],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -393,6 +399,8 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
     ["defiant-pirate-captain-2026-09-12.json", "panic_defiant_pirate_captain_male_stage2_2026-09-12.md", 1],
     ["divine-saint-2026-09-12.json", "panic_divine_saint_male_stage2_2026-09-12.md", 6],
     ["divine-saint-followup-2026-09-12.json", "panic_divine_saint_male_stage2_followup_2026-09-12.md", 2],
+    ["dark-swim-trunks-male-followup-2-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_followup_2_2026-09-12.md", 1],
+    ["divine-saint-male-followup-2-2026-09-12.json", "panic_divine_saint_male_stage2_followup_2_2026-09-12.md", 1],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));

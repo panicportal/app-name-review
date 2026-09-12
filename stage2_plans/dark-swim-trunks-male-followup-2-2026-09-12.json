@@ -1,0 +1,21 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the remaining user-rejected Stage 2 first names with stronger unused references.",
+  "clothing": "Dark swim trunks",
+  "gender": "Male",
+  "bank_file": "panic_dark_swim_trunks_male_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Dark swim trunks · wave 4",
+  "created_at": "2026-09-12T19:30:00.000Z",
+  "replacements": [
+    {
+      "id": "794",
+      "expected_first": "Moorhouse",
+      "replacement": "Zubero",
+      "reference": "Martin Zubero, Olympic champion backstroke swimmer",
+      "reference_url": "https://olympics.com/en/athletes/martin-lopez-zubero",
+      "fit": "The portrait's Cigarette front, You & me sunset back, Moss short mullet hair supports a compact, intense champion-swimmer identity; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    }
+  ]
+}

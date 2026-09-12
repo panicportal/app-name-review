@@ -1,0 +1,298 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Grasping devil",
+  "gender": "Male",
+  "bank_file": "panic_grasping_devil_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Grasping devil · wave 4",
+  "created_at": "2026-09-12T19:30:00.000Z",
+  "replacements": [
+    {
+      "id": "185",
+      "expected_first": "Gehenna",
+      "replacement": "Aku",
+      "reference": "Aku, the shape-shifting demon of Samurai Jack",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Soccer ball front, Swamp swirl back, Cotton airy hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "220",
+      "expected_first": "Belial",
+      "replacement": "Mephisto",
+      "reference": "Mephisto, the tempter from Faustian legend",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Berry cake front, Fuzzy swirl back, Biscotti rough hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "361",
+      "expected_first": "Draven",
+      "replacement": "Paimon",
+      "reference": "Paimon, a named infernal king in demon lore",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Soft serve ice cream front, Waning crescent moon back, Biscotti rough hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "540",
+      "expected_first": "Ichor",
+      "replacement": "Pazuzu",
+      "reference": "Pazuzu, the wind demon of Mesopotamian lore",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Octopus hot frizz hair, Brown tilt eyes, Mad mouth supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "751",
+      "expected_first": "Vane",
+      "replacement": "Lucifer",
+      "reference": "Lucifer, the archetypal fallen angel",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's ?an!c coin front, Swamp swirl back, Soot sleek curl hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "810",
+      "expected_first": "Scar",
+      "replacement": "Buer",
+      "reference": "Buer, a named spirit in demon lore",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Hamburger front, Waning crescent moon back, Tar shower hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "951",
+      "expected_first": "Moloch",
+      "replacement": "Astaroth",
+      "reference": "Astaroth, a named infernal figure",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Ginger dreads bun hair, Up eyes, Silly mouth supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1134",
+      "expected_first": "Malachi",
+      "replacement": "Malphas",
+      "reference": "Malphas, a named inferfinder in demon lore",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Waning crescent moon back, Banana flattop hair, Blue doll eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1365",
+      "expected_first": "Maw",
+      "replacement": "Barbatos",
+      "reference": "Barbatos, a named infernal duke",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Soft serve ice cream front, Cotton airy hair, Blue doll eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1566",
+      "expected_first": "Louis",
+      "replacement": "Baphomet",
+      "reference": "Baphomet, an iconic occult figure",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Salami pizza front, Soot sleek curl hair, Flat up eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1590",
+      "expected_first": "Kain",
+      "replacement": "Samael",
+      "reference": "Samael, a dark angelic figure",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's White flat brush front, Biscotti rough hair, Round eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1697",
+      "expected_first": "Brimstone",
+      "replacement": "Dantalion",
+      "reference": "Dantalion, a named infernal duke",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Biscotti rough hair, Up eyes, Mustache happy mouth supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1700",
+      "expected_first": "Karnak",
+      "replacement": "Behemoth",
+      "reference": "Behemoth, the biblical chaos beast",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Baguette front, Soot sleek curl hair, Brown tilt eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1713",
+      "expected_first": "Feral",
+      "replacement": "Sitri",
+      "reference": "Sitri, a named infernal prince",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Glass of beer front, Soot sleek curl hair, Green stretched eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1741",
+      "expected_first": "Ire",
+      "replacement": "Valak",
+      "reference": "Valak, the demon popularized by The Conjuring universe",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Waning crescent moon back, Ginger dreads bun hair, Googly eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1744",
+      "expected_first": "Hexbringer",
+      "replacement": "Amon",
+      "reference": "Amon, a named infernal marquis",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Skateboard front, Biscotti rough hair, Droopy eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1978",
+      "expected_first": "Mordant",
+      "replacement": "Furfur",
+      "reference": "Furfur, a named infernal count",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's White flat brush front, Fuzzy swirl back, Turmeric fluffy hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2057",
+      "expected_first": "Excoriate",
+      "replacement": "Azazel",
+      "reference": "Azazel, a prominent desert-demon figure",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Tar shower hair, Hanging sanpaku eyes, Big smile mouth supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2242",
+      "expected_first": "Harrow",
+      "replacement": "Raum",
+      "reference": "Raum, a named infernal count",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Octopus hot frizz hair, Hanging sanpaku eyes, Proud mouth supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2257",
+      "expected_first": "Oliver",
+      "replacement": "Crowley",
+      "reference": "Crowley, the demon from Good Omens",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's White cloud back, Soot sleek curl hair, Winking eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2519",
+      "expected_first": "Envy",
+      "replacement": "Naberius",
+      "reference": "Naberius, a named infernal marquis",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Glass of beer front, Waning crescent moon back, Biscotti rough hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2620",
+      "expected_first": "Krieg",
+      "replacement": "Zagan",
+      "reference": "Zagan, a named infernal king",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Hamburger front, Soot sleek curl hair, Happy eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2724",
+      "expected_first": "Blackthorn",
+      "replacement": "Agares",
+      "reference": "Agares, a named infernal duke",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Glass of beer front, Waning crescent moon back, Ginger dreads bun hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2827",
+      "expected_first": "Slate",
+      "replacement": "Orobas",
+      "reference": "Orobas, a named infernal prince",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Glass of beer front, Octopus hot frizz hair, Brown tilt eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2906",
+      "expected_first": "Umbral",
+      "replacement": "Surtur",
+      "reference": "Surtur, Marvel and Norse fire giant",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Sun back, Soot sleek curl hair, Tight eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3000",
+      "expected_first": "Marrow",
+      "replacement": "Forneus",
+      "reference": "Forneus, a named infernal marquis",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Soft serve ice cream front, Messy room back, Biscotti rough hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3019",
+      "expected_first": "Lurk",
+      "replacement": "Vassago",
+      "reference": "Vassago, a named infernal prince",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Skateboard front, White cloud back, Tar shower hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3071",
+      "expected_first": "Rift",
+      "replacement": "Marchosias",
+      "reference": "Marchosias, a named infernal marquis",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Cigarette front, Overgrown wasteland back, Turmeric fluffy hair supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3083",
+      "expected_first": "Yama",
+      "replacement": "Alloces",
+      "reference": "Alloces, a named infernal duke",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Baseball front, Soot sleek curl hair, Blue doll eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3127",
+      "expected_first": "Venomtongue",
+      "replacement": "Ronove",
+      "reference": "Ronove, a named infernal marquis",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Skateboard front, Biscotti rough hair, Green stretched eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3272",
+      "expected_first": "Dis",
+      "replacement": "Alastor",
+      "reference": "Alastor, the Radio Demon from Hazbin Hotel",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's Glass of beer front, Tar shower hair, Brown tilt eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3297",
+      "expected_first": "Nightshade",
+      "replacement": "Trigon",
+      "reference": "Trigon, the demonic DC villain",
+      "reference_url": "https://www.britannica.com/topic/demon",
+      "fit": "The portrait's You & me sunset back, Soot sleek curl hair, Blue doll eyes supports a devilish identity that echoes the horns, dark costume, and strongest visible trait; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    }
+  ]
+}

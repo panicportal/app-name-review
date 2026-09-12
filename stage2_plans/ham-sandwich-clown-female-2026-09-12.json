@@ -1,0 +1,352 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Ham sandwich clown",
+  "gender": "Female",
+  "bank_file": "panic_ham_sandwich_clown_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Ham sandwich clown · wave 4",
+  "created_at": "2026-09-12T19:30:00.000Z",
+  "replacements": [
+    {
+      "id": "48",
+      "expected_first": "Frill",
+      "replacement": "Loonette",
+      "reference": "Loonette, the clown lead of The Big Comfy Couch",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Soft serve ice cream front, Jet loose hair, Round eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "108",
+      "expected_first": "Bow",
+      "replacement": "Pomni",
+      "reference": "Pomni, the jester heroine of The Amazing Digital Circus",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Soft serve ice cream front, Swamp swirl back, Turmeric fluffy hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "145",
+      "expected_first": "Nougat",
+      "replacement": "Harleen",
+      "reference": "Harleen Quinzel, Harley Quinn's given name",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Tuna sushi front, Octopus hot frizz hair, Closed eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "829",
+      "expected_first": "Honey",
+      "replacement": "JoJo",
+      "reference": "JoJo Tickle, the clown heroine of JoJo's Circus",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Emerald innocent braids hair, Droopy eyes, Proud mouth supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "873",
+      "expected_first": "Bubbly",
+      "replacement": "Geiru",
+      "reference": "Geiru Toneido, the clown performer from Ace Attorney",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Sun back, Emerald innocent braids hair, Hanging sanpaku eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "939",
+      "expected_first": "Nugget",
+      "replacement": "Gelsomina",
+      "reference": "Gelsomina, Giulietta Masina's clown-like heroine in La Strada",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Skateboard front, Moon candy hair, Happy eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "945",
+      "expected_first": "Petunia",
+      "replacement": "Clownpiece",
+      "reference": "Clownpiece, the female jester from Touhou",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Salami pizza front, Fuzzy swirl back, Brandy wild braids hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1034",
+      "expected_first": "Lollipop",
+      "replacement": "Fratellini",
+      "reference": "Annie Fratellini, pioneering French woman clown",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Melt into heart sunrise back, Brandy wild braids hair, Blue doll eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1214",
+      "expected_first": "Glitz",
+      "replacement": "Gardi",
+      "reference": "Gardi Hutter, Swiss clown-theatre icon",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Taco front, Fire back, Snow natural hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1376",
+      "expected_first": "Sequin",
+      "replacement": "NolaRae",
+      "reference": "Nola Rae, acclaimed mime and clown",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Berry cake front, Tar shower hair, Googly eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1524",
+      "expected_first": "Fudge",
+      "replacement": "Pepa",
+      "reference": "Pepa Plana, Catalan clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Fuzzy swirl back, Moon candy hair, Green stretched eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1641",
+      "expected_first": "Oatcake",
+      "replacement": "Imaz",
+      "reference": "Virginia Imaz, Spanish clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Lollipop front, Snow natural hair, Dark shades eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1809",
+      "expected_first": "Marzipan",
+      "replacement": "DeCastro",
+      "reference": "Angela de Castro, Brazilian-British clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Tar shower hair, Round eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1886",
+      "expected_first": "Geri",
+      "replacement": "Hilary",
+      "reference": "Hilary Chaplain, American physical comedian and clown",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Moon candy hair, Sour eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1904",
+      "expected_first": "Bonbon",
+      "replacement": "Francine",
+      "reference": "Francine Cote, Canadian clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Lollipop front, White cloud back, Moon candy hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "1983",
+      "expected_first": "Flapjack",
+      "replacement": "Karla",
+      "reference": "Karla Conca, Brazilian clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baseball front, Tar shower hair, Winking eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2228",
+      "expected_first": "Dumpling",
+      "replacement": "Ava",
+      "reference": "Ava la Dame en verte, Orianne Bernard's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Cigarette front, Snow natural hair, Droopy eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2261",
+      "expected_first": "Nougatine",
+      "replacement": "Lory",
+      "reference": "Lory Leshin, American clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Tar shower hair, Green stretched eyes, Downturned mouth supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2470",
+      "expected_first": "Frosting",
+      "replacement": "Janie",
+      "reference": "Janie Folet, French clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baguette front, White cloud back, Jet loose hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2531",
+      "expected_first": "Gumdrop",
+      "replacement": "Roseline",
+      "reference": "Roseline Guinet, French clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baseball front, Sun back, Tan loose wave hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2536",
+      "expected_first": "Waffle",
+      "replacement": "Daphne",
+      "reference": "Daphne Clouzeau, French clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baguette front, Moon candy hair, Grey stare eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2569",
+      "expected_first": "Lemondrop",
+      "replacement": "Rosie",
+      "reference": "Rosie Volt, Daphne Clouzeau's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Soft serve ice cream front, Octopus hot frizz hair, Tight eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2614",
+      "expected_first": "Biscuit",
+      "replacement": "Nathalie",
+      "reference": "Nathalie Masseglia, French clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Jet loose hair, Droopy eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2626",
+      "expected_first": "Nutmeg",
+      "replacement": "Mazarine",
+      "reference": "Mazarine, Nathalie Masseglia's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Swamp swirl back, Octopus hot frizz hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2630",
+      "expected_first": "Jolly",
+      "replacement": "Sky",
+      "reference": "Sky de Sela, Quebec clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Basketball front, Turmeric fluffy hair, Tight eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2691",
+      "expected_first": "Cookie",
+      "replacement": "Maiwen",
+      "reference": "Maiwen Braud, woman clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baseball front, Moon candy hair, Up eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2695",
+      "expected_first": "Sparky",
+      "replacement": "Petula",
+      "reference": "Petula, Amelie Murdock's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Moon candy hair, Brown tilt eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2765",
+      "expected_first": "Kettlecorn",
+      "replacement": "Soizick",
+      "reference": "Soizick Hebert, Quebec clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baguette front, White cloud back, Turmeric fluffy hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2781",
+      "expected_first": "Crumpet",
+      "replacement": "Melanie",
+      "reference": "Melanie Raymond, woman clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Baseball front, Sun back, Jet loose hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2808",
+      "expected_first": "Pretzel",
+      "replacement": "Nicoletta",
+      "reference": "Nicoletta, Nicolette Hazewinkel's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Emerald innocent braids hair, Up eyes, Mad mouth supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2815",
+      "expected_first": "Hotcake",
+      "replacement": "Margarida",
+      "reference": "Margarida, Adelvane Neia's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Skateboard front, Turmeric fluffy hair, Up eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "2841",
+      "expected_first": "Miho",
+      "replacement": "Barrica",
+      "reference": "Barrica, Michelle Silveira's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Tan loose wave hair, Googly eyes supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3005",
+      "expected_first": "Sassafras",
+      "replacement": "Spirulina",
+      "reference": "Spirulina, Silvia Leblon's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Fuzzy swirl back, Snow natural hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3023",
+      "expected_first": "Zippy",
+      "replacement": "Mafalda",
+      "reference": "Mafalda, Andrea Macera's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Hamburger front, Waning crescent moon back, Brandy wild braids hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3045",
+      "expected_first": "Meringue",
+      "replacement": "Matusquela",
+      "reference": "Matusquela, Manuela Castelo Branco's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's White flat brush front, Swamp swirl back, Tan loose wave hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3054",
+      "expected_first": "Dimples",
+      "replacement": "Polina",
+      "reference": "Polina Ganshina, Cirque du Soleil clown artist",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Turmeric fluffy hair, Glare eyes, Expressionless mouth supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3076",
+      "expected_first": "Zinnia",
+      "replacement": "Mooky",
+      "reference": "Mooky Cornish, circus clown and comedian",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Soccer ball front, White cloud back, Octopus hot frizz hair supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    },
+    {
+      "id": "3141",
+      "expected_first": "Chirpy",
+      "replacement": "Slappy",
+      "reference": "Slappy, Tiffany Riley's clown persona",
+      "reference_url": "https://cirque-cnac.bnf.fr/en/clowns/clown-characters/women-clowns",
+      "fit": "The portrait's Snow natural hair, Tight eyes, Smile mouth supports a recognizable female-clown identity matching the portrait's comic expression and prop; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    }
+  ]
+}

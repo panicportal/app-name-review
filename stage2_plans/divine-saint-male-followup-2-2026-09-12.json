@@ -1,0 +1,21 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the remaining user-rejected Stage 2 first names with stronger unused references.",
+  "clothing": "Divine saint",
+  "gender": "Male",
+  "bank_file": "panic_divine_saint_male_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Divine saint · wave 4",
+  "created_at": "2026-09-12T19:30:00.000Z",
+  "replacements": [
+    {
+      "id": "2393",
+      "expected_first": "Blaise",
+      "replacement": "Ignatius",
+      "reference": "Saint Ignatius of Loyola",
+      "reference_url": "https://www.britannica.com/biography/St-Ignatius-of-Loyola",
+      "fit": "The portrait's Soccer ball front, White cloud back, Turmeric fluffy hair supports an energetic, resolute, widely recognizable saint; the reference is more specific, readable, and collectible than the rejected name.",
+      "score": 9.5
+    }
+  ]
+}

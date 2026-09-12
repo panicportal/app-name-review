@@ -24,6 +24,14 @@ function bundledBanks() {
     { filename: "panic_drifting_painter_male_stage2_2026-09-12.md", clothing: "Drifting painter", gender: "Male", version: "2026-09-12" },
     { filename: "panic_everyday_villager_female_stage2_2026-09-12.md", clothing: "Everyday villager", gender: "Female", version: "2026-09-12" },
     { filename: "panic_golden_angel_male_stage2_2026-09-12.md", clothing: "Golden angel", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_everyday_villager_female_stage2_followup_2026-09-12.md", clothing: "Everyday villager", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_dark_swim_trunks_male_stage2_followup_2_2026-09-12.md", clothing: "Dark swim trunks", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_golden_angel_male_stage2_followup_2026-09-12.md", clothing: "Golden angel", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_drifting_painter_male_stage2_followup_2026-09-12.md", clothing: "Drifting painter", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_divine_saint_male_stage2_followup_2_2026-09-12.md", clothing: "Divine saint", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_grasping_devil_male_stage2_2026-09-12.md", clothing: "Grasping devil", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_ham_sandwich_clown_female_stage2_2026-09-12.md", clothing: "Ham sandwich clown", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_kawaii_kimono_female_stage2_2026-09-12.md", clothing: "Kawaii kimono", gender: "Female", version: "2026-09-12" },
   ];
   return definitions.flatMap(definition => {
     const file = path.join(process.cwd(), "name_banks", definition.filename);
