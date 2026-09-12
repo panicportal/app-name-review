@@ -1,0 +1,64 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "clothing": "Divine saint",
+  "gender": "Male",
+  "bank_file": "panic_divine_saint_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2",
+  "created_at": "2026-09-12T13:29:02.468Z",
+  "replacements": [
+    {
+      "id": "350",
+      "expected_first": "Thomas",
+      "replacement": "George",
+      "reference": "Saint George, warrior and martyr",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "The golden halo, fiery hair, angry focus, and raised bat create the clearest warrior-saint silhouette in the group.",
+      "score": 9.9
+    },
+    {
+      "id": "1191",
+      "expected_first": "Polycarp",
+      "replacement": "Moses",
+      "reference": "Saint Moses the Black, Desert Father",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "The dark complexion, disciplined expression, scarlet head covering, and night crescent make Moses an immediate and dignified visual reference.",
+      "score": 9.9
+    },
+    {
+      "id": "1588",
+      "expected_first": "Zachariah",
+      "replacement": "Vincent",
+      "reference": "Saint Vincent of Saragossa, patron associated with winegrowers",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "The red-wine prop, warm sunset disk, bright curls, and composed stance make Vincent the strongest trait-specific saint connection.",
+      "score": 9.9
+    },
+    {
+      "id": "2393",
+      "expected_first": "Chrysologus",
+      "replacement": "Kolbe",
+      "reference": "Saint Maximilian Kolbe, modern martyr",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "The youthful face, pale cloud field, determined blue eyes, and soccer ball suit Kolbe's short, modern, energetic surname-name.",
+      "score": 9.7
+    },
+    {
+      "id": "3022",
+      "expected_first": "Emeric",
+      "replacement": "Martin",
+      "reference": "Saint Martin de Porres, Dominican healer and patron of social justice",
+      "reference_url": "https://www.vaticannews.va/en/saints/11/03/st--martin-de-porres--dominican.html",
+      "fit": "The dark complexion, simple dark hair, quiet green eyes, and unadorned blue field closely echo the humble visual tradition of Martin de Porres.",
+      "score": 10
+    },
+    {
+      "id": "3183",
+      "expected_first": "Chrysostom",
+      "replacement": "Aquinas",
+      "reference": "Saint Thomas Aquinas, theologian and Doctor of the Church",
+      "reference_url": "https://www.vaticannews.va/en/saints.html",
+      "fit": "The thoughtful sideways gaze, sober dark hair, golden robe, and calm pink field give Aquinas a scholarly, iconic saintly presence.",
+      "score": 9.8
+    }
+  ]
+}

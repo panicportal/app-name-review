@@ -360,6 +360,28 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
   }
 });
 
+test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short source-bank names", () => {
+  const cases = [
+    ["builder-bull-followup-2026-09-12.json", "panic_builder_bull_male_stage2_followup_2026-09-12.md", 2],
+    ["dark-swim-trunks-2026-09-12.json", "panic_dark_swim_trunks_male_stage2_swimmer_surnames_2026-09-12.md", 117],
+    ["defiant-pirate-captain-2026-09-12.json", "panic_defiant_pirate_captain_male_stage2_2026-09-12.md", 1],
+    ["divine-saint-2026-09-12.json", "panic_divine_saint_male_stage2_2026-09-12.md", 6],
+  ];
+  for (const [planFile, bankFile, expectedCount] of cases) {
+    const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
+    const markdown = fs.readFileSync(path.join(__dirname, "..", "name_banks", bankFile), "utf8");
+    const parsed = parseMarkdownNameBank(markdown, { clothing: plan.clothing, gender: plan.gender });
+    const bankNames = new Set(parsed.entries.map(entry => entry.name));
+    assert.equal(plan.replacements.length, expectedCount);
+    assert.equal(new Set(plan.replacements.map(item => item.id)).size, expectedCount);
+    assert.equal(new Set(plan.replacements.map(item => item.replacement.toLowerCase())).size, expectedCount);
+    assert.ok(plan.replacements.every(item => item.expected_first.toLowerCase() !== item.replacement.toLowerCase()));
+    assert.ok(plan.replacements.every(item => item.replacement.length <= 10));
+    assert.ok(plan.replacements.every(item => bankNames.has(item.replacement)));
+    assert.ok(plan.replacements.every(item => item.reference.length > 8 && item.fit.length > 40));
+  }
+});
+
 test("bank-origin detector uses exact eligible routes instead of name appearance", () => {
   const kotoha = detectFirstOrigin(characters.get("41"), "Kotoha");
   assert.equal(kotoha.origin, "japanese");
