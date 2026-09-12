@@ -45,6 +45,12 @@ function bundledBanks() {
     { filename: "panic_polished_suit_male_stage2_2026-09-12.md", clothing: "Polished suit", gender: "Male", version: "2026-09-12" },
     { filename: "panic_restless_ape_male_stage2_2026-09-12.md", clothing: "Restless ape", gender: "Male", version: "2026-09-12" },
     { filename: "panic_rogue_pirate_captain_female_stage2_2026-09-12.md", clothing: "Rogue pirate captain", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_polished_suit_male_stage2_followup_2_2026-09-12.md", clothing: "Polished suit", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_restless_ape_male_stage2_followup_2_2026-09-12.md", clothing: "Restless ape", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_rogue_pirate_captain_female_stage2_followup_2_2026-09-12.md", clothing: "Rogue pirate captain", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_observer_angel_female_screen_stage2_followup_4_2026-09-12.md", clothing: "Observer angel", gender: "Female", version: "2026-09-12" },
+    { filename: "panic_shiba_dog_male_stage2_2026-09-12.md", clothing: "Shiba dog", gender: "Male", version: "2026-09-12" },
+    { filename: "panic_simple_swimsuit_female_stage2_2026-09-12.md", clothing: "Simple swimsuit", gender: "Female", version: "2026-09-12" },
   ];
   return definitions.flatMap(definition => {
     const file = path.join(process.cwd(), "name_banks", definition.filename);

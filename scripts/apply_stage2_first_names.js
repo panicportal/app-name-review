@@ -32,6 +32,7 @@ function validatePlan(state, plan, bankState) {
   if (!plan.clothing || !Array.isArray(plan.replacements) || !plan.replacements.length) throw new Error("The plan is incomplete.");
   const byId = new Map(review.characters.map(character => [String(character.id), character]));
   const targetIds = new Set();
+  const plannedIds = new Set(plan.replacements.map(item => String(item.id)));
   const replacementNames = new Set();
   const sourceBank = plan.bank_file
     ? (bankState?.banks || []).find(bank =>
@@ -62,8 +63,8 @@ function validatePlan(state, plan, bankState) {
     if (replacementKey === current.trim().toLowerCase()) throw new Error(`#${id} must receive a different first name before its red mark can be cleared.`);
     const first = state.curation.records[id]?.parts?.first;
     if (plan.correct_existing_stage2) {
-      if (first?.workflow_stage !== "first_names_stage_2") {
-        throw new Error(`#${id} is not an existing Stage 2 assignment and cannot use the correction path.`);
+      if (first?.workflow_stage !== "first_names_stage_2" && first?.decision !== "replace") {
+        throw new Error(`#${id} is neither an existing Stage 2 assignment nor currently red-marked.`);
       }
       if (!plan.correction_reason) throw new Error("A Stage 2 correction plan requires a correction reason.");
     } else if (plan.include_unmarked_first_names) {
@@ -72,8 +73,14 @@ function validatePlan(state, plan, bankState) {
       throw new Error(`#${id} is no longer red-marked for first-name replacement.`);
     }
     if (!/^[A-Za-z][A-Za-z'-]{1,23}$/.test(item.replacement)) throw new Error(`Invalid first name ${item.replacement}.`);
+    if (plan.editorial_rules?.single_reference_name && !["given_name", "family_name", "pet_or_character_name"].includes(item.reference_name_kind)) {
+      throw new Error(`${item.replacement} lacks single-name reference provenance.`);
+    }
+    if (plan.editorial_rules?.avoid_living_public_figures && item.reference_life_status !== "deceased_historical") {
+      throw new Error(`${item.replacement} is not verified as a deceased historical reference.`);
+    }
     if (bankNames && !bankNames.has(item.replacement)) throw new Error(`${item.replacement} is not an exact row in ${plan.bank_file}.`);
-    const conflicts = (used.get(replacementKey) || []).filter(otherId => otherId !== id);
+    const conflicts = (used.get(replacementKey) || []).filter(otherId => otherId !== id && !plannedIds.has(otherId));
     if (conflicts.length) throw new Error(`${item.replacement} is already used by #${conflicts.join(", #")}.`);
     if (!item.reference || !item.fit) throw new Error(`#${id} needs both a reference and fit explanation.`);
   }

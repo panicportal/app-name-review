@@ -1,0 +1,1264 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Simple swimsuit",
+  "gender": "Female",
+  "bank_file": "panic_simple_swimsuit_female_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Simple swimsuit · wave 7",
+  "created_at": "2026-09-12T20:17:55.689Z",
+  "replacements": [
+    {
+      "id": "24",
+      "expected_first": "Solstice",
+      "replacement": "Sarah",
+      "reference": "Sarah Sjostrom",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Happy, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "27",
+      "expected_first": "Ibiza",
+      "replacement": "McKeon",
+      "reference": "Emma McKeon",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Happy, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "43",
+      "expected_first": "Shelly",
+      "replacement": "Titmus",
+      "reference": "Ariarne Titmus",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Up, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "57",
+      "expected_first": "Pelagia",
+      "replacement": "Mollie",
+      "reference": "Mollie OCallaghan",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Grey stare, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "61",
+      "expected_first": "Medley",
+      "replacement": "Summer",
+      "reference": "Summer McIntosh",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Up, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "73",
+      "expected_first": "Marinda",
+      "replacement": "Regan",
+      "reference": "Regan Smith",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Happy, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "81",
+      "expected_first": "Seashell",
+      "replacement": "Douglass",
+      "reference": "Kate Douglass",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Brown tilt, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "87",
+      "expected_first": "Nalani",
+      "replacement": "Torri",
+      "reference": "Torri Huske",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Googly, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "128",
+      "expected_first": "Lani",
+      "replacement": "Walsh",
+      "reference": "Gretchen Walsh",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "186",
+      "expected_first": "Splash",
+      "replacement": "Manuel",
+      "reference": "Simone Manuel",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Closed, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "196",
+      "expected_first": "Rivelle",
+      "replacement": "Missy",
+      "reference": "Missy Franklin",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Green stretched, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "227",
+      "expected_first": "Seaglass",
+      "replacement": "Torres",
+      "reference": "Dara Torres",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Flat up, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "288",
+      "expected_first": "Seabreeze",
+      "replacement": "Thompson",
+      "reference": "Jenny Thompson",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Droopy, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "295",
+      "expected_first": "Talise",
+      "replacement": "Evans",
+      "reference": "Janet Evans",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Winking, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "312",
+      "expected_first": "Dewdrop",
+      "replacement": "Tracy",
+      "reference": "Tracy Caulkins",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Hanging sanpaku, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "344",
+      "expected_first": "Gali",
+      "replacement": "Babashoff",
+      "reference": "Shirley Babashoff",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Sour, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "352",
+      "expected_first": "Alaia",
+      "replacement": "DeVarona",
+      "reference": "Donna DeVarona",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Closed, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "373",
+      "expected_first": "Meri",
+      "replacement": "Ederle",
+      "reference": "Gertrude Ederle",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Hanging sanpaku, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "411",
+      "expected_first": "Pearla",
+      "replacement": "Debbie",
+      "reference": "Debbie Meyer",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Green stretched, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "418",
+      "expected_first": "Nixie",
+      "replacement": "Meagher",
+      "reference": "Mary Meagher",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Up, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "432",
+      "expected_first": "Aquamarine",
+      "replacement": "VanDyken",
+      "reference": "Amy VanDyken",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Googly, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "458",
+      "expected_first": "Rainy",
+      "replacement": "Soni",
+      "reference": "Rebecca Soni",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Round, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "478",
+      "expected_first": "Podium",
+      "replacement": "Beard",
+      "reference": "Amanda Beard",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "574",
+      "expected_first": "Navy",
+      "replacement": "Bennett",
+      "reference": "Brooke Bennett",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Flat up, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "645",
+      "expected_first": "Pacifica",
+      "replacement": "Sanders",
+      "reference": "Summer Sanders",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Hanging sanpaku, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "649",
+      "expected_first": "Aqua",
+      "replacement": "Hogshead",
+      "reference": "Nancy Hogshead",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Sour, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "653",
+      "expected_first": "Nerissa",
+      "replacement": "Fraser",
+      "reference": "Dawn Fraser",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Hanging sanpaku, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "695",
+      "expected_first": "Undine",
+      "replacement": "Gould",
+      "reference": "Shane Gould",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Tearful, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "706",
+      "expected_first": "Mair",
+      "replacement": "ONeill",
+      "reference": "Susie ONeill",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Up, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "714",
+      "expected_first": "Reef",
+      "replacement": "Jones",
+      "reference": "Leisel Jones",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Grey stare, Hair:Emerald innocent braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "740",
+      "expected_first": "Freestyle",
+      "replacement": "Trickett",
+      "reference": "Libby Trickett",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Green stretched, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "744",
+      "expected_first": "Nereida",
+      "replacement": "Campbell",
+      "reference": "Cate Campbell",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Brown tilt, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "753",
+      "expected_first": "Naiad",
+      "replacement": "Bronte",
+      "reference": "Bronte Campbell",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Closed, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "785",
+      "expected_first": "Rhea",
+      "replacement": "Stephanie",
+      "reference": "Stephanie Rice",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Closed, Hair:Dandelion rough buns supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "824",
+      "expected_first": "Marilla",
+      "replacement": "Seebohm",
+      "reference": "Emily Seebohm",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Googly, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "871",
+      "expected_first": "Mar",
+      "replacement": "Thomas",
+      "reference": "Petria Thomas",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Round, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "912",
+      "expected_first": "Bay",
+      "replacement": "Schlanger",
+      "reference": "Melanie Schlanger",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Tight, Hair:Snow natural supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "926",
+      "expected_first": "Marea",
+      "replacement": "Madison",
+      "reference": "Madison Wilson",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Sour, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "950",
+      "expected_first": "Waterlily",
+      "replacement": "Chelsea",
+      "reference": "Chelsea Hodges",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Closed, Hair:Snow natural supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "976",
+      "expected_first": "Moonpool",
+      "replacement": "Kromowidjojo",
+      "reference": "Ranomi Kromowidjojo",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Blue doll, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1023",
+      "expected_first": "Galatea",
+      "replacement": "DeBruijn",
+      "reference": "Inge DeBruijn",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Green stretched, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1055",
+      "expected_first": "Brisa",
+      "replacement": "Femke",
+      "reference": "Femke Heemskerk",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Round, Hair:Emerald innocent braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1086",
+      "expected_first": "Selkie",
+      "replacement": "Marleen",
+      "reference": "Marleen Veldhuis",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Green stretched, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1104",
+      "expected_first": "Derya",
+      "replacement": "Rie",
+      "reference": "Rie Mastenbroek",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Winking, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1107",
+      "expected_first": "Dive",
+      "replacement": "Kok",
+      "reference": "Ada Kok",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Sour, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1197",
+      "expected_first": "Nerita",
+      "replacement": "Brigitha",
+      "reference": "Enith Brigitha",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Sour, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1212",
+      "expected_first": "Waterrose",
+      "replacement": "Pellegrini",
+      "reference": "Federica Pellegrini",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Brown tilt, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1219",
+      "expected_first": "Malia",
+      "replacement": "Novella",
+      "reference": "Novella Calligaris",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Hanging sanpaku, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1238",
+      "expected_first": "Wailani",
+      "replacement": "Simona",
+      "reference": "Simona Quadarella",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Up, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1249",
+      "expected_first": "Wave",
+      "replacement": "Halsall",
+      "reference": "Francesca Halsall",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Googly, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1256",
+      "expected_first": "Riviera",
+      "replacement": "Adlington",
+      "reference": "Rebecca Adlington",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Flat up, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1264",
+      "expected_first": "Breezy",
+      "replacement": "Jazz",
+      "reference": "Jazz Carlin",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Round, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1273",
+      "expected_first": "Amphitrite",
+      "replacement": "Siobhan",
+      "reference": "Siobhan Haughey",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Up, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1308",
+      "expected_first": "Gaia",
+      "replacement": "Ohashi",
+      "reference": "Yui Ohashi",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Droopy, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1311",
+      "expected_first": "Sirena",
+      "replacement": "Rikako",
+      "reference": "Rikako Ikee",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Googly, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1333",
+      "expected_first": "Coastline",
+      "replacement": "Shiwen",
+      "reference": "Ye Shiwen",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Round, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1348",
+      "expected_first": "Sereia",
+      "replacement": "Yufei",
+      "reference": "Zhang Yufei",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Glare, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1367",
+      "expected_first": "Maris",
+      "replacement": "Zige",
+      "reference": "Liu Zige",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Green stretched, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1386",
+      "expected_first": "Seaflower",
+      "replacement": "Liuyang",
+      "reference": "Jiao Liuyang",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Winking, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1412",
+      "expected_first": "Oceanna",
+      "replacement": "Xuejuan",
+      "reference": "Luo Xuejuan",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Sour, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1425",
+      "expected_first": "Tidal",
+      "replacement": "Yuanhui",
+      "reference": "Fu Yuanhui",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Blue doll, Hair:Dandelion rough buns supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1430",
+      "expected_first": "Shoreline",
+      "replacement": "Qianting",
+      "reference": "Tang Qianting",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Brown tilt, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1461",
+      "expected_first": "Raina",
+      "replacement": "Bingjie",
+      "reference": "Li Bingjie",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Up, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1470",
+      "expected_first": "Waverley",
+      "replacement": "Jianjiahe",
+      "reference": "Wang Jianjiahe",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Happy, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1479",
+      "expected_first": "Relay",
+      "replacement": "Yana",
+      "reference": "Yana Klochkova",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Up, Hair:Emerald innocent braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1500",
+      "expected_first": "Bluebell",
+      "replacement": "Hosszu",
+      "reference": "Katinka Hosszu",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Droopy, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1541",
+      "expected_first": "Sandybay",
+      "replacement": "Risztov",
+      "reference": "Eva Risztov",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Hanging sanpaku, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1617",
+      "expected_first": "Sunny",
+      "replacement": "Boglarka",
+      "reference": "Boglarka Kapas",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Brown tilt, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1626",
+      "expected_first": "Halia",
+      "replacement": "Judit",
+      "reference": "Judit Temes",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Droopy, Hair:Dandelion rough buns supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1708",
+      "expected_first": "Coralyn",
+      "replacement": "Schneider",
+      "reference": "Petra Schneider",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1735",
+      "expected_first": "Coralina",
+      "replacement": "Ender",
+      "reference": "Kornelia Ender",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Sour, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1763",
+      "expected_first": "Marinae",
+      "replacement": "Kristin",
+      "reference": "Kristin Otto",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Happy, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1775",
+      "expected_first": "Morgana",
+      "replacement": "Rica",
+      "reference": "Rica Reinisch",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Flat up, Hair:Dandelion rough buns supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1789",
+      "expected_first": "Marina",
+      "replacement": "Ulrike",
+      "reference": "Ulrike Tauber",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Grey stare, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1882",
+      "expected_first": "Meryl",
+      "replacement": "Dagmar",
+      "reference": "Dagmar Hase",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Up, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1893",
+      "expected_first": "Tide",
+      "replacement": "Britta",
+      "reference": "Britta Steffen",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Round, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1901",
+      "expected_first": "Kailani",
+      "replacement": "Franziska",
+      "reference": "Franziska Almsick",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Round, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1924",
+      "expected_first": "Rainfall",
+      "replacement": "Kohler",
+      "reference": "Sarah Kohler",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Glare, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1963",
+      "expected_first": "Poolside",
+      "replacement": "Rouwendaal",
+      "reference": "Sharon Rouwendaal",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Flat up, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "1989",
+      "expected_first": "Mona",
+      "replacement": "Ana",
+      "reference": "Ana Cunha",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Up, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2035",
+      "expected_first": "Solana",
+      "replacement": "Poliana",
+      "reference": "Poliana Okimoto",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Droopy, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2049",
+      "expected_first": "Glide",
+      "replacement": "Ilchenko",
+      "reference": "Larisa Ilchenko",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Brown tilt, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2098",
+      "expected_first": "Waterfall",
+      "replacement": "Rachele",
+      "reference": "Rachele Bruni",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Blue doll, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2104",
+      "expected_first": "Tempest",
+      "replacement": "Aurelie",
+      "reference": "Aurelie Muller",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Googly, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2137",
+      "expected_first": "Coral",
+      "replacement": "Keri",
+      "reference": "Keri Payne",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Brown tilt, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2162",
+      "expected_first": "Oceana",
+      "replacement": "Haley",
+      "reference": "Haley Anderson",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Green stretched, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2165",
+      "expected_first": "Bluewater",
+      "replacement": "Belmonte",
+      "reference": "Mireia Belmonte",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Flat up, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2172",
+      "expected_first": "Lana",
+      "replacement": "Oleksiak",
+      "reference": "Penny Oleksiak",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Up, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2210",
+      "expected_first": "Azul",
+      "replacement": "Masse",
+      "reference": "Kylie Masse",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Flat up, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2268",
+      "expected_first": "Marine",
+      "replacement": "MacNeil",
+      "reference": "Maggie MacNeil",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Glare, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2287",
+      "expected_first": "Muriel",
+      "replacement": "Ruck",
+      "reference": "Taylor Ruck",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Flat up, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2322",
+      "expected_first": "Capri",
+      "replacement": "Katerine",
+      "reference": "Katerine Savard",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2343",
+      "expected_first": "Bimini",
+      "replacement": "Sydney",
+      "reference": "Sydney Pickrem",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Round, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2409",
+      "expected_first": "Laguna",
+      "replacement": "Giaan",
+      "reference": "Giaan Rooney",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Glare, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2438",
+      "expected_first": "Stormy",
+      "replacement": "Michelle",
+      "reference": "Michelle Ford",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Round, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2444",
+      "expected_first": "Coralie",
+      "replacement": "Claudia",
+      "reference": "Claudia Poll",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Grey stare, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2461",
+      "expected_first": "Malibu",
+      "replacement": "Sylvia",
+      "reference": "Sylvia Poll",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Up, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2478",
+      "expected_first": "Leilani",
+      "replacement": "Kirsty",
+      "reference": "Kirsty Coventry",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Hanging sanpaku, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2526",
+      "expected_first": "Havana",
+      "replacement": "Tatjana",
+      "reference": "Tatjana Schoenmaker",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Green stretched, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2574",
+      "expected_first": "Sandy",
+      "replacement": "Heyns",
+      "reference": "Penny Heyns",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Happy, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2584",
+      "expected_first": "Calypso",
+      "replacement": "Beatrice",
+      "reference": "Beatrice Hess",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Round, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2594",
+      "expected_first": "Seastar",
+      "replacement": "Trischa",
+      "reference": "Trischa Zorn",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Happy, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2621",
+      "expected_first": "Sapphire",
+      "replacement": "Jessica",
+      "reference": "Jessica Long",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Brown tilt, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2648",
+      "expected_first": "Miriam",
+      "replacement": "Simmonds",
+      "reference": "Ellie Simmonds",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Up, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2697",
+      "expected_first": "Darya",
+      "replacement": "Pascoe",
+      "reference": "Sophie Pascoe",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Hanging sanpaku, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2704",
+      "expected_first": "Ripple",
+      "replacement": "Rivard",
+      "reference": "Aurelie Rivard",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Droopy, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2719",
+      "expected_first": "Turquoise",
+      "replacement": "Tai",
+      "reference": "Alice Tai",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Googly, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2729",
+      "expected_first": "Tethys",
+      "replacement": "Perales",
+      "reference": "Teresa Perales",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Blue doll, Hair:Snow natural supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2842",
+      "expected_first": "Aquaria",
+      "replacement": "DuToit",
+      "reference": "Natalie DuToit",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Hanging sanpaku, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2852",
+      "expected_first": "Beryl",
+      "replacement": "Fanny",
+      "reference": "Fanny Durack",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Flat up, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2885",
+      "expected_first": "Concha",
+      "replacement": "Wylie",
+      "reference": "Mina Wylie",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Passion Scarlet, Eyes:Up, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2895",
+      "expected_first": "Seabrook",
+      "replacement": "Bleibtrey",
+      "reference": "Ethelda Bleibtrey",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Green stretched, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2903",
+      "expected_first": "Butterfly",
+      "replacement": "Sybil",
+      "reference": "Sybil Bauer",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Googly, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2928",
+      "expected_first": "Kalea",
+      "replacement": "Norelius",
+      "reference": "Martha Norelius",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Round, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2947",
+      "expected_first": "Palma",
+      "replacement": "Holm",
+      "reference": "Eleanor Holm",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Closed, Hair:Moon candy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2996",
+      "expected_first": "Sunwave",
+      "replacement": "Hveger",
+      "reference": "Ragnhild Hveger",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Happy, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "2999",
+      "expected_first": "Mistral",
+      "replacement": "Andersen",
+      "reference": "Greta Andersen",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Hanging sanpaku, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "3017",
+      "expected_first": "Aquabelle",
+      "replacement": "Crapp",
+      "reference": "Lorraine Crapp",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Round, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "3085",
+      "expected_first": "Rivka",
+      "replacement": "Wilma",
+      "reference": "Wilma DenOuden",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Lovely Pink, Eyes:Sour, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3093",
+      "expected_first": "Current",
+      "replacement": "Nida",
+      "reference": "Nida Senff",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Brown tilt, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3109",
+      "expected_first": "Marley",
+      "replacement": "Jopie",
+      "reference": "Jopie Waalberg",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Romantic Purple, Eyes:Round, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3134",
+      "expected_first": "Marissa",
+      "replacement": "Muffat",
+      "reference": "Camille Muffat",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Silent Violet, Eyes:Googly, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    },
+    {
+      "id": "3163",
+      "expected_first": "Sprint",
+      "replacement": "Laure",
+      "reference": "Laure Manaudou",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Hungry Red, Eyes:Closed, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3175",
+      "expected_first": "Maui",
+      "replacement": "Coralie",
+      "reference": "Coralie Balmy",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Outlook Sky Blue, Eyes:Happy, Hair:Turmeric fluffy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3232",
+      "expected_first": "Moonwave",
+      "replacement": "Malia",
+      "reference": "Malia Metella",
+      "reference_url": "https://olympics.com/en/olympic-games/olympic-results",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Grey stare, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    }
+  ]
+}

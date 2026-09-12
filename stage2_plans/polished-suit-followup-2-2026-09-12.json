@@ -1,0 +1,180 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice under the revised naming direction.",
+  "editorial_rules": {
+    "avoid_living_public_figures": true
+  },
+  "clothing": "Polished suit",
+  "gender": "Male",
+  "bank_file": "panic_polished_suit_male_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Polished suit · wave 7",
+  "created_at": "2026-09-12T20:17:55.684Z",
+  "replacements": [
+    {
+      "id": "106",
+      "expected_first": "Disney",
+      "replacement": "Levi",
+      "reference": "Levi Strauss",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Passion Scarlet, Eyes:Hanging sanpaku, Hair:Banana flattop supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1404",
+      "expected_first": "Prada",
+      "replacement": "Conrad",
+      "reference": "Conrad Hilton",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Lovely Pink, Eyes:Flat up, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1584",
+      "expected_first": "Bloomberg",
+      "replacement": "Josiah",
+      "reference": "Josiah Wedgwood",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Googly, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1743",
+      "expected_first": "Bezos",
+      "replacement": "Elias",
+      "reference": "Elias Howe",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Romantic Purple, Eyes:Up, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1782",
+      "expected_first": "Carnegie",
+      "replacement": "Henry",
+      "reference": "Henry Heinz",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Romantic Purple, Eyes:Closed, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1798",
+      "expected_first": "Vanderbilt",
+      "replacement": "King",
+      "reference": "King Gillette",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Flat up, Hair:Ginger dreads bun supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1869",
+      "expected_first": "Versace",
+      "replacement": "Asa",
+      "reference": "Asa Candler",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Passion Scarlet, Eyes:Round, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1878",
+      "expected_first": "Porsche",
+      "replacement": "Caleb",
+      "reference": "Caleb Bradham",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Hungry Red, Eyes:Grey stare, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "1962",
+      "expected_first": "Zuckerberg",
+      "replacement": "Orville",
+      "reference": "Orville Wright",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Silent Violet, Eyes:Green stretched, Hair:Tar shower supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "2293",
+      "expected_first": "Pichai",
+      "replacement": "Gottlieb",
+      "reference": "Gottlieb Daimler",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Romantic Purple, Eyes:Happy, Hair:Biscotti rough supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "2360",
+      "expected_first": "Altman",
+      "replacement": "Ransom",
+      "reference": "Ransom Olds",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Lovely Pink, Eyes:Hanging sanpaku, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "2468",
+      "expected_first": "Toyoda",
+      "replacement": "David",
+      "reference": "David Buick",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Outlook Sky Blue, Eyes:Flat up, Hair:Soot sleek curl supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "2483",
+      "expected_first": "Kiichiro",
+      "replacement": "Louis",
+      "reference": "Louis Chevrolet",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Googly, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "2631",
+      "expected_first": "Arnault",
+      "replacement": "Andre",
+      "reference": "Andre Citroen",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Romantic Purple, Eyes:Winking, Hair:Biscotti rough supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    },
+    {
+      "id": "2797",
+      "expected_first": "Hughes",
+      "replacement": "Armand",
+      "reference": "Armand Peugeot",
+      "reference_url": "https://www.britannica.com/money/entrepreneur",
+      "fit": "Background:Outlook Sky Blue, Eyes:Dark shades, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name",
+      "reference_life_status": "deceased_historical"
+    }
+  ]
+}

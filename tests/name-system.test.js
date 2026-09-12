@@ -38,14 +38,15 @@ test("mobile portraits use immutable caching, a loading state, and adjacent prel
   assert.match(styles, /\.portrait-frame\.portrait-loading::after/);
 });
 
-test("Stage 2 prepared first names remain included in reviewed progress", () => {
+test("main progress uses approved decisions while Stage 2 remains separately visible", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(source, /first\.workflow_stage === "first_names_stage_2"/);
-  assert.match(source, /const reviewedParts = decidedParts \+ stage2ReadyParts/);
+  assert.match(source, /const actualPercent = totalParts \? Math\.round\(\(lockedParts \/ totalParts\) \* 100\) : 0/);
+  assert.match(source, /status\.key === "complete-approved"/);
   assert.match(source, /Stage 2 ready/);
   assert.match(source, /stage2ConfirmedParts/);
-  assert.match(source, /els\.statusFilter\.value === "first-stage-2"/);
   assert.match(source, /Stage 2 confirmed/);
+  assert.doesNotMatch(source, /const percent = showingStage2/);
 });
 
 test("unmarked Stage 2 replacement is limited to the two explicitly authorized clothing traits", () => {
@@ -347,7 +348,7 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=32-0-stage2-confirmed-progress/);
+  assert.match(html, /app\.js\?v=33-0-actual-progress/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
 });
@@ -392,6 +393,12 @@ test("Stage 2 bull and RPG-villager plans replace every target from exact bundle
     ["polished-suit-male-2026-09-12.json", "panic_polished_suit_male_stage2_2026-09-12.md", 54],
     ["restless-ape-male-2026-09-12.json", "panic_restless_ape_male_stage2_2026-09-12.md", 52],
     ["rogue-pirate-captain-female-2026-09-12.json", "panic_rogue_pirate_captain_female_stage2_2026-09-12.md", 35],
+    ["polished-suit-followup-2-2026-09-12.json", "panic_polished_suit_male_stage2_followup_2_2026-09-12.md", 15],
+    ["restless-ape-followup-2-2026-09-12.json", "panic_restless_ape_male_stage2_followup_2_2026-09-12.md", 22],
+    ["rogue-pirate-captain-followup-2-2026-09-12.json", "panic_rogue_pirate_captain_female_stage2_followup_2_2026-09-12.md", 19],
+    ["observer-angel-screen-followup-4-2026-09-12.json", "panic_observer_angel_female_screen_stage2_followup_4_2026-09-12.md", 8],
+    ["shiba-dog-male-2026-09-12.json", "panic_shiba_dog_male_stage2_2026-09-12.md", 13],
+    ["simple-swimsuit-female-2026-09-12.json", "panic_simple_swimsuit_female_stage2_2026-09-12.md", 125],
   ];
   for (const [planFile, bankFile, expectedCount] of cases) {
     const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", planFile), "utf8"));
@@ -449,7 +456,7 @@ test("Stage 2 swimmer, bull follow-up, pirate, and saint plans use exact short s
 test("an explicit Stage 2 bank correction can replace decided names without opening a no-op path", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "scripts", "apply_stage2_first_names.js"), "utf8");
   assert.match(source, /if \(plan\.correct_existing_stage2\)/);
-  assert.match(source, /first\?\.workflow_stage !== "first_names_stage_2"/);
+  assert.match(source, /first\?\.workflow_stage !== "first_names_stage_2" && first\?\.decision !== "replace"/);
   assert.match(source, /if \(!plan\.correction_reason\)/);
   assert.match(source, /replacementKey === current\.trim\(\)\.toLowerCase\(\)/);
 });
@@ -459,6 +466,42 @@ test("Stage 2 can initialize untouched records for explicitly authorized unmarke
   assert.match(source, /function ensureRecord\(state, id\)/);
   assert.match(source, /const record = ensureRecord\(next, id\)/);
   assert.match(source, /const previous = record\.parts\.first \|\| \{\}/);
+});
+
+test("an atomic Stage 2 batch may reuse a name vacated by another target in that same batch", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "scripts", "apply_stage2_first_names.js"), "utf8");
+  assert.match(source, /const plannedIds = new Set\(plan\.replacements\.map/);
+  assert.match(source, /!plannedIds\.has\(otherId\)/);
+});
+
+test("Stage 2 editorial safety rules reject living-business and unproven compound references", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "scripts", "apply_stage2_first_names.js"), "utf8");
+  const policy = fs.readFileSync(path.join(__dirname, "..", "stage2_plans", "STAGE2_EDITORIAL_POLICY.md"), "utf8");
+  assert.match(source, /single_reference_name/);
+  assert.match(source, /avoid_living_public_figures/);
+  assert.match(source, /deceased_historical/);
+  assert.match(policy, /Never concatenate a person's given and family names/);
+  assert.match(policy, /avoid living public figures/);
+});
+
+test("wave 7 uses historical business references and single pirate, dog, and swimmer names", () => {
+  const plans = [
+    ["polished-suit-followup-2-2026-09-12.json", "historical"],
+    ["rogue-pirate-captain-followup-2-2026-09-12.json", "single"],
+    ["shiba-dog-male-2026-09-12.json", "single"],
+    ["simple-swimsuit-female-2026-09-12.json", "single"],
+  ];
+  for (const [filename, kind] of plans) {
+    const plan = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "stage2_plans", filename), "utf8"));
+    if (kind === "historical") {
+      assert.equal(plan.editorial_rules.avoid_living_public_figures, true);
+      assert.ok(plan.replacements.every(item => item.reference_life_status === "deceased_historical"));
+    } else {
+      assert.equal(plan.editorial_rules.single_reference_name, true);
+      assert.ok(plan.replacements.every(item => !/\s/.test(item.replacement)));
+      assert.ok(plan.replacements.every(item => ["given_name", "family_name", "pet_or_character_name"].includes(item.reference_name_kind)));
+    }
+  }
 });
 
 test("bank-origin detector uses exact eligible routes instead of name appearance", () => {
@@ -515,7 +558,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=32-0-stage2-confirmed-progress/);
+  assert.match(html, /app\.js\?v=33-0-actual-progress/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

@@ -1841,23 +1841,21 @@ function updateProgress() {
     }
     rejectedParts += status.rejected;
     lockedParts += status.decided - status.rejected;
-    if (status.key.startsWith("complete")) completeCharacters++;
+    if (status.key === "complete-approved") completeCharacters++;
     if (status.key.startsWith("partial")) partialCharacters++;
   });
-  const reviewedParts = decidedParts + stage2ReadyParts;
-  const overallPercent = totalParts ? Math.round((reviewedParts / totalParts) * 100) : 0;
+  const actualPercent = totalParts ? Math.round((lockedParts / totalParts) * 100) : 0;
   const stage2Percent = stage2TotalParts ? Math.round((stage2ConfirmedParts / stage2TotalParts) * 100) : 0;
-  const showingStage2 = els.statusFilter.value === "first-stage-2";
-  const percent = showingStage2 ? stage2Percent : overallPercent;
-  els.curationPercent.textContent = `${percent}%`;
-  els.curationBar.style.width = `${percent}%`;
+  const completePercent = state.data.characters.length ? Math.round((completeCharacters / state.data.characters.length) * 100) : 0;
+  els.curationPercent.textContent = `${actualPercent}%`;
+  els.curationBar.style.width = `${actualPercent}%`;
   els.curationCounts.innerHTML = `
-    <span><b>${showingStage2 ? stage2ConfirmedParts.toLocaleString() : reviewedParts.toLocaleString()}</b> / ${(showingStage2 ? stage2TotalParts : totalParts).toLocaleString()} ${showingStage2 ? "Stage 2 confirmed" : "reviewed"}</span>
+    <span><b>${lockedParts.toLocaleString()}</b> / ${totalParts.toLocaleString()} approved decisions</span>
     <span class="stage2-confirmed"><b>${stage2Percent}%</b> Stage 2 confirmed</span>
     <span class="locked"><b>${lockedParts.toLocaleString()}</b> locked</span>
     <span class="stage2-ready"><b>${stage2ReadyParts.toLocaleString()}</b> Stage 2 ready</span>
     <span class="rejected"><b>${rejectedParts.toLocaleString()}</b> red X</span>
-    <span><b>${completeCharacters.toLocaleString()}</b> complete</span>
+    <span><b>${completeCharacters.toLocaleString()}</b> complete characters (${completePercent}%)</span>
     <span><b>${partialCharacters.toLocaleString()}</b> partial</span>`;
 }
 

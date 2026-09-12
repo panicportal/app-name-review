@@ -1,0 +1,144 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "editorial_rules": {
+    "single_reference_name": true,
+    "prefer_given_name_then_family": true
+  },
+  "clothing": "Shiba dog",
+  "gender": "Male",
+  "bank_file": "panic_shiba_dog_male_stage2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Shiba dog · wave 7",
+  "created_at": "2026-09-12T20:17:55.688Z",
+  "replacements": [
+    {
+      "id": "252",
+      "expected_first": "Clifford",
+      "replacement": "Kabosu",
+      "reference": "Kabosu, the Shiba Inu behind Doge",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Lovely Pink, Eyes:Round, Mouth:Proud supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "468",
+      "expected_first": "Coppercoat",
+      "replacement": "Balltze",
+      "reference": "Balltze, the Shiba Inu known as Cheems",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Hungry Red, Eyes:Dark shades, Mouth:Expressionless supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "763",
+      "expected_first": "Balto",
+      "replacement": "Bodhi",
+      "reference": "Bodhi, the Shiba Inu known as Menswear Dog",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Silent Violet, Eyes:Round, Mouth:Proud supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1083",
+      "expected_first": "Dug",
+      "replacement": "Mari",
+      "reference": "Mari from A Tale of Mari and Three Puppies",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Passion Scarlet, Eyes:Green stretched, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1490",
+      "expected_first": "Barkley",
+      "replacement": "Toto",
+      "reference": "Toto from The Wonderful Wizard of Oz",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Silent Violet, Eyes:Googly, Mouth:Big smile supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1513",
+      "expected_first": "Tramp",
+      "replacement": "Milo",
+      "reference": "Milo from The Mask",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Lovely Pink, Eyes:Droopy, Mouth:Smug supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1522",
+      "expected_first": "Beethoven",
+      "replacement": "Shadow",
+      "reference": "Shadow from Homeward Bound",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Droopy, Mouth:Silly supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "1996",
+      "expected_first": "Baxter",
+      "replacement": "Einstein",
+      "reference": "Einstein from Back to the Future",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Silent Violet, Eyes:Brown tilt, Mouth:Mustache happy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2206",
+      "expected_first": "Olaf",
+      "replacement": "Asta",
+      "reference": "Asta from The Thin Man",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Silent Violet, Eyes:Sour, Mouth:Beard sad supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2423",
+      "expected_first": "Fido",
+      "replacement": "Uggie",
+      "reference": "Uggie from The Artist",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Flat up, Mouth:Big smile supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2454",
+      "expected_first": "Marshall",
+      "replacement": "Pongo",
+      "reference": "Pongo from One Hundred and One Dalmatians",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Grey stare, Mouth:Mustache happy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2543",
+      "expected_first": "Bolt",
+      "replacement": "Nana",
+      "reference": "Nana from Peter Pan",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Closed, Mouth:Smile supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    },
+    {
+      "id": "2735",
+      "expected_first": "Scout",
+      "replacement": "Tock",
+      "reference": "Tock from The Phantom Tollbooth",
+      "reference_url": "https://www.akc.org/dog-breeds/shiba-inu/",
+      "fit": "Background:Passion Scarlet, Eyes:Round, Mouth:Smile supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "pet_or_character_name"
+    }
+  ]
+}

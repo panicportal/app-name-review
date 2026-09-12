@@ -1,0 +1,233 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice under the revised naming direction.",
+  "editorial_rules": {},
+  "clothing": "Restless ape",
+  "gender": "Male",
+  "bank_file": "panic_restless_ape_male_stage2_followup_2_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Restless ape · wave 7",
+  "created_at": "2026-09-12T20:17:55.686Z",
+  "replacements": [
+    {
+      "id": "845",
+      "expected_first": "Snowflake",
+      "replacement": "Bushman",
+      "reference": "Bushman, the famous Lincoln Park Zoo gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Closed, Mouth:Smug supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1044",
+      "expected_first": "Ivan",
+      "replacement": "Gargantua",
+      "reference": "Gargantua, the famous Ringling gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Round, Mouth:Proud supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1148",
+      "expected_first": "Oliver",
+      "replacement": "Massa",
+      "reference": "Massa, the long-lived Philadelphia Zoo gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Sour, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1157",
+      "expected_first": "Cheeta",
+      "replacement": "Digit",
+      "reference": "Digit, Dian Fossey's mountain gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Happy, Mouth:Smug supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1251",
+      "expected_first": "DavidGreybeard",
+      "replacement": "Lucius",
+      "reference": "Lucius from Planet of the Apes",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Green stretched, Mouth:Expressionless supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1419",
+      "expected_first": "Frodo",
+      "replacement": "Grape",
+      "reference": "Grape Ape",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Silent Violet, Eyes:Up, Mouth:Proud supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1543",
+      "expected_first": "Freud",
+      "replacement": "Willie",
+      "reference": "Willie B., the famous Atlanta gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Outlook Sky Blue, Eyes:Happy, Mouth:Grimace supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1547",
+      "expected_first": "Goblin",
+      "replacement": "Ozzie",
+      "reference": "Ozzie, the long-lived Atlanta gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Passion Scarlet, Eyes:Sour, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1631",
+      "expected_first": "Humphrey",
+      "replacement": "Kumbuka",
+      "reference": "Kumbuka, the London Zoo silverback",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Silent Violet, Eyes:Googly, Mouth:Mad supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1646",
+      "expected_first": "Sampson",
+      "replacement": "Ambam",
+      "reference": "Ambam, the upright-walking gorilla",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Hungry Red, Eyes:Tight, Mouth:Mustache happy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1673",
+      "expected_first": "Maurice",
+      "replacement": "Proximus",
+      "reference": "Proximus Caesar from Kingdom of the Planet of the Apes",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Romantic Purple, Eyes:Droopy, Mouth:Scream supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1784",
+      "expected_first": "BlueEyes",
+      "replacement": "Raka",
+      "reference": "Raka from Kingdom of the Planet of the Apes",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Lovely Pink, Eyes:Droopy, Mouth:Long beard surprise supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2071",
+      "expected_first": "Mojo",
+      "replacement": "Noa",
+      "reference": "Noa from Kingdom of the Planet of the Apes",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Passion Scarlet, Eyes:Glare, Mouth:Scream supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2234",
+      "expected_first": "Abu",
+      "replacement": "Donkey",
+      "reference": "Kong character Donkey Kong",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Passion Scarlet, Eyes:Winking, Mouth:Mustache happy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2364",
+      "expected_first": "Winston",
+      "replacement": "Funky",
+      "reference": "Funky Kong",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Passion Scarlet, Eyes:Sour, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2436",
+      "expected_first": "Lanky",
+      "replacement": "Cranky",
+      "reference": "Cranky Kong",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Silent Violet, Eyes:Up, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2547",
+      "expected_first": "Diddy",
+      "replacement": "Pogo",
+      "reference": "Pogo from The Umbrella Academy",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Romantic Purple, Eyes:Hanging sanpaku, Mouth:Mustache happy supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2709",
+      "expected_first": "Ursus",
+      "replacement": "Darwin",
+      "reference": "Darwin from The Wild Thornberrys",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Passion Scarlet, Eyes:Hanging sanpaku, Mouth:Expressionless supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2853",
+      "expected_first": "Urko",
+      "replacement": "Lazlo",
+      "reference": "Lazlo from Camp Lazlo",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Lovely Pink, Eyes:Googly, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2922",
+      "expected_first": "Joe",
+      "replacement": "Gleek",
+      "reference": "Gleek from Super Friends",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Lovely Pink, Eyes:Tight, Mouth:Laughing supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3039",
+      "expected_first": "MightyJoe",
+      "replacement": "ChimChim",
+      "reference": "Chim-Chim from Speed Racer",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Hungry Red, Eyes:Round, Mouth:Grimace supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "3055",
+      "expected_first": "CuriousGeorge",
+      "replacement": "Wukong",
+      "reference": "Sun Wukong, the Monkey King",
+      "reference_url": "https://janegoodall.org/our-story/about-jane/",
+      "fit": "Background:Passion Scarlet, Eyes:Round, Mouth:Expressionless supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    }
+  ]
+}

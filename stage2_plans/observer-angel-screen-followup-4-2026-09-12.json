@@ -1,0 +1,93 @@
+{
+  "workflow_stage": "first_names_stage_2",
+  "correct_existing_stage2": true,
+  "correction_reason": "Replace the latest user-rejected Stage 2 choice under the revised naming direction.",
+  "editorial_rules": {},
+  "clothing": "Observer angel",
+  "gender": "Female",
+  "bank_file": "panic_observer_angel_female_screen_stage2_followup_4_2026-09-12.md",
+  "reviewer": "Codex Stage 2 · Observer angel · wave 7",
+  "created_at": "2026-09-12T20:17:55.688Z",
+  "replacements": [
+    {
+      "id": "916",
+      "expected_first": "Zadkiel",
+      "replacement": "Monica",
+      "reference": "Monica from Touched by an Angel",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Outlook Sky Blue, Eyes:Googly, Hair:Tan loose wave supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1151",
+      "expected_first": "Phanuel",
+      "replacement": "Tess",
+      "reference": "Tess from Touched by an Angel",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Lovely Pink, Eyes:Round, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1205",
+      "expected_first": "Anael",
+      "replacement": "Serendipity",
+      "reference": "Serendipity from Dogma",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Lovely Pink, Eyes:Droopy, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1229",
+      "expected_first": "Jeremiel",
+      "replacement": "Kanade",
+      "reference": "Kanade from Angel Beats",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Romantic Purple, Eyes:Up, Hair:Jet loose supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1821",
+      "expected_first": "Sachiel",
+      "replacement": "Natalie",
+      "reference": "Natalie from Charlie's Angels",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Uncontrollable Ocean Blue, Eyes:Flat up, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "1851",
+      "expected_first": "Zuriel",
+      "replacement": "Roma",
+      "reference": "Roma Downey, who played Monica in Touched by an Angel",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Silent Violet, Eyes:Closed, Hair:Octopus hot frizz supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2510",
+      "expected_first": "Raphaelle",
+      "replacement": "Valerie",
+      "reference": "Valerie Bertinelli, who played Gloria in Touched by an Angel",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Hungry Red, Eyes:Googly, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "given_name"
+    },
+    {
+      "id": "2953",
+      "expected_first": "Shamsiel",
+      "replacement": "OReilly",
+      "reference": "Holly Hunter's angel O'Reilly in A Life Less Ordinary",
+      "reference_url": "https://www.britannica.com/topic/Touched-by-an-Angel",
+      "fit": "Background:Romantic Purple, Eyes:Droopy, Hair:Brandy wild braids supplies the portrait match; the selected single name remains readable, recognizable, and collectible.",
+      "score": 9.5,
+      "reference_name_kind": "family_name"
+    }
+  ]
+}
