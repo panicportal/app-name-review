@@ -209,7 +209,39 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   width: min(92%, 560px);
   height: auto;
   image-rendering: pixelated;
+  transition: opacity .12s ease;
 }
+.focus-portrait-wrap::after,
+.portrait-frame::after {
+  content: "Loading portrait";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 11px, rgba(112, 217, 183, .08) 11px 12px),
+    rgba(5, 18, 24, .94);
+  color: var(--mint);
+  font: 800 10px/1 var(--utility);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease;
+}
+.focus-portrait-wrap.portrait-loading::after,
+.portrait-frame.portrait-loading::after { opacity: 1; }
+.focus-portrait-wrap.portrait-load-error::after,
+.portrait-frame.portrait-load-error::after {
+  content: "Portrait unavailable";
+  opacity: 1;
+  color: var(--rose);
+}
+.focus-portrait-wrap.portrait-loading img,
+.portrait-frame.portrait-loading img,
+.focus-portrait-wrap.portrait-load-error img,
+.portrait-frame.portrait-load-error img { opacity: 0; }
 .focus-swipe-hint {
   position: absolute;
   inset: auto 14px 14px;
@@ -411,6 +443,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .curation-counts b { color: var(--paper); }
 .curation-counts .locked b { color: var(--mint); }
+.curation-counts .stage2-ready b { color: var(--amber); }
 .curation-counts .rejected b { color: var(--rose); }
 .reviewer-field {
   display: grid;
@@ -611,6 +644,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   height: 100%;
   object-fit: cover;
   image-rendering: pixelated;
+  transition: opacity .12s ease;
 }
 .portrait-error { position: absolute; inset: 0; display: grid; place-items: center; color: var(--rose); }
 .character-title { margin-top: 28px; }
@@ -1925,6 +1959,13 @@ dialog::backdrop { background: rgba(3, 12, 16, .76); backdrop-filter: blur(3px);
     font: 800 8px/1 var(--utility);
     text-transform: uppercase;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus-portrait-wrap::after,
+  .portrait-frame::after,
+  .focus-portrait-wrap img,
+  .portrait-frame img { transition: none; }
 }
 
 /* v20 structured surname + embedded workshop */

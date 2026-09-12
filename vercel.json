@@ -29,7 +29,7 @@
       ]
     },
     {
-      "source": "/pfps/(.*)",
+      "source": "/pfps_webp/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

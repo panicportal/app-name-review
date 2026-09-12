@@ -25,6 +25,26 @@ test("bundled cowboy Markdown bank parses 278 unique one-word names", () => {
   assert.ok(parsed.entries.every((entry) => /^[A-Za-z][A-Za-z'-]{1,23}$/.test(entry.name)));
 });
 
+test("mobile portraits use immutable caching, a loading state, and adjacent preloading", () => {
+  const vercel = fs.readFileSync(path.join(__dirname, "..", "vercel.json"), "utf8");
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  const styles = fs.readFileSync(path.join(__dirname, "..", "review", "styles.css"), "utf8");
+  assert.match(vercel, /"source": "\/pfps_webp\/\(\.\*\)"/);
+  assert.match(vercel, /max-age=31536000, immutable/);
+  assert.match(source, /function warmPortrait\(src\)/);
+  assert.match(source, /function preloadPortraitNeighbors\(character\)/);
+  assert.match(source, /\[-1, 1\]\.forEach/);
+  assert.match(source, /dataset\.requestedPortrait/);
+  assert.match(styles, /\.portrait-frame\.portrait-loading::after/);
+});
+
+test("Stage 2 prepared first names remain included in reviewed progress", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  assert.match(source, /first\.workflow_stage === "first_names_stage_2"/);
+  assert.match(source, /const reviewedParts = decidedParts \+ stage2ReadyParts/);
+  assert.match(source, /Stage 2 ready/);
+});
+
 test("lower-second compound renders one collector-visible surname", () => {
   assert.equal(composeSurname([{ order: 1, text: "Red" }, { order: 2, text: "Crust" }]), "Redcrust");
   assert.equal(composeSurname([{ order: 1, text: "Red" }, { order: 2, text: "Crust" }], "21"), "Crustred");
@@ -317,7 +337,7 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=30-1-stage2-queue/);
+  assert.match(html, /app\.js\?v=31-0-mobile-portraits-progress/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
 });
@@ -457,7 +477,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=30-1-stage2-queue/);
+  assert.match(html, /app\.js\?v=31-0-mobile-portraits-progress/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

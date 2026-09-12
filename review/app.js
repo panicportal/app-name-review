@@ -14,6 +14,8 @@ const ELIGIBLE_SURNAME_TRAIT_TYPES = new Set([
 const VOICE_SETTINGS_KEY = "panic-name-studio-voice-v2";
 const CHATGPT_HANDOFF_KEY = "panic-name-studio-chatgpt-handoff-v1";
 const REVIEW_PACKET_ROTATION_KEY = "panic-name-studio-review-packet-rotation-v1";
+const PORTRAIT_WARM_LIMIT = 24;
+const portraitWarmCache = new Map();
 
 function emptyCuration() {
   return {
@@ -1735,9 +1737,86 @@ function renderRoster() {
   });
 }
 
+function portraitUrl(character) {
+  return `/pfps_webp/${character.id}.webp`;
+}
+
+function warmPortrait(src) {
+  if (portraitWarmCache.has(src)) return portraitWarmCache.get(src);
+  const pending = new Promise((resolve, reject) => {
+    const loader = new Image();
+    loader.decoding = "async";
+    loader.onload = () => resolve(src);
+    loader.onerror = () => reject(new Error("Portrait could not be loaded."));
+    loader.src = src;
+  });
+  pending.catch(() => portraitWarmCache.delete(src));
+  portraitWarmCache.set(src, pending);
+  while (portraitWarmCache.size > PORTRAIT_WARM_LIMIT) {
+    portraitWarmCache.delete(portraitWarmCache.keys().next().value);
+  }
+  return pending;
+}
+
+function loadPortrait(image, character, errorElement = null) {
+  if (!image || !character) return;
+  const src = portraitUrl(character);
+  const frame = image.closest(".portrait-frame, .focus-portrait-wrap");
+  image.alt = `Pixel portrait of ${effectiveDisplayName(character)}, survivor ${character.id}`;
+  if (image.dataset.loadedPortrait === src && image.complete && image.naturalWidth) {
+    frame?.classList.remove("portrait-loading", "portrait-load-error");
+    frame?.setAttribute("aria-busy", "false");
+    return;
+  }
+  image.dataset.requestedPortrait = src;
+  frame?.classList.add("portrait-loading");
+  frame?.classList.remove("portrait-load-error");
+  frame?.setAttribute("aria-busy", "true");
+  if (errorElement) errorElement.hidden = true;
+
+  warmPortrait(src).then(() => {
+    if (image.dataset.requestedPortrait !== src) return;
+    const finish = () => {
+      if (image.dataset.requestedPortrait !== src) return;
+      image.dataset.loadedPortrait = src;
+      frame?.classList.remove("portrait-loading");
+      frame?.classList.remove("portrait-load-error");
+      frame?.setAttribute("aria-busy", "false");
+      if (errorElement) errorElement.hidden = true;
+    };
+    image.onload = finish;
+    image.onerror = () => {
+      if (image.dataset.requestedPortrait !== src) return;
+      frame?.classList.remove("portrait-loading");
+      frame?.classList.add("portrait-load-error");
+      frame?.setAttribute("aria-busy", "false");
+      if (errorElement) errorElement.hidden = false;
+    };
+    image.src = src;
+    if (image.complete && image.naturalWidth) finish();
+  }).catch(() => {
+    if (image.dataset.requestedPortrait !== src) return;
+    frame?.classList.remove("portrait-loading");
+    frame?.classList.add("portrait-load-error");
+    frame?.setAttribute("aria-busy", "false");
+    if (errorElement) errorElement.hidden = false;
+  });
+}
+
+function preloadPortraitNeighbors(character) {
+  const list = state.filtered.length ? state.filtered : state.data.characters;
+  const index = list.findIndex(item => item.id === character.id);
+  if (index < 0 || list.length < 2) return;
+  [-1, 1].forEach(offset => {
+    const neighbor = list[(index + offset + list.length) % list.length];
+    warmPortrait(portraitUrl(neighbor)).catch(() => {});
+  });
+}
+
 function updateProgress() {
   let totalParts = 0;
   let decidedParts = 0;
+  let stage2ReadyParts = 0;
   let lockedParts = 0;
   let rejectedParts = 0;
   let completeCharacters = 0;
@@ -1746,17 +1825,27 @@ function updateProgress() {
     const status = curationStatus(character);
     totalParts += status.total;
     decidedParts += status.decided;
+    const first = partReview(character.id, "first");
+    if (
+      character.first &&
+      first.workflow_stage === "first_names_stage_2" &&
+      !first.decision
+    ) {
+      stage2ReadyParts++;
+    }
     rejectedParts += status.rejected;
     lockedParts += status.decided - status.rejected;
     if (status.key.startsWith("complete")) completeCharacters++;
     if (status.key.startsWith("partial")) partialCharacters++;
   });
-  const percent = totalParts ? Math.round((decidedParts / totalParts) * 100) : 0;
+  const reviewedParts = decidedParts + stage2ReadyParts;
+  const percent = totalParts ? Math.round((reviewedParts / totalParts) * 100) : 0;
   els.curationPercent.textContent = `${percent}%`;
   els.curationBar.style.width = `${percent}%`;
   els.curationCounts.innerHTML = `
-    <span><b>${decidedParts.toLocaleString()}</b> / ${totalParts.toLocaleString()} parts</span>
+    <span><b>${reviewedParts.toLocaleString()}</b> / ${totalParts.toLocaleString()} reviewed</span>
     <span class="locked"><b>${lockedParts.toLocaleString()}</b> locked</span>
+    <span class="stage2-ready"><b>${stage2ReadyParts.toLocaleString()}</b> Stage 2 ready</span>
     <span class="rejected"><b>${rejectedParts.toLocaleString()}</b> red X</span>
     <span><b>${completeCharacters.toLocaleString()}</b> complete</span>
     <span><b>${partialCharacters.toLocaleString()}</b> partial</span>`;
@@ -1920,8 +2009,7 @@ function renderFocusDeck(character) {
     `${(index + 1).toLocaleString()} / ${list.length.toLocaleString()}`;
   els.focusStatus.textContent = status.label;
   els.focusStatus.className = status.key;
-  els.focusPortrait.src = `/pfps_webp/${character.id}.webp`;
-  els.focusPortrait.alt = `Pixel portrait of ${effectiveDisplayName(character)}, survivor ${character.id}`;
+  loadPortrait(els.focusPortrait, character);
   els.focusClothing.textContent = `${character.clothing || "Special"} · Surv!vor #${character.id}`;
   els.focusName.textContent = effectiveDisplayName(character);
   els.focusMix.textContent =
@@ -2004,9 +2092,8 @@ function renderCharacter() {
   els.tokenId.textContent = `Surv!vor #${c.id}`;
   els.languageMix.textContent =
     `${effectiveFirstLanguage(c)} first / ${effectiveSurnameLanguage(c)} surname`;
-  els.portrait.src = `/pfps_webp/${c.id}.webp`;
-  els.portrait.alt = `Pixel portrait of ${c.display_name}, survivor ${c.id}`;
-  els.portraitError.hidden = true;
+  loadPortrait(els.portrait, c, els.portraitError);
+  preloadPortraitNeighbors(c);
   els.clothingEyebrow.textContent = c.clothing || "Official one-of-one";
   const previewName = effectiveDisplayName(c);
   els.characterName.textContent = previewName;
