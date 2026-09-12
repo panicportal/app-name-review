@@ -12,6 +12,16 @@ function functionText(name) {
 }
 function element(value='') { return {value,textContent:'',dataset:{},classList:{add(){},remove(){},toggle(){},contains(){return false}},setAttribute(){},removeAttribute(){},closest(){return null}}; }
 
+test('cloud recovery detects a locally newer Stage 2 decision after reload',()=>{
+  const ctx=vm.createContext({});
+  vm.runInContext(functionText('timestamp'),ctx);
+  vm.runInContext(functionText('curationHasNewerLocalEdits'),ctx);
+  const remote={updated_at:'2026-09-12T20:00:00.000Z',records:{'263':{updated_at:'2026-09-12T20:00:00.000Z',parts:{first:{decision:null,updated_at:'2026-09-12T20:00:00.000Z'}}}}};
+  const local={updated_at:'2026-09-13T00:55:00.000Z',records:{'263':{updated_at:'2026-09-13T00:55:00.000Z',parts:{first:{decision:'replace',updated_at:'2026-09-13T00:55:00.000Z'}}}}};
+  assert.equal(ctx.curationHasNewerLocalEdits(local,remote),true);
+  assert.equal(ctx.curationHasNewerLocalEdits(remote,local),false);
+});
+
 test('compact surname pair selection balances route load before prompt generation',()=>{
   const ctx=vm.createContext({rotatePacketOptions:items=>items});
   vm.runInContext(functionText('selectBalancedSurnamePairs'),ctx);

@@ -38,6 +38,19 @@ test("mobile portraits use immutable caching, a loading state, and adjacent prel
   assert.match(styles, /\.portrait-frame\.portrait-loading::after/);
 });
 
+test("offline device decisions resume syncing and expired sessions open the login gate", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
+  const html = fs.readFileSync(path.join(__dirname, "..", "review", "index.html"), "utf8");
+  assert.match(source, /function curationHasNewerLocalEdits\(/);
+  assert.match(source, /hasPendingLocalEdits/);
+  assert.match(source, /state\.cloudDirty = true/);
+  assert.match(source, /requestCloudSignIn\(\)/);
+  assert.match(source, /response\.status === 401/);
+  assert.match(source, /cloudChip\.addEventListener\("click"/);
+  assert.match(html, /<button[^>]+id="cloudChip"/);
+  assert.match(html, /app\.js\?v=34-0-cloud-recovery/);
+});
+
 test("main progress uses approved decisions while Stage 2 remains separately visible", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "review", "app.js"), "utf8");
   assert.match(source, /first\.workflow_stage === "first_names_stage_2"/);
@@ -348,7 +361,7 @@ test("portrait shortcuts decide only the first name through the shared decision 
   assert.match(html, /id="quickLockFirstButton"[^>]+data-part="first"[^>]+data-decision="approve"/);
   assert.match(html, /id="quickReplaceFirstButton"[^>]+data-part="first"[^>]+data-decision="replace"/);
   assert.match(html, /aria-label="First name decision shortcuts"/);
-  assert.match(html, /app\.js\?v=33-0-actual-progress/);
+  assert.match(html, /app\.js\?v=34-0-cloud-recovery/);
   assert.match(source, /quickLockFirstButton\.disabled = !firstAvailable \|\| firstDecision === "approve"/);
   assert.match(source, /quickReplaceFirstButton\.disabled = !firstAvailable \|\| firstDecision === "replace"/);
 });
@@ -580,7 +593,7 @@ test("manual origin selection supports exact and custom Japanese names without r
   const endpoint = fs.readFileSync(path.join(__dirname, "..", "api", "name-origin.js"), "utf8");
   assert.match(html, /value="japanese">Japanese — exact bank or artist custom/);
   assert.match(html, /value="japanese">Japanese — 1 atomic surname/);
-  assert.match(html, /app\.js\?v=33-0-actual-progress/);
+  assert.match(html, /app\.js\?v=34-0-cloud-recovery/);
   assert.match(source, /async function detectManualNameOrigin/);
   assert.match(source, /detectManualNameOrigin\("first", rawFirst\)/);
   assert.match(source, /detectManualNameOrigin\("surname_atomic", rawSurname\)/);

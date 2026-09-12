@@ -1245,6 +1245,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .app-toast.error { border-color: var(--rose); }
 
 .cloud-chip {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -1254,6 +1257,10 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   font: 700 9px/1 var(--utility);
   letter-spacing: .03em;
   text-transform: uppercase;
+}
+.cloud-chip:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
 }
 .cloud-chip i {
   width: 7px;

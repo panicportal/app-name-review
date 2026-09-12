@@ -342,22 +342,60 @@ function mergeCurationStates(local, remote) {
   return merged;
 }
 
+function curationHasNewerLocalEdits(local, remote) {
+  if (!local?.records || !remote?.records) return false;
+  if (timestamp(local.updated_at) > timestamp(remote.updated_at)) return true;
+  for (const [id, localRecord] of Object.entries(local.records)) {
+    const remoteRecord = remote.records[id] || {};
+    const recordDates = [
+      "updated_at",
+      "deleted_at",
+      "note_updated_at",
+      "surname_order_updated_at",
+      "surname_join_style_updated_at",
+      "normalized_name_updated_at"
+    ];
+    if (recordDates.some(key => timestamp(localRecord?.[key]) > timestamp(remoteRecord?.[key]))) {
+      return true;
+    }
+    for (const [key, localPart] of Object.entries(localRecord?.parts || {})) {
+      const remotePart = remoteRecord?.parts?.[key] || {};
+      if (timestamp(localPart?.updated_at || localPart?.deleted_at) >
+          timestamp(remotePart?.updated_at || remotePart?.deleted_at)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function requestCloudSignIn(message = "Your team session expired. Sign in again to upload the decisions saved on this device.") {
+  state.cloudAuthenticated = false;
+  state.cloudMode = "auth";
+  els.loginGate.hidden = false;
+  els.loginReviewer.value = state.curation.reviewer || els.reviewerName.value || "";
+  els.loginError.textContent = message;
+  setCloudStatus("offline", "Sign in");
+  els.saveState.textContent = "Saved on this device · sign in to sync";
+}
+
 async function pullCloudState({ quiet = false } = {}) {
   if (!state.cloudAuthenticated) return;
   try {
     const response = await fetch("/api/state", { cache: "no-store" });
     if (response.status === 401) {
-      state.cloudAuthenticated = false;
-      els.loginGate.hidden = false;
-      setCloudStatus("offline", "Sign in");
+      requestCloudSignIn();
       return;
     }
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const payload = await response.json();
     state.cloudRevision = Number(payload.revision || 0);
     state.cloudHistory = payload.history || [];
-    const before = JSON.stringify(state.curation);
     const hasSyncedBefore = Boolean(localStorage.getItem(CLOUD_SYNC_MARKER_KEY));
+    const beforeCuration = state.curation;
+    const before = JSON.stringify(beforeCuration);
+    const hasPendingLocalEdits = hasSyncedBefore &&
+      curationHasNewerLocalEdits(beforeCuration, payload.curation);
     if (!hasSyncedBefore) {
       localStorage.setItem(PRE_CLOUD_BACKUP_KEY, before);
       state.curation = payload.curation;
@@ -375,8 +413,16 @@ async function pullCloudState({ quiet = false } = {}) {
       applyFilters();
     }
     els.reviewerName.value = state.curation.reviewer || "";
-    els.saveState.textContent = `Synced · revision ${state.cloudRevision}`;
-    setCloudStatus("online", "Synced");
+    if (hasPendingLocalEdits) {
+      state.cloudDirty = true;
+      state.cloudSaveVersion += 1;
+      els.saveState.textContent = "Recovering saved device decisions…";
+      setCloudStatus("saving", "Recovering");
+      scheduleCloudSave();
+    } else {
+      els.saveState.textContent = `Synced · revision ${state.cloudRevision}`;
+      setCloudStatus("online", "Synced");
+    }
   } catch (error) {
     setCloudStatus("offline", "Offline");
     els.saveState.textContent = "Offline draft saved on this device";
@@ -404,6 +450,10 @@ async function performCloudPush() {
         curation: state.curation
       })
     });
+    if (response.status === 401) {
+      requestCloudSignIn();
+      return;
+    }
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const payload = await response.json();
     state.cloudRevision = Number(payload.revision || 0);
@@ -6036,6 +6086,15 @@ function bindEvents() {
   });
   els.focusPortrait.addEventListener("dragstart", event => event.preventDefault());
   els.loginForm.addEventListener("submit", loginToCloud);
+  els.cloudChip.addEventListener("click", async () => {
+    if (!state.cloudAuthenticated) {
+      requestCloudSignIn("Sign in to upload the decisions already saved on this device.");
+      els.loginPasscode.focus();
+      return;
+    }
+    if (state.cloudDirty) await pushCloudState();
+    else await pullCloudState();
+  });
   els.importButton.addEventListener("click", () => els.importFile.click());
   els.importFile.addEventListener("change", async () => {
     const [file] = els.importFile.files;
